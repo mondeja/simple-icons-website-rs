@@ -1,0 +1,13 @@
+{
+  "name": "simple-icons-website",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Simple Icons contributors",
+  "license": "CS0",
+  "devDependencies": {
+    "@playwright/test": "^1.28.0",
+    "@types/node": "^18.15.5",
+    "prettier": "2.8.7",
+    "tailwindcss": "^3.2.7"
+  }
+}

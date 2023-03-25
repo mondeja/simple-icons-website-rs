@@ -1,0 +1,50 @@
+[tasks.serve]
+install_crate = "trunk"
+command = "trunk"
+args = [
+    "serve",
+    "--watch",
+    "assets",
+    "--watch",
+    "src",
+    "--ignore",
+    "assets/dist"
+]
+
+[tasks.formats]
+run_task = { name = ["format_rust", "format_prettier"], parallel = true }
+
+[tasks.tests]
+run_task = { name = ["serve_for_tests", "run_tests"], parallel = true }
+
+[tasks.watch-css]
+command = "tailwindcss"
+args = [
+    "-i",
+    "./assets/stylesheet.css",
+    "-o",
+    "./assets/dist/stylesheet.css",
+    "--watch"
+]
+
+[tasks.dev]
+run_task = { name = ["serve", "watch-css"], parallel = true }
+
+[tasks.run_tests]
+command = "playwright"
+args = ["test"]
+
+[tasks.serve_for_tests]
+install_crate = "trunk"
+command = "trunk"
+# Watch public to disable watching (very dirty hack)
+args = ["serve", "--watch", "public", "--port", "8081"]
+
+[tasks.format_rust]
+install_crate = "rustfmt"
+command = "cargo"
+args = ["fmt", "--", "--emit=files"]
+
+[tasks.format_prettier]
+command = "prettier"
+args = ["--write", ".", "--ignore-path", ".gitignore"]
