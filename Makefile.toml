@@ -1,4 +1,8 @@
+[tasks.default]
+alias = "dev"
+
 [tasks.serve]
+description = "Serve the app on development"
 install_crate = "trunk"
 command = "trunk"
 args = [
@@ -10,41 +14,90 @@ args = [
     "--ignore",
     "assets/dist"
 ]
+workspace = false
+cwd = "./app"
+
+[tasks.doc]
+description = "Open components documentation"
+command = "cargo"
+args = ["doc", "--open", "--package", "components"]
 
 [tasks.formats]
-run_task = { name = ["format_rust", "format_prettier"], parallel = true }
+description = "Format files"
+run_task = { name = ["format-rust", "format-prettier"], parallel = true }
+workspace = false
 
 [tasks.tests]
-run_task = { name = ["serve_for_tests", "run_tests"], parallel = true }
+description = "Run tests"
+run_task = { name = ["serve-for-tests", "run-tests"], parallel = true }
+workspace = false
 
 [tasks.watch-css]
+description = "Build CSS with Tailwind on development"
 command = "tailwindcss"
+args = [
+    "-i",
+    "./app/assets/stylesheet.css",
+    "-o",
+    "./app/assets/dist/stylesheet.css",
+    "--watch",
+    "--no-minify"
+]
+workspace = false
+
+[tasks.dev]
+description = "Run the app and watch CSS on development"
+run_task = { name = ["serve", "watch-css"], parallel = true }
+workspace = false
+
+[tasks.builds]
+description = "Build the app for production"
+install_crate = "trunk"
+run_task = { name = ["build-css", "build-wasm"] }
+workspace = false
+
+[tasks.build-wasm]
+install_crate = "trunk"
+command = "trunk"
+args = ["build", "--release"]
+cwd = "./app"
+workspace = false
+
+[tasks.build-css]
+command = "../node_modules/.bin/tailwindcss"
 args = [
     "-i",
     "./assets/stylesheet.css",
     "-o",
     "./assets/dist/stylesheet.css",
-    "--watch"
+    "--minify"
 ]
+cwd = "./app"
+workspace = false
 
-[tasks.dev]
-run_task = { name = ["serve", "watch-css"], parallel = true }
+[tasks.run-tests]
+command = "npx"
+args = ["playwright", "test"]
+workspace = false
+private = true
 
-[tasks.run_tests]
-command = "playwright"
-args = ["test"]
-
-[tasks.serve_for_tests]
+[tasks.serve-for-tests]
 install_crate = "trunk"
 command = "trunk"
-# Watch public to disable watching (very dirty hack)
-args = ["serve", "--watch", "public", "--port", "8081"]
+args = ["serve", "--watch", ".", "--port", "8081"]
+workspace = false
+cwd = "./app"
+private = true
 
-[tasks.format_rust]
+[tasks.format-rust]
 install_crate = "rustfmt"
 command = "cargo"
-args = ["fmt", "--", "--emit=files"]
+args = ["fmt", "--all"]
+workspace = false
+private = true
 
-[tasks.format_prettier]
+[tasks.format-prettier]
 command = "prettier"
 args = ["--write", ".", "--ignore-path", ".gitignore"]
+workspace = false
+private = true
