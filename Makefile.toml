@@ -8,6 +8,8 @@ command = "trunk"
 args = [
     "serve",
     "--watch",
+    "index.html",
+    "--watch",
     "assets",
     "--watch",
     "src",
@@ -16,7 +18,7 @@ args = [
     "--watch",
     "../macros",
     "--ignore",
-    "assets/dist"
+    "assets/dist",
 ]
 workspace = false
 cwd = "./app"
@@ -109,7 +111,7 @@ private = true
 [tasks.serve-for-tests]
 install_crate = "trunk"
 command = "trunk"
-args = ["serve", "--watch", ".", "--port", "8081"]
+args = ["serve", "--watch", "../.vscode", "--port", "8081"]
 workspace = false
 cwd = "./app"
 private = true

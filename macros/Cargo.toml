@@ -8,3 +8,6 @@ description = "Simple Icons website macros"
 proc-macro = true
 name = "macros"
 path = "src/lib.rs"
+
+[dependencies]
+syn = "2"

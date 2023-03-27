@@ -1,9 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- Note that only assets that must be loaded by Trunk are defined here -->
     <link data-trunk rel="rust" data-wasm-opt="z" />
-    <link data-trunk rel="icon" type="image/ico" href="/assets/favicon.ico" />
-    <link data-trunk rel="css" href="/assets/dist/stylesheet.css" />
+    <link
+      data-trunk
+      rel="icon"
+      type="image/x-icon"
+      href="/assets/favicon.ico"
+    />
+    <link data-trunk rel="icon" type="image/png" href="./assets/favicon.png" />
+    <link data-trunk rel="css" href="./assets/dist/stylesheet.css" />
+    <link data-trunk rel="copy-file" href="./assets/og.png" />
+    <link data-trunk rel="copy-file" href="./assets/apple-touch-icon.png" />
+    <link data-trunk rel="copy-file" href="./assets/logo.svg" />
+    <link data-trunk rel="copy-file" href="./assets/opensearch.xml" />
+    <link data-trunk rel="copy-file" href="../license.txt" />
+    <!-- TODO: color attribute not supported by Leptos, there is a better way to handle it? -->
+    <link rel="mask-icon" type_="image/png" href="/logo.svg" color="#111111" />
   </head>
   <body class="font-mono py-20 px-12"></body>
 </html>

@@ -33,15 +33,11 @@
 
 #### Technologies
 
-The website is built with:
-
 - [Leptos](https://docs.rs/leptos) as the components library with a client side rendering approach.
 - [TailwindCSS](https://tailwindcss.com/) as the CSS framework.
 - [Trunk](https://trunkrs.dev/) as the web server (on development) and application builder (on production).
 
 #### Rust packages
-
-Is divided in several Rust packages:
 
 - `app/`: Main package with the website. It provides the high level logic where the components are composed.
 - `components/`: Components library. It provides the components used in the website.
@@ -49,6 +45,6 @@ Is divided in several Rust packages:
 
 #### Where to look
 
-- End to end tests are located in `app/tests/`. They are written with [Playwright](https://playwright.dev/). Configuration is located at `app/playwright.config.ts`.
+- End to end tests are located in `app/tests/`. They are written with [Playwright](https://playwright.dev/). Configuration is located at `app/playwright.config.js`.
 - The main stylesheet and other assets are located at `app/assets/`. Hopefully you don't need to change this style due to the class-based approach of TailwindCSS framework. Configuration is located at `app/tailwind.config.ts`.
 - The initial HTML is located at `app/index.html`. It is used by Trunk to generate the final HTML.

@@ -7,7 +7,9 @@ edition = "2021"
 simple-icons-website-components = { path = "../components" }
 simple-icons-website-macros = { path = "../macros" }
 leptos = "0.2.4"
+leptos_meta = { version = "0.2.4", features = ["csr"] }
 console_log = "1"
 log = "0.4"
 console_error_panic_hook = "0.1.7"
 wasm-bindgen = "0.2"
+lazy_static = "1.4"

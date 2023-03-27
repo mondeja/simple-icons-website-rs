@@ -9,4 +9,5 @@ crate-type = ["cdylib", "rlib"]
 name = "components"
 
 [dependencies]
+simple-icons-website-macros = { path = "../macros" }
 leptos = "0.2.4"
