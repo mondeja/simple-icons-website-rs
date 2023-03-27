@@ -1,5 +1,5 @@
 [package]
-name = "components"
+name = "simple-icons-website-components"
 version = "0.1.0"
 edition = "2021"
 description = "Simple Icons website components"
@@ -9,4 +9,4 @@ crate-type = ["cdylib", "rlib"]
 name = "components"
 
 [dependencies]
-leptos = { path = "../../leptos/leptos" }
+leptos = "0.2.4"

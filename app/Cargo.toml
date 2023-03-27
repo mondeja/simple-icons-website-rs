@@ -4,7 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-components = { path = "../components" }
+simple-icons-website-components = { path = "../components" }
+simple-icons-website-macros = { path = "../macros" }
 leptos = "0.2.4"
 console_log = "1"
 log = "0.4"
