@@ -102,11 +102,11 @@ pub fn get_simple_icons_3rd_party_extensions(_: TokenStream) -> TokenStream {
         extensions_array_code.push_str(&format!(
             concat!(
                 "::types::SimpleIconsExtension{{",
-                "name: \"{}\".to_string(),",
-                "url: \"{}\".to_string(),",
-                "author_name: \"{}\".to_string(),",
-                "author_url: \"{}\".to_string(),",
-                "icon_svg_path: {}.to_string(),",
+                "name: \"{}\",",
+                "url: \"{}\",",
+                "author_name: \"{}\",",
+                "author_url: \"{}\",",
+                "icon_svg_path: {},",
                 "}},"
             ),
             name,
