@@ -222,7 +222,7 @@ pub fn ThirdPartyExtensions(cx: Scope) -> impl IntoView {
         />
         <table class=move || {
             if show_extensions.get() {
-                "absolute table-auto h-full z-10 top-[10rem] border-collapse".to_string()
+                "absolute table-auto h-full z-10 top-[10rem] right-12 border-collapse".to_string()
             } else {
                 "hidden".to_string()
             }

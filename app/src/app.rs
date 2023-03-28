@@ -82,5 +82,7 @@ pub fn MetaTwitter(cx: Scope) -> impl IntoView {
 pub fn AppBody(cx: Scope) -> impl IntoView {
     view! { cx,
         <Header/>
+        <Controls/>
+        <Footer/>
     }
 }

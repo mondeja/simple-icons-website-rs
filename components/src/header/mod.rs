@@ -1,3 +1,5 @@
+//! Header at the top of the page
+
 mod menu;
 mod title;
 
@@ -22,7 +24,7 @@ pub fn Header(cx: Scope) -> impl IntoView {
     provide_context(cx, HeaderStateSignal(header_state));
 
     view! { cx,
-        <header class="flex flex-row columns-2 justify-between">
+        <header class="flex flex-row columns-2 justify-between py-20">
             <HeaderTitle/>
             <HeaderMenu/>
         </header>
