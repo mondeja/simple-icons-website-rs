@@ -37,11 +37,12 @@
 - [TailwindCSS](https://tailwindcss.com/) as the CSS framework.
 - [Trunk](https://trunkrs.dev/) as the web server (on development) and application builder (on production).
 
-#### Rust packages
+#### Rust crates
 
-- `app/`: Main package with the website. It provides the high level logic where the components are composed.
+- `app/`: Main package with the app entrypoint. It provides the logic where the top level components are composed.
 - `components/`: Components library. It provides the components used in the website.
 - `macros/`: It provides compile time macros used in the website. Used to generate the data provided by the simple-icons npm package.
+- `types/`: Common types shared by packages.
 
 #### Where to look
 

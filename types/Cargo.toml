@@ -1,0 +1,9 @@
+[package]
+name = "simple-icons-website-types"
+version = "0.1.0"
+edition = "2018"
+description = "Simple Icons website types"
+
+[lib]
+name = "types"
+path = "src/lib.rs"

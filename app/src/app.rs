@@ -2,10 +2,10 @@ use components::*;
 use lazy_static::lazy_static;
 use leptos::*;
 use leptos_meta::*;
-use macros::number_of_icons;
+use macros::get_number_of_icons;
 
 /// Number of icons available in the library
-pub static NUMBER_OF_ICONS: usize = number_of_icons!();
+pub static NUMBER_OF_ICONS: usize = get_number_of_icons!();
 
 /// Title of the page
 pub static TITLE: &str = "Simple Icons";
@@ -81,6 +81,6 @@ pub fn MetaTwitter(cx: Scope) -> impl IntoView {
 #[component]
 pub fn AppBody(cx: Scope) -> impl IntoView {
     view! { cx,
-        <Header number_of_icons=NUMBER_OF_ICONS/>
+        <Header/>
     }
 }

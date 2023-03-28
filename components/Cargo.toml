@@ -10,4 +10,6 @@ name = "components"
 
 [dependencies]
 simple-icons-website-macros = { path = "../macros" }
+simple-icons-website-types = { path = "../types" }
 leptos = "0.2.4"
+log = "0.4"

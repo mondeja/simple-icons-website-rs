@@ -1,5 +1,7 @@
+use crate::header::{HeaderState, HeaderStateSignal};
 use leptos::*;
-use macros::simple_icon_svg_path;
+use macros::{get_simple_icons_3rd_party_extensions, simple_icon_svg_path};
+use types::SimpleIconsExtension;
 
 static MENU_LINKS: &[(&str, &str, &str)] = &[
     (
@@ -43,17 +45,41 @@ static MENU_LINKS: &[(&str, &str, &str)] = &[
 
 /// Header menu
 ///
-/// Menu with links to the different resources of the Simple Icons ecosystem
+/// Menu with:
+///
+/// - Links to the different resources of the Simple Icons ecosystem built by [`HeaderMenuLink`].
+/// - Button to open the menu on mobile devices built by [`HeaderMenuButton`].
+/// - Button to open third party extensions table built by [`HeaderMenuButton`].
 #[component]
 pub fn HeaderMenu(cx: Scope) -> impl IntoView {
+    let header_state = use_context::<HeaderStateSignal>(cx).unwrap().0;
+
     view! { cx,
-        <ul class="flex justify-end">
+        <ul class="flex space-x-3">
             { MENU_LINKS.iter().map(|(title, href, svg_path)| {
                 view! { cx,
-                    <HeaderMenuLink title=title href=href svg_path=svg_path/>
+                    <HeaderMenuLink
+                        title=title
+                        href=href
+                        svg_path=svg_path
+                        class=move || {
+                            if header_state.get().menu_open {
+                                "block".to_string()
+                            } else {
+                                "hidden lg:block".to_string()
+                            }
+                        }/>
                 }
             }).collect::<Vec<_>>()}
-            // TODO: third party extensions button
+
+            // Burger button (only shown on mobile screens)
+            <HeaderMenuBurgerButton />
+
+            <ThirdPartyExtensions />
+
+            // Close menu button (only shown on mobile screens)
+            <HeaderMenuCloseButton />
+
             // TODO: language button
         </ul>
     }
@@ -63,7 +89,7 @@ pub fn HeaderMenu(cx: Scope) -> impl IntoView {
 ///
 /// Each link of the header menu
 #[component]
-pub fn HeaderMenuLink(
+pub fn HeaderMenuLink<F>(
     cx: Scope,
     /// Title of the link
     title: &'static str,
@@ -71,14 +97,123 @@ pub fn HeaderMenuLink(
     href: &'static str,
     /// SVG path of the icon
     svg_path: &'static str,
-) -> impl IntoView {
+    /// Additional classes to add to the link
+    class: F,
+) -> impl IntoView
+where
+    F: Fn() -> String + 'static + Clone,
+{
     view! { cx,
-        <li class="w-14 h-14">
+        <li class=move || format!("w-12 h-12 {}", class())>
             <a title=title href=href>
                 <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d=svg_path/>
                 </svg>
             </a>
         </li>
+    }
+}
+
+/// Header menu button
+///
+/// Each button of the header menu that is not a link
+#[component]
+pub fn HeaderMenuButton<F>(
+    cx: Scope,
+    /// Additional classes to add to the button
+    class: F,
+    /// Title of the button
+    title: &'static str,
+    /// SVG path of the icon
+    svg_path: &'static str,
+) -> impl IntoView
+where
+    F: Fn() -> String + 'static + Clone,
+{
+    view! { cx,
+        <li title=title class=move || {
+            format!("w-12 h-12 cursor-pointer {}", class())
+        }>
+            <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d=svg_path/>
+            </svg>
+        </li>
+    }
+}
+
+/// Header menu burger button
+///
+/// Button to open the menu on mobile devices
+#[component]
+pub fn HeaderMenuBurgerButton(cx: Scope) -> impl IntoView {
+    let header_state = use_context::<HeaderStateSignal>(cx).unwrap().0;
+
+    view! { cx,
+        <HeaderMenuButton
+            // When the burger button is clicked, open the menu
+            on:click=move |_| {
+                header_state.update(
+                    |state: &mut HeaderState| state.menu_open = true
+                );
+            }
+            title="Menu"
+            class=move || {
+                // If the menu is open, hide the burger button
+                if !header_state.get().menu_open {
+                    "block lg:hidden".to_string()
+                } else {
+                    "hidden".to_string()
+                }
+            }
+            svg_path="M1.412 3.53A1.412 1.412 0 0 0 0 4.94a1.412 1.412 0 0 0 1.412 1.412h21.176A1.412 1.412 0 0 0 24 4.94a1.412 1.412 0 0 0-1.412-1.412Zm0 7.058A1.412 1.412 0 0 0 0 12a1.412 1.412 0 0 0 1.412 1.412h21.176A1.412 1.412 0 0 0 24 12a1.412 1.412 0 0 0-1.412-1.412Zm0 7.06A1.412 1.412 0 0 0 0 19.057a1.412 1.412 0 0 0 1.412 1.413h21.176A1.412 1.412 0 0 0 24 19.059a1.412 1.412 0 0 0-1.412-1.412Z"
+        />
+    }
+}
+
+/// Button to close the menu on mobile devices
+#[component]
+pub fn HeaderMenuCloseButton(cx: Scope) -> impl IntoView {
+    let header_state = use_context::<HeaderStateSignal>(cx).unwrap().0;
+
+    view! { cx,
+        <HeaderMenuButton
+            title="Close menu"
+            on:click=move |_| {
+                header_state.update(
+                    |state: &mut HeaderState| state.menu_open = false
+                );
+            }
+            class=move || {
+                // If the menu is open, show the close menu button
+                if header_state.get().menu_open {
+                    "block".to_string()
+                } else {
+                    "hidden".to_string()
+                }
+            }
+            svg_path="M12 10.586l5.657-5.657a1 1 0 1 1 1.414 1.414L13.414 12l5.657 5.657a1 1 0 0 1-1.414 1.414L12 13.414l-5.657 5.657a1 1 0 0 1-1.414-1.414L10.586 12 4.93 6.343a1 1 0 0 1 1.414-1.414L12 10.586z"
+        />
+    }
+}
+
+/// Third party extensions button and table
+#[component]
+pub fn ThirdPartyExtensions(cx: Scope) -> impl IntoView {
+    let header_state = use_context::<HeaderStateSignal>(cx).unwrap().0;
+    let extensions: &[SimpleIconsExtension] =
+        get_simple_icons_3rd_party_extensions!();
+
+    view! { cx,
+        <HeaderMenuButton
+            title="Third party extensions"
+            class=move || {
+                if header_state.get().menu_open {
+                    "block".to_string()
+                } else {
+                    "hidden lg:block".to_string()
+                }
+            }
+            svg_path="M16.513 23.996a.9.9 0 0 0 .885-.907v-4.972c.303-2.68 1.42-1.884 2.734-1.055 3.178 2.003 5.29-3.266 2.72-4.891-2.015-1.276-2.888.917-4.364.69-.57-.088-.967-.72-1.092-1.68V7.59c0-.5-.398-.907-.885-.907h-4.064c-3.355-.436-.377-2.339-.377-4.11C12.072 1.152 10.816 0 9.267 0 7.721 0 6.301 1.152 6.301 2.573c0 1.67 3.082 3.674-.32 4.11H.884A.898.898 0 0 0 0 7.59v3.583c.26 1.528 1.268 1.882 2.559.874.435-.341 1.17-.738 1.7-.738 1.385 0 2.51 1.285 2.51 2.871s-1.123 3.221-2.51 3.221c-.493 0-.954-.164-1.345-.45 0 .121-2.422-2.232-2.914.648v5.494c0 .5.398.907.885.907 2.728 0 5.453 0 8.18-.002.107-.525-.243-1.125-.571-1.646-2.582-4.1 7.463-4.508 4.88.128-.126.228-.253.45-.35.666-.124.27-.206.599-.188.852z"
+        />
     }
 }
