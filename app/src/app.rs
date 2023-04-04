@@ -78,8 +78,14 @@ pub fn MetaTwitter(cx: Scope) -> impl IntoView {
 }
 
 /// Body of the page
+///
+/// Initializes the top level contexts for the application in order
+/// to be used by the child components.
 #[component]
 pub fn AppBody(cx: Scope) -> impl IntoView {
+    let controls_state = create_rw_signal(cx, ControlsState::new());
+    provide_context(cx, ControlsStateSignal(controls_state));
+
     view! { cx,
         <Header/>
         <main>

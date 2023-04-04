@@ -8,7 +8,7 @@ static TWITTER_ICON_SVG_PATH: &str = simple_icon_svg_path!("twitter");
 #[component]
 pub fn Footer(cx: Scope) -> impl IntoView {
     view! { cx,
-        <footer class="flex flex-col justify-between py-8">
+        <footer class="flex flex-col justify-between py-8 text-sm">
             <ReportProblems/>
             <About/>
             <a

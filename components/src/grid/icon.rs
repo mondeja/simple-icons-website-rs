@@ -1,3 +1,7 @@
+use crate::controls::download::{
+    pdf::download_pdf, svg::download_svg, DownloadType,
+};
+use crate::controls::ControlsStateSignal;
 use leptos::*;
 
 /// Icon grid item preview
@@ -9,18 +13,20 @@ pub fn IconGridItemPreview(
     cx: Scope,
     /// Icon slug
     slug: &'static str,
+    /// Brand title
+    title: &'static str,
 ) -> impl IntoView {
     view! { cx,
-        <div class="m-auto">
+        <div class="m-auto pt-6">
             <button
                 class=""
-                title=".ENV SVG"
+                title=format!("{} SVG", title)
             >
                 <img
                     class="h-14"
                     src=format!("/icons/{}.svg", slug)
                     loading="lazy"
-                    alt=".ENV icon"
+                    alt=format!("{} icon", title)
                 />
             </button>
         </div>
@@ -35,7 +41,7 @@ pub fn IconGridItemTitle(
     title: &'static str,
 ) -> impl IntoView {
     view! { cx,
-        <h2 class="px-4">{title}</h2>
+        <h2 class="pl-3 pt-2">{title}</h2>
     }
 }
 
@@ -45,23 +51,31 @@ pub fn IconGridItemTitle(
 #[component]
 pub fn IconGridItemFooter(
     cx: Scope,
+    /// Icon slug
+    slug: &'static str,
     /// Brand color
     hex: &'static str,
     /// Brand title
     title: &'static str,
 ) -> impl IntoView {
-    let html_hex = format!("#{}", hex);
+    // Hex color formatted for CSS
+    let css_hex = format!("#{}", hex);
+
+    // Controls context
+    let controls_state = use_context::<ControlsStateSignal>(cx).unwrap().0;
+
     view! { cx,
-        <div class="flex flex-row">
+        // TODO: use defs SVG tags to optimize size
+        <div class="flex flex-row h-[26px]">
             // Hex color
-            <button class="p-1 w-1/2" style=format!("background-color:{}", html_hex)>
-                {html_hex}
+            <button class="p-0.5 w-1/2" style=format!("background-color:{}", css_hex)>
+                {css_hex}
             </button>
 
             // Open card
             <button class="w-1/4" title=format!("View {}", title)>
                 <svg
-                    class="h-4 w-4"
+                    class="h-4 m-auto"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                 >
@@ -70,16 +84,25 @@ pub fn IconGridItemFooter(
             </button>
 
             // Download
-            <a class="w-1/4" role="button">
+            <button
+                class="w-1/4"
+                title="Download"
+                on:click=move |_| {
+                    if controls_state().download_type == DownloadType::SVG {
+                        download_svg(slug);
+                    } else {
+                        download_pdf(slug);
+                    }
+                }
+            >
                 <svg
-                    class="h-4 w-4"
+                    class="h-4 mt-1 m-auto"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                 >
-                    // TODO: use a defs SVG tag to optimize size
                     <path d="M11.2 0a.8.8 0 0 0-.8.8v11.4L7.26 9.44a.803.803 0 0 0-1.13.074l-1.05 1.2a.8.8 0 0 0 .073 1.13l6.33 5.54a.795.795 0 0 0 1.05 0l6.32-5.54a.8.8 0 0 0 .074-1.13l-1.05-1.2a.804.804 0 0 0-1.13-.074l-3.14 2.76V.8a.8.8 0 0 0-.8-.8zm-8 20.8a.8.8 0 0 0-.8.8v1.6a.8.8 0 0 0 .8.8h17.6a.8.8 0 0 0 .8-.8v-1.6a.8.8 0 0 0-.8-.8z"/>
                 </svg>
-            </a>
+            </button>
         </div>
     }
 }
@@ -98,10 +121,10 @@ pub fn IconGridItem(
     hex: &'static str,
 ) -> impl IntoView {
     view! { cx,
-        <div class="inline-flex flex-col border-2">
-            <IconGridItemPreview slug=slug />
+        <div class="inline-flex flex-col border-2 space-y-2">
+            <IconGridItemPreview slug=slug title=title />
             <IconGridItemTitle title=title/>
-            <IconGridItemFooter hex=hex title=title/>
+            <IconGridItemFooter slug=slug hex=hex title=title/>
         </div>
     }
 }

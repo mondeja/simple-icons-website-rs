@@ -1,28 +1,31 @@
 //! App controls
 
+mod button;
+pub mod download;
+
+use button::*;
+use download::*;
 use leptos::*;
 
-/// Control buttons
-#[component]
-pub fn ControlButton(
-    cx: Scope,
-    /// Button title
-    title: &'static str,
-    /// Button icon SVG path
-    svg_path: &'static str,
-) -> impl IntoView {
-    view! { cx,
-        <button class="w-10 h-10 p-1.5" type="button" title=title>
-            <svg
-                role="img"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path d=svg_path/>
-            </svg>
-        </button>
+/// State of the controls
+#[derive(Copy, Clone, Default)]
+pub struct ControlsState {
+    /// Current active download type when the download button of
+    /// each icon is clicked
+    pub download_type: DownloadType,
+}
+
+impl ControlsState {
+    /// Creates a new `ControlsState`
+    pub fn new() -> Self {
+        Self {
+            download_type: initial_download_type_from_localstorage(),
+        }
     }
 }
+
+#[derive(Copy, Clone)]
+pub struct ControlsStateSignal(pub RwSignal<ControlsState>);
 
 #[component]
 pub fn Controls(cx: Scope) -> impl IntoView {
@@ -41,7 +44,7 @@ pub fn Controls(cx: Scope) -> impl IntoView {
 pub fn SearchControl(cx: Scope) -> impl IntoView {
     view! { cx,
         <div class="flex flex-col">
-            <label for="search" class="font-bold">"Search"</label>
+            <label for="search">"Search"</label>
             <input
                 id="search"
                 type="search"
@@ -56,7 +59,7 @@ pub fn SearchControl(cx: Scope) -> impl IntoView {
 pub fn OrderControl(cx: Scope) -> impl IntoView {
     view! { cx,
         <div class="flex flex-col">
-            <label class="font-bold">"Order"</label>
+            <label>"Order"</label>
             <div class="flex flex-row">
                 <ControlButton
                     title="Sort alphabetically"
@@ -75,7 +78,7 @@ pub fn OrderControl(cx: Scope) -> impl IntoView {
 pub fn ColorSchemeControl(cx: Scope) -> impl IntoView {
     view! { cx,
         <div class="flex flex-col">
-            <label class="font-bold">"Mode"</label>
+            <label>"Mode"</label>
             <div class="flex flex-row">
                 <ControlButton
                     title="Light color scheme"
@@ -95,27 +98,10 @@ pub fn ColorSchemeControl(cx: Scope) -> impl IntoView {
 }
 
 #[component]
-pub fn DownloadFileTypeControl(cx: Scope) -> impl IntoView {
-    view! { cx,
-        <div class="flex flex-col">
-            <label class="font-bold">"Download"</label>
-            <div class="flex flex-row">
-                <button class="font-bold w-10 h-10 p-1.5" type="button" title="Download SVG">
-                    <span>"SVG"</span>
-                </button>
-                <button class="font-bold w-10 h-10 p-1.5" type="button" title="Download PDF">
-                    <span>"PDF"</span>
-                </button>
-            </div>
-        </div>
-    }
-}
-
-#[component]
 pub fn LayoutControl(cx: Scope) -> impl IntoView {
     view! { cx,
         <div class="flex flex-col">
-            <label class="font-bold">"Layout"</label>
+            <label>"Layout"</label>
             <div class="flex flex-row">
                 <ControlButton
                     title="Comfortable"

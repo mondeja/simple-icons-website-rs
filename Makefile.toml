@@ -19,6 +19,8 @@ args = [
     "../macros",
     "--watch",
     "../simple-icons",
+    "--watch",
+    "../package.json",
     "--ignore",
     "assets/dist",
 ]

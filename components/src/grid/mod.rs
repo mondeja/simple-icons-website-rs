@@ -39,7 +39,7 @@ pub fn GridIcons(cx: Scope) -> impl IntoView {
 pub fn Grid(cx: Scope) -> impl IntoView {
     view! { cx,
         <div
-            class="relative grid top-8"
+            class="relative grid gap-3 mt-8"
             style="grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));"
         >
             <CarbonAdsAdGridItem/>

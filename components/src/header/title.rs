@@ -18,7 +18,7 @@ pub fn HeaderTitle(cx: Scope) -> impl IntoView {
             }
             cls
         }>
-            <h1 class="text-3xl">"Simple Icons"</h1>
+            <h1 class="text-[1.7rem] font-semibold">"Simple Icons"</h1>
             <p>{format!("{} free ", get_number_of_icons!())}
                 <abbr title="Scalable Vector Graphic">"SVG"</abbr>
             " icons for popular brands"</p>
