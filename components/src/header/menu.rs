@@ -1,28 +1,28 @@
 use crate::header::{HeaderState, HeaderStateSignal};
 use leptos::*;
 use macros::{get_simple_icons_3rd_party_extensions, simple_icon_svg_path};
-use types::SimpleIconsExtension;
+use simple_icons::SimpleIconsExtension;
 
 static MENU_LINKS: &[(&str, &str, &str)] = &[
     (
         "Main Repository",
         "https://github.com/simple-icons/simple-icons",
-        simple_icon_svg_path!("github.svg"),
+        simple_icon_svg_path!("github"),
     ),
     (
         "npm",
         "https://www.npmjs.com/package/simple-icons",
-        simple_icon_svg_path!("npm.svg"),
+        simple_icon_svg_path!("npm"),
     ),
     (
         "Packagist",
         "https://packagist.org/packages/simple-icons/simple-icons",
-        simple_icon_svg_path!("packagist.svg"),
+        simple_icon_svg_path!("packagist"),
     ),
     (
         "jsDelivr (Content Delivery Network)",
         "https://www.jsdelivr.com/package/npm/simple-icons",
-        simple_icon_svg_path!("jsdelivr.svg"),
+        simple_icon_svg_path!("jsdelivr"),
     ),
     (
         "UNPKG (Content Delivery Network)",
@@ -34,7 +34,7 @@ static MENU_LINKS: &[(&str, &str, &str)] = &[
     (
         "Open Collective",
         "https://opencollective.com/simple-icons",
-        simple_icon_svg_path!("opencollective.svg"),
+        simple_icon_svg_path!("opencollective"),
     ),
     (
         "Legal Disclaimer",

@@ -11,3 +11,4 @@ path = "src/lib.rs"
 
 [dependencies]
 syn = "2"
+simple-icons = { path = "../simple-icons" }

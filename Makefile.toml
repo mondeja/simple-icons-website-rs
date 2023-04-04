@@ -17,6 +17,8 @@ args = [
     "../components",
     "--watch",
     "../macros",
+    "--watch",
+    "../simple-icons",
     "--ignore",
     "assets/dist",
 ]

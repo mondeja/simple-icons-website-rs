@@ -6,8 +6,8 @@ edition = "2021"
 [dependencies]
 simple-icons-website-components = { path = "../components" }
 simple-icons-website-macros = { path = "../macros" }
-leptos = "0.2.4"
-leptos_meta = { version = "0.2.4", features = ["csr"] }
+leptos = "0.2.5"
+leptos_meta = { version = "0.2.5", features = ["csr"] }
 console_log = "1"
 log = "0.4"
 console_error_panic_hook = "0.1.7"

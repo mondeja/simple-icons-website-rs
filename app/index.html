@@ -16,8 +16,10 @@
     <link data-trunk rel="copy-file" href="./assets/logo.svg" />
     <link data-trunk rel="copy-file" href="./assets/opensearch.xml" />
     <link data-trunk rel="copy-file" href="../license.txt" />
-    <!-- TODO: color attribute not supported by Leptos, there is a better way to handle it? -->
-    <link rel="mask-icon" type_="image/png" href="/logo.svg" color="#111111" />
+    <!-- Include the /icons folder -->
+    <link data-trunk rel="copy-dir" href="../node_modules/simple-icons/icons" />
+    <!-- TODO: 'color' attribute not supported by Leptos, there is a better way to handle it? -->
+    <link rel="mask-icon" type="image/png" href="/logo.svg" color="#111111" />
   </head>
   <body class="font-mono flex flex-col px-12"></body>
 </html>

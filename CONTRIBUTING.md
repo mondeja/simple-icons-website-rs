@@ -3,7 +3,7 @@
 ## Setup
 
 - Install Rust with [rustup](https://rustup.rs/) and setup nightly as default.
-- Add `wasm-unknown-unknown` target with `rustup target add wasm32-unknown-unknown`.
+- Add `wasm32-unknown-unknown` target with `rustup target add wasm32-unknown-unknown`.
 - Install [cargo-make](https://sagiegurari.github.io/cargo-make/): `cargo install --force cargo-make`
 - Install NodeJS with npm and dependencies with `npm install`.
 
@@ -42,7 +42,7 @@
 - `app/`: Main package with the app entrypoint. It provides the logic where the top level components are composed.
 - `components/`: Components library. It provides the components used in the website.
 - `macros/`: It provides compile time macros used in the website. Used to generate the data provided by the simple-icons npm package.
-- `types/`: Common types shared by packages.
+- `simple-icons/`: Simple Icons Rust library. It provides the data provided by the simple-icons npm package.
 
 #### Where to look
 

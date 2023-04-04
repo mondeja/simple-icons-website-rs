@@ -3,7 +3,7 @@
 use leptos::*;
 use macros::simple_icon_svg_path;
 
-static TWITTER_ICON_SVG_PATH: &str = simple_icon_svg_path!("twitter.svg");
+static TWITTER_ICON_SVG_PATH: &str = simple_icon_svg_path!("twitter");
 
 #[component]
 pub fn Footer(cx: Scope) -> impl IntoView {

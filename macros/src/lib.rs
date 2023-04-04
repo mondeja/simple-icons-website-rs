@@ -2,10 +2,14 @@
 //!
 //! These macros are used to generate code at compile time.
 
+mod svg_path;
+
+use crate::svg_path::get_simple_icon_svg_path_by_slug;
 use proc_macro::TokenStream;
+use simple_icons::get_simple_icons;
 use std::fs;
 use std::path::Path;
-use syn::{parse_macro_input, LitStr};
+use syn::{parse_macro_input, LitInt, LitStr};
 
 /// Get number of icons available in the simple-icons npm package
 #[proc_macro]
@@ -19,28 +23,12 @@ pub fn get_number_of_icons(_: TokenStream) -> TokenStream {
         .unwrap()
 }
 
-fn simple_icon_svg_path_impl(filename: &str) -> String {
-    let icon_file_path =
-        format!("node_modules/simple-icons/icons/{}", filename);
-    let icon_file_content =
-        fs::read_to_string(Path::new(&icon_file_path)).unwrap();
-    let icon_path = icon_file_content
-        .split_once("d=\"")
-        .unwrap()
-        .1
-        .split_once("\"")
-        .unwrap()
-        .0;
-    format!("{:?}", icon_path)
-}
-
 /// Get a string with the SVG path of a simple icon
 #[proc_macro]
 pub fn simple_icon_svg_path(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as LitStr);
-    simple_icon_svg_path_impl(input.value().as_str())
-        .parse()
-        .unwrap()
+    let svg_path = get_simple_icon_svg_path_by_slug(input.value().as_str());
+    format!("{:?}", svg_path).parse().unwrap()
 }
 
 /// Get the extensions of Simple Icons from the README file of the npm package
@@ -86,7 +74,7 @@ pub fn get_simple_icons_3rd_party_extensions(_: TokenStream) -> TokenStream {
             .split_once(")")
             .unwrap()
             .0;
-        let icon_file_name = line
+        let icon_slug = line
             .split_once("<img src=\"")
             .unwrap()
             .1
@@ -95,27 +83,57 @@ pub fn get_simple_icons_3rd_party_extensions(_: TokenStream) -> TokenStream {
             .0
             .split("/")
             .last()
-            .unwrap();
+            .unwrap()
+            .split_once(".svg")
+            .unwrap()
+            .0;
 
         // We can't expose a struct from a procedural macro crate,
-        // so the extension struct is provided the `types` crate
+        // so the extension struct is provided the `simple_icons` crate
         extensions_array_code.push_str(&format!(
             concat!(
-                "::types::SimpleIconsExtension{{",
+                "::simple_icons::SimpleIconsExtension{{",
                 "name: \"{}\",",
                 "url: \"{}\",",
                 "author_name: \"{}\",",
                 "author_url: \"{}\",",
-                "icon_svg_path: {},",
+                "icon_svg_path: \"{}\",",
                 "}},"
             ),
             name,
             url,
             author_name,
             author_url,
-            simple_icon_svg_path_impl(icon_file_name)
+            get_simple_icon_svg_path_by_slug(icon_slug)
         ));
     }
     extensions_array_code.push_str("]");
     extensions_array_code.parse().unwrap()
+}
+
+#[proc_macro]
+pub fn simple_icons_array(input: TokenStream) -> TokenStream {
+    let max_icons = parse_macro_input!(input as LitInt)
+        .base10_digits()
+        .parse::<usize>()
+        .unwrap();
+    let simple_icons = get_simple_icons(Some(max_icons));
+
+    let mut simple_icons_array_code = "[".to_string();
+    for icon in simple_icons {
+        simple_icons_array_code.push_str(&format!(
+            concat!(
+                "::simple_icons::StaticSimpleIcon{{",
+                "slug: \"{}\",",
+                "title: \"{}\",",
+                "hex: \"{}\",",
+                "source: \"{}\",",
+                "}},"
+            ),
+            icon.slug, icon.title, icon.hex, icon.source,
+        ));
+    }
+    simple_icons_array_code.push_str("]");
+
+    simple_icons_array_code.parse().unwrap()
 }
