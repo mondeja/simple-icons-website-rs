@@ -97,7 +97,7 @@ pub fn get_simple_icons_3rd_party_extensions(_: TokenStream) -> TokenStream {
                 "url: \"{}\",",
                 "author_name: \"{}\",",
                 "author_url: \"{}\",",
-                "icon_svg_path: \"{}\",",
+                "icon_slug: \"{}\",",
                 "}},"
             ),
             name,

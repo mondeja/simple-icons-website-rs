@@ -1,0 +1,18 @@
+[package]
+name = "simple-icons-website-i18n"
+version = "0.1.0"
+edition = "2018"
+description = "Localization of Simple Icons"
+
+[lib]
+path = "src/lib.rs"
+name = "i18n"
+
+[dependencies]
+leptos = "0.2.5"
+lazy_static = "1.4"
+web-sys = { version = "0.3", features = ["Navigator", "Storage"] }
+rspolib = "0.0.5"
+
+[build-dependencies]
+rspolib = "0.0.5"

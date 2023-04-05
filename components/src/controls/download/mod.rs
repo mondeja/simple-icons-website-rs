@@ -13,9 +13,9 @@ pub enum DownloadType {
     PDF,
 }
 
-impl DownloadType {
-    fn from_str(s: &str) -> Self {
-        match s {
+impl From<&str> for DownloadType {
+    fn from(download_type: &str) -> Self {
+        match download_type {
             "svg" => Self::SVG,
             _ => Self::PDF,
         }
@@ -36,7 +36,7 @@ pub fn initial_download_type_from_localstorage() -> DownloadType {
     let local_storage = window.local_storage().unwrap().unwrap();
 
     let download_type = match local_storage.get_item("download-type") {
-        Ok(Some(download_type)) => DownloadType::from_str(&download_type),
+        Ok(Some(download_type)) => DownloadType::from(download_type.as_str()),
         _ => DownloadType::default(),
     };
 

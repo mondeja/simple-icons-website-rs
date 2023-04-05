@@ -6,6 +6,7 @@ edition = "2021"
 [dependencies]
 simple-icons-website-components = { path = "../components" }
 simple-icons-website-macros = { path = "../macros" }
+simple-icons-website-i18n = { path = "../i18n" }
 leptos = "0.2.5"
 leptos_meta = { version = "0.2.5", features = ["csr"] }
 console_log = "1"

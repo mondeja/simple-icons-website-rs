@@ -1,0 +1,23 @@
+#
+msgid ""
+msgstr ""
+
+#: components/src/footer.rs:19
+msgid "Made with ❤️ on GitHub"
+msgstr "Fait avec ❤️ sur GitHub"
+
+#: components/src/footer.rs:30
+msgid "Icon missing?"
+msgstr "Icône manquante?"
+
+#: components/src/footer.rs:33
+msgid "Submit a request"
+msgstr "Soumettre une demande"
+
+#: components/src/footer.rs:37
+msgid "Icon outdated?"
+msgstr "Icône périmée?"
+
+#: components/src/footer.rs:40
+msgid "Report outdated icon"
+msgstr "Signaler une icône périmée"

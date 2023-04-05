@@ -1,4 +1,5 @@
 use components::*;
+use i18n::{LocaleState, LocaleStateSignal};
 use lazy_static::lazy_static;
 use leptos::*;
 use leptos_meta::*;
@@ -35,7 +36,7 @@ pub fn App(cx: Scope) -> impl IntoView {
         <Link
             rel="search"
             type_="application/opensearchdescription+xml"
-            title="Simple Icons"
+            title=TITLE
             href="/opensearch.xml"
         />
         <Link rel="license" href="/license.txt" />
@@ -83,8 +84,17 @@ pub fn MetaTwitter(cx: Scope) -> impl IntoView {
 /// to be used by the child components.
 #[component]
 pub fn AppBody(cx: Scope) -> impl IntoView {
-    let controls_state = create_rw_signal(cx, ControlsState::new());
-    provide_context(cx, ControlsStateSignal(controls_state));
+    // Localization context
+    provide_context(
+        cx,
+        LocaleStateSignal(create_rw_signal(cx, LocaleState::default())),
+    );
+
+    // Controls context
+    provide_context(
+        cx,
+        ControlsStateSignal(create_rw_signal(cx, ControlsState::new())),
+    );
 
     view! { cx,
         <Header/>

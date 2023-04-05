@@ -16,36 +16,48 @@
 - `cargo make formats`: Format files. If you are using VSCode they should be formatted at save.
 - `cargo make builds`: Build the website for production.
 - `cargo doc --open`: Open documentation. If you want to build the documentation without dependencies, run `cargo doc --open --no-deps`. You can see the packages under `simple-icons-website-*` names.
+- `cargo make locales`: Generate or update locale files. See [Localization](#localization) section.
 
-### Recommended VSCode extensions
+## Recommended VSCode extensions
 
 - Install the [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) extension.
 - Install the [Rust Analyzer](https://marketplace.visualstudio.com/items?itemName=matklad.rust-analyzer) extension.
 - Install the [VSBrowser](https://marketplace.visualstudio.com/items?itemName=Phu1237.vs-browser) extension.
 
-### Recommended workflow
+## Recommended workflow
 
 - Open the project in VSCode with a VSBrowser screen at the side.
 - Run `cargo make` in the terminal.
 - Enjoy (recommended).
 
-### Arquitecture
+## Arquitecture
 
-#### Technologies
+### Technologies
 
 - [Leptos](https://docs.rs/leptos) as the components library with a client side rendering approach.
 - [TailwindCSS](https://tailwindcss.com/) as the CSS framework.
 - [Trunk](https://trunkrs.dev/) as the web server (on development) and application builder (on production).
 
-#### Rust crates
+### Rust crates
 
 - `app/`: Main package with the app entrypoint. It provides the logic where the top level components are composed.
 - `components/`: Components library. It provides the components used in the website.
+- `i18n/`: It provides the translations and i18n utilities used in the website.
 - `macros/`: It provides compile time macros used in the website. Used to generate the data provided by the simple-icons npm package.
 - `simple-icons/`: Simple Icons Rust library. It provides the data provided by the simple-icons npm package.
 
-#### Where to look
+### Where to look
 
 - End to end tests are located in `app/tests/`. They are written with [Playwright](https://playwright.dev/). Configuration is located at `app/playwright.config.js`.
 - The main stylesheet and other assets are located at `app/assets/`. Hopefully you don't need to change this style due to the class-based approach of TailwindCSS framework. Configuration is located at `app/tailwind.config.ts`.
 - The initial HTML is located at `app/index.html`. It is used by Trunk to generate the final HTML.
+
+## Localization
+
+- Generate and update locales with `cargo make locales`.
+- Translate po files located at _i18n/locales_ with your favorite editor.
+
+### How to add a new locale
+
+- Add the locale to the `LANGUAGES` array in `i18n/src/lib.rs`.
+- Copy the file `i18n/messages.pot` to the new locale po file at `i18n/locales/{code}.po`.

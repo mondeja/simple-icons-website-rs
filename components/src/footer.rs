@@ -1,5 +1,6 @@
 //! App footer
 
+use i18n::gettext;
 use leptos::*;
 use macros::simple_icon_svg_path;
 
@@ -15,7 +16,7 @@ pub fn Footer(cx: Scope) -> impl IntoView {
                 class="w-full text-center mt-6"
                 href="https://github.com/simple-icons/simple-icons-website"
             >
-                "Made with ❤️ on GitHub"
+                {move || {gettext!(cx, "Made with ❤️ on GitHub").to_string()}}
             </a>
         </footer>
     }
@@ -26,15 +27,17 @@ pub fn ReportProblems(cx: Scope) -> impl IntoView {
     view! { cx,
         <div class="flex flex-col py-8">
             <p>
-                "Icon missing? "
+                {move || gettext!(cx, "Icon missing?").to_string()}
+                {" "}
                 <a href="https://github.com/simple-icons/simple-icons/issues/new?assignees=&labels=new+icon&template=icon_request.yml">
-                    "Submit a request"
+                    {move || gettext!(cx, "Submit a request").to_string()}
                 </a>
             </p>
             <p>
-                "Icon outdated? "
+                {move || gettext!(cx, "Icon outdated?").to_string()}
+                {" "}
                 <a href="https://github.com/simple-icons/simple-icons/issues/new?assignees=&labels=icon+outdated&template=icon_update.yml">
-                    "Report outdated icon"
+                    {move || gettext!(cx, "Report outdated icon").to_string()}
                 </a>
             </p>
         </div>

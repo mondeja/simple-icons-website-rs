@@ -1,2 +1,2 @@
 [workspace]
-members = ["app", "components", "macros", "simple-icons"]
+members = ["app", "components", "i18n", "macros", "simple-icons"]

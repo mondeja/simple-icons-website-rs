@@ -1,4 +1,5 @@
 use crate::header::{HeaderState, HeaderStateSignal};
+use i18n::{Language, LocaleState, LocaleStateSignal, LANGUAGES};
 use leptos::*;
 use macros::{get_simple_icons_3rd_party_extensions, simple_icon_svg_path};
 use simple_icons::SimpleIconsExtension;
@@ -265,7 +266,7 @@ pub fn ThirdPartyExtensions(cx: Scope) -> impl IntoView {
                                         viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg"
                                     >
-                                        <path d={extension.icon_svg_path}/>
+                                        <path d={extension.icon_slug}/>
                                     </svg>
                                     " "{extension.name}
                                 </a>
@@ -283,6 +284,7 @@ pub fn ThirdPartyExtensions(cx: Scope) -> impl IntoView {
 #[component]
 pub fn LanguageButton(cx: Scope) -> impl IntoView {
     let header_state = use_context::<HeaderStateSignal>(cx).unwrap().0;
+    let locale_state = use_context::<LocaleStateSignal>(cx).unwrap().0;
 
     let toggle_languages = move |_| {
         header_state.update(|state: &mut HeaderState| state.toggle_languages());
@@ -308,8 +310,26 @@ pub fn LanguageButton(cx: Scope) -> impl IntoView {
                 "hidden".to_string()
             }
         }>
-            <li>"English"</li>
-            <li>"Spanish"</li>
+            {move || {LANGUAGES.iter().map(|lang: &Language| {
+                let mut class = "cursor-pointer".to_string();
+                // Hide the current language
+                if lang.code == locale_state().current_language.code {
+                    class.push_str(" hidden")
+                }
+
+                view! {
+                    cx,
+                    <li
+                        class=class
+                        on:click=move |ev: leptos::ev::MouseEvent| {
+                            toggle_languages(ev);
+                            locale_state.update(|state: &mut LocaleState| state.current_language = Language::from(lang.code));
+                        }
+                    >
+                        {lang.name}
+                    </li>
+                }
+            }).collect::<Vec<_>>()}}
         </ul>
     }
 }

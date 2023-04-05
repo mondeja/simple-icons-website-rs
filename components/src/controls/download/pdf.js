@@ -3,7 +3,6 @@ export async function download_pdf(slug) {
   const res = await fetch(icon_svg_url);
   const svg = await res.text();
   const svg_path = svg.split('"')[7];
-  console.log(svg_path);
 
   let doc, stream;
   try {
@@ -11,8 +10,7 @@ export async function download_pdf(slug) {
     stream = doc.pipe(blobStream());
     doc.path(svg_path).fill();
   } catch (e) {
-    // Some icon paths are not parsed correctly by PDFKit
-    // for example '/e/'
+    // Some icon paths are not parsed correctly by PDFKit ('/e/' for example)
     // so we catch the error and generate a PDF with the error message
     doc = new PDFDocument({ size: "A8" });
     stream = doc.pipe(blobStream());

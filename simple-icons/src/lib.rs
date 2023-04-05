@@ -10,7 +10,7 @@ pub struct SimpleIconsExtension {
     pub url: &'static str,
     pub author_name: &'static str,
     pub author_url: &'static str,
-    pub icon_svg_path: &'static str,
+    pub icon_slug: &'static str,
 }
 
 pub struct StaticSimpleIcon {
