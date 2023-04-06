@@ -42,6 +42,7 @@
 
 - `app/`: Main package with the app entrypoint. It provides the logic where the top level components are composed.
 - `components/`: Components library. It provides the components used in the website.
+- `config/`: Application configuration.
 - `i18n/`: It provides the translations and i18n utilities used in the website.
 - `macros/`: It provides compile time macros used in the website. Used to generate the data provided by the simple-icons npm package.
 - `simple-icons/`: Simple Icons Rust library. It provides the data provided by the simple-icons npm package.

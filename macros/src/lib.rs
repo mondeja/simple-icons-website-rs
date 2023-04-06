@@ -2,14 +2,12 @@
 //!
 //! These macros are used to generate code at compile time.
 
-mod svg_path;
-
-use crate::svg_path::get_simple_icon_svg_path_by_slug;
+use config::CONFIG;
 use proc_macro::TokenStream;
-use simple_icons::get_simple_icons;
+use simple_icons::{get_simple_icon_svg_path_by_slug, get_simple_icons};
 use std::fs;
 use std::path::Path;
-use syn::{parse_macro_input, LitInt, LitStr};
+use syn::{parse_macro_input, LitStr};
 
 /// Get number of icons available in the simple-icons npm package
 #[proc_macro]
@@ -112,25 +110,24 @@ pub fn get_simple_icons_3rd_party_extensions(_: TokenStream) -> TokenStream {
 }
 
 #[proc_macro]
-pub fn simple_icons_array(input: TokenStream) -> TokenStream {
-    let max_icons = parse_macro_input!(input as LitInt)
-        .base10_digits()
-        .parse::<usize>()
-        .unwrap();
-    let simple_icons = get_simple_icons(Some(max_icons));
+pub fn simple_icons_array(_: TokenStream) -> TokenStream {
+    let simple_icons = get_simple_icons(CONFIG.max_icons);
 
     let mut simple_icons_array_code = "[".to_string();
-    for icon in simple_icons {
+    for (i, icon) in simple_icons.iter().enumerate() {
         simple_icons_array_code.push_str(&format!(
             concat!(
-                "::simple_icons::StaticSimpleIcon{{",
+                "::simple_icons::FullStaticSimpleIcon{{",
                 "slug: \"{}\",",
                 "title: \"{}\",",
                 "hex: \"{}\",",
                 "source: \"{}\",",
+                // `get_simple_icons` function returns icon in alphabetical order
+                // because they are extracted from the `simple-icons.json` file
+                "order_alpha: {},",
                 "}},"
             ),
-            icon.slug, icon.title, icon.hex, icon.source,
+            icon.slug, icon.title, icon.hex, icon.source, i,
         ));
     }
     simple_icons_array_code.push_str("]");

@@ -1,28 +1,35 @@
 use components::*;
+use i18n::move_gettext;
 use i18n::{LocaleState, LocaleStateSignal};
-use lazy_static::lazy_static;
 use leptos::*;
 use leptos_meta::*;
 use macros::get_number_of_icons;
 
 /// Number of icons available in the library
-pub static NUMBER_OF_ICONS: usize = get_number_of_icons!();
+static NUMBER_OF_ICONS: usize = get_number_of_icons!();
 
 /// Title of the page
-pub static TITLE: &str = "Simple Icons";
+static TITLE: &str = "Simple Icons";
 
 /// URL of the website
-pub static URL: &str = "https://simpleicons.org";
-
-lazy_static! {
-    /// Description of the website
-    pub static ref DESCRIPTION: String = format!("{} free SVG icons for popular brands", NUMBER_OF_ICONS);
-}
+static URL: &str = "https://simpleicons.org";
 
 /// The main application component
 #[component]
 pub fn App(cx: Scope) -> impl IntoView {
     provide_meta_context(cx);
+
+    // Localization context
+    provide_context(
+        cx,
+        LocaleStateSignal(create_rw_signal(cx, LocaleState::new())),
+    );
+
+    let description = move_gettext!(
+        cx,
+        "{} free SVG icons for popular brands",
+        NUMBER_OF_ICONS.to_string().as_str()
+    );
 
     view! { cx,
         <Title text=TITLE/>
@@ -31,7 +38,7 @@ pub fn App(cx: Scope) -> impl IntoView {
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
             name="viewport"
         />
-        <Meta name="description" content=DESCRIPTION.as_str()/>
+        <Meta name="description" content=description/>
         <Link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <Link
             rel="search"
@@ -43,8 +50,8 @@ pub fn App(cx: Scope) -> impl IntoView {
         <Link rel="canonical" href=URL />
         // TODO: application/ld+json (structured data)
 
-        <MetaOpenGraph/>
-        <MetaTwitter/>
+        <MetaOpenGraph description=description/>
+        <MetaTwitter description=description/>
         <Meta name="msvalidate.01" content="14319924BC1F00DC15EF0EAA29E72404"/>
         <Meta name="yandex-verification" content="8b467a0b98aa2725"/>
 
@@ -54,11 +61,18 @@ pub fn App(cx: Scope) -> impl IntoView {
 
 /// Open graph meta tags
 #[component]
-pub fn MetaOpenGraph(cx: Scope) -> impl IntoView {
+pub fn MetaOpenGraph<F>(
+    cx: Scope,
+    /// Site description
+    description: F,
+) -> impl IntoView
+where
+    F: Fn() -> String + 'static,
+{
     view! { cx,
         <Meta name="og:type" content="website"/>
         <Meta name="og:title" content=TITLE/>
-        <Meta name="og:description" content=DESCRIPTION.as_str()/>
+        <Meta name="og:description" content=description/>
         <Meta name="og:url" content=URL/>
         <Meta name="og:site_name" content=TITLE/>
         // Note that the image is linked for Trunk at index.html
@@ -68,11 +82,18 @@ pub fn MetaOpenGraph(cx: Scope) -> impl IntoView {
 
 /// Twitter meta tags
 #[component]
-pub fn MetaTwitter(cx: Scope) -> impl IntoView {
+pub fn MetaTwitter<F>(
+    cx: Scope,
+    /// Site description
+    description: F,
+) -> impl IntoView
+where
+    F: Fn() -> String + 'static,
+{
     view! { cx,
         <Meta name="twitter:card" content="summary_large_image"/>
         <Meta name="twitter:title" content=TITLE/>
-        <Meta name="twitter:description" content=DESCRIPTION.as_str()/>
+        <Meta name="twitter:description" content=description/>
         <Meta name="twitter:url" content=URL/>
         <Meta name="twitter:image:src" content="/og.png"/>
     }
@@ -84,12 +105,6 @@ pub fn MetaTwitter(cx: Scope) -> impl IntoView {
 /// to be used by the child components.
 #[component]
 pub fn AppBody(cx: Scope) -> impl IntoView {
-    // Localization context
-    provide_context(
-        cx,
-        LocaleStateSignal(create_rw_signal(cx, LocaleState::default())),
-    );
-
     // Controls context
     provide_context(
         cx,

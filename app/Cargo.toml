@@ -1,6 +1,6 @@
 [package]
 name = "simple-icons-website"
-version = "0.1.0"
+version = { workspace = true }
 edition = "2021"
 
 [dependencies]
@@ -13,4 +13,3 @@ console_log = "1"
 log = "0.4"
 console_error_panic_hook = "0.1.7"
 wasm-bindgen = "0.2"
-lazy_static = "1.4"

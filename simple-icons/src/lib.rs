@@ -1,7 +1,10 @@
+mod svg_path;
+
 use serde::Deserialize;
 use serde_json;
 use std::fs;
 use std::path::Path;
+pub use svg_path::get_simple_icon_svg_path_by_slug;
 use unicode_normalization::UnicodeNormalization;
 
 /// Third party extensions of Simple Icons
@@ -13,11 +16,13 @@ pub struct SimpleIconsExtension {
     pub icon_slug: &'static str,
 }
 
-pub struct StaticSimpleIcon {
+#[derive(Clone, Copy)]
+pub struct FullStaticSimpleIcon {
     pub slug: &'static str,
     pub title: &'static str,
     pub hex: &'static str,
     pub source: &'static str,
+    pub order_alpha: usize,
 }
 
 pub struct SimpleIcon {

@@ -1,0 +1,8 @@
+[package]
+name = "simple-icons-website-config"
+version = { workspace = true }
+edition = "2021"
+
+[lib]
+path = "src/lib.rs"
+name = "config"

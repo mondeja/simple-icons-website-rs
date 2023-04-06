@@ -1,6 +1,6 @@
 [package]
 name = "simple-icons-website-macros"
-version = "0.1.0"
+version = { workspace = true }
 edition = "2018"
 description = "Simple Icons website macros"
 
@@ -12,3 +12,4 @@ path = "src/lib.rs"
 [dependencies]
 syn = "2"
 simple-icons = { path = "../simple-icons" }
+simple-icons-website-config = { path = "../config" }

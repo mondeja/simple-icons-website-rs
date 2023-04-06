@@ -1,0 +1,4 @@
+/* Icon title */
+main > ul > li > :nth-child(2) {
+  @apply pl-3 pt-2;
+}

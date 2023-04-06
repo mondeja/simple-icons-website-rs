@@ -1,4 +1,4 @@
-export async function download_pdf(slug) {
+export async function download_pdf(slug, errorMessageSchema) {
   let icon_svg_url = `/icons/${slug}.svg`;
   const res = await fetch(icon_svg_url);
   const svg = await res.text();
@@ -16,7 +16,7 @@ export async function download_pdf(slug) {
     stream = doc.pipe(blobStream());
     console.error(e);
     doc.fontSize(12);
-    doc.text(`Error generating PDF with PDFKit library: ${e.message}`, 0, 0, {
+    doc.text(errorMessageSchema.replace("{}", e.message), 0, 0, {
       align: "center",
     });
   }

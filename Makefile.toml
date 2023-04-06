@@ -22,6 +22,8 @@ args = [
     "--watch",
     "../i18n",
     "--watch",
+    "../config",
+    "--watch",
     "../package.json",
     "--ignore",
     "assets/dist",
@@ -35,7 +37,7 @@ cwd = "./app"
 description = "Generate or update locales"
 install_crate = "xtr"
 script = [
-    "xtr components/src/lib.rs app/src/main.rs --keyword=gettext:2 --output=i18n/messages.pot",
+    "xtr components/src/lib.rs app/src/main.rs --keyword=gettext:2 --keyword=move_gettext:2 --output=i18n/messages.pot",
 ]
 workspace = false
 
@@ -56,14 +58,12 @@ workspace = false
 
 [tasks.watch-css]
 description = "Build CSS with Tailwind on development"
-command = "../node_modules/.bin/tailwindcss"
+command = "../node_modules/.bin/postcss"
 args = [
-    "-i",
     "./assets/stylesheet.css",
     "-o",
     "./assets/dist/stylesheet.css",
     "--watch",
-    "--no-minify"
 ]
 workspace = false
 cwd = "./app"

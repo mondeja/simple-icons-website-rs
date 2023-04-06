@@ -1,6 +1,6 @@
 [package]
 name = "simple-icons-website-i18n"
-version = "0.1.0"
+version = { workspace = true }
 edition = "2018"
 description = "Localization of Simple Icons"
 

@@ -1,8 +1,11 @@
 pub mod pdf;
 pub mod svg;
 
+use crate::controls::button::*;
 use crate::controls::download::pdf::maybe_initialize_pdfkit;
 use crate::controls::ControlsStateSignal;
+use crate::storage::LocalStorage;
+use i18n::move_gettext;
 use leptos::*;
 use std::fmt;
 
@@ -35,7 +38,9 @@ pub fn initial_download_type_from_localstorage() -> DownloadType {
     let window = web_sys::window().unwrap();
     let local_storage = window.local_storage().unwrap().unwrap();
 
-    let download_type = match local_storage.get_item("download-type") {
+    let download_type = match local_storage
+        .get_item(LocalStorage::Keys::DownloadType.as_str())
+    {
         Ok(Some(download_type)) => DownloadType::from(download_type.as_str()),
         _ => DownloadType::default(),
     };
@@ -48,11 +53,14 @@ pub fn initial_download_type_from_localstorage() -> DownloadType {
     download_type
 }
 
-fn set_download_type_in_localstorage(download_type: DownloadType) {
+fn set_download_type_on_localstorage(download_type: DownloadType) {
     let window = web_sys::window().unwrap();
     let local_storage = window.local_storage().unwrap().unwrap();
     local_storage
-        .set_item("download-type", &download_type.to_string())
+        .set_item(
+            LocalStorage::Keys::DownloadType.as_str(),
+            &download_type.to_string(),
+        )
         .unwrap();
 }
 
@@ -62,51 +70,31 @@ pub fn DownloadFileTypeControl(cx: Scope) -> impl IntoView {
 
     view! { cx,
         <div class="flex flex-col">
-            <label>"Download"</label>
+            <label>{move_gettext!(cx, "Download")}</label>
             <div class="flex flex-row">
-                <button
-                    class=move || {
-                        let mut class = "font-bold w-10 h-10 p-1.5 ".to_string();
-                        if controls_state().download_type == DownloadType::SVG {
-                            class.push_str("bg-black text-white");
-                        } else {
-                            class.push_str("bg-white text-black");
-                        }
-                        class
-                    }
-                    type="button"
-                    title="Download SVG"
+                <ControlButtonText
+                    text=move_gettext!(cx, "SVG")
+                    title=move_gettext!(cx, "Download SVG")
+                    active=move || {controls_state().download_type == DownloadType::SVG}
                     on:click=move |_| {
                         controls_state.update(move |mut state| {
                             state.download_type = DownloadType::SVG;
-                            set_download_type_in_localstorage(state.download_type);
+                            set_download_type_on_localstorage(state.download_type);
                         });
                     }
-                >
-                    <span>"SVG"</span>
-                </button>
-                <button
-                    class=move || {
-                        let mut class = "font-bold w-10 h-10 p-1.5 ".to_string();
-                        if controls_state().download_type == DownloadType::PDF {
-                            class.push_str("bg-black text-white");
-                        } else {
-                            class.push_str("bg-white text-black");
-                        }
-                        class
-                    }
-                    type="button"
-                    title="Download PDF"
+                />
+                <ControlButtonText
+                    text=move_gettext!(cx, "PDF")
+                    title=move_gettext!(cx, "Download PDF")
+                    active=move || {controls_state().download_type == DownloadType::PDF}
                     on:click=move |_| {
                         controls_state.update(|mut state| {
                             state.download_type = DownloadType::PDF;
-                            set_download_type_in_localstorage(state.download_type);
+                            set_download_type_on_localstorage(state.download_type);
                             maybe_initialize_pdfkit();
                         });
                     }
-                >
-                    <span>"PDF"</span>
-                </button>
+                />
             </div>
         </div>
     }

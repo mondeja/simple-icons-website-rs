@@ -2,7 +2,7 @@ use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen(module = "/src/controls/download/pdf.js")]
 extern "C" {
-    pub fn download_pdf(slug: &str);
+    pub fn download_pdf(slug: &str, errorMessageSchema: String);
 }
 
 /// Lazy loading of PDFKit JS library

@@ -61,10 +61,25 @@ impl Default for Language {
 include!(concat!(env!("OUT_DIR"), "/translations.rs"));
 
 /// State of the localization
-#[derive(Default, Clone, Copy)]
+#[derive(Clone, Copy)]
 pub struct LocaleState {
     /// Current language of the website
     pub current_language: Language,
+}
+
+impl LocaleState {
+    pub fn new() -> Self {
+        LocaleState {
+            current_language: Language::new(),
+        }
+    }
+}
+
+impl LocaleState {
+    pub fn set_current_language(&mut self, language_code: &str) {
+        self.current_language = Language::from(language_code);
+        set_language_in_localstorage(self.current_language);
+    }
 }
 
 #[derive(Copy, Clone)]
@@ -85,7 +100,7 @@ fn initial_language_from_navigator_languages() -> Option<Language> {
     None
 }
 
-pub fn initial_language_from_localstorage_or_navigator_languages() -> Language {
+fn initial_language_from_localstorage_or_navigator_languages() -> Language {
     match initial_language_from_localstorage() {
         Some(lang) => lang,
         None => match initial_language_from_navigator_languages() {
@@ -113,13 +128,79 @@ pub fn set_language_in_localstorage(lang: Language) {
 }
 
 #[macro_export]
-macro_rules! gettext {
+macro_rules! gettext_impl {
     ($cx:ident, $key:expr) => {
-        &use_context::<::i18n::LocaleStateSignal>($cx)
+        (&use_context::<::i18n::LocaleStateSignal>($cx)
             .unwrap()
             .0
             .get()
             .current_language
-            .translate($key)
+            .translate($key))
+            .to_string()
+    };
+}
+
+#[macro_export]
+macro_rules! replace_impl {
+    ($key:expr, $($replacements:expr),+) => {
+        {
+            let mut string = $key.to_string();
+            $(
+                string = string.replacen("{}", $replacements, 1);
+            )+
+            string
+        }
+    };
+}
+
+/// Macro to translate strings in the website
+///
+/// Use it like this:
+///
+/// ```rust,ignore
+/// <p>{move || gettext!(cx, "Hello world!")}</p>
+/// ```
+///
+/// You need to wrap in a `move` closure because is the way that Leptos
+/// has to know that the string is reactive.
+///
+/// ## Interpolation
+///
+/// You can interpolate variables in the string like with `format!()`,
+/// but only `{}` interpolations are supported.
+///
+/// ```rust,ignore
+/// <p>{move || gettext!(cx, "{} {}!", "Hello", "world")}</p>
+/// ```
+#[macro_export]
+macro_rules! gettext {
+    ($cx:ident, $key:expr) => {
+        $crate::gettext_impl!($cx, $key)
+    };
+    ($cx:ident, $key:expr, $($replacements:expr),+) => {
+        $crate::replace_impl!($crate::gettext_impl!($cx, $key), $($replacements),+)
+    };
+}
+
+/// Macro to generate a closure that returns a translated string
+///
+/// Convenient wrapper for Leptos interactivity closures.
+///
+/// Use it like this:
+/// ```rust,ignore
+/// <p>{move_gettext!(cx, "Hello world!")}</p>
+/// ```
+///
+/// The previous code is the same as:
+/// ```rust,ignore
+/// <p>{move || gettext!(cx, "Hello world!")}</p>
+/// ```
+#[macro_export]
+macro_rules! move_gettext {
+    ($cx:ident, $key:expr) => {
+        move||$crate::gettext!($cx, $key)
+    };
+    ($cx:ident, $key:expr, $($replacements:expr),+) => {
+        move||$crate::gettext!($cx, $key, $($replacements),+)
     };
 }

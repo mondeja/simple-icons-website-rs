@@ -1,6 +1,6 @@
 //! App footer
 
-use i18n::gettext;
+use i18n::move_gettext;
 use leptos::*;
 use macros::simple_icon_svg_path;
 
@@ -16,7 +16,7 @@ pub fn Footer(cx: Scope) -> impl IntoView {
                 class="w-full text-center mt-6"
                 href="https://github.com/simple-icons/simple-icons-website"
             >
-                {move || {gettext!(cx, "Made with ❤️ on GitHub").to_string()}}
+                {move_gettext!(cx, "Made with ❤️ on GitHub")}
             </a>
         </footer>
     }
@@ -27,17 +27,17 @@ pub fn ReportProblems(cx: Scope) -> impl IntoView {
     view! { cx,
         <div class="flex flex-col py-8">
             <p>
-                {move || gettext!(cx, "Icon missing?").to_string()}
+                {move_gettext!(cx, "Icon missing?")}
                 {" "}
                 <a href="https://github.com/simple-icons/simple-icons/issues/new?assignees=&labels=new+icon&template=icon_request.yml">
-                    {move || gettext!(cx, "Submit a request").to_string()}
+                    {move_gettext!(cx, "Submit a request")}
                 </a>
             </p>
             <p>
-                {move || gettext!(cx, "Icon outdated?").to_string()}
+                {move_gettext!(cx, "Icon outdated?")}
                 {" "}
                 <a href="https://github.com/simple-icons/simple-icons/issues/new?assignees=&labels=icon+outdated&template=icon_update.yml">
-                    {move || gettext!(cx, "Report outdated icon").to_string()}
+                    {move_gettext!(cx, "Report outdated icon")}
                 </a>
             </p>
         </div>
@@ -87,11 +87,10 @@ pub fn TwitterButton(cx: Scope) -> impl IntoView {
             role="button"
             target="_blank"
             href="https://twitter.com/intent/tweet?url=https://simpleicons.org&amp;text=Simple%20Icons%3A%20free%20SVG%20icons%20for%20popular%20brands.">
-                <svg fill="white" class="h-4 mr-3" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <title>"Twitter logo"</title>
+                <svg fill="white" class="h-4 mr-3" role="img" viewBox="0 0 24 24">
                     <path d=TWITTER_ICON_SVG_PATH/>
                 </svg>
-                <span>"Share this on Twitter!"</span>
+                <span>{move_gettext!(cx, "Share this on Twitter!")}</span>
         </a>
     }
 }

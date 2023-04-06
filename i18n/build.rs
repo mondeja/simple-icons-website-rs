@@ -23,7 +23,12 @@ fn generate_lazy_static_translations_hashmap(
         for (msgid, msgstr) in translations {
             code.push_str(&format!(
                 "        {}.insert(\"{}\".to_string(), \"{}\".to_string());\n",
-                language_code, msgid, msgstr
+                language_code,
+                msgid,
+                match msgstr.is_empty() {
+                    true => msgid.clone(),
+                    false => msgstr,
+                }
             ));
         }
         code.push_str(&format!(

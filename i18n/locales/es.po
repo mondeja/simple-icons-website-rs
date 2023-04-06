@@ -21,3 +21,80 @@ msgstr "¿Icono desactualizado?"
 #: components/src/footer.rs:40
 msgid "Report outdated icon"
 msgstr "Informa de un icono desactualizado"
+
+#: components/src/footer.rs:93
+msgid "Share this on Twitter!"
+msgstr ""
+
+#: components/src/header/menu.rs:23
+msgid "Main Repository"
+msgstr "Repositorio principal"
+
+#: components/src/header/menu.rs:38
+msgid "jsDelivr (Content Delivery Network)"
+msgstr ""
+
+#: components/src/header/menu.rs:43
+msgid "UNPKG (Content Delivery Network)"
+msgstr ""
+
+#: components/src/grid/item/mod.rs:24
+msgid "{} SVG"
+msgstr ""
+
+#: components/src/grid/item/mod.rs:29
+msgid "{} icon"
+msgstr ""
+
+#. Open card
+#: components/src/grid/item/mod.rs:76
+msgid "View {}"
+msgstr "Ver {}"
+
+#: components/src/grid/item/mod.rs:84
+msgid "Download"
+msgstr ""
+
+#: components/src/header/menu.rs:59
+msgid "Legal disclaimer"
+msgstr ""
+
+#: components/src/header/menu.rs:157
+msgid "Open menu"
+msgstr ""
+
+#: components/src/header/menu.rs:178
+msgid "Close menu"
+msgstr ""
+
+#: components/src/header/menu.rs:209
+msgid "Third party extensions"
+msgstr ""
+
+#: components/src/header/menu.rs:229
+msgid "Extension"
+msgstr ""
+
+#: components/src/header/menu.rs:230
+msgid "Author"
+msgstr ""
+
+#: components/src/header/menu.rs:287
+msgid "Change language"
+msgstr ""
+
+#: app/src/app.rs:31
+msgid "{} free SVG icons for popular brands"
+msgstr "{} iconos SVG gratis para marcas populares"
+
+#: components/src/header/title.rs:16
+msgid "{} free {} icons for popular brands"
+msgstr "{} iconos {} gratis para marcas populares"
+
+#: components/src/header/title.rs:20
+msgid "Scalable Vector Graphic"
+msgstr "Gráfico Vectorial Escalable"
+
+#: components/src/header/title.rs:21
+msgid "SVG"
+msgstr "SVG"

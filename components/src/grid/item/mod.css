@@ -1,0 +1,9 @@
+/* Grid items are composed to generate the minimum HTML possible */
+@import "./icon-preview.css";
+@import "./title.css";
+@import "./footer.css";
+
+/* Grid item */
+main > ul > li {
+  @apply inline-flex flex-col border-2 space-y-2;
+}

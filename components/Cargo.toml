@@ -1,6 +1,6 @@
 [package]
 name = "simple-icons-website-components"
-version = "0.1.0"
+version = { workspace = true }
 edition = "2021"
 description = "Simple Icons website components"
 
@@ -11,6 +11,7 @@ name = "components"
 [dependencies]
 simple-icons-website-macros = { path = "../macros" }
 simple-icons-website-i18n = { path = "../i18n" }
+simple-icons-website-config = { path = "../config" }
 simple-icons = { path = "../simple-icons" }
 leptos = "0.2.5"
 log = "0.4"
