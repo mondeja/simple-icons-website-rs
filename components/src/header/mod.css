@@ -1,0 +1,6 @@
+@import "./menu/button.css";
+
+header {
+  @apply flex flex-row md:columns-2 justify-between
+    py-6 md:py-14;
+}

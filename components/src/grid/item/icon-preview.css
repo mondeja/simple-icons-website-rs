@@ -1,8 +1,8 @@
 /* Icon preview */
-main > ul > li > :nth-child(1) {
+main > ul > li > :first-child {
   @apply m-auto pt-6;
 }
 
-main > ul > li > :nth-child(1) img {
+main > ul > li > :first-child img {
   @apply h-14;
 }

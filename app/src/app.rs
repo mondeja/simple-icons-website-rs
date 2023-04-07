@@ -1,3 +1,6 @@
+use components::controls::color_scheme::{
+    initial_color_scheme_from_localstorage, ColorScheme, ColorSchemeSignal,
+};
 use components::controls::download::{
     initial_download_type_from_localstorage, DownloadTypeSignal,
 };
@@ -10,7 +13,9 @@ use components::*;
 use i18n::{gettext, move_gettext};
 use i18n::{LocaleState, LocaleStateSignal};
 use leptos::*;
-use leptos_meta::*;
+use leptos_meta::{
+    provide_meta_context, Link, LinkProps, Meta, MetaProps, Title, TitleProps,
+};
 use macros::get_number_of_icons;
 
 /// Number of icons available in the library
@@ -57,6 +62,14 @@ pub fn App(cx: Scope) -> impl IntoView {
         />
         <Link rel="license" href="/license.txt" />
         <Link rel="canonical" href=URL />
+
+        // Fonts from Google API
+        <Link rel="preconnect" href="https://fonts.gstatic.com" />
+        <Link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&family=Roboto+Mono:wght@400;600"
+        />
+
         // TODO: application/ld+json (structured data)
 
         <MetaOpenGraph description=description/>
@@ -114,6 +127,16 @@ where
 /// to be used by the child components.
 #[component]
 pub fn AppBody(cx: Scope) -> impl IntoView {
+    // Color scheme context
+    provide_context(
+        cx,
+        ColorSchemeSignal(create_rw_signal(
+            cx,
+            initial_color_scheme_from_localstorage(),
+        )),
+    );
+    let color_scheme = use_context::<ColorSchemeSignal>(cx).unwrap().0;
+
     // Donwload type context
     provide_context(
         cx,
@@ -139,12 +162,32 @@ pub fn AppBody(cx: Scope) -> impl IntoView {
     provide_context(cx, DisplayedIconsSignal(create_rw_signal(cx, icons)));
 
     view! { cx,
-        <SVGDefs/>
-        <Header/>
-        <main>
-            <Controls/>
-            <Grid/>
-        </main>
-        <Footer/>
+        <body class=move||{
+            let mut class = concat!(
+                "font-mono flex flex-col px-6 md:px-12",
+                " bg-custom-background-color",
+                " text-custom-text-default-color"
+            ).to_string();
+            match color_scheme() {
+                ColorScheme::Dark => class.push_str(" dark"),
+                ColorScheme::Light => class.push_str(" light"),
+                ColorScheme::System => {
+                    if web_sys::window().unwrap().match_media("(prefers-color-scheme: dark)").unwrap().unwrap().matches() {
+                        class.push_str(" dark");
+                    } else {
+                        class.push_str(" light");
+                    }
+                },
+            }
+            class
+        }>
+            <SVGDefs/>
+            <Header/>
+            <main>
+                <Controls/>
+                <Grid/>
+            </main>
+            <Footer/>
+        </body>
     }
 }

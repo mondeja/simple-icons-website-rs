@@ -53,7 +53,7 @@ pub fn Header(cx: Scope) -> impl IntoView {
     provide_context(cx, HeaderStateSignal(header_state));
 
     view! { cx,
-        <header class="flex flex-row columns-2 justify-between py-20">
+        <header>
             <HeaderTitle/>
             <HeaderMenu/>
         </header>

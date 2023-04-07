@@ -1,0 +1,64 @@
+/* Controls group */
+main > :first-child {
+  @apply flex flex-row;
+}
+
+/* Each control */
+main > :first-child > div {
+  @apply flex flex-col space-y-3;
+}
+
+/* Labels */
+main > :first-child > div > label {
+  @apply leading-4;
+}
+
+/* Input */
+main > :first-child > div input {
+  @apply h-9 border-[1px] border-solid rounded-[3px]
+    border-custom-button-background-active-color
+    text-custom-text-default-color
+    shadow-custom-shadows-color;
+  box-shadow: 0 0 3px 0 var(--shadows-color);
+}
+main > :first-child > div input::-webkit-search-decoration,
+main > :first-child > div input::-webkit-search-cancel-button,
+main > :first-child > div input::-webkit-search-results-button,
+main > :first-child > div input::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+}
+main > :first-child > div input::-ms-clear,
+main > :first-child > div input::-ms-reveal {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Buttons */
+main > :first-child > div button {
+  @apply h-9 w-9 font-bold 
+    border-[1px] border-solid
+    border-custom-button-background-active-color
+    shadow-custom-shadows-color;
+}
+main > :first-child > div button:hover {
+  box-shadow: 0 0 3px 0 var(--shadows-color);
+}
+main > :first-child > div button:first-child {
+  @apply border-r-0 rounded-l-[3px];
+}
+main > :first-child > div button:last-child {
+  @apply border-l-0 rounded-r-[3px];
+}
+/* SVG inside button */
+main > :first-child > div button > svg {
+  @apply p-1.5;
+  /* Firefox don't inherits SVG sizes */
+  width: inherit;
+}
+/* Button inside control when is in an active state */
+main > :first-child > div button.on {
+  @apply fill-custom-button-content-active-color
+    bg-custom-button-background-active-color
+    text-custom-button-content-active-color;
+}

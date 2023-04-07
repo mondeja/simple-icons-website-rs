@@ -23,8 +23,6 @@ args = [
     "../i18n",
     "--watch",
     "../config",
-    "--watch",
-    "../package.json",
     "--ignore",
     "assets/dist",
     "--ignore",

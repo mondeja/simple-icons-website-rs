@@ -17,7 +17,11 @@ use search::*;
 #[component]
 pub fn Controls(cx: Scope) -> impl IntoView {
     view! { cx,
-        <div class="flex flex-row space-x-4">
+        <div class=concat!(
+            "flex flex-row space-x-4 py-2",
+            " sticky -top-[1.55rem] z-10",
+            " bg-custom-background-color"
+        )>
             <SearchControl/>
             <OrderControl/>
             <ColorSchemeControl/>
@@ -30,9 +34,9 @@ pub fn Controls(cx: Scope) -> impl IntoView {
 #[component]
 pub fn LayoutControl(cx: Scope) -> impl IntoView {
     view! { cx,
-        <div class="flex flex-col">
+        <div>
             <label>{move_gettext!(cx, "Layout")}</label>
-            <div class="flex flex-row">
+            <div>
                 <ControlButtonSVGPath
                     title=move_gettext!(cx, "Comfortable")
                     svg_path="M19 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h14zm0 4V4H5v2h14zm0 10a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h14zm0 4v-2H5v2h14zm0-11a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h14zm0 4v-2H5v2h14z"

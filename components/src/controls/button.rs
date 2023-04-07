@@ -20,14 +20,11 @@ where
 {
     view! { cx,
         <button
-            class=move || {
-                let mut class = "font-bold w-10 h-10 p-1.5 ".to_string();
-                if active() {
-                    class.push_str("bg-black text-white fill-white");
-                } else {
-                    class.push_str("bg-white text-black");
-                }
-                class
+            // The class is defined at component scoped CSS
+            class=move || if active() {
+                "on".to_string()
+            } else {
+                "off".to_string()
             }
             type="button"
             title=title

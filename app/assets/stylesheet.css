@@ -1,9 +1,48 @@
-@import "@fontsource/roboto-mono/400.css";
-@import "@fontsource/roboto-mono/600.css";
-
 /* Grid items classes are composed to generate the minimum HTML possible */
 @import "./../../components/src/grid/item/mod.css";
+/* Header */
+@import "./../../components/src/header/mod.css";
+/* Controls */
+@import "./../../components/src/controls/mod.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --r-shadows-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Dark color scheme */
+body.dark {
+  /* Color of the background of the site */
+  --background-color: rgb(34, 34, 34);
+  /* Color of the text by default */
+  --text-default-color: rgb(236, 236, 236);
+  /* Color of the buttons content by default */
+  --button-content-color: rgb(212, 212, 212);
+  /* Color of a button content when is in an active state */
+  --button-content-active-color: rgb(34, 34, 34);
+  /* Color of a button background when is in an active state */
+  --button-background-active-color: rgb(212, 212, 212);
+  /* Color of the buttons background on hover */
+  --button-background-hover-color: rgb(212, 212, 212);
+  /* Color of shadows */
+  --shadows-color: var(--r-shadows-color);
+}
+
+/* Light color scheme */
+body.light {
+  --background-color: rgb(252, 252, 252);
+  --text-default-color: rgb(0, 0, 0);
+  --button-content-color: rgb(51, 51, 51);
+  --button-content-active-color: rgb(252, 252, 252);
+  --button-background-active-color: rgb(51, 51, 51);
+  --button-background-hover-color: rgb(51, 51, 51);
+  --shadows-color: var(--r-shadows-color);
+}
+
+/* Global resets */
+*:focus {
+  outline: none;
+}
