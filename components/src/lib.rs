@@ -1,9 +1,9 @@
 #![feature(trait_alias)]
 #![feature(const_option_ext)]
-mod controls;
+pub mod controls;
 mod experiments;
 mod footer;
-mod grid;
+pub mod grid;
 mod header;
 pub(crate) mod storage;
 mod svg_defs;

@@ -3,7 +3,6 @@ pub mod svg;
 
 use crate::controls::button::*;
 use crate::controls::download::pdf::maybe_initialize_pdfkit;
-use crate::controls::ControlsStateSignal;
 use crate::storage::LocalStorage;
 use i18n::move_gettext;
 use leptos::*;
@@ -33,6 +32,9 @@ impl fmt::Display for DownloadType {
         }
     }
 }
+
+#[derive(Copy, Clone)]
+pub struct DownloadTypeSignal(pub RwSignal<DownloadType>);
 
 pub fn initial_download_type_from_localstorage() -> DownloadType {
     let window = web_sys::window().unwrap();
@@ -66,7 +68,7 @@ fn set_download_type_on_localstorage(download_type: DownloadType) {
 
 #[component]
 pub fn DownloadFileTypeControl(cx: Scope) -> impl IntoView {
-    let controls_state = use_context::<ControlsStateSignal>(cx).unwrap().0;
+    let download_type = use_context::<DownloadTypeSignal>(cx).unwrap().0;
 
     view! { cx,
         <div class="flex flex-col">
@@ -75,22 +77,22 @@ pub fn DownloadFileTypeControl(cx: Scope) -> impl IntoView {
                 <ControlButtonText
                     text=move_gettext!(cx, "SVG")
                     title=move_gettext!(cx, "Download SVG")
-                    active=move || {controls_state().download_type == DownloadType::SVG}
+                    active=move || {download_type() == DownloadType::SVG}
                     on:click=move |_| {
-                        controls_state.update(move |mut state| {
-                            state.download_type = DownloadType::SVG;
-                            set_download_type_on_localstorage(state.download_type);
+                        download_type.update(move |state| {
+                            *state = DownloadType::SVG;
+                            set_download_type_on_localstorage(*state);
                         });
                     }
                 />
                 <ControlButtonText
                     text=move_gettext!(cx, "PDF")
                     title=move_gettext!(cx, "Download PDF")
-                    active=move || {controls_state().download_type == DownloadType::PDF}
+                    active=move || {download_type() == DownloadType::PDF}
                     on:click=move |_| {
-                        controls_state.update(|mut state| {
-                            state.download_type = DownloadType::PDF;
-                            set_download_type_on_localstorage(state.download_type);
+                        download_type.update(|state| {
+                            *state = DownloadType::PDF;
+                            set_download_type_on_localstorage(*state);
                             maybe_initialize_pdfkit();
                         });
                     }

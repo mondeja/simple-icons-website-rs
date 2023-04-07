@@ -4,6 +4,7 @@ pub mod LocalStorage {
         DownloadType,
         OrderMode,
         SearchValue,
+        ColorScheme,
     }
 
     impl Keys {
@@ -12,6 +13,7 @@ pub mod LocalStorage {
                 Keys::DownloadType => "download-type",
                 Keys::OrderMode => "order-mode",
                 Keys::SearchValue => "search-value",
+                Keys::ColorScheme => "color-scheme",
             }
         }
     }

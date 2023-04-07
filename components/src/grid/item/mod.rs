@@ -1,7 +1,6 @@
 use crate::controls::download::{
-    pdf::download_pdf, svg::download_svg, DownloadType,
+    pdf::download_pdf, svg::download_svg, DownloadType, DownloadTypeSignal,
 };
-use crate::controls::ControlsStateSignal;
 use crate::svg_defs::SVGDef;
 use i18n::{gettext, move_gettext};
 use leptos::*;
@@ -63,7 +62,7 @@ pub fn IconGridItemFooter(
     let css_hex = format!("#{}", hex);
 
     // Controls context
-    let controls_state = use_context::<ControlsStateSignal>(cx).unwrap().0;
+    let download_type = use_context::<DownloadTypeSignal>(cx).unwrap().0;
 
     view! { cx,
         // TODO: use defs SVG tags to optimize size
@@ -84,7 +83,7 @@ pub fn IconGridItemFooter(
             <button
                 title=move_gettext!(cx, "Download")
                 on:click=move |_| {
-                    if controls_state().download_type == DownloadType::SVG {
+                    if download_type() == DownloadType::SVG {
                         download_svg(slug);
                     } else {
                         download_pdf(slug, gettext!(cx, "Error generating PDF with PDFKit library: {}"));

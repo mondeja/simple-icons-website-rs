@@ -2,20 +2,26 @@ mod ad;
 mod item;
 
 use ad::*;
+use config::CONFIG;
 use item::*;
 use leptos::*;
-
-use crate::controls::ControlsStateSignal;
+use macros::{get_number_of_icons, simple_icons_array};
 use simple_icons::FullStaticSimpleIcon;
+
+pub const ICONS: [FullStaticSimpleIcon;
+    CONFIG.max_icons.unwrap_or(get_number_of_icons!())] = simple_icons_array!();
+
+#[derive(Copy, Clone)]
+pub struct DisplayedIconsSignal(pub RwSignal<Vec<FullStaticSimpleIcon>>);
 
 /// Icons grid
 #[component]
 pub fn GridIcons(cx: Scope) -> impl IntoView {
-    let controls_state = use_context::<ControlsStateSignal>(cx).unwrap().0;
+    let displayed_icons = use_context::<DisplayedIconsSignal>(cx).unwrap().0;
 
     view! { cx,
         {move || {
-            controls_state().shown_icons.iter().map(|icon: &FullStaticSimpleIcon| {
+            displayed_icons().iter().map(|icon: &FullStaticSimpleIcon| {
                 view!{
                     cx,
                     <IconGridItem

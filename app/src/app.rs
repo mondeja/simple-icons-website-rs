@@ -1,3 +1,11 @@
+use components::controls::download::{
+    initial_download_type_from_localstorage, DownloadTypeSignal,
+};
+use components::controls::order::{
+    initial_order_mode_from_localstorage, sort_displayed_icons, OrderModeSignal,
+};
+use components::controls::search::SearchValueSignal;
+use components::grid::{DisplayedIconsSignal, ICONS};
 use components::*;
 use i18n::{gettext, move_gettext};
 use i18n::{LocaleState, LocaleStateSignal};
@@ -106,11 +114,29 @@ where
 /// to be used by the child components.
 #[component]
 pub fn AppBody(cx: Scope) -> impl IntoView {
-    // Controls context
+    // Donwload type context
     provide_context(
         cx,
-        ControlsStateSignal(create_rw_signal(cx, ControlsState::new())),
+        DownloadTypeSignal(create_rw_signal(
+            cx,
+            initial_download_type_from_localstorage(),
+        )),
     );
+
+    // Order mode context
+    let initial_order_mode = initial_order_mode_from_localstorage();
+    provide_context(
+        cx,
+        OrderModeSignal(create_rw_signal(cx, initial_order_mode)),
+    );
+
+    // Search context
+    provide_context(cx, SearchValueSignal(create_rw_signal(cx, String::new())));
+
+    // Displayed icons context
+    let mut icons = ICONS.to_vec();
+    sort_displayed_icons(&mut icons, initial_order_mode);
+    provide_context(cx, DisplayedIconsSignal(create_rw_signal(cx, icons)));
 
     view! { cx,
         <SVGDefs/>

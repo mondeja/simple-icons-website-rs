@@ -1,9 +1,12 @@
-use crate::controls::ControlsStateSignal;
 use crate::debounce;
+use crate::grid::{DisplayedIconsSignal, ICONS};
 use crate::storage::LocalStorage;
+use config::CONFIG;
 use i18n::move_gettext;
 use leptos::leptos_dom::helpers::TimeoutHandle;
 use leptos::*;
+use rust_fuzzy_search::fuzzy_search;
+use simple_icons::FullStaticSimpleIcon;
 use wasm_bindgen::JsCast;
 use web_sys;
 
@@ -49,14 +52,64 @@ pub fn set_search_value_on_localstorage(search_value: &str) {
         .unwrap();
 }
 
+#[derive(Copy, Clone)]
+pub struct SearchValueSignal(pub RwSignal<String>);
+
 #[component]
 pub fn SearchControl(cx: Scope) -> impl IntoView {
-    let controls_state = use_context::<ControlsStateSignal>(cx).unwrap().0;
+    let displayed_icons = use_context::<DisplayedIconsSignal>(cx).unwrap().0;
+    let search = use_context::<SearchValueSignal>(cx).unwrap().0;
 
     // timeout for search debouncing
     //
     // TODO: improve rendering time to remove debouncing
     let mut timeout: Option<TimeoutHandle> = None;
+
+    let on_search_input = move |event: web_sys::Event| {
+        debounce(
+            &mut timeout,
+            400,
+            Box::new(move || {
+                let value = event
+                    .clone()
+                    .target()
+                    .unwrap()
+                    .unchecked_into::<web_sys::HtmlInputElement>()
+                    .value();
+                search.update(move |state| {
+                    set_search_value_on_localstorage(&value);
+
+                    if value.is_empty() {
+                        displayed_icons.update(move |state| {
+                            *state = ICONS.to_vec();
+                        });
+                        *state = value;
+                        return;
+                    }
+
+                    let icon_titles = ICONS
+                        .iter()
+                        .map(|icon| icon.title)
+                        .collect::<Vec<&str>>();
+                    let res: Vec<(&str, f32)> =
+                        fuzzy_search(&value, &icon_titles);
+
+                    let mut new_displayed_icons: Vec<FullStaticSimpleIcon> =
+                        Vec::with_capacity(ICONS.len());
+                    for (i, (_title, score)) in res.iter().enumerate() {
+                        if *score > CONFIG.min_search_score {
+                            new_displayed_icons.push(ICONS[i].clone())
+                        }
+                    }
+                    displayed_icons.update(move |state| {
+                        *state = new_displayed_icons;
+                    });
+
+                    *state = value;
+                });
+            }),
+        );
+    };
 
     view! { cx,
         <div class="flex flex-col">
@@ -66,19 +119,7 @@ pub fn SearchControl(cx: Scope) -> impl IntoView {
                 type="search"
                 class="border px-2 py-1 h-10"
                 placeholder=move_gettext!(cx, "Search by brand...")
-                on:input=move|event: web_sys::Event| {
-                    debounce(
-                        &mut timeout,
-                        400,
-                        Box::new(move || {
-                            let value = event.clone().target().unwrap().unchecked_into::<web_sys::HtmlInputElement>()
-                                .value();
-                            controls_state.update(
-                                move|state| state.set_search_value(&value),
-                            );
-                        })
-                    );
-                }
+                on:input=on_search_input
             />
         </div>
     }
