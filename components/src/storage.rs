@@ -3,6 +3,7 @@ pub mod LocalStorage {
     pub enum Keys {
         DownloadType,
         OrderMode,
+        SearchValue,
     }
 
     impl Keys {
@@ -10,6 +11,7 @@ pub mod LocalStorage {
             match self {
                 Keys::DownloadType => "download-type",
                 Keys::OrderMode => "order-mode",
+                Keys::SearchValue => "search-value",
             }
         }
     }

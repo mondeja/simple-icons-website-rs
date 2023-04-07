@@ -1,6 +1,6 @@
 //! App footer
 
-use i18n::move_gettext;
+use i18n::{gettext, move_gettext};
 use leptos::*;
 use macros::simple_icon_svg_path;
 
@@ -49,29 +49,34 @@ pub fn About(cx: Scope) -> impl IntoView {
     view! { cx,
         <div class="flex flex-row justify-between">
             <div class="flex flex-col">
-                <p>
-                    "A "
-                    <a href="https://github.com/simple-icons/simple-icons/blob/develop/LICENSE.md">
-                        "CCO"
-                    </a>
-                    " project maintained by the "
-                    <a href="">"Simple Icons contributors"</a>
-                    "."
-                </p>
-                <p>
-                    "Use "
-                    <a href="https://github.com/simple-icons/simple-icons">
-                        "GitHub"
-                    </a>
-                    " for requests, corrections and contributions."
-                </p>
-                <p>
-                    "Kindly supported by your donations at "
-                    <a href="https://opencollective.com/simple-icons">
-                        "Open Collective"
-                    </a>
-                    "."
-                </p>
+                <p inner_html=move_gettext!(
+                    cx,
+                    "A {} project maintained by the {}.",
+                    &format!(
+                        "<a href=\"https://github.com/simple-icons/simple-icons/blob/develop/LICENSE.md\">{}</a>",
+                        gettext!(cx, "CCO")
+                    ),
+                    &format!(
+                        "<a href=\"https://github.com/simple-icons/simple-icons\">{}</a>",
+                        gettext!(cx, "Simple Icons contributors")
+                    )
+                )/>
+                <p inner_html=move_gettext!(
+                    cx,
+                    "Use {} for requests, corrections and contributions.",
+                    &format!(
+                        "<a href=\"https://github.com/simple-icons/simple-icons\">{}</a>",
+                        gettext!(cx, "GitHub")
+                    )
+                )/>
+                <p inner_html=move_gettext!(
+                    cx,
+                    "Kindly supported by your donations at {}.",
+                    &format!(
+                        "<a href=\"https://opencollective.com/simple-icons\">{}</a>",
+                        gettext!(cx, "Open Collective")
+                    )
+                )/>
             </div>
             <TwitterButton/>
         </div>

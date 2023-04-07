@@ -16,14 +16,16 @@ fn generate_lazy_static_translations_hashmap(
     ).to_string();
 
     for (language_code, translations) in translations {
+        let language_code_variable =
+            language_code.replace('-', "_").to_lowercase();
         code.push_str(&format!(
             "        let mut {} = HashMap::new();\n",
-            language_code
+            language_code_variable
         ));
         for (msgid, msgstr) in translations {
             code.push_str(&format!(
                 "        {}.insert(\"{}\".to_string(), \"{}\".to_string());\n",
-                language_code,
+                language_code_variable,
                 msgid,
                 match msgstr.is_empty() {
                     true => msgid.clone(),
@@ -33,7 +35,7 @@ fn generate_lazy_static_translations_hashmap(
         }
         code.push_str(&format!(
             "        translations.insert(\"{}\".into(), {});\n",
-            language_code, language_code
+            language_code, language_code_variable
         ));
     }
     code.push_str("        translations\n");

@@ -1,5 +1,5 @@
 use components::*;
-use i18n::move_gettext;
+use i18n::{gettext, move_gettext};
 use i18n::{LocaleState, LocaleStateSignal};
 use leptos::*;
 use leptos_meta::*;
@@ -27,8 +27,9 @@ pub fn App(cx: Scope) -> impl IntoView {
 
     let description = move_gettext!(
         cx,
-        "{} free SVG icons for popular brands",
-        NUMBER_OF_ICONS.to_string().as_str()
+        "{} free {} icons for popular brands",
+        NUMBER_OF_ICONS.to_string().as_str(),
+        &gettext!(cx, "SVG")
     );
 
     view! { cx,

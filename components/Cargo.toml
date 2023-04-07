@@ -15,5 +15,11 @@ simple-icons-website-config = { path = "../config" }
 simple-icons = { path = "../simple-icons" }
 leptos = "0.2.5"
 log = "0.4"
-web-sys = { version = "0.3", features = ["HtmlElement", "Storage"] }
+web-sys = { version = "0.3", features = [
+    "HtmlElement",
+    "Storage",
+    "DateTimeValue"
+] }
+js-sys = "0.3"
 wasm-bindgen = "0.2"
+rust-fuzzy-search = "0.1"

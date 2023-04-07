@@ -3,6 +3,7 @@
 mod button;
 pub mod download;
 pub mod order;
+pub mod search;
 
 use button::*;
 use config::CONFIG;
@@ -11,6 +12,8 @@ use i18n::move_gettext;
 use leptos::*;
 use macros::{get_number_of_icons, simple_icons_array};
 use order::*;
+use rust_fuzzy_search::fuzzy_search;
+use search::*;
 use simple_icons::FullStaticSimpleIcon;
 
 const SIMPLE_ICONS: [FullStaticSimpleIcon;
@@ -26,6 +29,8 @@ pub struct ControlsState {
     pub order_mode: OrderMode,
     /// Shown icons
     pub shown_icons: Vec<FullStaticSimpleIcon>,
+    /// Search value currently active
+    pub search_value: String,
 }
 
 impl ControlsState {
@@ -38,6 +43,7 @@ impl ControlsState {
             download_type: initial_download_type_from_localstorage(),
             order_mode,
             shown_icons: simple_icons,
+            search_value: initial_search_value_from_url_or_localstorage(),
         }
     }
 
@@ -45,6 +51,26 @@ impl ControlsState {
         order_shown_icons(&mut self.shown_icons, order_mode);
         set_order_mode_on_localstorage(order_mode);
         self.order_mode = order_mode;
+    }
+
+    pub fn set_search_value(&mut self, search_value: &str) {
+        set_search_value_on_localstorage(search_value);
+        self.search_value = search_value.to_string();
+
+        let icon_titles = SIMPLE_ICONS
+            .iter()
+            .map(|icon| icon.title)
+            .collect::<Vec<&str>>();
+        let res: Vec<(&str, f32)> = fuzzy_search(search_value, &icon_titles);
+
+        let mut new_shown_icons: Vec<FullStaticSimpleIcon> =
+            Vec::with_capacity(SIMPLE_ICONS.len());
+        for (i, (t, score)) in res.iter().enumerate() {
+            if *score > CONFIG.min_search_score {
+                new_shown_icons.push(SIMPLE_ICONS[i].clone())
+            }
+        }
+        self.shown_icons = new_shown_icons;
     }
 }
 
@@ -80,25 +106,10 @@ pub fn Controls(cx: Scope) -> impl IntoView {
 }
 
 #[component]
-pub fn SearchControl(cx: Scope) -> impl IntoView {
-    view! { cx,
-        <div class="flex flex-col">
-            <label for="search">{move_gettext!(cx, "Search")}</label>
-            <input
-                id="search"
-                type="search"
-                class="border px-2 py-1 h-10"
-                placeholder=move_gettext!(cx, "Search by brand...")
-            />
-        </div>
-    }
-}
-
-#[component]
 pub fn ColorSchemeControl(cx: Scope) -> impl IntoView {
     view! { cx,
         <div class="flex flex-col">
-            <label>{move_gettext!(cx, "Mode")}</label>
+            <label>{move_gettext!(cx, "Theme")}</label>
             <div class="flex flex-row">
                 <ControlButtonSVGPath
                     title=move_gettext!(cx, "Light color scheme")

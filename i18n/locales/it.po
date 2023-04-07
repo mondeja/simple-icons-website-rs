@@ -1,0 +1,190 @@
+#
+msgid ""
+msgstr ""
+
+#: components/src/controls/download/mod.rs:73
+#: components/src/controls/download/mod.rs:73
+msgid "Download"
+msgstr "Scarica"
+
+#: components/src/controls/download/mod.rs:76
+#: components/src/controls/download/mod.rs:76
+msgid "SVG"
+msgstr "SVG"
+
+#: components/src/controls/download/mod.rs:77
+msgid "Download SVG"
+msgstr "Scarica SVG"
+
+#: components/src/controls/download/mod.rs:87
+msgid "PDF"
+msgstr "PDF"
+
+#: components/src/controls/download/mod.rs:88
+msgid "Download PDF"
+msgstr "Scarica PDF"
+
+#: components/src/controls/order.rs:66
+msgid "Order"
+msgstr "Ordine"
+
+#: components/src/controls/order.rs:69
+msgid "Sort alphabetically"
+msgstr "Ordina in ordine alfabetico"
+
+#: components/src/controls/order.rs:79
+msgid "Sort by color"
+msgstr "Ordina per colore"
+
+#: components/src/controls/mod.rs:86
+msgid "Search"
+msgstr "Ricerca"
+
+#: components/src/controls/mod.rs:91
+msgid "Search by brand..."
+msgstr "Ricerca per marchio..."
+
+#: components/src/controls/mod.rs:104
+msgid "Light color scheme"
+msgstr "Tema leggero"
+
+#: components/src/controls/mod.rs:109
+msgid "Dark color scheme"
+msgstr "Tema scuro"
+
+#: components/src/controls/mod.rs:114
+msgid "System color scheme"
+msgstr "Combinazione di colori del sistema"
+
+#: components/src/controls/mod.rs:127
+msgid "Layout"
+msgstr "Layout"
+
+#: components/src/controls/mod.rs:130
+msgid "Comfortable"
+msgstr "Comodo"
+
+#: components/src/controls/mod.rs:135
+msgid "Compact"
+msgstr "Compatto"
+
+#: components/src/footer.rs:19
+msgid "Made with ❤️ on GitHub"
+msgstr "Fatto con ❤️ su GitHub"
+
+#: components/src/footer.rs:30
+msgid "Icon missing?"
+msgstr "Manca un'icona?"
+
+#: components/src/footer.rs:33
+msgid "Submit a request"
+msgstr "Invia una richiesta"
+
+#: components/src/footer.rs:37
+msgid "Icon outdated?"
+msgstr "Icona obsoleta?"
+
+#: components/src/footer.rs:40
+msgid "Report outdated icon"
+msgstr "Segnala un'icona obsoleta"
+
+#: components/src/footer.rs:93
+msgid "Share this on Twitter!"
+msgstr "Condividi questo su Twitter!"
+
+#: components/src/grid/item/mod.rs:25
+msgid "{} SVG"
+msgstr "{} SVG"
+
+#: components/src/grid/item/mod.rs:30
+msgid "{} icon"
+msgstr ""
+
+#. Open card
+#: components/src/grid/item/mod.rs:77
+msgid "View {}"
+msgstr ""
+
+#: components/src/grid/item/mod.rs:90
+msgid "Error generating PDF with PDFKit library: {}"
+msgstr ""
+
+#: components/src/header/menu.rs:29
+msgid "Main Repository"
+msgstr ""
+
+#: components/src/header/menu.rs:44
+msgid "jsDelivr (Content Delivery Network)"
+msgstr ""
+
+#: components/src/header/menu.rs:49
+msgid "UNPKG (Content Delivery Network)"
+msgstr ""
+
+#: components/src/header/menu.rs:59
+msgid "Legal disclaimer"
+msgstr ""
+
+#: components/src/header/menu.rs:157
+msgid "Open menu"
+msgstr ""
+
+#: components/src/header/menu.rs:178
+msgid "Close menu"
+msgstr ""
+
+#: components/src/header/menu.rs:209
+msgid "Third party extensions"
+msgstr ""
+
+#: components/src/header/menu.rs:229
+msgid "Extension"
+msgstr ""
+
+#: components/src/header/menu.rs:230
+msgid "Author"
+msgstr ""
+
+#: components/src/header/menu.rs:285
+msgid "Change language"
+msgstr ""
+
+#: components/src/header/title.rs:19
+msgid "{} free {} icons for popular brands"
+msgstr ""
+
+#: components/src/header/title.rs:23
+msgid "Scalable Vector Graphic"
+msgstr ""
+
+#: components/src/controls/mod.rs:101
+msgid "Theme"
+msgstr ""
+
+#: components/src/footer.rs:54
+msgid "A {} project maintained by the {}."
+msgstr ""
+
+#: components/src/footer.rs:57
+msgid "CCO"
+msgstr ""
+
+#: components/src/footer.rs:61
+msgid "Simple Icons contributors"
+msgstr ""
+
+#: components/src/footer.rs:66
+msgid "Use {} for requests, corrections and contributions."
+msgstr ""
+
+#: components/src/footer.rs:69
+msgid "GitHub"
+msgstr ""
+
+#: components/src/footer.rs:74
+msgid "Kindly supported by your donations at {}."
+msgstr ""
+
+#: components/src/footer.rs:77
+msgid "Open Collective"
+msgstr ""

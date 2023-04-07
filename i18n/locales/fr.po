@@ -32,133 +32,157 @@ msgstr "Répertoire principal"
 
 #: components/src/header/menu.rs:38
 msgid "jsDelivr (Content Delivery Network)"
-msgstr ""
+msgstr "jsDelivr (Réseau de diffusion de contenu)"
 
 #: components/src/header/menu.rs:43
 msgid "UNPKG (Content Delivery Network)"
-msgstr ""
+msgstr "UNPKG (Réseau de diffusion de contenu)"
 
 #: components/src/grid/item/mod.rs:24
 msgid "{} SVG"
-msgstr ""
+msgstr "{} SVG"
 
 #: components/src/grid/item/mod.rs:29
 msgid "{} icon"
-msgstr ""
+msgstr "{} icône"
 
 #. Open card
 #: components/src/grid/item/mod.rs:76
 msgid "View {}"
-msgstr ""
+msgstr "Voir {}"
 
 #: components/src/grid/item/mod.rs:84
 msgid "Download"
-msgstr ""
+msgstr "Télécharger"
 
 #: components/src/header/menu.rs:59
 msgid "Legal disclaimer"
-msgstr ""
+msgstr "Avertissement légal"
 
 #: components/src/header/menu.rs:157
 msgid "Open menu"
-msgstr ""
+msgstr "Ouvrir le menu"
 
 #: components/src/header/menu.rs:178
 msgid "Close menu"
-msgstr ""
+msgstr "Fermer le menu"
 
 #: components/src/header/menu.rs:209
 msgid "Third party extensions"
-msgstr ""
+msgstr "Extensions tierces"
 
 #: components/src/header/menu.rs:229
 msgid "Extension"
-msgstr ""
+msgstr "Extension"
 
 #: components/src/header/menu.rs:230
 msgid "Author"
-msgstr ""
+msgstr "Auteur"
 
 #: components/src/header/menu.rs:287
 msgid "Change language"
-msgstr ""
-
-#: app/src/app.rs:31
-msgid "{} free SVG icons for popular brands"
-msgstr "{} icônes SVG gratuites pour les marques populaires"
+msgstr "Changer de langue"
 
 #: components/src/header/title.rs:16
 msgid "{} free {} icons for popular brands"
-msgstr ""
+msgstr "{} icônes gratuites {} pour les marques populaires"
 
 #: components/src/header/title.rs:20
 msgid "Scalable Vector Graphic"
-msgstr ""
+msgstr "Graphique vectoriel évolutif"
 
 #: components/src/header/title.rs:21
 msgid "SVG"
-msgstr ""
+msgstr "SVG"
 
 #: components/src/controls/download/mod.rs:77
 msgid "Download SVG"
-msgstr ""
+msgstr "Télécharger le SVG"
 
 #: components/src/controls/download/mod.rs:87
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #: components/src/controls/download/mod.rs:88
 msgid "Download PDF"
-msgstr ""
+msgstr "Télécharger le PDF"
 
 #: components/src/controls/order.rs:66
 msgid "Order"
-msgstr ""
+msgstr "Ordre"
 
 #: components/src/controls/order.rs:69
 msgid "Sort alphabetically"
-msgstr ""
+msgstr "Trier par ordre alphabétique"
 
 #: components/src/controls/order.rs:79
 msgid "Sort by color"
-msgstr ""
+msgstr "Trier par couleur"
 
 #: components/src/controls/mod.rs:86
 msgid "Search"
-msgstr ""
+msgstr "Rechercher"
 
 #: components/src/controls/mod.rs:91
 msgid "Search by brand..."
-msgstr ""
-
-#: components/src/controls/mod.rs:101
-msgid "Mode"
-msgstr ""
+msgstr "Rechercher par marque..."
 
 #: components/src/controls/mod.rs:104
 msgid "Light color scheme"
-msgstr ""
+msgstr "Thème clair"
 
 #: components/src/controls/mod.rs:109
 msgid "Dark color scheme"
-msgstr ""
+msgstr "Thème foncé"
 
 #: components/src/controls/mod.rs:114
 msgid "System color scheme"
-msgstr ""
+msgstr "Thème du système"
 
 #: components/src/controls/mod.rs:127
 msgid "Layout"
-msgstr ""
+msgstr "Disposition"
 
 #: components/src/controls/mod.rs:130
 msgid "Comfortable"
-msgstr ""
+msgstr "Confortable"
 
 #: components/src/controls/mod.rs:135
 msgid "Compact"
-msgstr ""
+msgstr "Compact"
 
 #: components/src/grid/item/mod.rs:89
 msgid "Error generating PDF with PDFKit library: {}"
+msgstr "Erreur de génération du PDF avec la bibliothèque PDFKit: {}"
+
+#: components/src/controls/mod.rs:101
+msgid "Theme"
+msgstr "Thème"
+
+#: components/src/footer.rs:54
+msgid "A {} project maintained by the {}."
+msgstr ""
+
+#: components/src/footer.rs:57
+msgid "CCO"
+msgstr ""
+
+#: components/src/footer.rs:61
+msgid "Simple Icons contributors"
+msgstr ""
+
+#: components/src/footer.rs:66
+msgid "Use {} for requests, corrections and contributions."
+msgstr ""
+
+#: components/src/footer.rs:69
+msgid "GitHub"
+msgstr ""
+
+#: components/src/footer.rs:74
+msgid "Kindly supported by your donations at {}."
+msgstr ""
+
+#: components/src/footer.rs:77
+msgid "Open Collective"
 msgstr ""

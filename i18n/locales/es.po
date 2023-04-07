@@ -24,7 +24,7 @@ msgstr "Informa de un icono desactualizado"
 
 #: components/src/footer.rs:93
 msgid "Share this on Twitter!"
-msgstr ""
+msgstr "¡Comparte esto en Twitter!"
 
 #: components/src/header/menu.rs:23
 msgid "Main Repository"
@@ -32,19 +32,19 @@ msgstr "Repositorio principal"
 
 #: components/src/header/menu.rs:38
 msgid "jsDelivr (Content Delivery Network)"
-msgstr ""
+msgstr "jsDelivr (Red de entrega de contenidos)"
 
 #: components/src/header/menu.rs:43
 msgid "UNPKG (Content Delivery Network)"
-msgstr ""
+msgstr "UNPKG (Red de entrega de contenidos)"
 
 #: components/src/grid/item/mod.rs:24
 msgid "{} SVG"
-msgstr ""
+msgstr "SVG de {}"
 
 #: components/src/grid/item/mod.rs:29
 msgid "{} icon"
-msgstr ""
+msgstr "Icono de {}"
 
 #. Open card
 #: components/src/grid/item/mod.rs:76
@@ -53,39 +53,35 @@ msgstr "Ver {}"
 
 #: components/src/grid/item/mod.rs:84
 msgid "Download"
-msgstr ""
+msgstr "Descargar"
 
 #: components/src/header/menu.rs:59
 msgid "Legal disclaimer"
-msgstr ""
+msgstr "Descargo de responsabilidad legal"
 
 #: components/src/header/menu.rs:157
 msgid "Open menu"
-msgstr ""
+msgstr "Abrir menú"
 
 #: components/src/header/menu.rs:178
 msgid "Close menu"
-msgstr ""
+msgstr "Cerrar menú"
 
 #: components/src/header/menu.rs:209
 msgid "Third party extensions"
-msgstr ""
+msgstr "Extensiones de terceros"
 
 #: components/src/header/menu.rs:229
 msgid "Extension"
-msgstr ""
+msgstr "Extensión"
 
 #: components/src/header/menu.rs:230
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: components/src/header/menu.rs:287
 msgid "Change language"
-msgstr ""
-
-#: app/src/app.rs:31
-msgid "{} free SVG icons for popular brands"
-msgstr "{} iconos SVG gratis para marcas populares"
+msgstr "Cambiar idioma"
 
 #: components/src/header/title.rs:16
 msgid "{} free {} icons for popular brands"
@@ -101,64 +97,92 @@ msgstr "SVG"
 
 #: components/src/controls/download/mod.rs:77
 msgid "Download SVG"
-msgstr ""
+msgstr "Descargar SVG"
 
 #: components/src/controls/download/mod.rs:87
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #: components/src/controls/download/mod.rs:88
 msgid "Download PDF"
-msgstr ""
+msgstr "Descargar PDF"
 
 #: components/src/controls/order.rs:66
 msgid "Order"
-msgstr ""
+msgstr "Orden"
 
 #: components/src/controls/order.rs:69
 msgid "Sort alphabetically"
-msgstr ""
+msgstr "Ordenar alfabéticamente"
 
 #: components/src/controls/order.rs:79
 msgid "Sort by color"
-msgstr ""
+msgstr "Ordenar por color"
 
 #: components/src/controls/mod.rs:86
 msgid "Search"
-msgstr ""
+msgstr "Buscar"
 
 #: components/src/controls/mod.rs:91
 msgid "Search by brand..."
-msgstr ""
-
-#: components/src/controls/mod.rs:101
-msgid "Mode"
-msgstr ""
+msgstr "Búscar por marca..."
 
 #: components/src/controls/mod.rs:104
 msgid "Light color scheme"
-msgstr ""
+msgstr "Tema claro"
 
 #: components/src/controls/mod.rs:109
 msgid "Dark color scheme"
-msgstr ""
+msgstr "Tema oscuro"
 
 #: components/src/controls/mod.rs:114
 msgid "System color scheme"
-msgstr ""
+msgstr "Tema de color del sistema"
 
 #: components/src/controls/mod.rs:127
 msgid "Layout"
-msgstr ""
+msgstr "Diseño"
 
 #: components/src/controls/mod.rs:130
 msgid "Comfortable"
-msgstr ""
+msgstr "Confortable"
 
 #: components/src/controls/mod.rs:135
 msgid "Compact"
-msgstr ""
+msgstr "Compacto"
 
 #: components/src/grid/item/mod.rs:89
 msgid "Error generating PDF with PDFKit library: {}"
+msgstr "Error generando PDF con la librería PDFKit: {}"
+
+#: components/src/controls/mod.rs:101
+msgid "Theme"
+msgstr "Tema"
+
+#: components/src/footer.rs:54
+msgid "A {} project maintained by the {}."
+msgstr ""
+
+#: components/src/footer.rs:57
+msgid "CCO"
+msgstr ""
+
+#: components/src/footer.rs:61
+msgid "Simple Icons contributors"
+msgstr ""
+
+#: components/src/footer.rs:66
+msgid "Use {} for requests, corrections and contributions."
+msgstr ""
+
+#: components/src/footer.rs:69
+msgid "GitHub"
+msgstr ""
+
+#: components/src/footer.rs:74
+msgid "Kindly supported by your donations at {}."
+msgstr ""
+
+#: components/src/footer.rs:77
+msgid "Open Collective"
 msgstr ""
