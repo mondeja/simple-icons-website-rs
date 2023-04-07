@@ -13,3 +13,4 @@ path = "src/lib.rs"
 syn = "2"
 simple-icons = { path = "../simple-icons" }
 simple-icons-website-config = { path = "../config" }
+colorsys = "0.6"

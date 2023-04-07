@@ -103,7 +103,7 @@ where
             }
         }>
             <a title=title href=href>
-                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <svg role="img" viewBox="0 0 24 24">
                     <path d=svg_path/>
                 </svg>
             </a>
@@ -132,7 +132,7 @@ where
         <li title=title class=move || {
             format!("w-9 cursor-pointer {}", class())
         }>
-            <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg role="img" viewBox="0 0 24 24">
                 <path d=svg_path/>
             </svg>
         </li>
@@ -235,7 +235,6 @@ pub fn ThirdPartyExtensions(cx: Scope) -> impl IntoView {
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
                     on:click=toggle_extensions
                 >
                     <path
@@ -256,7 +255,6 @@ pub fn ThirdPartyExtensions(cx: Scope) -> impl IntoView {
                                         class="h-6 w-6 inline"
                                         fill="currentColor"
                                         viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg"
                                     >
                                         <path d={extension.icon_slug}/>
                                     </svg>

@@ -98,3 +98,67 @@ msgstr ""
 #: components/src/header/title.rs:21
 msgid "SVG"
 msgstr ""
+
+#: components/src/controls/download/mod.rs:77
+msgid "Download SVG"
+msgstr ""
+
+#: components/src/controls/download/mod.rs:87
+msgid "PDF"
+msgstr ""
+
+#: components/src/controls/download/mod.rs:88
+msgid "Download PDF"
+msgstr ""
+
+#: components/src/controls/order.rs:66
+msgid "Order"
+msgstr ""
+
+#: components/src/controls/order.rs:69
+msgid "Sort alphabetically"
+msgstr ""
+
+#: components/src/controls/order.rs:79
+msgid "Sort by color"
+msgstr ""
+
+#: components/src/controls/mod.rs:86
+msgid "Search"
+msgstr ""
+
+#: components/src/controls/mod.rs:91
+msgid "Search by brand..."
+msgstr ""
+
+#: components/src/controls/mod.rs:101
+msgid "Mode"
+msgstr ""
+
+#: components/src/controls/mod.rs:104
+msgid "Light color scheme"
+msgstr ""
+
+#: components/src/controls/mod.rs:109
+msgid "Dark color scheme"
+msgstr ""
+
+#: components/src/controls/mod.rs:114
+msgid "System color scheme"
+msgstr ""
+
+#: components/src/controls/mod.rs:127
+msgid "Layout"
+msgstr ""
+
+#: components/src/controls/mod.rs:130
+msgid "Comfortable"
+msgstr ""
+
+#: components/src/controls/mod.rs:135
+msgid "Compact"
+msgstr ""
+
+#: components/src/grid/item/mod.rs:89
+msgid "Error generating PDF with PDFKit library: {}"
+msgstr ""

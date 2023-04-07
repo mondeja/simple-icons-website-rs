@@ -23,8 +23,10 @@ pub struct FullStaticSimpleIcon {
     pub hex: &'static str,
     pub source: &'static str,
     pub order_alpha: usize,
+    pub order_color: usize,
 }
 
+#[derive(Clone)]
 pub struct SimpleIcon {
     pub slug: String,
     pub title: String,

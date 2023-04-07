@@ -112,6 +112,7 @@ pub fn AppBody(cx: Scope) -> impl IntoView {
     );
 
     view! { cx,
+        <SVGDefs/>
         <Header/>
         <main>
             <Controls/>

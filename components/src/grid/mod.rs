@@ -22,7 +22,6 @@ pub fn GridIcons(cx: Scope) -> impl IntoView {
                         slug={&icon.slug}
                         title={&icon.title}
                         hex={&icon.hex}
-                        order_alpha_index={icon.order_alpha}
                     />
                 }
             }).collect::<Vec<_>>()}

@@ -2,6 +2,9 @@
 //!
 //! These macros are used to generate code at compile time.
 
+mod color_sorting;
+
+use color_sorting::sort_hexes;
 use config::CONFIG;
 use proc_macro::TokenStream;
 use simple_icons::{get_simple_icon_svg_path_by_slug, get_simple_icons};
@@ -111,10 +114,23 @@ pub fn get_simple_icons_3rd_party_extensions(_: TokenStream) -> TokenStream {
 
 #[proc_macro]
 pub fn simple_icons_array(_: TokenStream) -> TokenStream {
-    let simple_icons = get_simple_icons(CONFIG.max_icons);
+    let max_icons = CONFIG.max_icons;
+    let simple_icons = get_simple_icons(max_icons);
+
+    let hexes = simple_icons
+        .iter()
+        .map(|icon| icon.hex.clone())
+        .collect::<Vec<_>>();
+    let sorted_hexes = sort_hexes(&hexes);
 
     let mut simple_icons_array_code = "[".to_string();
     for (i, icon) in simple_icons.iter().enumerate() {
+        // color order index
+        let order_color = sorted_hexes
+            .iter()
+            .position(|hex| *hex == icon.hex)
+            .unwrap();
+
         simple_icons_array_code.push_str(&format!(
             concat!(
                 "::simple_icons::FullStaticSimpleIcon{{",
@@ -125,9 +141,10 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
                 // `get_simple_icons` function returns icon in alphabetical order
                 // because they are extracted from the `simple-icons.json` file
                 "order_alpha: {},",
+                "order_color: {},",
                 "}},"
             ),
-            icon.slug, icon.title, icon.hex, icon.source, i,
+            icon.slug, icon.title, icon.hex, icon.source, i, order_color,
         ));
     }
     simple_icons_array_code.push_str("]");

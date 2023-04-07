@@ -57,7 +57,7 @@ fn order_shown_icons(
             icons.sort_by(|a, b| a.order_alpha.cmp(&b.order_alpha));
         }
         OrderMode::Color => {
-            icons.sort_by(|a, b| b.order_alpha.cmp(&a.order_alpha));
+            icons.sort_by(|a, b| a.order_color.cmp(&b.order_color));
         }
         _ => todo!(),
     }
