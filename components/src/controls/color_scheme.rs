@@ -74,7 +74,7 @@ pub fn ColorSchemeControl(cx: Scope) -> impl IntoView {
     let color_scheme = use_context::<ColorSchemeSignal>(cx).unwrap().0;
 
     view! { cx,
-        <div>
+        <div class="control">
             <label>{move_gettext!(cx, "Theme")}</label>
             <div>
                 <ControlButtonSVGPath

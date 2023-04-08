@@ -7,6 +7,6 @@ header li {
     hover:fill-custom-background-color;
 }
 
-header ul li > a {
+header li > a {
   @apply fill-inherit;
 }

@@ -1,4 +1,4 @@
-@import "./menu/button.css";
+@import "./nav/button.css";
 
 header {
   @apply flex flex-row md:columns-2 justify-between

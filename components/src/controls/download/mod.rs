@@ -71,7 +71,7 @@ pub fn DownloadFileTypeControl(cx: Scope) -> impl IntoView {
     let download_type = use_context::<DownloadTypeSignal>(cx).unwrap().0;
 
     view! { cx,
-        <div class="flex flex-col">
+        <div class="control">
             <label>{move_gettext!(cx, "Download")}</label>
             <div class="flex flex-row">
                 <ControlButtonText

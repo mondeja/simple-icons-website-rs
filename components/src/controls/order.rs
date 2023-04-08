@@ -96,7 +96,7 @@ pub fn OrderControl(cx: Scope) -> impl IntoView {
     let displayed_icons = use_context::<DisplayedIconsSignal>(cx).unwrap().0;
 
     view! { cx,
-        <div class="flex flex-col">
+        <div class="control">
             <label>{move_gettext!(cx, "Order")}</label>
             <div class="flex flex-row">
                 <ControlButtonSVGPath

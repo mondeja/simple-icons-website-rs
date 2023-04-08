@@ -6,7 +6,7 @@ mod third_party_extensions;
 use crate::header::{
     HeaderState,
     HeaderStateSignal,
-    menu::{
+    nav::{
         button::*,
         language_selector::*,
         third_party_extensions::*,
@@ -35,7 +35,7 @@ pub fn HeaderMenu(cx: Scope) -> impl IntoView {
     let header_state = use_context::<HeaderStateSignal>(cx).unwrap().0;
 
     view! { cx,
-        <div class="self-center flex flex-row justify-between w-full lg:w-auto">
+        <nav class="self-center flex flex-row justify-between w-full lg:w-auto">
             <ul class=move|| {
                 let mut class = "self-center md:flex md:flex-row md:space-x-1".to_string();
                 // if the menu is open on small screens, use a grid to display the buttons
@@ -55,7 +55,6 @@ pub fn HeaderMenu(cx: Scope) -> impl IntoView {
                     href="https://www.npmjs.com/package/simple-icons"
                     svg_path=simple_icon_svg_path!("npm")
                 />
-
                 <HeaderMenuLink
                     title=move||"Packagist".to_string()
                     href="https://packagist.org/packages/simple-icons/simple-icons"
@@ -96,7 +95,7 @@ pub fn HeaderMenu(cx: Scope) -> impl IntoView {
                 // Close menu button (only shown on mobile screens)
                 <HeaderMenuCloseButton />
             </ul>
-        </div>
+        </nav>
     }
 }
 
@@ -154,4 +153,3 @@ pub fn HeaderMenuCloseButton(cx: Scope) -> impl IntoView {
         />
     }
 }
-

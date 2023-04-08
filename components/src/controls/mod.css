@@ -1,64 +1,69 @@
 /* Controls group */
-main > :first-child {
-  @apply flex flex-row;
+menu {
+  @apply flex flex-row h-16
+    sticky -top-[1.55rem] z-10
+    bg-custom-background-color;
+}
+
+menu .controls-group {
+  @apply flex-row space-x-4;
 }
 
 /* Each control */
-main > :first-child > div {
-  @apply flex flex-col space-y-3;
+menu .control {
+  @apply flex flex-col;
 }
 
 /* Labels */
-main > :first-child > div > label {
-  @apply leading-4;
+menu .control > label {
+  @apply leading-4 mb-3;
 }
 
 /* Input */
-main > :first-child > div input {
-  @apply h-9 border-[1px] border-solid rounded-[3px]
+menu .control input {
+  @apply h-9 py-1.5 pl-3 pr-8 w-72 border-[1px] border-solid rounded-[3px]
     border-custom-button-background-active-color
     text-custom-text-default-color
     shadow-custom-shadows-color;
   box-shadow: 0 0 3px 0 var(--shadows-color);
 }
-main > :first-child > div input::-webkit-search-decoration,
-main > :first-child > div input::-webkit-search-cancel-button,
-main > :first-child > div input::-webkit-search-results-button,
-main > :first-child > div input::-webkit-search-results-decoration {
+menu .control input::-webkit-search-decoration,
+menu .control input::-webkit-search-cancel-button,
+menu .control input::-webkit-search-results-button,
+menu .control input::-webkit-search-results-decoration {
   -webkit-appearance: none;
 }
-main > :first-child > div input::-ms-clear,
-main > :first-child > div input::-ms-reveal {
+menu .control input::-ms-clear,
+menu .control input::-ms-reveal {
   display: none;
   width: 0;
   height: 0;
 }
 
 /* Buttons */
-main > :first-child > div button {
+.control-button {
   @apply h-9 w-9 font-bold 
     border-[1px] border-solid
     border-custom-button-background-active-color
-    shadow-custom-shadows-color;
+    shadow-custom-shadows-color
+    hover:shadow-[0_0_3px_0_var(--shadows-color)];
 }
-main > :first-child > div button:hover {
-  box-shadow: 0 0 3px 0 var(--shadows-color);
+.control-button > svg {
+  @apply p-1.5 w-[inherit];
 }
-main > :first-child > div button:first-child {
-  @apply border-r-0 rounded-l-[3px];
-}
-main > :first-child > div button:last-child {
-  @apply border-l-0 rounded-r-[3px];
-}
-/* SVG inside button */
-main > :first-child > div button > svg {
-  @apply p-1.5;
-  /* Firefox don't inherits SVG sizes */
-  width: inherit;
-}
-/* Button inside control when is in an active state */
-main > :first-child > div button.on {
+.control-button.on {
   @apply fill-custom-button-content-active-color
     bg-custom-button-background-active-color
     text-custom-button-content-active-color;
+}
+
+/* Control buttons */
+menu .control button {
+  @apply control-button;
+}
+menu .control button:first-child {
+  @apply border-r-0 rounded-l-[3px];
+}
+menu .control button:last-child {
+  @apply border-l-0 rounded-r-[3px];
 }

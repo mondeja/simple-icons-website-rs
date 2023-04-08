@@ -1,16 +1,16 @@
 //! Header at the top of the page
 
-mod menu;
+mod nav;
 mod title;
 
 use leptos::*;
-use menu::*;
+use nav::*;
 use title::*;
 
 /// State of the header
 #[derive(Copy, Clone, Default)]
 pub struct HeaderState {
-    /// Indicates if the menu is currently open (only used on mobile screens)
+    /// Indicates if the menu is currently open (only used on tablet and mobile screens)
     pub menu_open: bool,
     /// Indicates if the extensions table is currently open
     pub extensions_open: bool,

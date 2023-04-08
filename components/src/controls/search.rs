@@ -112,12 +112,11 @@ pub fn SearchControl(cx: Scope) -> impl IntoView {
     };
 
     view! { cx,
-        <div class="flex flex-col">
+        <div class="control">
             <label for="search">{move_gettext!(cx, "Search")}</label>
             <input
                 id="search"
                 type="search"
-                class="border px-2 py-1 h-10"
                 placeholder=move_gettext!(cx, "Search by brand...")
                 on:input=on_search_input
             />
