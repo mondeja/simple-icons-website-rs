@@ -6,6 +6,7 @@ mod experiments;
 mod footer;
 pub mod grid;
 mod header;
+mod modal;
 pub(crate) mod storage;
 mod svg_defs;
 
@@ -14,4 +15,5 @@ pub use experiments::*;
 pub use footer::*;
 pub use grid::*;
 pub use header::*;
+pub use modal::*;
 pub use svg_defs::*;

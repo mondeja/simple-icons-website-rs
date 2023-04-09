@@ -6,7 +6,7 @@ menu {
    * that's why we are using the !important modifier here.
    */
   @apply box-content flex flex-row !pb-1.5 h-7 xs:h-9 sm:h-16
-    sticky -top-[1.4rem] z-50
+    sticky -top-[1.4rem] z-20
     bg-custom-background-color;
 }
 

@@ -1,4 +1,5 @@
 use crate::header::{nav::button::*, HeaderState, HeaderStateSignal};
+use crate::modal::*;
 use i18n::{move_gettext, Language, LocaleState, LocaleStateSignal, LANGUAGES};
 use leptos::*;
 
@@ -9,32 +10,19 @@ pub fn LanguagesList(cx: Scope) -> impl IntoView {
     let locale_state = use_context::<LocaleStateSignal>(cx).unwrap().0;
 
     view! { cx,
-        <ul class=move || {
-            if header_state().languages_open {
-                concat!(
-                    "absolute z-20 top-[8rem] right-12 uppercase p-4",
-                    " h-[155px] w-[250px] bg-custom-background-color"
-                ).to_string()
-            } else {
-                "hidden".to_string()
-            }
-        }>
+        <ul class="language-selector">
             {move || {
                 let current_language_code = locale_state().current_language.code;
 
                 LANGUAGES.iter().map(|lang: &Language| {
-                    let mut class = "cursor-pointer".to_string();
-                    // Hide the current language
-                    if lang.code == current_language_code {
-                        class.push_str(" hidden")
-                    }
-
                     view! {
                         cx,
                         <li
-                            class=class
+                            class:hidden={lang.code == current_language_code}
                             on:click=move |_| {
-                                header_state.update(|state: &mut HeaderState| state.toggle_languages());
+                                header_state.update(
+                                    |state: &mut HeaderState| state.toggle_languages()
+                                );
                                 locale_state.update(
                                     |state: &mut LocaleState| state.set_current_language(lang.code)
                                 );
@@ -76,8 +64,18 @@ pub fn LanguageSelectorButton(cx: Scope) -> impl IntoView {
 /// Language selector
 #[component]
 pub fn LanguageSelector(cx: Scope) -> impl IntoView {
+    let header_state = use_context::<HeaderStateSignal>(cx).unwrap().0;
+
     view! { cx,
         <LanguageSelectorButton />
-        <LanguagesList/>
+        <Modal
+            is_open=move||header_state().languages_open
+            title=move_gettext!(cx, "Select a language")
+            on_close=move |_| {
+                header_state.update(|state: &mut HeaderState| state.languages_open = false);
+            }
+        >
+            <LanguagesList/>
+        </Modal>
     }
 }

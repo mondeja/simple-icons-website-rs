@@ -3,6 +3,7 @@ mod button;
 mod language_selector;
 mod third_party_extensions;
 
+use crate::svg_defs::SVGDefs;
 use crate::header::{
     HeaderState,
     HeaderStateSignal,
@@ -149,7 +150,8 @@ pub fn HeaderMenuCloseButton(cx: Scope) -> impl IntoView {
                     "hidden".to_string()
                 }
             }
-            svg_path="M12 10.586l5.657-5.657a1 1 0 1 1 1.414 1.414L13.414 12l5.657 5.657a1 1 0 0 1-1.414 1.414L12 13.414l-5.657 5.657a1 1 0 0 1-1.414-1.414L10.586 12 4.93 6.343a1 1 0 0 1 1.414-1.414L12 10.586z"
+            // TODO: use a SVG def
+            svg_path=SVGDefs::CrossPath.as_str()
         />
     }
 }

@@ -1,4 +1,5 @@
 use crate::header::{nav::button::*, HeaderState, HeaderStateSignal};
+use crate::modal::*;
 use i18n::move_gettext;
 use leptos::*;
 use macros::get_simple_icons_3rd_party_extensions;
@@ -10,45 +11,17 @@ static THIRD_PARTY_EXTENSIONS: &[SimpleIconsExtension] =
 /// Third party extensions table
 #[component]
 pub fn ThirdPartyExtensionsTable(cx: Scope) -> impl IntoView {
-    let header_state = use_context::<HeaderStateSignal>(cx).unwrap().0;
-
     view! { cx,
-        <table class=move || {
-            if header_state().extensions_open {
-                "absolute table-auto h-full z-10 top-[10rem] right-12 border-collapse".to_string()
-            } else {
-                "hidden".to_string()
-            }
-        }>
-            <thead>
-                <tr>
-                    <th>{move_gettext!(cx, "Extension")}</th>
-                    <th>{move_gettext!(cx, "Author")}</th>
-                </tr>
-                // Close button
-                <svg
-                    class="absolute -top-1 -right-6 h-6 w-6 cursor-pointer"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    on:click=move |_| {
-                        header_state.update(|state: &mut HeaderState| state.toggle_extensions());
-                    }
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12"
-                    ></path>
-                </svg>
-            </thead>
+        <table class="table-auto border-collapse mx-8 my-1">
             <tbody>
                 {THIRD_PARTY_EXTENSIONS.iter().map(|extension| {
                     view! { cx,
                         <tr>
-                            <td class="px-4">
-                                <a href={extension.url}>
+                            <td>
+                                <a
+                                    href={extension.url}
+                                    class="hover:opacity-80"
+                                >
                                     <svg
                                         class="h-6 w-6 inline"
                                         fill="currentColor"
@@ -56,10 +29,17 @@ pub fn ThirdPartyExtensionsTable(cx: Scope) -> impl IntoView {
                                     >
                                         <path d={extension.icon_slug}/>
                                     </svg>
-                                    " "{extension.name}
+                                    <span class="ml-4">{extension.name}</span>
                                 </a>
                             </td>
-                            <td><a href={extension.author_url}>{extension.author_name}</a></td>
+                            <td>
+                                <a
+                                    class="hover:opacity-80 ml-6"
+                                    href={extension.author_url}
+                                >
+                                    {extension.author_name}
+                                </a>
+                            </td>
                         </tr>
                     }
                 }).collect::<Vec<_>>()}
@@ -94,8 +74,18 @@ pub fn ThirdPartyExtensionsButton(cx: Scope) -> impl IntoView {
 /// Third party extensions
 #[component]
 pub fn ThirdPartyExtensions(cx: Scope) -> impl IntoView {
+    let header_state = use_context::<HeaderStateSignal>(cx).unwrap().0;
+
     view! { cx,
         <ThirdPartyExtensionsButton />
-        <ThirdPartyExtensionsTable />
+        <Modal
+            title=move_gettext!(cx, "Third party extensions")
+            is_open=move||header_state().extensions_open
+            on_close=move |_| {
+                header_state.update(|state: &mut HeaderState| state.extensions_open = false);
+            }
+        >
+            <ThirdPartyExtensionsTable />
+        </Modal>
     }
 }

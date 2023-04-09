@@ -2,7 +2,7 @@ use crate::controls::download::{
     pdf::download_pdf, svg::download_svg, DownloadType, DownloadTypeSignal,
 };
 use crate::copy::copy_setting_copied_transition_in_element;
-use crate::svg_defs::SVGDef;
+use crate::svg_defs::SVGDefs;
 use i18n::{gettext, move_gettext};
 use leptos::ev::MouseEvent;
 use leptos::*;
@@ -51,7 +51,7 @@ pub fn IconGridItemFooter(
             // Open card
             <button title=move_gettext!(cx, "View {}", title)>
                 <svg viewBox="0 0 24 24">
-                    <use_ href=format!("#{}", SVGDef::ViewPath.id()) />
+                    <use_ href=format!("#{}", SVGDefs::ViewPath.id()) />
                 </svg>
             </button>
 
@@ -67,7 +67,7 @@ pub fn IconGridItemFooter(
                 }
             >
                 <svg viewBox="0 0 24 24">
-                    <use_ href=format!("#{}", SVGDef::DownloadPath.id()) />
+                    <use_ href=format!("#{}", SVGDefs::DownloadPath.id()) />
                 </svg>
             </button>
         </div>

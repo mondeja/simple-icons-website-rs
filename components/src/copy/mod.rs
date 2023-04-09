@@ -21,7 +21,7 @@ pub async fn copy_setting_copied_transition_in_element(
     {
         Ok(_) => {
             button.class_list().add_1("copied").unwrap();
-            let _ = set_timeout_with_handle(
+            _ = set_timeout_with_handle(
                 move || {
                     button.class_list().remove_1("copied").unwrap();
                 },

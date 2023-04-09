@@ -190,7 +190,7 @@ pub fn AppBody(cx: Scope) -> impl IntoView {
             }
             class
         }>
-            <SVGDefs/>
+            <SVGDefsDefinition/>
             <Header/>
             <main>
                 <Controls/>

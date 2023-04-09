@@ -20,8 +20,8 @@ main > ul > li > :last-child > :first-child.dark {
     @apply w-1/4
       fill-custom-button-content-default-color
       hover:bg-custom-button-background-hover-color
-      hover:fill-custom-background-color;
-    border-top: 1px solid var(--grid-item-divider-color);
+      hover:fill-custom-button-content-hover-color;
+    border-top: 1px solid var(--divider-color);
   }
 
   .grid-item-button svg {

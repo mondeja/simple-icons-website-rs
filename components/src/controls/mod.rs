@@ -7,7 +7,7 @@ pub mod layout;
 pub mod order;
 pub mod search;
 
-use crate::svg_defs::SVGDef;
+use crate::svg_defs::SVGDefs;
 use color_scheme::*;
 use download::*;
 use i18n::gettext;
@@ -100,11 +100,11 @@ pub fn ControlsToggler(cx: Scope) -> impl IntoView {
                     {move || {
                         if controls_state().buttons_group_open {
                             view!{cx,
-                                <use_ href=format!("#{}", SVGDef::ViewPath.id()) />
+                                <use_ href=format!("#{}", SVGDefs::ViewPath.id()) />
                             }
                         } else {
                             view!{cx,
-                                <use_ href=format!("#{}", SVGDef::ControlsPath.id()) />
+                                <use_ href=format!("#{}", SVGDefs::ControlsPath.id()) />
                             }
                         }
                     }}
