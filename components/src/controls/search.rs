@@ -91,6 +91,8 @@ pub fn SearchControl(cx: Scope) -> impl IntoView {
                         .iter()
                         .map(|icon| icon.title)
                         .collect::<Vec<&str>>();
+
+                    // TODO: fuzzy searching is todo much restrictive
                     let res: Vec<(&str, f32)> =
                         fuzzy_search(&value, &icon_titles);
 

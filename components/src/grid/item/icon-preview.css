@@ -1,8 +1,0 @@
-/* Icon preview */
-main > ul > li > :first-child {
-  @apply m-auto pt-6;
-}
-
-main > ul > li > :first-child img {
-  @apply h-14;
-}

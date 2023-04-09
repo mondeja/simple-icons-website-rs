@@ -125,7 +125,7 @@ msgstr "Buscar"
 
 #: components/src/controls/mod.rs:91
 msgid "Search by brand..."
-msgstr "Búscar por marca..."
+msgstr "Buscar por marca..."
 
 #: components/src/controls/mod.rs:104
 msgid "Light color scheme"

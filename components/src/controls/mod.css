@@ -1,30 +1,37 @@
 /* Controls group */
 menu {
-  @apply flex flex-row h-16
-    sticky -top-[1.55rem] z-10
+  /**
+   * TODO: For some reason, the padding-bottom (pb-*)
+   * is not being applied over the default menu padding,
+   * that's why we are using the !important modifier here.
+   */
+  @apply box-content flex flex-row !pb-1.5 h-7 xs:h-9 sm:h-16
+    sticky -top-[1.4rem] z-50
     bg-custom-background-color;
 }
 
 menu .controls-group {
-  @apply flex-row space-x-4;
+  @apply flex-row space-x-2 xs:space-x-4;
 }
 
 /* Each control */
 menu .control {
-  @apply flex flex-col;
+  @apply flex flex-col h-auto;
 }
 
 /* Labels */
 menu .control > label {
-  @apply leading-4 mb-3;
+  @apply h-4 leading-4 mb-3 hidden sm:block;
 }
 
 /* Input */
 menu .control input {
-  @apply h-9 py-1.5 pl-3 pr-8 w-72 border-[1px] border-solid rounded-[3px]
-    border-custom-button-background-active-color
+  @apply h-7 xs:h-9 py-1.5 pl-3 pr-8 w-72 
+    border-[1px] border-solid rounded-[3px]
+    border-custom-button-background-selected-color
     text-custom-text-default-color
-    shadow-custom-shadows-color;
+    shadow-custom-shadows-color
+    bg-custom-background-color;
   box-shadow: 0 0 3px 0 var(--shadows-color);
 }
 menu .control input::-webkit-search-decoration,
@@ -40,30 +47,41 @@ menu .control input::-ms-reveal {
   height: 0;
 }
 
-/* Buttons */
-.control-button {
-  @apply h-9 w-9 font-bold 
-    border-[1px] border-solid
-    border-custom-button-background-active-color
-    shadow-custom-shadows-color
-    hover:shadow-[0_0_3px_0_var(--shadows-color)];
-}
-.control-button > svg {
-  @apply p-1.5 w-[inherit];
-}
-.control-button.on {
-  @apply fill-custom-button-content-active-color
-    bg-custom-button-background-active-color
-    text-custom-button-content-active-color;
+@layer components {
+  /* Buttons */
+  .control-button {
+    @apply w-7 h-7 xs:h-9 xs:w-9
+      font-bold text-sm xs:text-base
+      border-[1px] border-solid
+      border-custom-button-background-selected-color
+      shadow-custom-shadows-color
+      hover:shadow-[0_0_3px_0_var(--shadows-color)];
+  }
+  .control-button > svg {
+    @apply p-[5px] xs:p-1.5 w-[inherit];
+  }
+  /* Selected buttons */
+  .control-button.selected {
+    @apply fill-custom-button-content-selected-color
+      bg-custom-button-background-selected-color
+      text-custom-button-content-selected-color;
+  }
+  .control-button:not(.selected) {
+    @apply fill-custom-button-content-default-color
+      bg-custom-button-background-default-color
+      text-custom-button-content-default-color;
+  }
 }
 
-/* Control buttons */
+/**
+ * Control buttons in controls
+ **/
 menu .control button {
   @apply control-button;
 }
-menu .control button:first-child {
+menu .controls-group .control button:first-child {
   @apply border-r-0 rounded-l-[3px];
 }
-menu .control button:last-child {
+menu .controls-group .control button:last-child {
   @apply border-l-0 rounded-r-[3px];
 }

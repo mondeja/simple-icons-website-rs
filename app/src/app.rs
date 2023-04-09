@@ -4,6 +4,9 @@ use components::controls::color_scheme::{
 use components::controls::download::{
     initial_download_type_from_localstorage, DownloadTypeSignal,
 };
+use components::controls::layout::{
+    initial_layout_from_localstorage, LayoutSignal,
+};
 use components::controls::order::{
     initial_order_mode_from_localstorage, sort_displayed_icons, OrderModeSignal,
 };
@@ -155,6 +158,12 @@ pub fn AppBody(cx: Scope) -> impl IntoView {
 
     // Search context
     provide_context(cx, SearchValueSignal(create_rw_signal(cx, String::new())));
+
+    // Layout context
+    provide_context(
+        cx,
+        LayoutSignal(create_rw_signal(cx, initial_layout_from_localstorage())),
+    );
 
     // Displayed icons context
     let mut icons = ICONS.to_vec();

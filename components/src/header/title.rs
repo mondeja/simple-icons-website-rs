@@ -19,9 +19,17 @@ pub fn HeaderTitle(cx: Scope) -> impl IntoView {
             }
             cls
         }>
-            <h1 class="text-2xl lg:text-[1.7rem] font-semibold">"Simple Icons"</h1>
+            <h1
+                class="text-[1.7rem] font-semibold whitespace-nowrap"
+            >
+                "Simple Icons"
+            </h1>
             <p
-                class="font-sans tracking-wider leading-5 lg:leading-6 text-sm md:text-base pr-3"
+                class=concat!(
+                    "font-sans tracking-wider leading-5 lg:leading-6",
+                    " text-sm md:text-base pr-3",
+                    " whitespace-normal xs:whitespace-nowrap"
+                )
                 inner_html=move_gettext!(
                     cx,
                     "{} free {} icons for popular brands",

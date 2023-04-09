@@ -1,3 +1,8 @@
+[env]
+# Clipboard API of wasm_bindgen needs unstable API
+# https://docs.rs/web-sys/latest/web_sys/struct.Navigator.html#method.clipboard
+RUSTFLAGS = "--cfg=web_sys_unstable_apis"
+
 [tasks.default]
 alias = "dev"
 
@@ -8,11 +13,7 @@ command = "trunk"
 args = [
     "serve",
     "--watch",
-    "index.html",
-    "--watch",
-    "assets",
-    "--watch",
-    "src",
+    ".",
     "--watch",
     "../components",
     "--watch",
@@ -57,12 +58,7 @@ workspace = false
 [tasks.watch-css]
 description = "Build CSS with Tailwind on development"
 command = "../node_modules/.bin/postcss"
-args = [
-    "./assets/stylesheet.css",
-    "-o",
-    "./assets/dist/stylesheet.css",
-    "--watch",
-]
+args = ["./stylesheet.css", "-o", "./assets/dist/stylesheet.css", "--watch"]
 workspace = false
 cwd = "./app"
 
@@ -76,7 +72,7 @@ description = "Build CSS with Tailwind on development"
 command = "../node_modules/.bin/tailwindcss"
 args = [
     "-i",
-    "./assets/stylesheet.css",
+    "./stylesheet.css",
     "-o",
     "./assets/dist/stylesheet.css",
     "--watch",
@@ -108,7 +104,7 @@ workspace = false
 command = "../node_modules/.bin/tailwindcss"
 args = [
     "-i",
-    "./assets/stylesheet.css",
+    "./stylesheet.css",
     "-o",
     "./assets/dist/stylesheet.css",
     "--minify"

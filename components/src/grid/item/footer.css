@@ -1,25 +1,40 @@
 /* Grid item footer */
-main > ul > li > :nth-child(3) {
-  @apply flex flex-row h-[26px];
+main > ul > li > :last-child {
+  @apply flex flex-row h-8;
 }
 
 /* Hex color */
-main > ul > li > :nth-child(3) > :first-child {
-  @apply p-0.5 w-1/2;
+main > ul > li > :last-child > :first-child {
+  @apply p-0.5 w-1/2 text-xs
+    text-[var(--light-contrast-color)]
+    hover:!text-transparent
+    copy-button-white before:bg-[size:1.2rem]
+    before:top-[2px];
+}
+main > ul > li > :last-child > :first-child.dark {
+  @apply text-[var(--dark-contrast-color)] copy-button-black;
+}
+
+@layer components {
+  .grid-item-button {
+    @apply w-1/4
+      fill-custom-button-content-default-color
+      hover:bg-custom-button-background-hover-color
+      hover:fill-custom-background-color;
+    border-top: 1px solid var(--grid-item-divider-color);
+  }
+
+  .grid-item-button svg {
+    @apply h-4 m-auto;
+  }
 }
 
 /* View details button */
-main > ul > li > :nth-child(3) > :nth-child(2) {
-  @apply w-1/4;
-}
-main > ul > li > :nth-child(3) > :nth-child(2) svg {
-  @apply h-4 m-auto;
+main > ul > li > :last-child > :nth-child(2) {
+  @apply grid-item-button;
 }
 
 /* Download button */
-main > ul > li > :nth-child(3) > :nth-child(3) {
-  @apply w-1/4;
-}
-main > ul > li > :nth-child(3) > :nth-child(3) svg {
-  @apply h-4 mt-1 m-auto;
+main > ul > li > :last-child > :nth-child(3) {
+  @apply grid-item-button;
 }

@@ -2,7 +2,7 @@ header li {
   @apply w-14 h-14
     p-2 md:p-[10px]
     rounded-md cursor-pointer
-    fill-custom-button-content-color
+    fill-custom-button-content-default-color
     hover:bg-custom-button-background-hover-color
     hover:fill-custom-background-color;
 }

@@ -1,0 +1,50 @@
+@import "./item/mod.css";
+
+/**
+ * Grid
+ *
+ * The default layout is the comfortable one, the rest of them are defined by classes.
+ **/
+main > ul {
+  @apply grid relative mt-5;
+
+  grid-template-columns: repeat(auto-fill, minmax(var(--grid-width), 1fr));
+  grid-gap: var(--grid-gap);
+
+  /* Comfortable layout variables: */
+  --grid-width: 13rem;
+  --grid-gap: 0.75rem;
+
+  --icon-preview-margin-top: 1.5rem;
+  --icon-preview-margin-bottom: 1rem;
+
+  --title-x-padding: 1rem;
+  --title-font-size: 1.2rem;
+  --title-line-height: 1.5rem;
+  --title-text-overflow: none;
+  --title-white-space: normal;
+  --title-copy-button-size: 1.25rem;
+  --title-copy-button-margin-top: 0.1rem;
+  --title-copy-button-margin-right: 2rem;
+
+  --footer-x-padding: 1rem;
+}
+
+main > ul.layout-compact {
+  --grid-width: 8rem;
+  --grid-gap: 0.5rem;
+
+  --icon-preview-margin-top: 0.5rem;
+  --icon-preview-margin-bottom: 0.5rem;
+
+  --title-x-padding: 0.5rem;
+  --title-font-size: 1rem;
+  --title-line-height: 1rem;
+  --title-text-overflow: ellipsis;
+  --title-white-space: nowrap;
+  --title-copy-button-size: 1rem;
+  --title-copy-button-margin-top: 0rem;
+  --title-copy-button-margin-right: 1.3rem;
+
+  --footer-x-padding: 0.5rem;
+}

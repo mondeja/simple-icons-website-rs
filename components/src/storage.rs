@@ -5,6 +5,7 @@ pub mod LocalStorage {
         OrderMode,
         SearchValue,
         ColorScheme,
+        Layout,
     }
 
     impl Keys {
@@ -14,6 +15,7 @@ pub mod LocalStorage {
                 Keys::OrderMode => "order-mode",
                 Keys::SearchValue => "search-value",
                 Keys::ColorScheme => "color-scheme",
+                Keys::Layout => "layout",
             }
         }
     }

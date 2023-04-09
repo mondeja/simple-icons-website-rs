@@ -21,6 +21,7 @@ pub struct FullStaticSimpleIcon {
     pub slug: &'static str,
     pub title: &'static str,
     pub hex: &'static str,
+    pub hex_is_relatively_light: bool,
     pub source: &'static str,
     pub order_alpha: usize,
     pub order_color: usize,
@@ -62,6 +63,7 @@ fn title_to_slug_replace_chars(title: &str) -> String {
             'ł' => new_title.push_str("l"),
             'ß' => new_title.push_str("ss"),
             'ŧ' => new_title.push_str("t"),
+            'é' => new_title.push_str("e"),
             'a'..='z' | '0'..='9' => new_title.push(c),
             _ => continue,
         }

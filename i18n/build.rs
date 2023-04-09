@@ -45,8 +45,6 @@ fn generate_lazy_static_translations_hashmap(
 }
 
 fn main() {
-    println!("cargo:rerun-if-changed=locales");
-
     let mut translations: Translations = HashMap::new();
 
     let pot_ref = pofile("messages.pot").unwrap();

@@ -11,7 +11,7 @@ const defaultTheme = require("tailwindcss/defaultTheme");
  */
 const parseRootCssVariables = () => {
   return fs
-    .readFileSync(path.resolve(`${__dirname}/assets/stylesheet.css`), "utf8")
+    .readFileSync(path.resolve(`${__dirname}/stylesheet.css`), "utf8")
     .split("body.dark {", 2)[1]
     .split("}", 2)[0]
     .split("\n")
@@ -22,7 +22,7 @@ const parseRootCssVariables = () => {
 /** @type {import('tailwindcss').Config} */
 const config = {
   content: {
-    files: ["index.html", "../{app,components}/src/**/*.rs"],
+    files: ["index.html", "../{app,components}/src/**/*.{css,rs}"],
   },
   theme: {
     extend: {

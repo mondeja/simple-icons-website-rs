@@ -1,0 +1,10 @@
+@layer components {
+  .footer-about {
+    @apply flex flex-col;
+  }
+
+  .footer-about a {
+    @apply text-[var(--link-color)] hover:text-[var(--link-color-hover)]
+      font-bold hover:underline;
+  }
+}

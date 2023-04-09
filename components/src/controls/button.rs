@@ -21,11 +21,7 @@ where
     view! { cx,
         <button
             // The class is defined at component scoped CSS
-            class=move || if active() {
-                "on".to_string()
-            } else {
-                "off".to_string()
-            }
+            class:selected=active
             type="button"
             title=title
         >

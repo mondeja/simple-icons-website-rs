@@ -47,7 +47,7 @@ pub fn initial_order_mode_from_localstorage() -> OrderMode {
     }
 }
 
-fn set_order_mode_on_localstorage(order_mode: OrderMode) {
+fn set_order_mode_on_localstorage(order_mode: &OrderMode) {
     let window = web_sys::window().unwrap();
     let local_storage = window.local_storage().unwrap().unwrap();
     local_storage
@@ -87,7 +87,7 @@ fn set_order_mode(
     });
 
     // Update order mode
-    set_order_mode_on_localstorage(order_mode);
+    set_order_mode_on_localstorage(&order_mode);
 }
 
 #[component]

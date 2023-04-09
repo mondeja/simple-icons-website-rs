@@ -1,6 +1,7 @@
 mod ad;
 mod item;
 
+use crate::controls::layout::{Layout, LayoutSignal};
 use ad::*;
 use config::CONFIG;
 use item::*;
@@ -25,9 +26,10 @@ pub fn GridIcons(cx: Scope) -> impl IntoView {
                 view!{
                     cx,
                     <IconGridItem
-                        slug={&icon.slug}
-                        title={&icon.title}
-                        hex={&icon.hex}
+                        slug=&icon.slug
+                        title=&icon.title
+                        hex=&icon.hex
+                        hex_is_relatively_light=icon.hex_is_relatively_light
                     />
                 }
             }).collect::<Vec<_>>()}
@@ -40,11 +42,10 @@ pub fn GridIcons(cx: Scope) -> impl IntoView {
 /// Includes the Carbon Ads ad and the icons
 #[component]
 pub fn Grid(cx: Scope) -> impl IntoView {
+    let layout = use_context::<LayoutSignal>(cx).unwrap().0;
+
     view! { cx,
-        <ul
-            class="relative grid gap-3 mt-5"
-            style="grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));"
-        >
+        <ul class:layout-compact=move||layout() == Layout::Compact>
             <CarbonAdsAdGridItem/>
             <GridIcons />
         </ul>

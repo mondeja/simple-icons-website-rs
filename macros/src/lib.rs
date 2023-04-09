@@ -2,9 +2,9 @@
 //!
 //! These macros are used to generate code at compile time.
 
-mod color_sorting;
+mod color;
 
-use color_sorting::sort_hexes;
+use color::{get_relative_luminance, sort_hexes};
 use config::CONFIG;
 use proc_macro::TokenStream;
 use simple_icons::{get_simple_icon_svg_path_by_slug, get_simple_icons};
@@ -137,6 +137,7 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
                 "slug: \"{}\",",
                 "title: \"{}\",",
                 "hex: \"{}\",",
+                "hex_is_relatively_light: {},",
                 "source: \"{}\",",
                 // `get_simple_icons` function returns icon in alphabetical order
                 // because they are extracted from the `simple-icons.json` file
@@ -144,7 +145,13 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
                 "order_color: {},",
                 "}},"
             ),
-            icon.slug, icon.title, icon.hex, icon.source, i, order_color,
+            icon.slug,
+            icon.title,
+            icon.hex,
+            get_relative_luminance(&icon.hex) >= 0.4,
+            icon.source,
+            i,
+            order_color,
         ));
     }
     simple_icons_array_code.push_str("]");

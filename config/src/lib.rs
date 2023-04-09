@@ -8,5 +8,5 @@ pub struct Config {
 
 pub const CONFIG: Config = Config {
     max_icons: Some(100),
-    min_search_score: 0.05,
+    min_search_score: 0.01,
 };

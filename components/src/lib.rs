@@ -1,6 +1,7 @@
 #![feature(trait_alias)]
 #![feature(const_option_ext)]
 pub mod controls;
+mod copy;
 mod experiments;
 mod footer;
 pub mod grid;

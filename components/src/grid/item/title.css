@@ -1,4 +1,12 @@
 /* Icon title */
 main > ul > li > :nth-child(2) {
-  @apply pl-3 pt-2;
+  @apply font-sans font-semibold w-full overflow-hidden flex-grow align-baseline
+    p-[0.4rem_var(--title-x-padding)]
+    copy-button-color-scheme
+    before:bg-[size:_var(--title-copy-button-size)]
+    before:bg-[position:calc(100%-var(--title-copy-button-margin-right))_var(--title-copy-button-margin-top)];
+  font-size: var(--title-font-size);
+  line-height: var(--title-line-height);
+  text-overflow: var(--title-text-overflow);
+  white-space: var(--title-white-space);
 }

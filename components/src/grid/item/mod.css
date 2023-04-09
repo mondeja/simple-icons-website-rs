@@ -1,9 +1,13 @@
 /* Grid items are composed to generate the minimum HTML possible */
-@import "./icon-preview.css";
+@import "./icon_preview.css";
 @import "./title.css";
 @import "./footer.css";
 
 /* Grid item */
 main > ul > li {
-  @apply inline-flex flex-col border-2 space-y-2;
+  @apply flex flex-col space-y-2
+    rounded-md border-spacing-0 border-collapse
+    overflow-hidden
+    bg-custom-background-color;
+  box-shadow: 0 0 3px 0 var(--shadows-color);
 }

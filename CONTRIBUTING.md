@@ -22,7 +22,6 @@
 
 - Install the [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) extension.
 - Install the [Rust Analyzer](https://marketplace.visualstudio.com/items?itemName=matklad.rust-analyzer) extension.
-- Install the [VSBrowser](https://marketplace.visualstudio.com/items?itemName=Phu1237.vs-browser) extension.
 
 ## Recommended workflow
 
@@ -50,7 +49,7 @@
 ### Where to look
 
 - End to end tests are located in `app/tests/`. They are written with [Playwright](https://playwright.dev/). Configuration is located at `app/playwright.config.js`.
-- The main stylesheet and other assets are located at `app/assets/`. Hopefully you don't need to change this style due to the class-based approach of TailwindCSS framework. Configuration is located at `app/tailwind.config.ts`.
+- The main stylesheet is located at `app/stylesheet.css` other assets are located at `app/assets/`. Hopefully you don't need to change this style due to the class-based approach of TailwindCSS framework. Configuration is located at `app/tailwind.config.ts`.
 - The initial HTML is located at `app/index.html`. It is used by Trunk to generate the final HTML.
 
 ## Localization

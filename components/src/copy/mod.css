@@ -1,0 +1,61 @@
+/* Global components */
+@layer components {
+  /**
+   * Copy buttons
+   *
+   * Adds a copy icon in top of the element using a ::before pseudo-element.
+   * The icon is hidden by default and shown on hover.
+   *
+   * # Usage
+   *
+   * It offers three variants of the icon:
+   *
+   * - `copy-button-white` for light icon.
+   * - `copy-button-black` for dark icon.
+   * - `copy-button-color-scheme` for icon that changes depending on the color scheme.
+   *
+   * ```css
+   * your-element {
+   *   @apply copy-button-color-scheme before:bg-[size:_1.5rem_1.5rem];
+   * }
+   * ```
+   *
+   * Note that you need to specify the size of the icon using `before:bg-[size:*]`.
+   **/
+  * > .copy-button {
+    @apply relative;
+  }
+
+  .copy-button {
+    @apply cursor-pointer before:content-[''] before:absolute
+      before:hidden before:hover:flex before:w-full before:h-full
+      before:bg-center before:bg-no-repeat
+      before:z-10;
+  }
+
+  .copy-button-color-scheme {
+    @apply copy-button
+      before:bg-[color:var(--transparent-element-background-color)]
+      before:bg-[url(./copy.svg)] dark:before:bg-[url(./copy-white.svg)];
+  }
+
+  .copy-button-white {
+    @apply copy-button before:bg-[url(./copy-white.svg)];
+  }
+
+  .copy-button-black {
+    @apply copy-button before:bg-[url(./copy.svg)];
+  }
+
+  .copy-button-color-scheme.copied {
+    @apply before:bg-[url(./check.svg)] dark:before:bg-[url(./check-white.svg)];
+  }
+
+  .copy-button-white.copied {
+    @apply before:bg-[url(./check-white.svg)];
+  }
+
+  .copy-button-black.copied {
+    @apply before:bg-[url(./check.svg)];
+  }
+}

@@ -1,0 +1,11 @@
+/* Icon preview */
+main > ul > li > :first-child {
+  @apply mx-auto w-14 h-14
+    copy-button-color-scheme before:bg-[size:_1.5rem]
+    mt-[var(--icon-preview-margin-top)]
+    mb-[var(--icon-preview-margin-bottom)];
+}
+
+main > ul > li > :first-child img {
+  @apply h-14 dark:invert;
+}
