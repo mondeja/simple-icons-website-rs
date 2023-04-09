@@ -1,7 +1,6 @@
 mod svg_path;
 
-use serde::Deserialize;
-use serde_json;
+use nanoserde::DeJson;
 use std::fs;
 use std::path::Path;
 pub use svg_path::get_simple_icon_svg_path_by_slug;
@@ -35,7 +34,7 @@ pub struct SimpleIcon {
     pub source: String,
 }
 
-#[derive(Deserialize)]
+#[derive(DeJson)]
 pub struct SimpleIconData {
     pub slug: Option<String>,
     pub title: String,
@@ -43,7 +42,7 @@ pub struct SimpleIconData {
     pub source: String,
 }
 
-#[derive(Deserialize)]
+#[derive(DeJson)]
 pub struct SimpleIconsData {
     pub icons: Vec<SimpleIconData>,
 }
@@ -90,7 +89,7 @@ pub fn get_simple_icons(max_icons: Option<usize>) -> Vec<SimpleIcon> {
         Path::new("node_modules/simple-icons/_data/simple-icons.json");
     let icons_data_raw = fs::read_to_string(icons_data_file)
         .expect("Could not read simple-icons.json file");
-    let icons_data: SimpleIconsData = serde_json::from_str(&icons_data_raw)
+    let icons_data: SimpleIconsData = DeJson::deserialize_json(&icons_data_raw)
         .expect("JSON was not well-formatted");
 
     for icon in icons_data.icons {
