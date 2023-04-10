@@ -10,9 +10,7 @@ use components::controls::layout::{
 use components::controls::order::{
     initial_order_mode_from_localstorage, OrderModeSignal,
 };
-use components::controls::search::{
-    initial_search_value_from_url_or_localstorage, SearchValueSignal,
-};
+use components::controls::search::{initial_search_value, SearchValueSignal};
 use components::grid::DisplayedIconsSignal;
 use components::*;
 use i18n::{gettext, move_gettext};
@@ -193,7 +191,7 @@ pub fn AppBody(cx: Scope) -> impl IntoView {
     );
 
     // Search context
-    let initial_search_value = initial_search_value_from_url_or_localstorage();
+    let initial_search_value = initial_search_value();
     provide_context(
         cx,
         SearchValueSignal(create_rw_signal(cx, initial_search_value.clone())),

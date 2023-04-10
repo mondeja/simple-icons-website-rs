@@ -3,17 +3,23 @@ mod item;
 
 use crate::controls::layout::{Layout, LayoutSignal};
 use crate::controls::order::OrderMode;
-use crate::controls::search::search_icons;
+use crate::controls::search::search_icons_and_returns_first_page;
 use crate::grid::item::details::*;
 use ad::*;
 use config::CONFIG;
 use item::*;
+use lazy_static::lazy_static;
 use leptos::*;
 use macros::{get_number_of_icons, simple_icons_array};
 use simple_icons::StaticSimpleIcon;
 
 pub const ICONS: [StaticSimpleIcon;
     CONFIG.max_icons.unwrap_or(get_number_of_icons!())] = simple_icons_array!();
+
+lazy_static! {
+    pub static ref INITIAL_ICONS: Vec<StaticSimpleIcon> =
+        ICONS[..CONFIG.max_icons_per_page].to_vec();
+}
 
 #[derive(Copy, Clone)]
 pub struct DisplayedIconsSignal(pub RwSignal<Vec<StaticSimpleIcon>>);
@@ -26,11 +32,14 @@ pub fn initial_displayed_icons_from_search_value_and_order_mode(
     order_mode: &OrderMode,
 ) -> Vec<StaticSimpleIcon> {
     if search_value.is_empty() {
-        let mut displayed_icons: Vec<StaticSimpleIcon> = ICONS.to_vec();
-        order_mode.sort_icons(&mut displayed_icons);
+        let mut displayed_icons: Vec<StaticSimpleIcon> = INITIAL_ICONS.to_vec();
+        if order_mode != &OrderMode::Alphabetic {
+            // Alphabetical is the default order of the icons in the static array
+            order_mode.sort_icons(&mut displayed_icons);
+        }
         displayed_icons
     } else {
-        search_icons(search_value, order_mode)
+        search_icons_and_returns_first_page(search_value)
     }
 }
 

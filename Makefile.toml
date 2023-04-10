@@ -150,6 +150,19 @@ command = "cargo"
 args = ["run", "--bin", "fetch-deprecated-icons", "--package", "scripts"]
 workspace = false
 
+[tasks.build-fast-fuzzy]
+description = "Build the fast-fuzzy JS library for the web"
+command = "esbuild"
+args = [
+    "components/src/controls/search/fast-fuzzy.js",
+    "--bundle",
+    "--outfile=app/assets/dist/fast-fuzzy.js"
+]
+workspace = false
+
 [tasks.run-pre-build-scripts]
-run_task = { name = ["fetch-deprecated-icons"] }
+run_task = { name = [
+    "fetch-deprecated-icons",
+    "build-fast-fuzzy",
+], parallel = true }
 workspace = false
