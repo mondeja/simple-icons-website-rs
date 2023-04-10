@@ -1,15 +1,14 @@
+use config::DEPRECATED_ICONS_FILE_NAME;
 use serde_json;
 use std::env;
 use std::fs;
 use std::path::Path;
 
-pub const DEPRECATED_ICONS_FILE_NAME: &str = "simple-icons-deprecated.txt";
-
 /// Deprecated icons for next versions of Simple Icons
 #[derive(Debug)]
 pub struct DeprecatedIcon {
     pub slug: String,
-    pub at_version: String,
+    pub removal_at_version: String,
     pub milestone_number: String,
     pub milestone_due_on: String,
     pub milestone_url: String,
@@ -52,7 +51,7 @@ pub fn fetch_deprecated_simple_icons() -> Vec<DeprecatedIcon> {
 
     for milestone_data in milestones_data.into_iter() {
         let title = milestone_data.get("title").unwrap().as_str().unwrap();
-        let at_version = title.replace("v", "");
+        let removal_at_version = title.replace("v", "");
         let milestone_url = milestone_data.get("url").unwrap();
         let milestone_number = milestone_data.get("number").unwrap();
         let milestone_due_on = milestone_data.get("dueOn").unwrap();
@@ -88,7 +87,7 @@ pub fn fetch_deprecated_simple_icons() -> Vec<DeprecatedIcon> {
 
                 let deprecated_icon = DeprecatedIcon {
                     slug,
-                    at_version: at_version.to_string(),
+                    removal_at_version: removal_at_version.to_string(),
                     milestone_number: milestone_number.to_string(),
                     milestone_due_on: milestone_due_on.to_string(),
                     milestone_url: milestone_url.to_string(),

@@ -16,7 +16,6 @@ async fn fetch_svg_value_and_set_download_colored_button_href(
     download_colored_icon_container: HtmlElement,
 ) {
     // TODO: handle http errors
-    let window = window().unwrap();
     let svg = Request::get(&format!("/icons/{}.svg", slug))
         .send()
         .await

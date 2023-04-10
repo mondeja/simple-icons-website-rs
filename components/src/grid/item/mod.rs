@@ -1,9 +1,11 @@
+mod deprecated;
 pub mod details;
 mod footer;
 mod icon_preview;
 mod links;
 mod title;
 
+use deprecated::*;
 use footer::*;
 use icon_preview::*;
 use links::*;
@@ -30,6 +32,21 @@ pub fn IconGridItem(
                 license_url=icon.license_url
                 license_type=icon.license_type
             />
+            {
+                if icon.is_deprecated {
+                    vec![
+                        view!{cx,
+                            <IconIsDeprecatedNotice
+                                title=icon.title
+                                pull_request_url=icon.deprecation_pull_request_url.unwrap()
+                                removal_at_version=icon.removal_at_version.unwrap()
+                            />
+                        }
+                    ]
+                } else {
+                    vec![]
+                }
+            }
             <IconGridItemTitle title=icon.title slug=icon.slug/>
             <IconGridItemFooter icon=icon/>
         </li>

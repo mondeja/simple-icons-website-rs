@@ -1,7 +1,7 @@
+use config::DEPRECATED_ICONS_FILE_NAME;
 use dotenv;
 use reqwest;
 use serde_json;
-use simple_icons::DEPRECATED_ICONS_FILE_NAME;
 use std::env;
 use std::fs;
 use std::io::Write;
@@ -67,6 +67,10 @@ async fn main() {
         fs::remove_file(tmp_file_path).unwrap();
         panic!("Error retrieving data from GITHUB Graphql API: {}", message);
     }
-    let mut tmp_file = fs::File::create(tmp_file_path).unwrap();
+    let mut tmp_file = fs::File::create(&tmp_file_path).unwrap();
     writeln!(&mut tmp_file, "{}", resp.to_string()).unwrap();
+    println!(
+        "Fetched deprecated icons from Github API and saved to {}",
+        tmp_file_path.display()
+    );
 }

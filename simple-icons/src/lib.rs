@@ -1,9 +1,7 @@
 mod deprecated;
 mod svg_path;
 
-pub use deprecated::{
-    fetch_deprecated_simple_icons, DeprecatedIcon, DEPRECATED_ICONS_FILE_NAME,
-};
+pub use deprecated::{fetch_deprecated_simple_icons, DeprecatedIcon};
 use nanoserde::DeJson;
 use std::fs;
 use std::path::Path;
@@ -32,6 +30,8 @@ pub struct StaticSimpleIcon {
     pub license_url: Option<&'static str>,
     pub license_type: Option<&'static str>,
     pub is_deprecated: bool,
+    pub deprecation_pull_request_url: Option<&'static str>,
+    pub removal_at_version: Option<&'static str>,
 }
 
 #[derive(DeJson, Clone)]

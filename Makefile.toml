@@ -32,9 +32,9 @@ args = [
 workspace = false
 cwd = "./app"
 
-[tasks.pre-build-and-serve]
-description = "Run pre-build scripts and serve the app on development"
-run_task = { name = ["run-pre-build-scripts", "serve"] }
+[tasks.serve-and-watch-css]
+description = "Run the app and watch CSS on development"
+run_task = { name = ["serve", "watch-css-for-dev"], parallel = true }
 workspace = false
 
 [tasks.locales]
@@ -89,11 +89,7 @@ private = true
 
 [tasks.dev]
 description = "Run the app and watch CSS on development"
-run_task = { name = [
-    "pre-build-and-serve",
-    "serve",
-    "watch-css-for-dev"
-], parallel = true }
+run_task = { name = ["run-pre-build-scripts", "serve-and-watch-css"] }
 workspace = false
 
 [tasks.builds]

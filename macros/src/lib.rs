@@ -126,9 +126,7 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
         .collect::<Vec<_>>();
     let sorted_hexes = sort_hexes(&hexes);
 
-    println!("HERE");
     let deprecated_icons = fetch_deprecated_simple_icons();
-    println!("Deprecated icons: {:?}", deprecated_icons);
 
     let mut simple_icons_array_code = "[".to_string();
     for (i, icon) in simple_icons.iter().enumerate() {
@@ -137,6 +135,10 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
             .iter()
             .position(|hex| *hex == icon.hex)
             .unwrap();
+
+        let deprecated_icon = deprecated_icons
+            .iter()
+            .find(|deprecated_icon| deprecated_icon.slug == icon.slug);
 
         simple_icons_array_code.push_str(&format!(
             concat!(
@@ -154,6 +156,8 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
                 "order_alpha: {},",
                 "order_color: {},",
                 "is_deprecated: {},",
+                "deprecation_pull_request_url: {},",
+                "removal_at_version: {},",
                 "}},"
             ),
             icon.slug,
@@ -178,7 +182,21 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
             },
             i,
             order_color,
-            false,
+            deprecated_icon.is_some(),
+            match deprecated_icon.is_some() {
+                true => format!(
+                    "Some(\"{}\")",
+                    deprecated_icon.unwrap().pull_request_url
+                ),
+                false => "None".to_string(),
+            },
+            match deprecated_icon.is_some() {
+                true => format!(
+                    "Some(\"{}\")",
+                    deprecated_icon.unwrap().removal_at_version
+                ),
+                false => "None".to_string(),
+            },
         ));
     }
     simple_icons_array_code.push_str("]");

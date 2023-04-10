@@ -1,3 +1,5 @@
+pub const DEPRECATED_ICONS_FILE_NAME: &str = "simple-icons-deprecated.txt";
+
 /// Application configuration
 pub struct Config {
     /// Number of icons to load

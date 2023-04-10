@@ -8,7 +8,7 @@ name = "fetch-deprecated-icons"
 path = "src/fetch-deprecated-icons.rs"
 
 [dependencies]
-simple-icons = { path = "../simple-icons" }
+simple-icons-website-config = { path = "../config" }
 dotenv = "0.15"
 reqwest = { version = "0.11", features = ["json"] }
 serde_json = "1.0"
