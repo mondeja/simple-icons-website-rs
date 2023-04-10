@@ -16,14 +16,26 @@ pub struct SimpleIconsExtension {
 }
 
 #[derive(Clone, Copy)]
-pub struct FullStaticSimpleIcon {
+pub struct StaticSimpleIcon {
     pub slug: &'static str,
     pub title: &'static str,
     pub hex: &'static str,
     pub hex_is_relatively_light: bool,
-    pub source: &'static str,
+    pub source_url: &'static str,
     pub order_alpha: usize,
     pub order_color: usize,
+    pub guidelines_url: Option<&'static str>,
+    // TODO: problem separating license_url and license_type
+    // into a different struct
+    pub license_url: Option<&'static str>,
+    pub license_type: Option<&'static str>,
+}
+
+#[derive(DeJson, Clone)]
+pub struct SimpleIconLicense {
+    #[nserde(rename = "type")]
+    pub type_: String,
+    pub url: Option<String>,
 }
 
 #[derive(Clone)]
@@ -31,7 +43,9 @@ pub struct SimpleIcon {
     pub slug: String,
     pub title: String,
     pub hex: String,
-    pub source: String,
+    pub source_url: String,
+    pub guidelines_url: Option<String>,
+    pub license: Option<SimpleIconLicense>,
 }
 
 #[derive(DeJson)]
@@ -40,6 +54,8 @@ pub struct SimpleIconData {
     pub title: String,
     pub hex: String,
     pub source: String,
+    pub guidelines: Option<String>,
+    pub license: Option<SimpleIconLicense>,
 }
 
 #[derive(DeJson)]
@@ -102,7 +118,9 @@ pub fn get_simple_icons(max_icons: Option<usize>) -> Vec<SimpleIcon> {
             slug,
             title: icon.title,
             hex: icon.hex,
-            source: icon.source,
+            source_url: icon.source,
+            guidelines_url: icon.guidelines,
+            license: icon.license,
         };
         simple_icons.push(icon);
 

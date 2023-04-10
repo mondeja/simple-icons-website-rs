@@ -1,3 +1,4 @@
+use crate::controls::order::{OrderMode, OrderModeSignal};
 use crate::debounce;
 use crate::grid::{DisplayedIconsSignal, ICONS};
 use crate::storage::LocalStorage;
@@ -6,7 +7,7 @@ use i18n::move_gettext;
 use leptos::leptos_dom::helpers::TimeoutHandle;
 use leptos::*;
 use rust_fuzzy_search::fuzzy_search;
-use simple_icons::FullStaticSimpleIcon;
+use simple_icons::StaticSimpleIcon;
 use wasm_bindgen::JsCast;
 use web_sys;
 
@@ -55,10 +56,34 @@ pub fn set_search_value_on_localstorage(search_value: &str) {
 #[derive(Copy, Clone)]
 pub struct SearchValueSignal(pub RwSignal<String>);
 
+pub fn search_icons(
+    search_value: &str,
+    order_mode: &OrderMode,
+) -> Vec<StaticSimpleIcon> {
+    let icon_titles =
+        ICONS.iter().map(|icon| icon.title).collect::<Vec<&str>>();
+
+    // TODO: fuzzy searching is todo much restrictive
+    let res: Vec<(&str, f32)> = fuzzy_search(search_value, &icon_titles);
+
+    let mut new_displayed_icons: Vec<StaticSimpleIcon> =
+        Vec::with_capacity(ICONS.len());
+    for (i, (_title, score)) in res.iter().enumerate() {
+        if *score > CONFIG.min_search_score {
+            new_displayed_icons.push(ICONS[i].clone())
+        }
+    }
+
+    order_mode.sort_icons(&mut new_displayed_icons);
+
+    new_displayed_icons
+}
+
 #[component]
 pub fn SearchControl(cx: Scope) -> impl IntoView {
     let displayed_icons = use_context::<DisplayedIconsSignal>(cx).unwrap().0;
     let search = use_context::<SearchValueSignal>(cx).unwrap().0;
+    let order_mode = use_context::<OrderModeSignal>(cx).unwrap().0;
 
     // timeout for search debouncing
     //
@@ -87,22 +112,9 @@ pub fn SearchControl(cx: Scope) -> impl IntoView {
                         return;
                     }
 
-                    let icon_titles = ICONS
-                        .iter()
-                        .map(|icon| icon.title)
-                        .collect::<Vec<&str>>();
+                    let new_displayed_icons =
+                        search_icons(&value, &order_mode.get());
 
-                    // TODO: fuzzy searching is todo much restrictive
-                    let res: Vec<(&str, f32)> =
-                        fuzzy_search(&value, &icon_titles);
-
-                    let mut new_displayed_icons: Vec<FullStaticSimpleIcon> =
-                        Vec::with_capacity(ICONS.len());
-                    for (i, (_title, score)) in res.iter().enumerate() {
-                        if *score > CONFIG.min_search_score {
-                            new_displayed_icons.push(ICONS[i].clone())
-                        }
-                    }
                     displayed_icons.update(move |state| {
                         *state = new_displayed_icons;
                     });
@@ -121,6 +133,7 @@ pub fn SearchControl(cx: Scope) -> impl IntoView {
                 type="search"
                 placeholder=move_gettext!(cx, "Search by brand...")
                 on:input=on_search_input
+                value=search
             />
         </div>
     }

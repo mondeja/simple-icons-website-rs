@@ -8,10 +8,12 @@ use components::controls::layout::{
     initial_layout_from_localstorage, LayoutSignal,
 };
 use components::controls::order::{
-    initial_order_mode_from_localstorage, sort_displayed_icons, OrderModeSignal,
+    initial_order_mode_from_localstorage, OrderModeSignal,
 };
-use components::controls::search::SearchValueSignal;
-use components::grid::{DisplayedIconsSignal, ICONS};
+use components::controls::search::{
+    initial_search_value_from_url_or_localstorage, SearchValueSignal,
+};
+use components::grid::DisplayedIconsSignal;
 use components::*;
 use i18n::{gettext, move_gettext};
 use i18n::{LocaleState, LocaleStateSignal};
@@ -157,7 +159,11 @@ pub fn AppBody(cx: Scope) -> impl IntoView {
     );
 
     // Search context
-    provide_context(cx, SearchValueSignal(create_rw_signal(cx, String::new())));
+    let initial_search_value = initial_search_value_from_url_or_localstorage();
+    provide_context(
+        cx,
+        SearchValueSignal(create_rw_signal(cx, initial_search_value.clone())),
+    );
 
     // Layout context
     provide_context(
@@ -166,14 +172,21 @@ pub fn AppBody(cx: Scope) -> impl IntoView {
     );
 
     // Displayed icons context
-    let mut icons = ICONS.to_vec();
-    sort_displayed_icons(&mut icons, initial_order_mode);
-    provide_context(cx, DisplayedIconsSignal(create_rw_signal(cx, icons)));
+    provide_context(
+        cx,
+        DisplayedIconsSignal(create_rw_signal(
+            cx,
+            initial_displayed_icons_from_search_value_and_order_mode(
+                &initial_search_value,
+                &initial_order_mode,
+            ),
+        )),
+    );
 
     view! { cx,
         <body class=move||{
             let mut class = concat!(
-                "font-mono flex flex-col px-6 md:px-12",
+                "font-mono flex flex-col px-6 md:px-12 min-h-[100vh]",
                 " bg-custom-background-color",
                 " text-custom-text-default-color"
             ).to_string();

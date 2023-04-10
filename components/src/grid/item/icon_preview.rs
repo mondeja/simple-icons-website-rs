@@ -1,7 +1,7 @@
 use crate::copy::copy_setting_copied_transition_in_element;
 use i18n::move_gettext;
 use leptos::{ev::MouseEvent, *};
-use reqwasm;
+use reqwasm::http::Request;
 use wasm_bindgen::JsCast;
 use web_sys::{HtmlElement, HtmlImageElement};
 
@@ -10,7 +10,7 @@ async fn fetch_svg_value_and_copy_setting_copied_transition_in_element(
     button: HtmlElement,
 ) {
     // TODO: Handle HTTP failures here
-    let svg = reqwasm::http::Request::get(&src)
+    let svg = Request::get(&src)
         .send()
         .await
         .unwrap()
@@ -34,7 +34,7 @@ pub fn IconGridItemPreview(
 ) -> impl IntoView {
     view! { cx,
         <button
-            title=move_gettext!(cx, "{} SVG", title)
+            title=move_gettext!(cx, "Copy {} SVG", title)
             on:click=move |ev: MouseEvent| {
                 let target = event_target::<HtmlElement>(&ev);
                 let src = target

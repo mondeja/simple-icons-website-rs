@@ -8,6 +8,8 @@
 @import "./../components/src/footer/mod.css";
 /* Copy buttons */
 @import "./../components/src/copy/mod.css";
+/* Modal */
+@import "./../components/src/modal.css";
 
 @tailwind base;
 @tailwind components;
@@ -44,7 +46,7 @@ body.dark {
   /* Color of shadows */
   --shadows-color: rgba(212, 212, 212, 0.7);
   /* Color of transparent background for some elements, like copy buttons in icon previews */
-  --transparent-element-background-color: rgba(20, 20, 20, 0.7);
+  --transparent-element-background-color: rgba(34, 34, 34, 0.6);
   /* Color of links */
   --link-color: rgb(236, 236, 236);
   /* Color of on hover */

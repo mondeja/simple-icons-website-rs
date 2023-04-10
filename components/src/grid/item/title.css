@@ -1,5 +1,5 @@
 /* Icon title */
-main > ul > li > :nth-child(2) {
+main > ul > li > h2 {
   @apply font-sans font-semibold w-full overflow-hidden flex-grow align-baseline
     p-[0.4rem_var(--title-x-padding)]
     copy-button-color-scheme

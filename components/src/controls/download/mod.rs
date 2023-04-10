@@ -6,7 +6,11 @@ use crate::controls::download::pdf::maybe_initialize_pdfkit;
 use crate::storage::LocalStorage;
 use i18n::move_gettext;
 use leptos::*;
+pub use pdf::download_pdf;
 use std::fmt;
+pub use svg::download_svg;
+use wasm_bindgen::JsCast;
+use web_sys::HtmlElement;
 
 #[derive(Default, Copy, Clone, PartialEq)]
 pub enum DownloadType {
@@ -100,4 +104,22 @@ pub fn DownloadFileTypeControl(cx: Scope) -> impl IntoView {
             </div>
         </div>
     }
+}
+
+/// Download a SVG icon by its slug
+pub fn download(filename: &str, href: &str) {
+    let window = web_sys::window().unwrap();
+    let document = window.document().unwrap();
+    let link: web_sys::HtmlElement = document
+        .create_element("a")
+        .unwrap()
+        .dyn_into::<HtmlElement>()
+        .unwrap();
+    link.set_attribute("class", "hidden").unwrap();
+    link.set_attribute("download", filename).unwrap();
+    link.set_attribute("href", href).unwrap();
+    let body = document.body().unwrap();
+    body.append_child(&link).unwrap();
+    link.click();
+    body.remove_child(&link).unwrap();
 }

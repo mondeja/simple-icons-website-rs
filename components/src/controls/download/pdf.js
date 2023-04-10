@@ -1,4 +1,4 @@
-export async function download_pdf(slug, errorMessageSchema) {
+export async function download_pdf_(slug, errorMessageSchema) {
   let icon_svg_url = `/icons/${slug}.svg`;
   const res = await fetch(icon_svg_url);
   const svg = await res.text();

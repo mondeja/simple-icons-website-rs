@@ -133,13 +133,16 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
 
         simple_icons_array_code.push_str(&format!(
             concat!(
-                "::simple_icons::FullStaticSimpleIcon{{",
+                "::simple_icons::StaticSimpleIcon{{",
                 "slug: \"{}\",",
                 "title: \"{}\",",
                 "hex: \"{}\",",
                 "hex_is_relatively_light: {},",
-                "source: \"{}\",",
-                // `get_simple_icons` function returns icon in alphabetical order
+                "source_url: \"{}\",",
+                "guidelines_url: {},",
+                "license_url: {},",
+                "license_type: {},",
+                // `get_simple_icons` function returns icons in alphabetical order
                 // because they are extracted from the `simple-icons.json` file
                 "order_alpha: {},",
                 "order_color: {},",
@@ -149,7 +152,22 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
             icon.title,
             icon.hex,
             get_relative_luminance(&icon.hex) >= 0.4,
-            icon.source,
+            icon.source_url,
+            match icon.guidelines_url {
+                Some(ref url) => format!("Some(\"{}\")", url),
+                None => "None".to_string(),
+            },
+            match icon.license {
+                Some(ref license) => match license.url {
+                    Some(ref url) => format!("Some(\"{}\")", url),
+                    None => "None".to_string(),
+                },
+                None => "None".to_string(),
+            },
+            match icon.license {
+                Some(ref license) => format!("Some(\"{}\")", license.type_),
+                None => "None".to_string(),
+            },
             i,
             order_color,
         ));

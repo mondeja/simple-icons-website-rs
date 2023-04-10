@@ -14,7 +14,7 @@ pub fn IconGridItemTitle(
 ) -> impl IntoView {
     view! { cx,
         <h2
-            title=move_gettext!(cx, "Copy slug")
+            title=move_gettext!(cx, "Copy {} slug ({})", title, slug)
             on:click=move|ev: MouseEvent|{
                 let target = event_target::<HtmlElement>(&ev);
                 spawn_local(

@@ -1,9 +1,13 @@
+pub mod details;
 mod footer;
 mod icon_preview;
+mod links;
 mod title;
 
 use footer::*;
 use icon_preview::*;
+use links::*;
+use simple_icons::StaticSimpleIcon;
 use title::*;
 
 use leptos::*;
@@ -14,26 +18,20 @@ use leptos::*;
 #[component]
 pub fn IconGridItem(
     cx: Scope,
-    /// Icon slug
-    slug: &'static str,
-    /// Brand title
-    title: &'static str,
-    /// Brand color
-    hex: &'static str,
-    /// Hex color is relatively light, which means that the text should be dark
-    hex_is_relatively_light: bool,
+    /// Icon
+    icon: StaticSimpleIcon,
 ) -> impl IntoView {
     view! { cx,
         // The grid items are styled in item.css
         <li>
-            <IconGridItemPreview slug=slug title=title />
-            <IconGridItemTitle title=title slug=slug/>
-            <IconGridItemFooter
-                slug=slug
-                title=title
-                hex=hex
-                hex_is_relatively_light=hex_is_relatively_light
+            <IconGridItemPreview slug=icon.slug title=icon.title />
+            <IconGridItemLinks
+                guidelines_url=icon.guidelines_url
+                license_url=icon.license_url
+                license_type=icon.license_type
             />
+            <IconGridItemTitle title=icon.title slug=icon.slug/>
+            <IconGridItemFooter icon=icon/>
         </li>
     }
 }

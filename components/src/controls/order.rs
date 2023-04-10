@@ -3,7 +3,7 @@ use crate::storage::LocalStorage;
 use crate::DisplayedIconsSignal;
 use i18n::move_gettext;
 use leptos::*;
-use simple_icons::FullStaticSimpleIcon;
+use simple_icons::StaticSimpleIcon;
 use std::fmt;
 
 #[derive(Default, Copy, Clone, PartialEq)]
@@ -12,6 +12,19 @@ pub enum OrderMode {
     Alphabetic,
     Color,
     SearchMatch,
+}
+
+impl OrderMode {
+    pub fn sort_icons(&self, icons: &mut Vec<StaticSimpleIcon>) {
+        match self {
+            OrderMode::Alphabetic => {
+                icons.sort_by(|a, b| a.order_alpha.cmp(&b.order_alpha));
+            }
+            _ => {
+                icons.sort_by(|a, b| a.order_color.cmp(&b.order_color));
+            }
+        }
+    }
 }
 
 impl From<&str> for OrderMode {
@@ -58,28 +71,13 @@ fn set_order_mode_on_localstorage(order_mode: &OrderMode) {
         .unwrap();
 }
 
-pub fn sort_displayed_icons(
-    icons: &mut Vec<FullStaticSimpleIcon>,
-    order_mode: OrderMode,
-) {
-    match order_mode {
-        OrderMode::Alphabetic => {
-            icons.sort_by(|a, b| a.order_alpha.cmp(&b.order_alpha));
-        }
-        OrderMode::Color => {
-            icons.sort_by(|a, b| a.order_color.cmp(&b.order_color));
-        }
-        _ => todo!(),
-    }
-}
-
 fn set_order_mode(
     order_mode: OrderMode,
-    displayed_icons_signal: &RwSignal<Vec<FullStaticSimpleIcon>>,
+    displayed_icons_signal: &RwSignal<Vec<StaticSimpleIcon>>,
 ) {
     // Sort icons array
     let mut displayed_icons = displayed_icons_signal();
-    sort_displayed_icons(&mut displayed_icons, order_mode);
+    order_mode.sort_icons(&mut displayed_icons);
 
     // Update displayed icons signal
     displayed_icons_signal.update(move |state| {
