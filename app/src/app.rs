@@ -23,6 +23,12 @@ use leptos_meta::{
 };
 use macros::get_number_of_icons;
 
+macro_rules! url {
+    () => {
+        "https://simpleicons.org"
+    };
+}
+
 /// Number of icons available in the library
 static NUMBER_OF_ICONS: usize = get_number_of_icons!();
 
@@ -30,7 +36,10 @@ static NUMBER_OF_ICONS: usize = get_number_of_icons!();
 static TITLE: &str = "Simple Icons";
 
 /// URL of the website
-static URL: &str = "https://simpleicons.org";
+static URL: &str = url!();
+
+/// URL of Simple Icons logo
+static LOGO_URL: &str = concat!(url!(), "/icons/simpleicons.svg");
 
 /// The main application component
 #[component]
@@ -75,12 +84,12 @@ pub fn App(cx: Scope) -> impl IntoView {
             href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&family=Roboto+Mono:wght@400;600"
         />
 
-        // TODO: application/ld+json (structured data)
-
         <MetaOpenGraph description=description/>
         <MetaTwitter description=description/>
         <Meta name="msvalidate.01" content="14319924BC1F00DC15EF0EAA29E72404"/>
         <Meta name="yandex-verification" content="8b467a0b98aa2725"/>
+
+        <LdJSONMetadata/>
 
         <AppBody/>
     }
@@ -123,6 +132,31 @@ where
         <Meta name="twitter:description" content=description/>
         <Meta name="twitter:url" content=URL/>
         <Meta name="twitter:image:src" content="/og.png"/>
+    }
+}
+
+/// JSON-LD metadata
+/// See https://developers.google.com/search/docs/data-types/logo
+#[component]
+pub fn LdJSONMetadata(cx: Scope) -> impl IntoView {
+    view! { cx,
+        <script type="application/ld+json">
+            {{
+                serde_json::json!({
+                    "@context": "https://schema.org",
+                    "@type": "Organization",
+                    "name": TITLE,
+                    "url": URL,
+                    "logo": LOGO_URL,
+                    "image": LOGO_URL,
+                    "potentialAction": {
+                        "@type": "SearchAction",
+                        "target": URL.to_owned() + "/?q={search-term}",
+                        "query-input": "required name=search-term",
+                    },
+                }).to_string()
+            }}
+        </script>
     }
 }
 
