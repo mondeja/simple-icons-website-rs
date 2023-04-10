@@ -7,7 +7,10 @@ mod color;
 use color::{get_relative_luminance, sort_hexes};
 use config::CONFIG;
 use proc_macro::TokenStream;
-use simple_icons::{get_simple_icon_svg_path_by_slug, get_simple_icons};
+use simple_icons::{
+    fetch_deprecated_simple_icons, get_simple_icon_svg_path_by_slug,
+    get_simple_icons,
+};
 use std::fs;
 use std::path::Path;
 use syn::{parse_macro_input, LitStr};
@@ -123,6 +126,10 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
         .collect::<Vec<_>>();
     let sorted_hexes = sort_hexes(&hexes);
 
+    println!("HERE");
+    let deprecated_icons = fetch_deprecated_simple_icons();
+    println!("Deprecated icons: {:?}", deprecated_icons);
+
     let mut simple_icons_array_code = "[".to_string();
     for (i, icon) in simple_icons.iter().enumerate() {
         // color order index
@@ -146,6 +153,7 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
                 // because they are extracted from the `simple-icons.json` file
                 "order_alpha: {},",
                 "order_color: {},",
+                "is_deprecated: {},",
                 "}},"
             ),
             icon.slug,
@@ -170,6 +178,7 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
             },
             i,
             order_color,
+            false,
         ));
     }
     simple_icons_array_code.push_str("]");

@@ -32,6 +32,11 @@ args = [
 workspace = false
 cwd = "./app"
 
+[tasks.pre-build-and-serve]
+description = "Run pre-build scripts and serve the app on development"
+run_task = { name = ["run-pre-build-scripts", "serve"] }
+workspace = false
+
 [tasks.locales]
 description = "Generate or update locales"
 install_crate = "xtr"
@@ -84,13 +89,17 @@ private = true
 
 [tasks.dev]
 description = "Run the app and watch CSS on development"
-run_task = { name = ["serve", "watch-css-for-dev"], parallel = true }
+run_task = { name = [
+    "pre-build-and-serve",
+    "serve",
+    "watch-css-for-dev"
+], parallel = true }
 workspace = false
 
 [tasks.builds]
 description = "Build the app for production"
 install_crate = "trunk"
-run_task = { name = ["build-css", "build-wasm"] }
+run_task = { name = ["run-pre-build-scripts", "build-css", "build-wasm"] }
 workspace = false
 
 [tasks.build-wasm]
@@ -138,3 +147,13 @@ command = "prettier"
 args = ["--write", ".", "--ignore-path", ".gitignore"]
 workspace = false
 private = true
+
+[tasks.fetch-deprecated-icons]
+description = "Fetch deprecated icons from simple-icons repository"
+command = "cargo"
+args = ["run", "--bin", "fetch-deprecated-icons", "--package", "scripts"]
+workspace = false
+
+[tasks.run-pre-build-scripts]
+run_task = { name = ["fetch-deprecated-icons"] }
+workspace = false

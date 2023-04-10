@@ -6,6 +6,7 @@
 - Add `wasm32-unknown-unknown` target with `rustup target add wasm32-unknown-unknown`.
 - Install [cargo-make](https://sagiegurari.github.io/cargo-make/): `cargo install --force cargo-make`
 - Install NodeJS with npm and dependencies with `npm install`.
+- Create an _.env_ file at the root with a Github personal token with the variable `GITHUB_TOKEN`.
 
 ## Commands
 

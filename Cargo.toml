@@ -1,5 +1,13 @@
 [workspace]
-members = ["app", "components", "config", "i18n", "macros", "simple-icons"]
+members = [
+    "app",
+    "components",
+    "config",
+    "i18n",
+    "macros",
+    "simple-icons",
+    "scripts"
+]
 
 [workspace.package]
 version = "0.1.0"
