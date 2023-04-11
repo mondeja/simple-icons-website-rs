@@ -1,6 +1,6 @@
 use crate::controls::button::*;
 use crate::storage::LocalStorage;
-use crate::DisplayedIconsSignal;
+use crate::{IconsGrid, IconsGridSignal};
 use i18n::move_gettext;
 use leptos::*;
 use simple_icons::StaticSimpleIcon;
@@ -73,16 +73,14 @@ fn set_order_mode_on_localstorage(order_mode: &OrderMode) {
 
 fn set_order_mode(
     order_mode: OrderMode,
-    displayed_icons_signal: &RwSignal<Vec<StaticSimpleIcon>>,
+    icons_grid_signal: &RwSignal<IconsGrid>,
 ) {
     // Sort icons array
-    let mut displayed_icons = displayed_icons_signal();
-    order_mode.sort_icons(&mut displayed_icons);
+    let mut loaded_icons = icons_grid_signal().loaded_icons;
+    order_mode.sort_icons(&mut loaded_icons);
 
     // Update displayed icons signal
-    displayed_icons_signal.update(move |state| {
-        *state = displayed_icons;
-    });
+    icons_grid_signal.update(move |grid| grid.set_loaded_icons(loaded_icons));
 
     // Update order mode
     set_order_mode_on_localstorage(&order_mode);
@@ -91,7 +89,7 @@ fn set_order_mode(
 #[component]
 pub fn OrderControl(cx: Scope) -> impl IntoView {
     let order_mode = use_context::<OrderModeSignal>(cx).unwrap().0;
-    let displayed_icons = use_context::<DisplayedIconsSignal>(cx).unwrap().0;
+    let displayed_icons = use_context::<IconsGridSignal>(cx).unwrap().0;
 
     view! { cx,
         <div class="control">

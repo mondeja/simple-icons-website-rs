@@ -1,18 +1,13 @@
 mod fuzzy;
 
-use crate::controls::order::{OrderMode, OrderModeSignal};
-use crate::debounce;
-use crate::grid::{DisplayedIconsSignal, ICONS, INITIAL_ICONS};
+use crate::grid::{IconsGrid, IconsGridSignal, ICONS, INITIAL_ICONS};
 use crate::storage::LocalStorage;
 use config::CONFIG;
-use fuzzy::{rebuild_searcher, search};
+use fuzzy::{build_searcher, search};
 use i18n::move_gettext;
 use js_sys::JsString;
-use leptos::leptos_dom::helpers::TimeoutHandle;
-use leptos::*;
-use rust_fuzzy_search::fuzzy_search;
+use leptos::{html::Input, *};
 use simple_icons::StaticSimpleIcon;
-use wasm_bindgen::{JsCast, JsValue};
 use web_sys;
 
 fn initial_search_value_from_localstorage() -> Option<String> {
@@ -58,24 +53,23 @@ pub fn set_search_value_on_localstorage(search_value: &str) {
 }
 
 fn init_searcher() {
-    let icon_titles =
-        ICONS.iter().map(|icon| icon.title).collect::<Vec<&str>>();
-
+    // TODO: include aliases in the search
     let icons_titles_ids = ICONS
         .iter()
         .map(|icon| (icon.title, icon.order_alpha))
         .collect::<Vec<(&str, usize)>>();
 
+    // TODO: `js_sys::Array::new_with_length` generates an array with a first
+    // undefined value (investigate why)
     let icon_titles_ids_js_array = js_sys::Array::new();
     for (icon_title, icon_order_alpha) in &icons_titles_ids {
-        let icon_title_id_array = js_sys::Array::new_with_length(2);
-        icon_title_id_array.set(0, (JsString::from(*icon_title)).into());
-        icon_title_id_array
-            .set(1, (js_sys::Number::from(*icon_order_alpha as u32)).into());
-
+        let icon_title_id_array = js_sys::Array::of2(
+            &JsString::from(*icon_title).into(),
+            &js_sys::Number::from(*icon_order_alpha as u32).into(),
+        );
         icon_titles_ids_js_array.push(&icon_title_id_array);
     }
-    rebuild_searcher(&icon_titles_ids_js_array);
+    build_searcher(&icon_titles_ids_js_array);
 }
 
 pub fn initial_search_value() -> String {
@@ -89,88 +83,106 @@ pub struct SearchValueSignal(pub RwSignal<String>);
 
 pub fn search_icons_and_returns_first_page(
     search_value: &str,
-) -> Vec<StaticSimpleIcon> {
-    let res = js_sys::Array::from(&search(search_value));
+) -> (Vec<StaticSimpleIcon>, Vec<StaticSimpleIcon>) {
+    let search_result = js_sys::Array::from(&search(search_value));
 
-    let response_length = res.length();
+    let search_result_length = search_result.length();
 
     let mut new_displayed_icons: Vec<StaticSimpleIcon> =
-        Vec::with_capacity(response_length as usize);
-    for i in 0..response_length {
-        let res_array = js_sys::Array::from(&res.get(i));
-        let icon_order_alpha = res_array.get(1).as_f64().unwrap() as usize;
+        Vec::with_capacity(search_result_length as usize);
+    for i in 0..search_result_length {
+        let result_icon_array = js_sys::Array::from(&search_result.get(i));
+        let icon_order_alpha =
+            result_icon_array.get(1).as_f64().unwrap() as usize;
         let icon = ICONS[icon_order_alpha as usize];
         new_displayed_icons.push(icon);
-        if new_displayed_icons.len() >= CONFIG.max_icons_per_page {
+        if new_displayed_icons.len() >= CONFIG.icons_per_page {
             break;
         }
     }
-    new_displayed_icons
+
+    let mut new_icons = Vec::with_capacity(search_result_length as usize);
+    if search_result_length > CONFIG.icons_per_page as u32 {
+        for i in (CONFIG.icons_per_page as u32)..search_result_length {
+            let result_icon_array = js_sys::Array::from(&search_result.get(i));
+            let icon_order_alpha =
+                result_icon_array.get(1).as_f64().unwrap() as usize;
+            let icon = ICONS[icon_order_alpha as usize];
+            new_icons.push(icon);
+        }
+    }
+
+    (new_icons, new_displayed_icons)
 }
 
 pub fn search_icons(
     search_value: &str,
-    displayed_icons_signal: &RwSignal<Vec<StaticSimpleIcon>>,
+    icons_grid_signal: &RwSignal<IconsGrid>,
 ) {
-    let res = js_sys::Array::from(&search(search_value));
+    let search_result = js_sys::Array::from(&search(search_value));
 
-    let response_length = res.length();
+    let search_result_length = search_result.length();
 
-    let mut new_displayed_icons: Vec<StaticSimpleIcon> =
-        Vec::with_capacity(response_length as usize);
-    for i in 0..response_length {
-        let res_array = js_sys::Array::from(&res.get(i));
-        let icon_order_alpha = res_array.get(1).as_f64().unwrap() as usize;
+    let mut new_displayed_icons: Vec<StaticSimpleIcon> = Vec::new();
+    for i in 0..search_result_length {
+        let result_icon_array = js_sys::Array::from(&search_result.get(i));
+        let icon_order_alpha =
+            result_icon_array.get(1).as_f64().unwrap() as usize;
         let icon = ICONS[icon_order_alpha as usize];
         new_displayed_icons.push(icon);
-        if new_displayed_icons.len() >= CONFIG.max_icons_per_page {
+        if new_displayed_icons.len() >= CONFIG.icons_per_page {
             break;
         }
     }
 
-    displayed_icons_signal.update(move |state| {
-        *state = new_displayed_icons;
-    });
+    icons_grid_signal
+        .update(move |grid| grid.set_loaded_icons(new_displayed_icons));
+
+    let mut new_icons = Vec::with_capacity(search_result_length as usize);
+    if search_result_length > CONFIG.icons_per_page as u32 {
+        for i in (CONFIG.icons_per_page as u32)..search_result_length {
+            let result_icon_array = js_sys::Array::from(&search_result.get(i));
+            let icon_order_alpha =
+                result_icon_array.get(1).as_f64().unwrap() as usize;
+            let icon = ICONS[icon_order_alpha as usize];
+            new_icons.push(icon);
+        }
+    }
+
+    icons_grid_signal.update(move |grid| grid.set_icons(new_icons));
 }
 
 #[component]
 pub fn SearchControl(cx: Scope) -> impl IntoView {
-    let displayed_icons = use_context::<DisplayedIconsSignal>(cx).unwrap().0;
+    let icons_grid = use_context::<IconsGridSignal>(cx).unwrap().0;
     let search = use_context::<SearchValueSignal>(cx).unwrap().0;
-    let order_mode = use_context::<OrderModeSignal>(cx).unwrap().0;
-
-    let on_search_input = move |event: web_sys::Event| {
-        let value = event
-            .clone()
-            .target()
-            .unwrap()
-            .unchecked_into::<web_sys::HtmlInputElement>()
-            .value();
-        search.update(move |state| {
-            set_search_value_on_localstorage(&value);
-
-            if value.is_empty() {
-                displayed_icons.update(move |state| {
-                    *state = INITIAL_ICONS.to_vec();
-                });
-                *state = value;
-                return;
-            }
-
-            search_icons(&value, &displayed_icons);
-
-            *state = value;
-        });
-    };
+    let search_input_ref = create_node_ref::<Input>(cx);
 
     view! { cx,
         <div class="control">
             <label for="search">{move_gettext!(cx, "Search")}</label>
             <input
+                _ref=search_input_ref
                 id="search"
                 type="search"
                 placeholder=move_gettext!(cx, "Search by brand...")
-                on:input=on_search_input
+                on:input=move |_| {
+                    let value = search_input_ref.get().unwrap().value();
+                    search.update(move |state| {
+                        if value.is_empty() {
+                            icons_grid.update(move |grid| {
+                                grid.set_loaded_icons(INITIAL_ICONS.to_vec());
+                            });
+                            set_search_value_on_localstorage(&value);
+                            *state = value;
+                            return;
+                        }
+
+                        search_icons(&value, &icons_grid);
+                        set_search_value_on_localstorage(&value);
+                        *state = value;
+                    });
+                }
                 value=search
             />
         </div>

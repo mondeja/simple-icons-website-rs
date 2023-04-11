@@ -8,7 +8,7 @@ msgid "Download"
 msgstr ""
 
 #: components/src/controls/download/mod.rs:76
-#: components/src/controls/download/mod.rs:76
+#: components/src/controls/download/mod.rs:76 app/src/app.rs:32
 msgid "SVG"
 msgstr ""
 
@@ -24,47 +24,51 @@ msgstr ""
 msgid "Download PDF"
 msgstr ""
 
-#: components/src/controls/order.rs:66
+#: components/src/controls/order.rs:63
 msgid "Order"
 msgstr ""
 
-#: components/src/controls/order.rs:69
+#: components/src/controls/order.rs:66
 msgid "Sort alphabetically"
 msgstr ""
 
-#: components/src/controls/order.rs:79
+#: components/src/controls/order.rs:78
 msgid "Sort by color"
 msgstr ""
 
-#: components/src/controls/mod.rs:86
+#: components/src/controls/search.rs:86
 msgid "Search"
 msgstr ""
 
-#: components/src/controls/mod.rs:91
+#: components/src/controls/search.rs:91
 msgid "Search by brand..."
 msgstr ""
 
-#: components/src/controls/mod.rs:104
+#: components/src/controls/mod.rs:96
+msgid "Theme"
+msgstr ""
+
+#: components/src/controls/mod.rs:99
 msgid "Light color scheme"
 msgstr ""
 
-#: components/src/controls/mod.rs:109
+#: components/src/controls/mod.rs:104
 msgid "Dark color scheme"
 msgstr ""
 
-#: components/src/controls/mod.rs:114
+#: components/src/controls/mod.rs:109
 msgid "System color scheme"
 msgstr ""
 
-#: components/src/controls/mod.rs:127
+#: components/src/controls/mod.rs:122
 msgid "Layout"
 msgstr ""
 
-#: components/src/controls/mod.rs:130
+#: components/src/controls/mod.rs:125
 msgid "Comfortable"
 msgstr ""
 
-#: components/src/controls/mod.rs:135
+#: components/src/controls/mod.rs:130
 msgid "Compact"
 msgstr ""
 
@@ -88,7 +92,35 @@ msgstr ""
 msgid "Report outdated icon"
 msgstr ""
 
-#: components/src/footer.rs:93
+#: components/src/footer.rs:54
+msgid "A {} project maintained by the {}."
+msgstr ""
+
+#: components/src/footer.rs:57
+msgid "CCO"
+msgstr ""
+
+#: components/src/footer.rs:61
+msgid "Simple Icons contributors"
+msgstr ""
+
+#: components/src/footer.rs:66
+msgid "Use {} for requests, corrections and contributions."
+msgstr ""
+
+#: components/src/footer.rs:69
+msgid "GitHub"
+msgstr ""
+
+#: components/src/footer.rs:74
+msgid "Kindly supported by your donations at {}."
+msgstr ""
+
+#: components/src/footer.rs:77
+msgid "Open Collective"
+msgstr ""
+
+#: components/src/footer.rs:98
 msgid "Share this on Twitter!"
 msgstr ""
 
@@ -149,42 +181,10 @@ msgstr ""
 msgid "Change language"
 msgstr ""
 
-#: components/src/header/title.rs:19
+#: components/src/header/title.rs:25 app/src/app.rs:30
 msgid "{} free {} icons for popular brands"
 msgstr ""
 
-#: components/src/header/title.rs:23
+#: components/src/header/title.rs:29
 msgid "Scalable Vector Graphic"
-msgstr ""
-
-#: components/src/controls/mod.rs:101
-msgid "Theme"
-msgstr ""
-
-#: components/src/footer.rs:54
-msgid "A {} project maintained by the {}."
-msgstr ""
-
-#: components/src/footer.rs:57
-msgid "CCO"
-msgstr ""
-
-#: components/src/footer.rs:61
-msgid "Simple Icons contributors"
-msgstr ""
-
-#: components/src/footer.rs:66
-msgid "Use {} for requests, corrections and contributions."
-msgstr ""
-
-#: components/src/footer.rs:69
-msgid "GitHub"
-msgstr ""
-
-#: components/src/footer.rs:74
-msgid "Kindly supported by your donations at {}."
-msgstr ""
-
-#: components/src/footer.rs:77
-msgid "Open Collective"
 msgstr ""

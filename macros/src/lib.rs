@@ -124,6 +124,7 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
         .iter()
         .map(|icon| icon.hex.clone())
         .collect::<Vec<_>>();
+
     let sorted_hexes = sort_hexes(&hexes);
 
     let deprecated_icons = fetch_deprecated_simple_icons();

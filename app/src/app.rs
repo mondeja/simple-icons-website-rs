@@ -11,7 +11,7 @@ use components::controls::order::{
     initial_order_mode_from_localstorage, OrderModeSignal,
 };
 use components::controls::search::{initial_search_value, SearchValueSignal};
-use components::grid::DisplayedIconsSignal;
+use components::grid::{IconsGrid, IconsGridSignal};
 use components::*;
 use i18n::{gettext, move_gettext};
 use i18n::{LocaleState, LocaleStateSignal};
@@ -206,12 +206,9 @@ pub fn AppBody(cx: Scope) -> impl IntoView {
     // Displayed icons context
     provide_context(
         cx,
-        DisplayedIconsSignal(create_rw_signal(
+        IconsGridSignal(create_rw_signal(
             cx,
-            initial_displayed_icons_from_search_value_and_order_mode(
-                &initial_search_value,
-                &initial_order_mode,
-            ),
+            IconsGrid::new(&initial_search_value, &initial_order_mode),
         )),
     );
 

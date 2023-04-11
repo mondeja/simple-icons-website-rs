@@ -2,17 +2,54 @@
 
 mod about;
 
+use crate::grid::IconsGridSignal;
 use about::*;
 use i18n::move_gettext;
-use leptos::*;
+use leptos::{
+    html::{Footer, HtmlElement},
+    *,
+};
 use macros::simple_icon_svg_path;
+use wasm_bindgen::{closure::Closure, JsCast};
+use web_sys::{IntersectionObserver, IntersectionObserverEntry};
 
 static TWITTER_ICON_SVG_PATH: &str = simple_icon_svg_path!("twitter");
 
+/// Footer of the website
 #[component]
 pub fn Footer(cx: Scope) -> impl IntoView {
+    let footer_ref = create_node_ref::<Footer>(cx);
+    let icons_grid = use_context::<IconsGridSignal>(cx).unwrap().0;
+
+    let intersection_callback: Closure<
+        dyn Fn(Vec<IntersectionObserverEntry>, IntersectionObserver),
+    > = Closure::wrap(Box::new(
+        move |entries: Vec<IntersectionObserverEntry>,
+              _observer: IntersectionObserver| {
+            let footer_entry = &entries[0];
+            if footer_entry.is_intersecting() {
+                icons_grid.update(|grid| grid.load_next_icons());
+            }
+        },
+    ));
+
+    footer_ref.on_load(cx, move |footer: HtmlElement<Footer>| {
+        let intersection_observer = IntersectionObserver::new(
+            intersection_callback.as_ref().unchecked_ref(),
+        )
+        .unwrap();
+        intersection_observer.observe(&footer);
+
+        // TODO: this is a memory leak
+        // https://rustwasm.github.io/docs/wasm-bindgen/examples/closures.html
+        intersection_callback.forget();
+    });
+
     view! { cx,
-        <footer class="flex flex-col justify-between py-8 text-sm">
+        <footer
+            _ref=footer_ref
+            class="flex flex-col justify-between py-8 text-sm"
+        >
             <ReportProblems/>
             <div class="flex flex-row justify-between">
                 <About/>

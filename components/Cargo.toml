@@ -25,10 +25,11 @@ web-sys = { version = "0.3", features = [
     "EventTarget",
     "Storage",
     "Clipboard",
+    "IntersectionObserver",
+    "IntersectionObserverEntry",
 ] }
 js-sys = "0.3"
 wasm-bindgen = "0.2"
-rust-fuzzy-search = "0.1"
 wasm-bindgen-futures = "0.4"
 reqwasm = "0.5"
 lazy_static = "1.4"

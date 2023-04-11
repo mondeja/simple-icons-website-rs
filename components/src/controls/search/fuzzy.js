@@ -1,10 +1,6 @@
 let SEARCHER = null;
 
-export function rebuild_searcher(candidates) {
-  console.log(candidates[0]);
-  candidates.forEach((candidate) => {
-    console.log(candidate);
-  });
+export function build_searcher(candidates) {
   SEARCHER = new window.Searcher(candidates, {
     keySelector: (item) => item[0],
   });

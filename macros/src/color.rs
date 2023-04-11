@@ -34,9 +34,17 @@ pub mod sorting {
         if g < GREY_RANGE || b < GREY_RANGE {
             return true;
         } else {
-            return r <= g + GREY_RANGE
-                && b <= g + GREY_RANGE
-                && r <= b + GREY_RANGE;
+            let g_plus_range = if { u8::MAX - g } < GREY_RANGE {
+                u8::MAX
+            } else {
+                g + GREY_RANGE
+            };
+            let b_plus_range = if { u8::MAX - b } < GREY_RANGE {
+                u8::MAX
+            } else {
+                b + GREY_RANGE
+            };
+            return r <= g_plus_range && b <= g_plus_range && r <= b_plus_range;
         }
     }
 
