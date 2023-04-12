@@ -146,8 +146,8 @@ private = true
 
 [tasks.fetch-deprecated-icons]
 description = "Fetch deprecated icons from simple-icons repository"
-command = "cargo"
-args = ["run", "--bin", "fetch-deprecated-icons", "--package", "scripts"]
+command = "npm"
+args = ["run", "fetch-deprecated-icons"]
 workspace = false
 
 [tasks.build-fast-fuzzy]

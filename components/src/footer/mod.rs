@@ -34,11 +34,6 @@ pub fn Footer(cx: Scope) -> impl IntoView {
         move |entries: Vec<IntersectionObserverEntry>,
               _observer: IntersectionObserver| {
             let footer_entry = &entries[0];
-            use log::info;
-            info!(
-                "footer_entry is intersecting: {}",
-                footer_entry.is_intersecting()
-            );
 
             if footer_entry.is_intersecting() {
                 if grid_icons_loader().load_more_icons {
@@ -62,6 +57,7 @@ pub fn Footer(cx: Scope) -> impl IntoView {
 
         // TODO: this is a memory leak
         // https://rustwasm.github.io/docs/wasm-bindgen/examples/closures.html
+        // Use Leptos' `on_cleanup`?
         intersection_callback.forget();
     });
 

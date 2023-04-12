@@ -9,10 +9,10 @@ path = "src/lib.rs"
 name = "i18n"
 
 [dependencies]
-leptos = "0.2.5"
-lazy_static = "1.4"
-web-sys = { version = "0.3", features = ["Navigator", "Storage"] }
-rspolib = "0.0.5"
+leptos.workspace = true
+lazy_static.workspace = true
+web-sys = { workspace = true, features = ["Navigator", "Storage"] }
+rspolib.workspace = true
 
 [build-dependencies]
-rspolib = "0.0.5"
+rspolib.workspace = true

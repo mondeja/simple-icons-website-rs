@@ -38,10 +38,6 @@ msgstr "jsDelivr (Red de entrega de contenidos)"
 msgid "UNPKG (Content Delivery Network)"
 msgstr "UNPKG (Red de entrega de contenidos)"
 
-#: components/src/grid/item/mod.rs:24
-msgid "{} SVG"
-msgstr "SVG de {}"
-
 #: components/src/grid/item/mod.rs:29
 msgid "{} icon"
 msgstr "Icono de {}"
@@ -70,14 +66,6 @@ msgstr "Cerrar menú"
 #: components/src/header/menu.rs:209
 msgid "Third party extensions"
 msgstr "Extensiones de terceros"
-
-#: components/src/header/menu.rs:229
-msgid "Extension"
-msgstr "Extensión"
-
-#: components/src/header/menu.rs:230
-msgid "Author"
-msgstr "Autor"
 
 #: components/src/header/menu.rs:287
 msgid "Change language"
@@ -161,28 +149,99 @@ msgstr "Tema"
 
 #: components/src/footer.rs:54
 msgid "A {} project maintained by the {}."
-msgstr ""
+msgstr "Un proyecto {} mantenido por los {}."
 
 #: components/src/footer.rs:57
 msgid "CCO"
-msgstr ""
+msgstr "CCO"
 
 #: components/src/footer.rs:61
 msgid "Simple Icons contributors"
-msgstr ""
+msgstr "colaboradores de Simple Icons"
 
 #: components/src/footer.rs:66
 msgid "Use {} for requests, corrections and contributions."
-msgstr ""
+msgstr "Usa {} para solicitudes, correcciones y contribuciones."
 
 #: components/src/footer.rs:69
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 #: components/src/footer.rs:74
 msgid "Kindly supported by your donations at {}."
-msgstr ""
+msgstr "Amablemente apoyado por tus donaciones en {}."
 
 #: components/src/footer.rs:77
 msgid "Open Collective"
-msgstr ""
+msgstr "Open Collective"
+
+#: components/src/controls/order.rs:182
+msgid "Sort by search match score"
+msgstr "Ordenar por puntuación de coincidencia de búsqueda"
+
+#: components/src/controls/search/mod.rs:271
+msgid "Clear search"
+msgstr "Borrar búsqueda"
+
+#: components/src/controls/mod.rs:88
+msgid "Open search bar"
+msgstr "Abrir barra de búsqueda"
+
+#: components/src/controls/mod.rs:90
+msgid "Open controls"
+msgstr "Abrir controles"
+
+#: components/src/grid/item/deprecated.rs:19
+msgid "{} will be removed at v{}"
+msgstr "{} será eliminado en v{}"
+
+#: components/src/grid/item/deprecated.rs:22
+msgid "Deprecated"
+msgstr "Obsoleto"
+
+#: components/src/grid/item/details.rs:203
+#: components/src/grid/item/details.rs:203
+msgid "Copy hex color"
+msgstr "Copiar color hexadecimal"
+
+#: components/src/grid/item/details.rs:208
+msgid "Brand guidelines"
+msgstr "Directrices de marca"
+
+#: components/src/grid/item/details.rs:216
+#: components/src/grid/item/details.rs:216
+msgid "License"
+msgstr "Licencia"
+
+#: components/src/grid/item/details.rs:232
+#: components/src/grid/item/details.rs:232
+msgid "Download colored SVG"
+msgstr "Descargar SVG coloreado"
+
+#: components/src/grid/item/icon_preview.rs:37
+msgid "Copy {} SVG"
+msgstr "Copiar SVG de {}"
+
+#: components/src/grid/item/title.rs:17
+msgid "Copy {} slug ({})"
+msgstr "Copiar slug de {} ({})"
+
+#: components/src/grid/more_icons.rs:44
+msgid "Load more icons"
+msgstr "Cargar más iconos"
+
+#: components/src/header/nav/language_selector.rs:73
+msgid "Select a language"
+msgstr "Selecciona un idioma"
+
+#: components/src/modal.rs:27
+msgid "Close"
+msgstr "Cerrar"
+
+#: components/src/scroll.rs:50
+msgid "Go to header"
+msgstr "Ir al encabezado"
+
+#: components/src/scroll.rs:68
+msgid "Go to footer"
+msgstr "Ir al pie de página"

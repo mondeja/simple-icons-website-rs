@@ -92,10 +92,6 @@ msgstr ""
 msgid "Share this on Twitter!"
 msgstr ""
 
-#: components/src/grid/item/mod.rs:25
-msgid "{} SVG"
-msgstr ""
-
 #: components/src/grid/item/mod.rs:30
 msgid "{} icon"
 msgstr ""
@@ -135,14 +131,6 @@ msgstr ""
 
 #: components/src/header/menu.rs:209
 msgid "Third party extensions"
-msgstr ""
-
-#: components/src/header/menu.rs:229
-msgid "Extension"
-msgstr ""
-
-#: components/src/header/menu.rs:230
-msgid "Author"
 msgstr ""
 
 #: components/src/header/menu.rs:285
@@ -187,4 +175,75 @@ msgstr ""
 
 #: components/src/footer.rs:77
 msgid "Open Collective"
+msgstr ""
+
+#: components/src/controls/order.rs:182
+msgid "Sort by search match score"
+msgstr ""
+
+#: components/src/controls/search/mod.rs:271
+msgid "Clear search"
+msgstr ""
+
+#: components/src/controls/mod.rs:88
+msgid "Open search bar"
+msgstr ""
+
+#: components/src/controls/mod.rs:90
+msgid "Open controls"
+msgstr ""
+
+#: components/src/grid/item/deprecated.rs:19
+msgid "{} will be removed at v{}"
+msgstr ""
+
+#: components/src/grid/item/deprecated.rs:22
+msgid "Deprecated"
+msgstr ""
+
+#: components/src/grid/item/details.rs:203
+#: components/src/grid/item/details.rs:203
+msgid "Copy hex color"
+msgstr ""
+
+#: components/src/grid/item/details.rs:208
+msgid "Brand guidelines"
+msgstr ""
+
+#: components/src/grid/item/details.rs:216
+#: components/src/grid/item/details.rs:216
+msgid "License"
+msgstr ""
+
+#: components/src/grid/item/details.rs:232
+#: components/src/grid/item/details.rs:232
+msgid "Download colored SVG"
+msgstr ""
+
+#: components/src/grid/item/icon_preview.rs:37
+msgid "Copy {} SVG"
+msgstr ""
+
+#: components/src/grid/item/title.rs:17
+msgid "Copy {} slug ({})"
+msgstr ""
+
+#: components/src/grid/more_icons.rs:44
+msgid "Load more icons"
+msgstr ""
+
+#: components/src/header/nav/language_selector.rs:73
+msgid "Select a language"
+msgstr ""
+
+#: components/src/modal.rs:27
+msgid "Close"
+msgstr ""
+
+#: components/src/scroll.rs:50
+msgid "Go to header"
+msgstr ""
+
+#: components/src/scroll.rs:68
+msgid "Go to footer"
 msgstr ""

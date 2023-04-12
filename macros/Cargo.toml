@@ -10,7 +10,7 @@ name = "macros"
 path = "src/lib.rs"
 
 [dependencies]
-syn = "2"
-simple-icons = { path = "../simple-icons" }
-simple-icons-website-config = { path = "../config" }
-colorsys = "0.6"
+syn.workspace = true
+simple-icons.workspace = true
+simple-icons-website-config.workspace = true
+colorsys.workspace = true

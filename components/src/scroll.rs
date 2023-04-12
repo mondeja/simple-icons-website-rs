@@ -47,7 +47,7 @@ pub fn ScrollToHeaderButton(cx: Scope) -> impl IntoView {
         <ScrollButton
             class="top-2"
             hidden=move|| grid_icons_loader().load_more_icons
-            title=move_gettext!(cx, "Scroll to header")
+            title=move_gettext!(cx, "Go to header")
             on_click=move|_|{
                 let footer = document().query_selector("header").unwrap().unwrap();
                 footer.scroll_into_view();
@@ -65,7 +65,7 @@ pub fn ScrollToFooterButton(cx: Scope) -> impl IntoView {
         <ScrollButton
             class="bottom-2"
             hidden=move|| !grid_icons_loader().load_more_icons
-            title=move_gettext!(cx, "Scroll to footer")
+            title=move_gettext!(cx, "Go to footer")
             on_click=move|_|{
                 grid_icons_loader.update(|loader| loader.load_more_icons = false);
                 let footer = document().query_selector("footer").unwrap().unwrap();

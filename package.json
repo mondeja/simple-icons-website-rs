@@ -4,11 +4,15 @@
   "description": "",
   "author": "Simple Icons contributors",
   "license": "CS0",
+  "scripts": {
+    "fetch-deprecated-icons": "path-exists target/release/fetch-deprecated-icons && target/release/fetch-deprecated-icons || cargo build --release --bin fetch-deprecated-icons && target/release/fetch-deprecated-icons"
+  },
   "devDependencies": {
     "@playwright/test": "1.32.1",
     "@types/node": "18.15.5",
     "autoprefixer": "10.4.14",
     "esbuild": "0.17.16",
+    "path-exists-cli": "2.0.0",
     "postcss": "8.4.21",
     "postcss-cli": "10.1.0",
     "postcss-import": "15.1.0",

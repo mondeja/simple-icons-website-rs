@@ -38,10 +38,6 @@ msgstr "jsDelivr (Réseau de diffusion de contenu)"
 msgid "UNPKG (Content Delivery Network)"
 msgstr "UNPKG (Réseau de diffusion de contenu)"
 
-#: components/src/grid/item/mod.rs:24
-msgid "{} SVG"
-msgstr "{} SVG"
-
 #: components/src/grid/item/mod.rs:29
 msgid "{} icon"
 msgstr "{} icône"
@@ -70,14 +66,6 @@ msgstr "Fermer le menu"
 #: components/src/header/menu.rs:209
 msgid "Third party extensions"
 msgstr "Extensions tierces"
-
-#: components/src/header/menu.rs:229
-msgid "Extension"
-msgstr "Extension"
-
-#: components/src/header/menu.rs:230
-msgid "Author"
-msgstr "Auteur"
 
 #: components/src/header/menu.rs:287
 msgid "Change language"
@@ -161,28 +149,99 @@ msgstr "Thème"
 
 #: components/src/footer.rs:54
 msgid "A {} project maintained by the {}."
-msgstr ""
+msgstr "Un projet {} maintenu par le {}."
 
 #: components/src/footer.rs:57
 msgid "CCO"
-msgstr ""
+msgstr "CCO"
 
 #: components/src/footer.rs:61
 msgid "Simple Icons contributors"
-msgstr ""
+msgstr "contributeurs de Simple Icons"
 
 #: components/src/footer.rs:66
 msgid "Use {} for requests, corrections and contributions."
-msgstr ""
+msgstr "utilisez {} pour les demandes, les corrections et les contributions."
 
 #: components/src/footer.rs:69
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 #: components/src/footer.rs:74
 msgid "Kindly supported by your donations at {}."
-msgstr ""
+msgstr "aimablement soutenu par vos dons à {}."
 
 #: components/src/footer.rs:77
 msgid "Open Collective"
-msgstr ""
+msgstr "Open Collective"
+
+#: components/src/controls/order.rs:182
+msgid "Sort by search match score"
+msgstr "Trier par score de correspondance de recherche"
+
+#: components/src/controls/search/mod.rs:271
+msgid "Clear search"
+msgstr "Effacer la recherche"
+
+#: components/src/controls/mod.rs:88
+msgid "Open search bar"
+msgstr "Ouvrir la barre de recherche"
+
+#: components/src/controls/mod.rs:90
+msgid "Open controls"
+msgstr "Ouvrir les contrôles"
+
+#: components/src/grid/item/deprecated.rs:19
+msgid "{} will be removed at v{}"
+msgstr "{} sera supprimé à la v{}"
+
+#: components/src/grid/item/deprecated.rs:22
+msgid "Deprecated"
+msgstr "Obsolète"
+
+#: components/src/grid/item/details.rs:203
+#: components/src/grid/item/details.rs:203
+msgid "Copy hex color"
+msgstr "Copier la couleur hexadécimale"
+
+#: components/src/grid/item/details.rs:208
+msgid "Brand guidelines"
+msgstr "Directives de marque"
+
+#: components/src/grid/item/details.rs:216
+#: components/src/grid/item/details.rs:216
+msgid "License"
+msgstr "Licence"
+
+#: components/src/grid/item/details.rs:232
+#: components/src/grid/item/details.rs:232
+msgid "Download colored SVG"
+msgstr "Télécharger le SVG coloré"
+
+#: components/src/grid/item/icon_preview.rs:37
+msgid "Copy {} SVG"
+msgstr "Copier le SVG de {}"
+
+#: components/src/grid/item/title.rs:17
+msgid "Copy {} slug ({})"
+msgstr "Copier le slug de {} ({})"
+
+#: components/src/grid/more_icons.rs:44
+msgid "Load more icons"
+msgstr "Charger plus d'icônes"
+
+#: components/src/header/nav/language_selector.rs:73
+msgid "Select a language"
+msgstr "Sélectionnez une langue"
+
+#: components/src/modal.rs:27
+msgid "Close"
+msgstr "Fermer"
+
+#: components/src/scroll.rs:50
+msgid "Go to header"
+msgstr "Aller à l'en-tête"
+
+#: components/src/scroll.rs:68
+msgid "Go to footer"
+msgstr "Aller au pied de page"

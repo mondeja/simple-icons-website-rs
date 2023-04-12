@@ -3,18 +3,16 @@
     "rust": "html",
     "*.rs": "html"
   },
-  "tailwindCSS.includeLanguages": {
-    "rust": "html",
-    "*.rs": "html"
-  },
   "files.associations": {
-    "*.rs": "rust"
+    "*.rs": "rust",
+    "*.css": "tailwindcss"
   },
   "editor.quickSuggestions": {
     "other": "on",
     "comments": "on",
     "strings": true
   },
+  "editor.formatOnSave": true,
   "css.validate": false,
   "[json]": {
     "editor.tabSize": 2
@@ -28,7 +26,13 @@
   "[typescript]": {
     "editor.tabSize": 2
   },
-  "editor.formatOnSave": true,
+  "tailwindCSS.includeLanguages": {
+    "rust": "html",
+    "*.rs": "html"
+  },
+  "tailwindCSS.emmetCompletions": true,
+  "tailwindCSS.lint.cssConflict": "error",
+  "tailwindCSS.lint.recommendedVariantOrder": "error",
   "vs-browser.url": "http://localhost:8080",
   // Clipboard API of wasm_bindgen needs unstable API
   // https://docs.rs/web-sys/latest/web_sys/struct.Navigator.html#method.clipboard

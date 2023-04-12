@@ -8,8 +8,8 @@ description = "Binding between simple-icons library and Rust"
 path = "src/lib.rs"
 
 [dependencies]
-simple-icons-website-config = { path = "../config" }
-nanoserde = "0.1"
-unicode-normalization = "0.1"
-icu_collator = "1.1"
-serde_json = "1.0"
+simple-icons-website-config.workspace = true
+nanoserde.workspace = true
+unicode-normalization.workspace = true
+icu_collator.workspace = true
+serde_json.workspace = true

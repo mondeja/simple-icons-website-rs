@@ -3,6 +3,7 @@ pkg
 package-lock.json
 Cargo.lock
 app/dist/
+/dist/
 playwright-report/
 assets/dist/stylesheet.css
 **/*.rs.bk
