@@ -2,7 +2,7 @@
 #![feature(const_option_ext)]
 pub mod controls;
 mod copy;
-mod experiments;
+mod debounce;
 mod footer;
 pub mod grid;
 mod header;
@@ -11,7 +11,7 @@ pub(crate) mod storage;
 mod svg_defs;
 
 pub use controls::*;
-pub use experiments::*;
+pub use debounce::*;
 pub use footer::*;
 pub use grid::*;
 pub use header::*;

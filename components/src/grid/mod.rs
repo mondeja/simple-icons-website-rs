@@ -2,9 +2,11 @@ mod ad;
 mod item;
 
 use crate::controls::layout::{Layout, LayoutSignal};
-use crate::controls::order::OrderMode;
-use crate::controls::search::search_icons_and_returns_first_page;
+use crate::controls::search::{
+    fire_on_search_event, search_icons_and_returns_first_page,
+};
 use crate::grid::item::details::*;
+use crate::order::{sort_icons, OrderModeVariant};
 use ad::*;
 use config::CONFIG;
 use item::*;
@@ -17,8 +19,8 @@ pub const ICONS: [StaticSimpleIcon;
     CONFIG.max_icons.unwrap_or(get_number_of_icons!())] = simple_icons_array!();
 
 lazy_static! {
-    pub static ref INITIAL_ICONS: Vec<StaticSimpleIcon> =
-        ICONS[..CONFIG.icons_per_page].to_vec();
+    pub static ref FIRST_LOADED_ICONS: Vec<StaticSimpleIcon> =
+        ICONS[..(CONFIG.icons_per_page as usize)].to_vec();
 }
 
 /// Icons grid
@@ -31,7 +33,7 @@ pub struct IconsGrid {
 }
 
 impl IconsGrid {
-    pub fn new(search_value: &str, order_mode: &OrderMode) -> Self {
+    pub fn new(search_value: &str, order_mode: &OrderModeVariant) -> Self {
         let (icons, loaded_icons) =
             initial_icons_from_search_value_and_order_mode(
                 search_value,
@@ -43,12 +45,17 @@ impl IconsGrid {
         }
     }
 
+    pub fn reset(&mut self) {
+        self.icons = ICONS.to_vec();
+        self.loaded_icons = FIRST_LOADED_ICONS.to_vec();
+    }
+
     pub fn set_icons(&mut self, icons: Vec<StaticSimpleIcon>) {
         self.icons = icons;
     }
 
-    pub fn set_loaded_icons(&mut self, loaded_icons: Vec<StaticSimpleIcon>) {
-        self.loaded_icons = loaded_icons;
+    pub fn set_loaded_icons(&mut self, loaded_icons: &Vec<StaticSimpleIcon>) {
+        self.loaded_icons = loaded_icons.clone();
     }
 
     pub fn load_next_icons(&mut self) {
@@ -56,10 +63,24 @@ impl IconsGrid {
             .icons
             .iter()
             .skip(self.loaded_icons.len())
-            .take(CONFIG.icons_per_page)
+            .take(CONFIG.icons_per_page as usize)
             .cloned()
             .collect();
         self.loaded_icons.extend(next_icons);
+    }
+
+    pub fn set_order_mode(&mut self, order_mode: &OrderModeVariant) {
+        match order_mode {
+            &OrderModeVariant::Alphabetic | &OrderModeVariant::Color => {
+                sort_icons(order_mode, &mut self.icons);
+                self.loaded_icons = vec![];
+                self.load_next_icons()
+            }
+            &OrderModeVariant::SearchMatch => {
+                // Fire a search event to update the grid
+                fire_on_search_event();
+            }
+        }
     }
 }
 
@@ -71,16 +92,18 @@ pub struct CurrentIconViewSignal(pub RwSignal<Option<StaticSimpleIcon>>);
 
 pub fn initial_icons_from_search_value_and_order_mode(
     search_value: &str,
-    order_mode: &OrderMode,
+    order_mode: &OrderModeVariant,
 ) -> (Vec<StaticSimpleIcon>, Vec<StaticSimpleIcon>) {
     if search_value.is_empty() {
-        let mut loaded_icons: Vec<StaticSimpleIcon> = INITIAL_ICONS.to_vec();
         let mut icons: Vec<StaticSimpleIcon> = ICONS.to_vec();
-        if order_mode != &OrderMode::Alphabetic {
+        if order_mode != &OrderModeVariant::Alphabetic {
             // Alphabetical is the default order of the icons in the static array
-            order_mode.sort_icons(&mut loaded_icons);
-            order_mode.sort_icons(&mut icons);
+            sort_icons(order_mode, &mut icons);
         }
+        let mut loaded_icons =
+            Vec::with_capacity(CONFIG.icons_per_page as usize);
+        loaded_icons.extend(icons.iter().take(CONFIG.icons_per_page as usize));
+
         (icons, loaded_icons)
     } else {
         search_icons_and_returns_first_page(search_value)

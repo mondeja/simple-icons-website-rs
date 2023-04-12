@@ -27,6 +27,11 @@ main > ul {
   --title-copy-button-margin-top: 0.1rem;
   --title-copy-button-margin-right: 2rem;
 
+  --links-font-size: 0.75rem;
+  --links-line-height: 1rem;
+  --links-container-padding-left: 1rem;
+  --links-text-padding-left: 1.25rem;
+
   --footer-x-padding: 1rem;
 }
 
@@ -45,6 +50,11 @@ main > ul.layout-compact {
   --title-copy-button-size: 1rem;
   --title-copy-button-margin-top: 0rem;
   --title-copy-button-margin-right: 1.3rem;
+
+  --links-font-size: 0.65rem;
+  --links-line-height: 0.9rem;
+  --links-container-padding-left: 0.5rem;
+  --links-text-padding-left: 1rem;
 
   --footer-x-padding: 0.5rem;
 }

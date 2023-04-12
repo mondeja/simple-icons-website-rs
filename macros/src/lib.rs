@@ -152,6 +152,7 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
                 "guidelines_url: {},",
                 "license_url: {},",
                 "license_type: {},",
+                "plain_aliases: {},",
                 // `get_simple_icons` function returns icons in alphabetical order
                 // because they are extracted from the `simple-icons.json` file
                 "order_alpha: {},",
@@ -180,6 +181,39 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
             match icon.license {
                 Some(ref license) => format!("Some(\"{}\")", license.type_),
                 None => "None".to_string(),
+            },
+            match &icon.aliases {
+                None => "&[]".to_string(),
+                Some(aliases) => format!("&[{}]", {
+                    let mut ret = vec![];
+                    if let Some(aka) = aliases.aka.clone() {
+                        ret.extend(aka);
+                    };
+                    if aliases.dup.is_some() {
+                        ret.extend(
+                            aliases
+                                .dup
+                                .clone()
+                                .unwrap()
+                                .iter()
+                                .map(|dup| dup.title.clone()),
+                        );
+                    }
+                    if aliases.loc.is_some() {
+                        ret.extend(
+                            aliases
+                                .loc
+                                .clone()
+                                .unwrap()
+                                .values()
+                                .map(|v| v.to_string()),
+                        );
+                    }
+                    ret.iter()
+                        .map(|alias| format!("\"{}\"", alias))
+                        .collect::<Vec<_>>()
+                        .join(", ")
+                }),
             },
             i,
             order_color,

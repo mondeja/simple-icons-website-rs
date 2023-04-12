@@ -1,10 +1,12 @@
+mod data;
 mod deprecated;
 mod svg_path;
 
+pub use crate::data::{
+    get_simple_icons_data, SimpleIconData, SimpleIconDataAliases,
+    SimpleIconDataLicense,
+};
 pub use deprecated::{fetch_deprecated_simple_icons, DeprecatedIcon};
-use nanoserde::DeJson;
-use std::fs;
-use std::path::Path;
 pub use svg_path::get_simple_icon_svg_path_by_slug;
 use unicode_normalization::UnicodeNormalization;
 
@@ -24,21 +26,15 @@ pub struct StaticSimpleIcon {
     pub hex: &'static str,
     pub hex_is_relatively_light: bool,
     pub source_url: &'static str,
-    pub order_alpha: usize,
-    pub order_color: usize,
     pub guidelines_url: Option<&'static str>,
     pub license_url: Option<&'static str>,
     pub license_type: Option<&'static str>,
+    pub plain_aliases: &'static [&'static str],
+    pub order_alpha: usize,
+    pub order_color: usize,
     pub is_deprecated: bool,
     pub deprecation_pull_request_url: Option<&'static str>,
     pub removal_at_version: Option<&'static str>,
-}
-
-#[derive(DeJson, Clone)]
-pub struct SimpleIconLicense {
-    #[nserde(rename = "type")]
-    pub type_: String,
-    pub url: Option<String>,
 }
 
 #[derive(Clone)]
@@ -48,22 +44,8 @@ pub struct SimpleIcon {
     pub hex: String,
     pub source_url: String,
     pub guidelines_url: Option<String>,
-    pub license: Option<SimpleIconLicense>,
-}
-
-#[derive(DeJson)]
-pub struct SimpleIconData {
-    pub slug: Option<String>,
-    pub title: String,
-    pub hex: String,
-    pub source: String,
-    pub guidelines: Option<String>,
-    pub license: Option<SimpleIconLicense>,
-}
-
-#[derive(DeJson)]
-pub struct SimpleIconsData {
-    pub icons: Vec<SimpleIconData>,
+    pub license: Option<SimpleIconDataLicense>,
+    pub aliases: Option<SimpleIconDataAliases>,
 }
 
 fn title_to_slug_replace_chars(title: &str) -> String {
@@ -102,28 +84,22 @@ fn title_to_slug(title: &str) -> String {
 
 /// Get simple icons
 pub fn get_simple_icons(max_icons: Option<usize>) -> Vec<SimpleIcon> {
-    let mut simple_icons: Vec<SimpleIcon> = Vec::new();
+    let simple_icons_data = get_simple_icons_data();
+    let mut simple_icons: Vec<SimpleIcon> =
+        Vec::with_capacity(simple_icons_data.icons.len());
 
-    let icons_data_file =
-        Path::new("node_modules/simple-icons/_data/simple-icons.json");
-    let icons_data_raw = fs::read_to_string(icons_data_file)
-        .expect("Could not read simple-icons.json file");
-    let icons_data: SimpleIconsData = DeJson::deserialize_json(&icons_data_raw)
-        .expect("JSON was not well-formatted");
-
-    for icon in icons_data.icons {
-        let slug = match icon.slug {
-            Some(slug) => slug,
-            None => title_to_slug(&icon.title),
-        };
-
+    for icon_data in simple_icons_data.icons {
         let icon = SimpleIcon {
-            slug,
-            title: icon.title,
-            hex: icon.hex,
-            source_url: icon.source,
-            guidelines_url: icon.guidelines,
-            license: icon.license,
+            slug: match icon_data.slug {
+                Some(slug) => slug,
+                None => title_to_slug(&icon_data.title),
+            },
+            title: icon_data.title,
+            hex: icon_data.hex,
+            source_url: icon_data.source,
+            guidelines_url: icon_data.guidelines,
+            license: icon_data.license,
+            aliases: icon_data.aliases,
         };
         simple_icons.push(icon);
 

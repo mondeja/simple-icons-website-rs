@@ -8,7 +8,7 @@ use components::controls::layout::{
     initial_layout_from_localstorage, LayoutSignal,
 };
 use components::controls::order::{
-    initial_order_mode_from_localstorage, OrderModeSignal,
+    initial_order_mode_from_localstorage_and_search_value, OrderModeSignal,
 };
 use components::controls::search::{initial_search_value, SearchValueSignal};
 use components::grid::{IconsGrid, IconsGridSignal};
@@ -183,18 +183,21 @@ pub fn AppBody(cx: Scope) -> impl IntoView {
         )),
     );
 
-    // Order mode context
-    let initial_order_mode = initial_order_mode_from_localstorage();
-    provide_context(
-        cx,
-        OrderModeSignal(create_rw_signal(cx, initial_order_mode)),
-    );
-
     // Search context
     let initial_search_value = initial_search_value();
     provide_context(
         cx,
         SearchValueSignal(create_rw_signal(cx, initial_search_value.clone())),
+    );
+
+    // Order mode context
+    let initial_order_mode =
+        initial_order_mode_from_localstorage_and_search_value(
+            &initial_search_value,
+        );
+    provide_context(
+        cx,
+        OrderModeSignal(create_rw_signal(cx, initial_order_mode)),
     );
 
     // Layout context
@@ -208,7 +211,7 @@ pub fn AppBody(cx: Scope) -> impl IntoView {
         cx,
         IconsGridSignal(create_rw_signal(
             cx,
-            IconsGrid::new(&initial_search_value, &initial_order_mode),
+            IconsGrid::new(&initial_search_value, &initial_order_mode.current),
         )),
     );
 

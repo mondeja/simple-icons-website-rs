@@ -11,11 +11,16 @@ use leptos::{
 };
 use macros::simple_icon_svg_path;
 use wasm_bindgen::{closure::Closure, JsCast};
-use web_sys::{IntersectionObserver, IntersectionObserverEntry};
+use web_sys::{
+    IntersectionObserver, IntersectionObserverEntry, IntersectionObserverInit,
+};
 
 static TWITTER_ICON_SVG_PATH: &str = simple_icon_svg_path!("twitter");
 
 /// Footer of the website
+///
+/// When the user scrolls nearly to the footer, the next page of icons are loaded.
+/// This is accomplished by using an `IntersectionObserver`.
 #[component]
 pub fn Footer(cx: Scope) -> impl IntoView {
     let footer_ref = create_node_ref::<Footer>(cx);
@@ -34,8 +39,10 @@ pub fn Footer(cx: Scope) -> impl IntoView {
     ));
 
     footer_ref.on_load(cx, move |footer: HtmlElement<Footer>| {
-        let intersection_observer = IntersectionObserver::new(
+        let intersection_observer = IntersectionObserver::new_with_options(
             intersection_callback.as_ref().unchecked_ref(),
+            // 300px before the footer is reached, load the next page
+            IntersectionObserverInit::new().root_margin("300px 0px 0px 0px"),
         )
         .unwrap();
         intersection_observer.observe(&footer);
