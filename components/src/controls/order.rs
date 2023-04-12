@@ -32,6 +32,21 @@ impl Default for OrderMode {
     }
 }
 
+pub fn provide_order_mode_context(
+    cx: Scope,
+    initial_search_value: &str,
+) -> OrderMode {
+    let initial_order_mode =
+        initial_order_mode_from_localstorage_and_search_value(
+            &initial_search_value,
+        );
+    provide_context(
+        cx,
+        OrderModeSignal(create_rw_signal(cx, initial_order_mode)),
+    );
+    initial_order_mode
+}
+
 pub fn sort_icons(
     order_mode: &OrderModeVariant,
     icons: &mut Vec<StaticSimpleIcon>,
@@ -91,7 +106,7 @@ impl fmt::Display for OrderModeVariant {
 #[derive(Copy, Clone)]
 pub struct OrderModeSignal(pub RwSignal<OrderMode>);
 
-pub fn initial_order_mode_from_localstorage() -> OrderMode {
+fn initial_order_mode_from_localstorage() -> OrderMode {
     let window = web_sys::window().unwrap();
     let local_storage = window.local_storage().unwrap().unwrap();
 
@@ -101,7 +116,7 @@ pub fn initial_order_mode_from_localstorage() -> OrderMode {
     }
 }
 
-pub fn initial_order_mode_from_localstorage_and_search_value(
+fn initial_order_mode_from_localstorage_and_search_value(
     search_value: &str,
 ) -> OrderMode {
     let mut order_mode = initial_order_mode_from_localstorage();
@@ -111,7 +126,7 @@ pub fn initial_order_mode_from_localstorage_and_search_value(
     order_mode
 }
 
-pub fn set_order_mode_on_localstorage(order_mode: &OrderModeVariant) {
+fn set_order_mode_on_localstorage(order_mode: &OrderModeVariant) {
     let window = web_sys::window().unwrap();
     let local_storage = window.local_storage().unwrap().unwrap();
     local_storage

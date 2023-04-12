@@ -1,7 +1,8 @@
 [package]
 name = "scripts"
-version = "0.1.0"
-edition = "2021"
+description = "Simple Icons website scripts"
+version.workspace = true
+edition.workspace = true
 
 [[bin]]
 name = "fetch-deprecated-icons"

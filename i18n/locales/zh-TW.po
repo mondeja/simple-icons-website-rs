@@ -96,7 +96,6 @@ msgstr ""
 msgid "{} icon"
 msgstr ""
 
-#. Open card
 #: components/src/grid/item/mod.rs:77
 msgid "View {}"
 msgstr ""

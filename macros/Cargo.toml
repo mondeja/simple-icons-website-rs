@@ -1,8 +1,8 @@
 [package]
 name = "simple-icons-website-macros"
-version = { workspace = true }
-edition = "2018"
 description = "Simple Icons website macros"
+version.workspace = true
+edition.workspace = true
 
 [lib]
 proc-macro = true

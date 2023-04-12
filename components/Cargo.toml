@@ -1,8 +1,8 @@
 [package]
 name = "simple-icons-website-components"
-version = { workspace = true }
-edition = "2021"
 description = "Simple Icons website components"
+version.workspace = true
+edition.workspace = true
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -31,6 +31,8 @@ web-sys = { workspace = true, features = [
     "IntersectionObserverEntry",
     "Event",
     "EventInit",
+    "History",
+    "Navigator",
 ] }
 js-sys.workspace = true
 wasm-bindgen.workspace = true

@@ -2,7 +2,6 @@
 
 use leptos::*;
 use std::collections::HashMap;
-use web_sys;
 
 #[derive(Clone, Copy)]
 pub struct Language {
@@ -52,10 +51,6 @@ pub static LANGUAGES: [Language; 9] = [
 ];
 
 impl Language {
-    pub fn new() -> Self {
-        initial_language_from_localstorage_or_navigator_languages()
-    }
-
     pub fn translate(&self, key: &'static str) -> String {
         TRANSLATIONS
             .get(self.code)
@@ -63,15 +58,12 @@ impl Language {
             .unwrap_or(&key.to_string())
             .to_string()
     }
-}
 
-impl From<&str> for Language {
-    fn from(code: &str) -> Self {
-        LANGUAGES
-            .iter()
-            .find(|lang| lang.code == code)
-            .unwrap_or(&LANGUAGES[0])
-            .clone()
+    pub fn from_str(code: &str) -> Option<Self> {
+        match LANGUAGES.iter().find(|lang| lang.code == code) {
+            Some(language) => Some(*language),
+            None => None,
+        }
     }
 }
 
@@ -92,64 +84,18 @@ pub struct LocaleState {
 }
 
 impl LocaleState {
-    pub fn new() -> Self {
-        LocaleState {
-            current_language: Language::new(),
-        }
+    pub fn new(current_language: Language) -> Self {
+        Self { current_language }
     }
-}
 
-impl LocaleState {
     pub fn set_current_language(&mut self, language_code: &str) {
-        self.current_language = Language::from(language_code);
-        set_language_in_localstorage(self.current_language);
+        // TODO: this unwrap is safe, but ugly
+        self.current_language = Language::from_str(language_code).unwrap();
     }
 }
 
 #[derive(Copy, Clone)]
 pub struct LocaleStateSignal(pub RwSignal<LocaleState>);
-
-fn initial_language_from_navigator_languages() -> Option<Language> {
-    let languages = web_sys::window().unwrap().navigator().languages().to_vec();
-    for raw_language in languages {
-        let mut language =
-            raw_language.as_string().expect("Language not parseable");
-        if language.contains('-') {
-            language = language.split_once('-').unwrap().0.to_string();
-        }
-        if let Some(lang) = Some(Language::from(language.as_str())) {
-            return Some(lang);
-        }
-    }
-    None
-}
-
-fn initial_language_from_localstorage_or_navigator_languages() -> Language {
-    match initial_language_from_localstorage() {
-        Some(lang) => lang,
-        None => match initial_language_from_navigator_languages() {
-            Some(lang) => lang,
-            None => Language::default(),
-        },
-    }
-}
-
-fn initial_language_from_localstorage() -> Option<Language> {
-    let window = web_sys::window().unwrap();
-    let local_storage = window.local_storage().unwrap().unwrap();
-
-    match local_storage.get_item("language") {
-        Ok(Some(language)) => Some(Language::from(language.as_str())),
-        _ => None,
-    }
-}
-
-pub fn set_language_in_localstorage(lang: Language) {
-    let window = web_sys::window().unwrap();
-    let local_storage = window.local_storage().unwrap().unwrap();
-
-    local_storage.set_item("language", lang.code).unwrap();
-}
 
 #[macro_export]
 macro_rules! gettext_impl {

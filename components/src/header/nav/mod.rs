@@ -1,5 +1,5 @@
 mod button;
-mod language_selector;
+pub mod language_selector;
 mod third_party_extensions;
 
 use crate::header::{
@@ -32,7 +32,7 @@ pub fn HeaderMenu(cx: Scope) -> impl IntoView {
     view! { cx,
         <nav class="self-center flex flex-row justify-between w-full lg:w-auto">
             <ul class=move || {
-                let mut class = "self-center md:flex md:flex-row md:space-x-1".to_string();
+                let mut class = "self-center md:flex md:flex-row".to_string();
                 if header_state().menu_open {
                     class.push(' ');
                     class.push_str("m-auto grid grid-cols-5 gap-1");

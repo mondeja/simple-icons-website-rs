@@ -28,6 +28,8 @@ pub fn LoadMoreIconsButton(cx: Scope) -> impl IntoView {
     let icons_grid = use_context::<IconsGridSignal>(cx).unwrap().0;
     let grid_icons_loader = use_context::<GridIconsLoaderSignal>(cx).unwrap().0;
 
+    // TODO: when there are very few icons displayed because of the search,
+    // the button must not be displayed
     view! { cx,
         <div class="load-more-icons" class:hidden=move || grid_icons_loader().load_more_icons>
             <button on:click=move |_| {

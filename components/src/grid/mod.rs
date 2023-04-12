@@ -8,7 +8,7 @@ use crate::controls::search::{
 };
 use crate::grid::item::details::*;
 pub use crate::grid::more_icons::*;
-use crate::order::{sort_icons, OrderModeVariant};
+use crate::order::{sort_icons, OrderMode, OrderModeVariant};
 use ad::*;
 use config::CONFIG;
 use item::*;
@@ -28,6 +28,7 @@ lazy_static! {
 /// Icons grid
 #[derive(Clone)]
 pub struct IconsGrid {
+    // TODO: split into two signals
     /// Icons currently loaded
     pub loaded_icons: Vec<StaticSimpleIcon>,
     /// Icons in order of the grid
@@ -94,7 +95,25 @@ pub struct IconsGridSignal(pub RwSignal<IconsGrid>);
 #[derive(Copy, Clone)]
 pub struct CurrentIconViewSignal(pub RwSignal<Option<StaticSimpleIcon>>);
 
-pub fn initial_icons_from_search_value_and_order_mode(
+pub fn provide_icons_grid_contexts(
+    cx: Scope,
+    initial_search_value: &str,
+    initial_order_mode: &OrderMode,
+) {
+    provide_context(
+        cx,
+        IconsGridSignal(create_rw_signal(
+            cx,
+            IconsGrid::new(initial_search_value, &initial_order_mode.current),
+        )),
+    );
+    provide_context(
+        cx,
+        GridIconsLoaderSignal(create_rw_signal(cx, GridIconsLoader::new())),
+    );
+}
+
+fn initial_icons_from_search_value_and_order_mode(
     search_value: &str,
     order_mode: &OrderModeVariant,
 ) -> (Vec<StaticSimpleIcon>, Vec<StaticSimpleIcon>) {

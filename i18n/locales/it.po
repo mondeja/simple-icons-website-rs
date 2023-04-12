@@ -96,7 +96,6 @@ msgstr "Condividi questo su Twitter!"
 msgid "{} icon"
 msgstr "Icona {}"
 
-#. Open card
 #: components/src/grid/item/mod.rs:77
 msgid "View {}"
 msgstr "Visualizza {}"

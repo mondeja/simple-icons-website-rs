@@ -32,7 +32,14 @@ impl fmt::Display for Layout {
 #[derive(Copy, Clone)]
 pub struct LayoutSignal(pub RwSignal<Layout>);
 
-pub fn initial_layout_from_localstorage() -> Layout {
+pub fn provide_layout_context(cx: Scope) {
+    provide_context(
+        cx,
+        LayoutSignal(create_rw_signal(cx, initial_layout_from_localstorage())),
+    );
+}
+
+fn initial_layout_from_localstorage() -> Layout {
     let window = web_sys::window().unwrap();
     let local_storage = window.local_storage().unwrap().unwrap();
 

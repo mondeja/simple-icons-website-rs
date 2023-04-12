@@ -40,7 +40,16 @@ impl fmt::Display for ColorScheme {
 #[derive(Copy, Clone)]
 pub struct ColorSchemeSignal(pub RwSignal<ColorScheme>);
 
-pub fn initial_color_scheme_from_localstorage() -> ColorScheme {
+pub fn provide_color_scheme_context(cx: Scope) -> ColorSchemeSignal {
+    let color_scheme_signal = ColorSchemeSignal(create_rw_signal(
+        cx,
+        initial_color_scheme_from_localstorage(),
+    ));
+    provide_context(cx, color_scheme_signal);
+    color_scheme_signal
+}
+
+fn initial_color_scheme_from_localstorage() -> ColorScheme {
     let window = web_sys::window().unwrap();
     let local_storage = window.local_storage().unwrap().unwrap();
 

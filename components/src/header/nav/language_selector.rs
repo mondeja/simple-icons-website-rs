@@ -1,7 +1,84 @@
 use crate::header::{nav::button::*, HeaderState, HeaderStateSignal};
 use crate::modal::*;
+use crate::Url;
 use i18n::{move_gettext, Language, LocaleState, LocaleStateSignal, LANGUAGES};
 use leptos::*;
+
+pub fn provide_language_context(cx: Scope) {
+    provide_context(
+        cx,
+        LocaleStateSignal(create_rw_signal(
+            cx,
+            LocaleState::new(initial_language(cx)),
+        )),
+    );
+}
+
+pub fn initial_language(cx: Scope) -> Language {
+    initial_language_from_url_localstorage_or_navigator_languages(cx)
+}
+
+fn initial_language_from_navigator_languages() -> Option<Language> {
+    let languages = web_sys::window().unwrap().navigator().languages().to_vec();
+    for raw_language in languages {
+        let mut language =
+            raw_language.as_string().expect("Language not parseable");
+        if language.contains('-') {
+            language = language.split_once('-').unwrap().0.to_string();
+        }
+        if let Some(lang) = Language::from_str(language.as_str()) {
+            return Some(lang);
+        }
+    }
+    None
+}
+
+fn initial_language_from_url_localstorage_or_navigator_languages(
+    cx: Scope,
+) -> Language {
+    let language: Option<Language> =
+        match Url::params::get(cx, &Url::params::Names::Language) {
+            Some(value) => match Language::from_str(value.as_str()) {
+                Some(lang) => {
+                    set_language_in_localstorage(lang);
+                    Some(lang)
+                }
+                None => None,
+            },
+            None => None,
+        };
+
+    match language {
+        Some(lang) => lang,
+        None => match initial_language_from_localstorage() {
+            Some(lang) => lang,
+            None => match initial_language_from_navigator_languages() {
+                Some(lang) => lang,
+                None => Language::default(),
+            },
+        },
+    }
+}
+
+fn initial_language_from_localstorage() -> Option<Language> {
+    let window = web_sys::window().unwrap();
+    let local_storage = window.local_storage().unwrap().unwrap();
+
+    match local_storage.get_item("language") {
+        Ok(Some(language)) => match Language::from_str(language.as_str()) {
+            Some(lang) => Some(lang),
+            None => None,
+        },
+        _ => None,
+    }
+}
+
+pub fn set_language_in_localstorage(lang: Language) {
+    let window = web_sys::window().unwrap();
+    let local_storage = window.local_storage().unwrap().unwrap();
+
+    local_storage.set_item("language", lang.code).unwrap();
+}
 
 /// Languages list
 #[component]
@@ -22,6 +99,7 @@ pub fn LanguagesList(cx: Scope) -> impl IntoView {
                                 on:click=move |_| {
                                     header_state.update(|state: &mut HeaderState| state.toggle_languages());
                                     locale_state.update(|state: &mut LocaleState| state.set_current_language(lang.code));
+                                    set_language_in_localstorage(lang.clone());
                                 }
                             >
                                 {lang.name}

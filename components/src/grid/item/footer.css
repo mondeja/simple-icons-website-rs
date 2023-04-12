@@ -5,7 +5,7 @@ main > ul > li > :last-child {
 
 /* Hex color */
 main > ul > li > :last-child > :first-child {
-  @apply p-0.5 w-1/2 text-xs
+  @apply w-1/2 text-xs
     text-[var(--light-contrast-color)]
     hover:!text-transparent
     copy-button-white before:bg-[size:1.2rem]

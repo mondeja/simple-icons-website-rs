@@ -1,8 +1,8 @@
 [package]
 name = "simple-icons-website-i18n"
-version = { workspace = true }
-edition = "2018"
-description = "Localization of Simple Icons"
+description = "Localization of Simple Icons website"
+version.workspace = true
+edition.workspace = true
 
 [lib]
 path = "src/lib.rs"
@@ -11,7 +11,6 @@ name = "i18n"
 [dependencies]
 leptos.workspace = true
 lazy_static.workspace = true
-web-sys = { workspace = true, features = ["Navigator", "Storage"] }
 rspolib.workspace = true
 
 [build-dependencies]

@@ -5,161 +5,160 @@ msgstr ""
 #: components/src/controls/download/mod.rs:73
 #: components/src/controls/download/mod.rs:73
 msgid "Download"
-msgstr ""
+msgstr "ダウンロード"
 
 #: components/src/controls/download/mod.rs:76
 #: components/src/controls/download/mod.rs:76
 msgid "SVG"
-msgstr ""
+msgstr "SVG"
 
 #: components/src/controls/download/mod.rs:77
 msgid "Download SVG"
-msgstr ""
+msgstr "SVG をダウンロード"
 
 #: components/src/controls/download/mod.rs:87
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #: components/src/controls/download/mod.rs:88
 msgid "Download PDF"
-msgstr ""
+msgstr "PDF をダウンロード"
 
 #: components/src/controls/order.rs:66
 msgid "Order"
-msgstr ""
+msgstr "注文"
 
 #: components/src/controls/order.rs:69
 msgid "Sort alphabetically"
-msgstr ""
+msgstr "アルファベット順に並べ替え"
 
 #: components/src/controls/order.rs:79
 msgid "Sort by color"
-msgstr ""
+msgstr "色で並べ替え"
 
 #: components/src/controls/mod.rs:86
 msgid "Search"
-msgstr ""
+msgstr "検索"
 
 #: components/src/controls/mod.rs:91
 msgid "Search by brand..."
-msgstr ""
+msgstr "銘柄から探す。。。"
 
 #: components/src/controls/mod.rs:104
 msgid "Light color scheme"
-msgstr ""
+msgstr "淡い配色"
 
 #: components/src/controls/mod.rs:109
 msgid "Dark color scheme"
-msgstr ""
+msgstr "暗い配色"
 
 #: components/src/controls/mod.rs:114
 msgid "System color scheme"
-msgstr ""
+msgstr "システム配色"
 
 #: components/src/controls/mod.rs:127
 msgid "Layout"
-msgstr ""
+msgstr "レイアウト"
 
 #: components/src/controls/mod.rs:130
 msgid "Comfortable"
-msgstr ""
+msgstr "快適"
 
 #: components/src/controls/mod.rs:135
 msgid "Compact"
-msgstr ""
+msgstr "コンパクト"
 
 #: components/src/footer.rs:19
 msgid "Made with ❤️ on GitHub"
-msgstr ""
+msgstr "GitHub の ❤️ で作成"
 
 #: components/src/footer.rs:30
 msgid "Icon missing?"
-msgstr ""
+msgstr "アイコンがない？"
 
 #: components/src/footer.rs:33
 msgid "Submit a request"
-msgstr ""
+msgstr "リクエストを送信"
 
 #: components/src/footer.rs:37
 msgid "Icon outdated?"
-msgstr ""
+msgstr "アイコンが古い？"
 
 #: components/src/footer.rs:40
 msgid "Report outdated icon"
-msgstr ""
+msgstr "古いアイコンを報告"
 
 #: components/src/footer.rs:93
 msgid "Share this on Twitter!"
-msgstr ""
+msgstr "Twitter でシェア！"
 
 #: components/src/grid/item/mod.rs:30
 msgid "{} icon"
-msgstr ""
+msgstr "{} アイコン"
 
-#. Open card
 #: components/src/grid/item/mod.rs:77
 msgid "View {}"
-msgstr ""
+msgstr "{} を見る"
 
 #: components/src/grid/item/mod.rs:90
 msgid "Error generating PDF with PDFKit library: {}"
-msgstr ""
+msgstr "PDFKit ライブラリで PDF を生成中にエラーが発生しました: {}"
 
 #: components/src/header/menu.rs:29
 msgid "Main Repository"
-msgstr ""
+msgstr "メインリポジトリ"
 
 #: components/src/header/menu.rs:44
 msgid "jsDelivr (Content Delivery Network)"
-msgstr ""
+msgstr "jsDelivr (コンテンツ配信ネットワーク)"
 
 #: components/src/header/menu.rs:49
 msgid "UNPKG (Content Delivery Network)"
-msgstr ""
+msgstr "UNPKG (コンテンツ配信ネットワーク)"
 
 #: components/src/header/menu.rs:59
 msgid "Legal disclaimer"
-msgstr ""
+msgstr "法的放棄声明"
 
 #: components/src/header/menu.rs:157
 msgid "Open menu"
-msgstr ""
+msgstr "メニューを開く"
 
 #: components/src/header/menu.rs:178
 msgid "Close menu"
-msgstr ""
+msgstr "メニューを閉じる"
 
 #: components/src/header/menu.rs:209
 msgid "Third party extensions"
-msgstr ""
+msgstr "サードパーティの拡張機能"
 
 #: components/src/header/menu.rs:285
 msgid "Change language"
-msgstr ""
+msgstr "言語を変えてください"
 
 #: components/src/header/title.rs:19
 msgid "{} free {} icons for popular brands"
-msgstr ""
+msgstr "{} 人気ブランドの無料 {} アイコン"
 
 #: components/src/header/title.rs:23
 msgid "Scalable Vector Graphic"
-msgstr ""
+msgstr "スケーラブルなベクター グラフィック"
 
 #: components/src/controls/mod.rs:101
 msgid "Theme"
-msgstr ""
+msgstr "テーマ"
 
 #: components/src/footer.rs:54
 msgid "A {} project maintained by the {}."
-msgstr ""
+msgstr "{} によって維持される {} プロジェクト。"
 
 #: components/src/footer.rs:57
 msgid "CCO"
-msgstr ""
+msgstr "CCO"
 
 #: components/src/footer.rs:61
 msgid "Simple Icons contributors"
-msgstr ""
+msgstr "Simple Icons の貢献者"
 
 #: components/src/footer.rs:66
 msgid "Use {} for requests, corrections and contributions."
@@ -167,83 +166,83 @@ msgstr ""
 
 #: components/src/footer.rs:69
 msgid "GitHub"
-msgstr ""
+msgstr "リクエスト、修正、投稿には {} を使用してください。"
 
 #: components/src/footer.rs:74
 msgid "Kindly supported by your donations at {}."
-msgstr ""
+msgstr "{} での寄付により、ご支援をお願いいたします。"
 
 #: components/src/footer.rs:77
 msgid "Open Collective"
-msgstr ""
+msgstr "Open Collective"
 
 #: components/src/controls/order.rs:182
 msgid "Sort by search match score"
-msgstr ""
+msgstr "検索一致スコアで並べ替え"
 
 #: components/src/controls/search/mod.rs:271
 msgid "Clear search"
-msgstr ""
+msgstr "検索をクリア"
 
 #: components/src/controls/mod.rs:88
 msgid "Open search bar"
-msgstr ""
+msgstr "検索バーを開く"
 
 #: components/src/controls/mod.rs:90
 msgid "Open controls"
-msgstr ""
+msgstr "コントロールを開く"
 
 #: components/src/grid/item/deprecated.rs:19
 msgid "{} will be removed at v{}"
-msgstr ""
+msgstr "{} は v{} で削除されます"
 
 #: components/src/grid/item/deprecated.rs:22
 msgid "Deprecated"
-msgstr ""
+msgstr "非推奨"
 
 #: components/src/grid/item/details.rs:203
 #: components/src/grid/item/details.rs:203
 msgid "Copy hex color"
-msgstr ""
+msgstr "16 進数の色をコピー"
 
 #: components/src/grid/item/details.rs:208
 msgid "Brand guidelines"
-msgstr ""
+msgstr "ブランドガイドライン"
 
 #: components/src/grid/item/details.rs:216
 #: components/src/grid/item/details.rs:216
 msgid "License"
-msgstr ""
+msgstr "ライセンス"
 
 #: components/src/grid/item/details.rs:232
 #: components/src/grid/item/details.rs:232
 msgid "Download colored SVG"
-msgstr ""
+msgstr "カラーSVGをダウンロード"
 
 #: components/src/grid/item/icon_preview.rs:37
 msgid "Copy {} SVG"
-msgstr ""
+msgstr "{} SVG をコピー"
 
 #: components/src/grid/item/title.rs:17
 msgid "Copy {} slug ({})"
-msgstr ""
+msgstr "{} スラッグ ({}) をコピー"
 
 #: components/src/grid/more_icons.rs:44
 msgid "Load more icons"
-msgstr ""
+msgstr "さらにアイコンを読み込む"
 
 #: components/src/header/nav/language_selector.rs:73
 msgid "Select a language"
-msgstr ""
+msgstr "言語を選択"
 
 #: components/src/modal.rs:27
 msgid "Close"
-msgstr ""
+msgstr "近い"
 
 #: components/src/scroll.rs:50
 msgid "Go to header"
-msgstr ""
+msgstr "ヘッダーに移動"
 
 #: components/src/scroll.rs:68
 msgid "Go to footer"
-msgstr ""
+msgstr "フッターに移動"

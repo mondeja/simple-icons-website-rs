@@ -3,5 +3,5 @@
 
 header {
   @apply flex flex-row md:columns-2 justify-between
-    py-6 md:py-14 px-[var(--padding-x)];
+    py-6 md:py-14 page-margin-x;
 }

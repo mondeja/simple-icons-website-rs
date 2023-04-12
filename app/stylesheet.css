@@ -21,7 +21,8 @@
   --dark-contrast-color: rgb(34, 34, 34);
   --light-contrast-color: rgb(238, 238, 238);
 
-  --padding-x: 1.5rem;
+  --margin-x: 1.5rem;
+  --margin-x-md: 3rem;
 }
 
 /* Dark color scheme */
@@ -73,16 +74,43 @@ body.light {
   --link-color-hover: rgb(51, 51, 51);
 }
 
+/* Global components */
+@layer components {
+  /* Margin X of the page */
+  .page-margin-x {
+    @apply mx-[var(--margin-x)] md:mx-[var(--margin-x-md)];
+  }
+
+  /**
+   * Padding X of the page.
+   *
+   * Useful for components that should render their background in top of others,
+   * like the controls one.
+   **/
+  .page-padding-x {
+    @apply px-[var(--margin-x)] md:px-[var(--margin-x-md)];
+  }
+}
+
 /* Global resets */
 @layer base {
   *:focus {
     @apply outline-none;
   }
 
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
   /* TODO: using :last-child because Trunk includes another <body> element */
   body:last-child {
-    @apply font-mono flex flex-col md:px-12 min-h-[100vh]
+    @apply font-mono flex flex-col min-h-[100vh]
       bg-custom-background-color
       text-custom-text-default-color;
   }
+}
+
+main > menu {
+  @apply page-padding-x;
 }

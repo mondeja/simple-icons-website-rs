@@ -1,7 +1,8 @@
 [package]
 name = "simple-icons-website"
-version = { workspace = true }
-edition = "2021"
+description = "Simple Icons website main entrypoint"
+version.workspace = true
+edition.workspace = true
 
 [dependencies]
 simple-icons-website-components = { path = "../components" }

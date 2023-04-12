@@ -42,7 +42,6 @@ msgstr "UNPKG (Red de entrega de contenidos)"
 msgid "{} icon"
 msgstr "Icono de {}"
 
-#. Open card
 #: components/src/grid/item/mod.rs:76
 msgid "View {}"
 msgstr "Ver {}"

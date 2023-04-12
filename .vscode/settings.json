@@ -13,6 +13,7 @@
     "strings": true
   },
   "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
   "css.validate": false,
   "[json]": {
     "editor.tabSize": 2,

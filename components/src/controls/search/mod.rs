@@ -6,6 +6,7 @@ use crate::controls::order::{
 use crate::debounce::debounce;
 use crate::grid::{IconsGrid, IconsGridSignal, ICONS};
 use crate::storage::LocalStorage;
+use crate::Url;
 use config::CONFIG;
 use fuzzy::{build_searcher, search};
 use i18n::move_gettext;
@@ -17,37 +18,53 @@ use web_sys;
 #[derive(Copy, Clone)]
 pub struct SearchValueSignal(pub RwSignal<String>);
 
+pub fn provide_search_context(cx: Scope) -> String {
+    let initial_search_value = initial_search_value(cx);
+    provide_context(
+        cx,
+        SearchValueSignal(create_rw_signal(cx, initial_search_value.clone())),
+    );
+
+    initial_search_value
+}
+
+fn initial_search_value(cx: Scope) -> String {
+    let search_value = match Url::params::get(cx, &Url::params::Names::Search) {
+        Some(value) => {
+            set_search_value_on_localstorage(value.as_str());
+            value.to_string()
+        }
+        None => match initial_search_value_from_localstorage() {
+            Some(value) => {
+                Url::params::update(
+                    cx,
+                    &Url::params::Names::Search,
+                    value.as_str(),
+                );
+                set_search_value_on_localstorage(value.as_str());
+                value
+            }
+            None => String::new(),
+        },
+    };
+
+    use log::info;
+    info!("initial_search_value: {:?}", search_value);
+
+    init_searcher();
+    search_value
+}
+
 fn initial_search_value_from_localstorage() -> Option<String> {
     let window = web_sys::window().unwrap();
     let local_storage = window.local_storage().unwrap().unwrap();
 
     match local_storage.get_item(LocalStorage::Keys::SearchValue.as_str()) {
-        Ok(Some(search_value)) => Some(search_value),
-        _ => None,
-    }
-}
-
-pub fn initial_search_value_from_url_or_localstorage() -> String {
-    let search_value: Option<String> =
-        match web_sys::window().unwrap().location().search() {
-            Ok(search) => {
-                let search = search.trim_start_matches('?');
-                let search = search.trim_start_matches("search=");
-                if search.is_empty() {
-                    None
-                } else {
-                    Some(search.to_string())
-                }
-            }
-            Err(_) => None,
-        };
-
-    match search_value {
-        Some(search_value) => search_value,
-        None => match initial_search_value_from_localstorage() {
-            Some(search_value) => search_value,
-            None => String::new(),
+        Ok(Some(search_value)) => match search_value.is_empty() {
+            true => None,
+            false => Some(search_value),
         },
+        _ => None,
     }
 }
 
@@ -85,12 +102,6 @@ fn init_searcher() {
         icon_titles_ids_js_array.push(&icon_title_id_array);
     }
     build_searcher(&icon_titles_ids_js_array);
-}
-
-pub fn initial_search_value() -> String {
-    let search_value = initial_search_value_from_url_or_localstorage();
-    init_searcher();
-    search_value
 }
 
 #[inline(always)]
@@ -182,6 +193,7 @@ pub async fn search_icons(
 }
 
 async fn on_search(
+    cx: Scope,
     search_input_ref: NodeRef<Input>,
     search_signal: RwSignal<String>,
     icons_grid_signal: RwSignal<IconsGrid>,
@@ -189,6 +201,8 @@ async fn on_search(
 ) {
     let value = search_input_ref.get().unwrap().value();
     search_signal.update(move |state| {
+        Url::params::update(cx, &Url::params::Names::Search, &value);
+
         if value.is_empty() {
             icons_grid_signal.update(|grid| grid.reset());
             set_order_mode(
@@ -218,7 +232,7 @@ async fn on_search(
 pub fn fire_on_search_event() {
     let document = web_sys::window().unwrap().document().unwrap();
     let input = document
-        .query_selector("input[type='search']")
+        .query_selector(".control input[type='search']")
         .unwrap()
         .unwrap();
     let event = web_sys::Event::new_with_event_init_dict(
@@ -254,7 +268,7 @@ pub fn SearchControl(cx: Scope) -> impl IntoView {
                             &mut timeout,
                             CONFIG.search_debounce_ms as u64,
                             Box::new(move || {
-                                spawn_local(on_search(search_input_ref, search, icons_grid, order_mode))
+                                spawn_local(on_search(cx, search_input_ref, search, icons_grid, order_mode))
                             }),
                         );
                     }

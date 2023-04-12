@@ -1,6 +1,6 @@
 //! Header at the top of the page
 
-mod nav;
+pub mod nav;
 mod title;
 
 use leptos::*;

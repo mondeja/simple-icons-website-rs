@@ -37,10 +37,20 @@ impl fmt::Display for DownloadType {
     }
 }
 
+pub fn provide_download_type_context(cx: Scope) {
+    provide_context(
+        cx,
+        DownloadTypeSignal(create_rw_signal(
+            cx,
+            initial_download_type_from_localstorage(),
+        )),
+    );
+}
+
 #[derive(Copy, Clone)]
 pub struct DownloadTypeSignal(pub RwSignal<DownloadType>);
 
-pub fn initial_download_type_from_localstorage() -> DownloadType {
+fn initial_download_type_from_localstorage() -> DownloadType {
     let window = web_sys::window().unwrap();
     let local_storage = window.local_storage().unwrap().unwrap();
 

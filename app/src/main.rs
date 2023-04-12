@@ -6,7 +6,9 @@
 //! See the contributing guide for instructions on how to
 //! develop and build for production.
 //!
-mod app;
+pub(crate) mod app;
+pub(crate) mod meta;
+pub(crate) mod page;
 
 use crate::app::{App, AppProps};
 use console_error_panic_hook;

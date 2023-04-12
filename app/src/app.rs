@@ -1,25 +1,18 @@
+use crate::page::*;
 use components::controls::color_scheme::{
-    initial_color_scheme_from_localstorage, ColorScheme, ColorSchemeSignal,
+    provide_color_scheme_context, ColorScheme,
 };
-use components::controls::download::{
-    initial_download_type_from_localstorage, DownloadTypeSignal,
-};
-use components::controls::layout::{
-    initial_layout_from_localstorage, LayoutSignal,
-};
-use components::controls::order::{
-    initial_order_mode_from_localstorage_and_search_value, OrderModeSignal,
-};
-use components::controls::search::{initial_search_value, SearchValueSignal};
-use components::grid::{
-    GridIconsLoader, GridIconsLoaderSignal, IconsGrid, IconsGridSignal,
-};
+use components::controls::download::provide_download_type_context;
+use components::controls::layout::provide_layout_context;
+use components::controls::order::provide_order_mode_context;
+use components::controls::search::provide_search_context;
+use components::grid::provide_icons_grid_contexts;
+use components::header::nav::language_selector::provide_language_context;
 use components::*;
-use i18n::{gettext, move_gettext};
-use i18n::{LocaleState, LocaleStateSignal};
 use leptos::*;
-use leptos_meta::{
-    provide_meta_context, Link, LinkProps, Meta, MetaProps, Title, TitleProps,
+use leptos_meta::provide_meta_context;
+use leptos_router::{
+    Route, RouteProps, Router, RouterProps, Routes, RoutesProps,
 };
 use macros::get_number_of_icons;
 
@@ -30,183 +23,53 @@ macro_rules! url {
 }
 
 /// Number of icons available in the library
-static NUMBER_OF_ICONS: usize = get_number_of_icons!();
+pub static NUMBER_OF_ICONS: usize = get_number_of_icons!();
 
 /// Title of the page
-static TITLE: &str = "Simple Icons";
+pub static TITLE: &str = "Simple Icons";
 
 /// URL of the website
-static URL: &str = url!();
+pub static URL: &str = url!();
 
 /// URL of Simple Icons logo
-static LOGO_URL: &str = concat!(url!(), "/icons/simpleicons.svg");
+pub static LOGO_URL: &str = concat!(url!(), "/icons/simpleicons.svg");
 
 /// The main application component
 #[component]
 pub fn App(cx: Scope) -> impl IntoView {
     provide_meta_context(cx);
 
-    // Localization context
-    provide_context(
-        cx,
-        LocaleStateSignal(create_rw_signal(cx, LocaleState::new())),
-    );
-
-    let description = move_gettext!(
-        cx,
-        "{} free {} icons for popular brands",
-        NUMBER_OF_ICONS.to_string().as_str(),
-        &gettext!(cx, "SVG")
-    );
-
     view! { cx,
-        <Title text=TITLE/>
-        <Meta charset="utf-8"/>
-        <Meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-        <Meta name="description" content=description/>
-        <Link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
-        <Link
-            rel="search"
-            type_="application/opensearchdescription+xml"
-            title=TITLE
-            href="/opensearch.xml"
-        />
-        <Link rel="license" href="/license.txt"/>
-        <Link rel="canonical" href=URL/>
-        <Link rel="preconnect" href="https://fonts.gstatic.com"/>
-        <Link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&family=Roboto+Mono:wght@400;600"
-        />
-        <MetaOpenGraph description=description/>
-        <MetaTwitter description=description/>
-        <Meta name="msvalidate.01" content="14319924BC1F00DC15EF0EAA29E72404"/>
-        <Meta name="yandex-verification" content="8b467a0b98aa2725"/>
-        <LdJSONMetadata/>
-        <AppBody/>
+        <Router>
+            <Routes>
+                <Route
+                    path="/"
+                    view=move |cx| {
+                        view! { cx, <AppIndex/> }
+                    }
+                />
+            </Routes>
+        </Router>
     }
 }
 
-/// Open graph meta tags
 #[component]
-pub fn MetaOpenGraph<F>(
-    cx: Scope,
-    /// Site description
-    description: F,
-) -> impl IntoView
-where
-    F: Fn() -> String + 'static,
-{
-    view! { cx,
-        <Meta name="og:type" content="website"/>
-        <Meta name="og:title" content=TITLE/>
-        <Meta name="og:description" content=description/>
-        <Meta name="og:url" content=URL/>
-        <Meta name="og:site_name" content=TITLE/>
-        <Meta name="og:image" content="/og.png"/>
-    }
-}
+fn AppIndex(cx: Scope) -> impl IntoView {
+    provide_language_context(cx);
 
-/// Twitter meta tags
-#[component]
-pub fn MetaTwitter<F>(
-    cx: Scope,
-    /// Site description
-    description: F,
-) -> impl IntoView
-where
-    F: Fn() -> String + 'static,
-{
     view! { cx,
-        <Meta name="twitter:card" content="summary_large_image"/>
-        <Meta name="twitter:title" content=TITLE/>
-        <Meta name="twitter:description" content=description/>
-        <Meta name="twitter:url" content=URL/>
-        <Meta name="twitter:image:src" content="/og.png"/>
-    }
-}
-
-/// JSON-LD metadata
-/// See https://developers.google.com/search/docs/data-types/logo
-#[component]
-pub fn LdJSONMetadata(cx: Scope) -> impl IntoView {
-    view! { cx,
-        <script type="application/ld+json">
-            {{
-                serde_json::json!(
-                    { "@context" : "https://schema.org", "@type" : "Organization", "name" : TITLE,
-                    "url" : URL, "logo" : LOGO_URL, "image" : LOGO_URL, "potentialAction" : { "@type"
-                    : "SearchAction", "target" : URL.to_owned() + "/?q={search-term}", "query-input"
-                    : "required name=search-term", }, }
-                )
-                    .to_string()
-            }}
-        </script>
+        <AppPage>
+            <AppBody/>
+        </AppPage>
     }
 }
 
 /// Body of the page
 ///
-/// Initializes the top level contexts for the application in order
-/// to be used by the child components.
+/// Initializes the color scheme context
 #[component]
 pub fn AppBody(cx: Scope) -> impl IntoView {
-    // Color scheme context
-    provide_context(
-        cx,
-        ColorSchemeSignal(create_rw_signal(
-            cx,
-            initial_color_scheme_from_localstorage(),
-        )),
-    );
-    let color_scheme = use_context::<ColorSchemeSignal>(cx).unwrap().0;
-
-    // Donwload type context
-    provide_context(
-        cx,
-        DownloadTypeSignal(create_rw_signal(
-            cx,
-            initial_download_type_from_localstorage(),
-        )),
-    );
-
-    // Search context
-    let initial_search_value = initial_search_value();
-    provide_context(
-        cx,
-        SearchValueSignal(create_rw_signal(cx, initial_search_value.clone())),
-    );
-
-    // Order mode context
-    let initial_order_mode =
-        initial_order_mode_from_localstorage_and_search_value(
-            &initial_search_value,
-        );
-    provide_context(
-        cx,
-        OrderModeSignal(create_rw_signal(cx, initial_order_mode)),
-    );
-
-    // Layout context
-    provide_context(
-        cx,
-        LayoutSignal(create_rw_signal(cx, initial_layout_from_localstorage())),
-    );
-
-    // Displayed icons context
-    provide_context(
-        cx,
-        IconsGridSignal(create_rw_signal(
-            cx,
-            IconsGrid::new(&initial_search_value, &initial_order_mode.current),
-        )),
-    );
-
-    // Grid items loader context
-    provide_context(
-        cx,
-        GridIconsLoaderSignal(create_rw_signal(cx, GridIconsLoader::new())),
-    );
+    let color_scheme = provide_color_scheme_context(cx).0;
 
     view! { cx,
         <body class=move || match color_scheme() {
@@ -226,15 +89,33 @@ pub fn AppBody(cx: Scope) -> impl IntoView {
                 }
             }
         }>
-            <SVGDefsDefinition/>
-            <Header/>
-            <ScrollToHeaderButton/>
-            <main>
-                <Controls/>
-                <Grid/>
-            </main>
-            <Footer/>
-            <ScrollToFooterButton/>
+            <AppBodyContent/>
         </body>
+    }
+}
+
+/// Content of the body of the page
+///
+/// Initializes the top level contexts for the application in order
+/// to be used by the child components.
+#[component]
+fn AppBodyContent(cx: Scope) -> impl IntoView {
+    let initial_search_value = provide_search_context(cx);
+    let initial_order_mode =
+        provide_order_mode_context(cx, &initial_search_value);
+    provide_download_type_context(cx);
+    provide_layout_context(cx);
+    provide_icons_grid_contexts(cx, &initial_search_value, &initial_order_mode);
+
+    view! { cx,
+        <SVGDefsDefinition/>
+        <Header/>
+        <ScrollToHeaderButton/>
+        <main>
+            <Controls/>
+            <Grid/>
+        </main>
+        <Footer/>
+        <ScrollToFooterButton/>
     }
 }
