@@ -4,254 +4,250 @@ msgstr ""
 
 #: components/src/controls/color_scheme.rs:87
 msgid "Theme"
-msgstr ""
+msgstr "主题"
 
 #: components/src/controls/color_scheme.rs:90
 msgid "Light color scheme"
-msgstr ""
+msgstr "浅色系"
 
 #: components/src/controls/color_scheme.rs:96
 msgid "Dark color scheme"
-msgstr ""
+msgstr "深色配色方案"
 
 #: components/src/controls/color_scheme.rs:102
 msgid "System color scheme"
-msgstr ""
+msgstr "系统配色方案"
 
 #: components/src/controls/download/mod.rs:89
 #: components/src/controls/download/mod.rs:89
 msgid "Download"
-msgstr ""
+msgstr "下载格式"
 
 #: components/src/controls/download/mod.rs:92
 #: components/src/controls/download/mod.rs:92 app/src/page.rs:21
 msgid "SVG"
-msgstr ""
+msgstr "SVG"
 
 #: components/src/controls/download/mod.rs:93
 #: components/src/controls/download/mod.rs:93
 #: components/src/controls/download/mod.rs:93
 msgid "Download SVG"
-msgstr ""
+msgstr "下载 SVG"
 
 #: components/src/controls/download/mod.rs:104
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #: components/src/controls/download/mod.rs:105
 #: components/src/controls/download/mod.rs:105
 #: components/src/controls/download/mod.rs:105
 msgid "Download PDF"
-msgstr ""
+msgstr "下载 PDF"
 
 #: components/src/controls/layout.rs:71
 msgid "Layout"
-msgstr ""
+msgstr "布局"
 
 #: components/src/controls/layout.rs:74
 msgid "Comfortable"
-msgstr ""
+msgstr "舒服的"
 
 #: components/src/controls/layout.rs:80
 msgid "Compact"
-msgstr ""
+msgstr "袖珍的"
 
 #: components/src/controls/order.rs:166
 msgid "Order"
-msgstr ""
+msgstr "命令"
 
 #: components/src/controls/order.rs:171
 msgid "Sort alphabetically"
-msgstr ""
+msgstr "按字母顺序排序"
 
 #: components/src/controls/order.rs:176
 msgid "Sort by color"
-msgstr ""
+msgstr "按颜色排序"
 
 #: components/src/controls/order.rs:187
 msgid "Sort by search match score"
-msgstr ""
+msgstr "按搜索匹配分数排序"
 
 #: components/src/controls/search/mod.rs:258
 msgid "Search"
-msgstr ""
+msgstr "搜索"
 
 #: components/src/controls/search/mod.rs:264
 msgid "Search by brand..."
-msgstr ""
+msgstr "按品牌搜索..."
 
 #: components/src/controls/search/mod.rs:278
 msgid "Clear search"
-msgstr ""
+msgstr "清除搜索"
 
 #: components/src/controls/mod.rs:88
 msgid "Open search bar"
-msgstr ""
+msgstr "打开搜索栏"
 
 #: components/src/controls/mod.rs:90
 msgid "Open controls"
-msgstr ""
+msgstr "打开控件"
 
 #: components/src/footer/about.rs:9
 msgid "A {} project maintained by the {}."
-msgstr ""
+msgstr "由 {} 维护的 {} 项目。"
 
 #: components/src/footer/about.rs:11
 msgid "CCO"
-msgstr ""
+msgstr "CCO"
 
 #: components/src/footer/about.rs:13
 msgid "Simple Icons contributors"
-msgstr ""
+msgstr "Simple Icons 的贡献者"
 
 #: components/src/footer/about.rs:16
 msgid "Use {} for requests, corrections and contributions."
-msgstr ""
+msgstr "使用 {} 请求、更正和贡献。"
 
 #: components/src/footer/about.rs:18
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 #: components/src/footer/about.rs:21
 msgid "Kindly supported by your donations at {}."
-msgstr ""
+msgstr "欢迎您在 {} 捐款支持。"
 
 #: components/src/footer/about.rs:23
 msgid "Open Collective"
-msgstr ""
+msgstr "Open Collective"
 
 #: components/src/footer/mod.rs:78
 msgid "Made with ❤️ on GitHub"
-msgstr ""
+msgstr "在 GitHub 上用 ❤️ 制作"
 
 #: components/src/footer/mod.rs:110
 msgid "Icon missing?"
-msgstr ""
+msgstr "图标不见了？"
 
 #: components/src/footer/mod.rs:112
 msgid "Submit a request"
-msgstr ""
+msgstr "提交申请"
 
 #: components/src/footer/mod.rs:116
 msgid "Icon outdated?"
-msgstr ""
+msgstr "图标过时？"
 
 #: components/src/footer/mod.rs:118
 msgid "Report outdated icon"
-msgstr ""
+msgstr "报告过时图标"
 
 #: components/src/footer/mod.rs:141
 msgid "Share this on Twitter!"
-msgstr ""
+msgstr "在推特上分享这个！"
 
 #: components/src/grid/item/deprecated.rs:18
 msgid "{} will be removed at v{}"
-msgstr ""
+msgstr "{} 将在 v{} 时移除"
 
 #: components/src/grid/item/deprecated.rs:21
 msgid "Deprecated"
-msgstr ""
+msgstr "弃用"
 
 #: components/src/grid/item/details.rs:199
 #: components/src/grid/item/details.rs:199
 msgid "Copy hex color"
-msgstr ""
+msgstr "复制十六进制颜色"
 
 #: components/src/grid/item/details.rs:203
-#: components/src/grid/item/details.rs:203 components/src/grid/item/links.rs:24
-#: components/src/grid/item/details.rs:203 components/src/grid/item/links.rs:24 components/src/grid/item/links.rs:24
-#: components/src/grid/item/details.rs:203 components/src/grid/item/links.rs:24 components/src/grid/item/links.rs:24 components/src/grid/item/details.rs:203
-#: components/src/grid/item/details.rs:203 components/src/grid/item/links.rs:24 components/src/grid/item/links.rs:24 components/src/grid/item/details.rs:203 components/src/grid/item/links.rs:24
 msgid "Brand guidelines"
-msgstr ""
+msgstr "品牌指南"
 
 #: components/src/grid/item/details.rs:207
 #: components/src/grid/item/details.rs:207
 msgid "License"
-msgstr ""
+msgstr "执照"
 
 #: components/src/grid/item/details.rs:222
 #: components/src/grid/item/details.rs:222
 msgid "Download colored SVG"
-msgstr ""
+msgstr "下载彩色 SVG"
 
 #: components/src/grid/item/footer.rs:48
 msgid "View {}"
-msgstr ""
+msgstr "看法 {}"
 
 #: components/src/grid/item/footer.rs:60
 msgid "Error generating PDF with PDFKit library: {}"
-msgstr ""
+msgstr "使用 PDFKit 库生成 PDF 时出错：{}"
 
 #: components/src/grid/item/icon_preview.rs:37
 msgid "Copy {} SVG"
-msgstr ""
+msgstr "复制 {} SVG"
 
 #: components/src/grid/item/icon_preview.rs:58
 msgid "{} icon"
-msgstr ""
+msgstr "{} 图标"
 
 #: components/src/grid/item/title.rs:17
 msgid "Copy {} slug ({})"
-msgstr ""
+msgstr "复制 {} 别名 ({})"
 
 #: components/src/grid/more_icons.rs:41
 msgid "Load more icons"
-msgstr ""
+msgstr "加载更多图标"
 
 #: components/src/header/nav/language_selector.rs:122
 msgid "Change language"
-msgstr ""
+msgstr "改变语言"
 
 #: components/src/header/nav/language_selector.rs:147
 msgid "Select a language"
-msgstr ""
+msgstr "选择语言"
 
 #: components/src/header/nav/third_party_extensions.rs:51
 #: components/src/header/nav/third_party_extensions.rs:51
 msgid "Third party extensions"
-msgstr ""
+msgstr "第三方扩展"
 
 #: components/src/header/nav/mod.rs:43
 msgid "Main Repository"
-msgstr ""
+msgstr "主项目"
 
 #: components/src/header/nav/mod.rs:58
 msgid "jsDelivr (Content Delivery Network)"
-msgstr ""
+msgstr "jsDelivr（内容分发网络）"
 
 #: components/src/header/nav/mod.rs:63
 msgid "UNPKG (Content Delivery Network)"
-msgstr ""
+msgstr "UNPKG（内容交付网络）"
 
 #: components/src/header/nav/mod.rs:73
 msgid "Legal disclaimer"
-msgstr ""
+msgstr "法律免责声明"
 
 #: components/src/header/nav/mod.rs:100
 msgid "Open menu"
-msgstr ""
+msgstr "打开菜单"
 
 #: components/src/header/nav/mod.rs:120
 msgid "Close menu"
-msgstr ""
+msgstr "关闭菜单"
 
 #: components/src/header/title.rs:29 app/src/page.rs:19
 msgid "{} free {} icons for popular brands"
-msgstr ""
+msgstr "流行品牌的 {} 免费 {} 图标"
 
 #: components/src/header/title.rs:31
 msgid "Scalable Vector Graphic"
-msgstr ""
+msgstr "可缩放矢量图形"
 
 #: components/src/modal.rs:25
 msgid "Close"
-msgstr ""
+msgstr "关闭"
 
 #: components/src/scroll.rs:53
 msgid "Go to header"
-msgstr ""
+msgstr "转到标题"
 
 #: components/src/scroll.rs:71
 msgid "Go to footer"
-msgstr ""
+msgstr "转到页脚"
