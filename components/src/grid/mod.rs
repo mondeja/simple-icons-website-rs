@@ -1,11 +1,13 @@
 mod ad;
 mod item;
+pub mod more_icons;
 
 use crate::controls::layout::{Layout, LayoutSignal};
 use crate::controls::search::{
     fire_on_search_event, search_icons_and_returns_first_page,
 };
 use crate::grid::item::details::*;
+pub use crate::grid::more_icons::*;
 use crate::order::{sort_icons, OrderModeVariant};
 use ad::*;
 use config::CONFIG;
@@ -84,9 +86,11 @@ impl IconsGrid {
     }
 }
 
+/// Signal to control the icons grid
 #[derive(Copy, Clone)]
 pub struct IconsGridSignal(pub RwSignal<IconsGrid>);
 
+/// Signal to control the current detail view modal of icons
 #[derive(Copy, Clone)]
 pub struct CurrentIconViewSignal(pub RwSignal<Option<StaticSimpleIcon>>);
 
@@ -144,5 +148,6 @@ pub fn Grid(cx: Scope) -> impl IntoView {
             <CarbonAdsAdGridItem/>
             <GridIcons />
         </ul>
+        <LoadMoreIconsButton/>
     }
 }

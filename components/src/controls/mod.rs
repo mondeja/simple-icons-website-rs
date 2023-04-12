@@ -96,7 +96,7 @@ pub fn ControlsToggler(cx: Scope) -> impl IntoView {
                     });
                 }
             >
-                <svg role="img" viewBox="0 0 24 24">
+                <svg role="button" viewBox="0 0 24 24">
                     {move || {
                         if controls_state().buttons_group_open {
                             view!{cx,

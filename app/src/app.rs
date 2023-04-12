@@ -11,7 +11,9 @@ use components::controls::order::{
     initial_order_mode_from_localstorage_and_search_value, OrderModeSignal,
 };
 use components::controls::search::{initial_search_value, SearchValueSignal};
-use components::grid::{IconsGrid, IconsGridSignal};
+use components::grid::{
+    GridIconsLoader, GridIconsLoaderSignal, IconsGrid, IconsGridSignal,
+};
 use components::*;
 use i18n::{gettext, move_gettext};
 use i18n::{LocaleState, LocaleStateSignal};
@@ -215,33 +217,33 @@ pub fn AppBody(cx: Scope) -> impl IntoView {
         )),
     );
 
+    // Grid items loader context
+    provide_context(
+        cx,
+        GridIconsLoaderSignal(create_rw_signal(cx, GridIconsLoader::new())),
+    );
+
     view! { cx,
-        <body class=move||{
-            let mut class = concat!(
-                "font-mono flex flex-col px-6 md:px-12 min-h-[100vh]",
-                " bg-custom-background-color",
-                " text-custom-text-default-color"
-            ).to_string();
-            match color_scheme() {
-                ColorScheme::Dark => class.push_str(" dark"),
-                ColorScheme::Light => class.push_str(" light"),
-                ColorScheme::System => {
-                    if web_sys::window().unwrap().match_media("(prefers-color-scheme: dark)").unwrap().unwrap().matches() {
-                        class.push_str(" dark");
-                    } else {
-                        class.push_str(" light");
-                    }
-                },
+        <body class=move || match color_scheme() {
+            ColorScheme::Dark => "dark",
+            ColorScheme::Light => "light",
+            ColorScheme::System => {
+                if web_sys::window().unwrap().match_media("(prefers-color-scheme: dark)").unwrap().unwrap().matches() {
+                    "dark"
+                } else {
+                    "light"
+                }
             }
-            class
         }>
             <SVGDefsDefinition/>
             <Header/>
+            <ScrollToHeaderButton/>
             <main>
                 <Controls/>
                 <Grid/>
             </main>
             <Footer/>
+            <ScrollToFooterButton/>
         </body>
     }
 }

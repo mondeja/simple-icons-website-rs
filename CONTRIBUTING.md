@@ -24,12 +24,6 @@
 - Install the [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) extension.
 - Install the [Rust Analyzer](https://marketplace.visualstudio.com/items?itemName=matklad.rust-analyzer) extension.
 
-## Recommended workflow
-
-- Open the project in VSCode with a VSBrowser screen at the side.
-- Run `cargo make` in the terminal.
-- Enjoy (recommended).
-
 ## Arquitecture
 
 ### Technologies
@@ -46,6 +40,7 @@
 - `i18n/`: It provides the translations and i18n utilities used in the website.
 - `macros/`: It provides compile time macros used in the website. Used to generate the data provided by the simple-icons npm package.
 - `simple-icons/`: Simple Icons Rust library. It provides the data provided by the simple-icons npm package.
+- `scripts/`: Scripts used to generate data needed by the website.
 
 ### Where to look
 

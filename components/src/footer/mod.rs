@@ -2,6 +2,7 @@
 
 mod about;
 
+use crate::grid::more_icons::GridIconsLoaderSignal;
 use crate::grid::IconsGridSignal;
 use about::*;
 use i18n::move_gettext;
@@ -25,6 +26,7 @@ static TWITTER_ICON_SVG_PATH: &str = simple_icon_svg_path!("twitter");
 pub fn Footer(cx: Scope) -> impl IntoView {
     let footer_ref = create_node_ref::<Footer>(cx);
     let icons_grid = use_context::<IconsGridSignal>(cx).unwrap().0;
+    let grid_icons_loader = use_context::<GridIconsLoaderSignal>(cx).unwrap().0;
 
     let intersection_callback: Closure<
         dyn Fn(Vec<IntersectionObserverEntry>, IntersectionObserver),
@@ -32,8 +34,19 @@ pub fn Footer(cx: Scope) -> impl IntoView {
         move |entries: Vec<IntersectionObserverEntry>,
               _observer: IntersectionObserver| {
             let footer_entry = &entries[0];
+            use log::info;
+            info!(
+                "footer_entry is intersecting: {}",
+                footer_entry.is_intersecting()
+            );
+
             if footer_entry.is_intersecting() {
-                icons_grid.update(|grid| grid.load_next_icons());
+                if grid_icons_loader().load_more_icons {
+                    icons_grid.update(|grid| grid.load_next_icons());
+                }
+            } else if !grid_icons_loader().load_more_icons {
+                grid_icons_loader
+                    .update(|loader| loader.load_more_icons = true);
             }
         },
     ));
@@ -53,10 +66,7 @@ pub fn Footer(cx: Scope) -> impl IntoView {
     });
 
     view! { cx,
-        <footer
-            _ref=footer_ref
-            class="flex flex-col justify-between py-8 text-sm"
-        >
+        <footer _ref=footer_ref>
             <ReportProblems/>
             <div class="flex flex-row justify-between">
                 <About/>

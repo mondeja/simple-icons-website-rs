@@ -26,7 +26,7 @@ where
             "hidden lg:block".to_string()
         }>
             <a title=title href=href>
-                <svg role="img" viewBox="0 0 24 24">
+                <svg role="link" viewBox="0 0 24 24">
                     <path d=svg_path/>
                 </svg>
             </a>
@@ -53,7 +53,7 @@ where
 {
     view! { cx,
         <li title=title class=additional_classes>
-            <svg role="img" viewBox="0 0 24 24">
+            <svg role="button" viewBox="0 0 24 24">
                 <path d=svg_path/>
             </svg>
         </li>
