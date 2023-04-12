@@ -22,13 +22,9 @@ where
     view! { cx,
         <div>
             <h2>{title}</h2>
-            <button
-                type="button"
-                title=move_gettext!(cx, "Close")
-                on:click=on_close
-            >
+            <button type="button" title=move_gettext!(cx, "Close") on:click=on_close>
                 <svg role="img" viewBox="0 0 24 24">
-                    <use_ href=format!("#{}", SVGDefs::CrossPath.id()) />
+                    <use_ href=format!("#{}", SVGDefs::CrossPath.id())></use_>
                 </svg>
             </button>
         </div>
@@ -37,11 +33,7 @@ where
 
 #[component]
 fn ModalBody(cx: Scope, children: Children) -> impl IntoView {
-    view! { cx,
-        <div>
-            {children(cx)}
-        </div>
-    }
+    view! { cx, <div>{children(cx)}</div> }
 }
 
 #[component]
@@ -58,11 +50,7 @@ where
     C: OnCloseFn + 'static,
 {
     view! { cx,
-        <div
-            class="modal-shadow"
-            class:hidden=move || !is_open()
-            on:click=on_close
-        >
+        <div class="modal-shadow" class:hidden=move || !is_open() on:click=on_close>
             {children(cx)}
         </div>
     }
@@ -89,9 +77,7 @@ where
         <ModalShadow is_open=is_open on_close=on_close>
             <div class="modal">
                 <ModalHeader title=title on_close=on_close/>
-                <ModalBody>
-                    {children(cx)}
-                </ModalBody>
+                <ModalBody>{children(cx)}</ModalBody>
             </div>
         </ModalShadow>
     }

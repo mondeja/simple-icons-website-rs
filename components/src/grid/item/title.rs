@@ -15,12 +15,12 @@ pub fn IconGridItemTitle(
     view! { cx,
         <h2
             title=move_gettext!(cx, "Copy {} slug ({})", title, slug)
-            on:click=move|ev: MouseEvent|{
+            on:click=move |ev: MouseEvent| {
                 let target = event_target::<HtmlElement>(&ev);
-                spawn_local(
-                    copy_setting_copied_transition_in_element(slug.to_string(), target)
-                );
+                spawn_local(copy_setting_copied_transition_in_element(slug.to_string(), target));
             }
-        >{title}</h2>
+        >
+            {title}
+        </h2>
     }
 }

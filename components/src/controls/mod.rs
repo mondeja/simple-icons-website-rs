@@ -34,7 +34,7 @@ pub fn Controls(cx: Scope) -> impl IntoView {
 
     view! { cx,
         <menu>
-            <div class=move||{
+            <div class=move || {
                 let mut class = "controls-group flex-grow sm:flex-grow-0 mr-4".to_string();
                 if controls_state().buttons_group_open {
                     class.push_str(" hidden lg:flex");
@@ -43,7 +43,7 @@ pub fn Controls(cx: Scope) -> impl IntoView {
             }>
                 <SearchControl/>
             </div>
-            <div class=move|| {
+            <div class=move || {
                 let mut class = "controls-group".to_string();
                 if !controls_state().buttons_group_open {
                     class.push_str(" hidden lg:flex");
@@ -83,7 +83,7 @@ pub fn ControlsToggler(cx: Scope) -> impl IntoView {
             <label class="block">""</label>
             <button
                 class="absolute right-0 bottom-0 rounded"
-                title=move||{
+                title=move || {
                     if controls_state().buttons_group_open {
                         gettext!(cx, "Open search bar")
                     } else {
@@ -91,21 +91,18 @@ pub fn ControlsToggler(cx: Scope) -> impl IntoView {
                     }
                 }
                 on:click=move |_| {
-                    controls_state.update(|mut state| {
-                        state.buttons_group_open = !state.buttons_group_open;
-                    });
+                    controls_state
+                        .update(|mut state| {
+                            state.buttons_group_open = !state.buttons_group_open;
+                        });
                 }
             >
                 <svg role="button" viewBox="0 0 24 24">
                     {move || {
                         if controls_state().buttons_group_open {
-                            view!{cx,
-                                <use_ href=format!("#{}", SVGDefs::ViewPath.id()) />
-                            }
+                            view! { cx, <use_ href=format!("#{}", SVGDefs::ViewPath.id())></use_> }
                         } else {
-                            view!{cx,
-                                <use_ href=format!("#{}", SVGDefs::ControlsPath.id()) />
-                            }
+                            view! { cx, <use_ href=format!("#{}", SVGDefs::ControlsPath.id())></use_> }
                         }
                     }}
                 </svg>

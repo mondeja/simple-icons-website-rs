@@ -45,7 +45,10 @@ pub fn IconGridItemPreview(
                     .unwrap()
                     .get_attribute("src")
                     .unwrap();
-                let future = fetch_svg_value_and_copy_setting_copied_transition_in_element(src, target);
+                let future = fetch_svg_value_and_copy_setting_copied_transition_in_element(
+                    src,
+                    target,
+                );
                 spawn_local(future);
             }
         >

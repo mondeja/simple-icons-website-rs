@@ -187,9 +187,7 @@ pub fn fill_icon_details_modal_with_icon(icon: StaticSimpleIcon) {
 /// Details modal icon preview
 #[component]
 fn IconDetailsModalPreview(cx: Scope) -> impl IntoView {
-    view! { cx,
-        <img class="w-1/2 p-10 dark:invert"/>
-    }
+    view! { cx, <img class="w-1/2 p-10 dark:invert"/> }
 }
 
 /// Details modal icon information
@@ -197,11 +195,8 @@ fn IconDetailsModalPreview(cx: Scope) -> impl IntoView {
 fn IconDetailsModalInformation(cx: Scope) -> impl IntoView {
     view! { cx,
         <div class="flex flex-col w-1/2 space-y-2">
-            // Slug
             <h3></h3>
-            // Hex color button
             <button title=move_gettext!(cx, "Copy hex color")></button>
-            // Brand guidelines
             <a
                 class="pt-7 hover:opacity-70"
                 target="_blank"
@@ -209,12 +204,7 @@ fn IconDetailsModalInformation(cx: Scope) -> impl IntoView {
             >
                 {move_gettext!(cx, "Brand guidelines")}
             </a>
-            // License
-            <a
-                class="pt-7 hover:opacity-70"
-                target="_blank"
-                title=move_gettext!(cx, "License")
-            ></a>
+            <a class="pt-7 hover:opacity-70" target="_blank" title=move_gettext!(cx, "License")></a>
         </div>
     }
 }
@@ -224,7 +214,7 @@ fn IconDetailsModalFooter(cx: Scope) -> impl IntoView {
     view! { cx,
         <div>
             <button
-                on:click=move|_| download_svg(&get_slug_from_modal_container())
+                on:click=move |_| download_svg(&get_slug_from_modal_container())
                 title=move_gettext!(cx, "Download SVG")
             >
                 {move_gettext!(cx, "Download SVG")}
@@ -233,7 +223,7 @@ fn IconDetailsModalFooter(cx: Scope) -> impl IntoView {
                 {move_gettext!(cx, "Download colored SVG")}
             </a>
             <button
-                on:click=move|_| download_pdf(&get_slug_from_modal_container())
+                on:click=move |_| download_pdf(&get_slug_from_modal_container())
                 title=move_gettext!(cx, "Download PDF")
             >
                 {move_gettext!(cx, "Download PDF")}
@@ -248,23 +238,20 @@ pub fn IconDetailsModal(cx: Scope) -> impl IntoView {
     let current_icon_view = use_context::<CurrentIconViewSignal>(cx).unwrap().0;
 
     view! { cx,
-        // The modal is initialized empty. Before open it will be filled with the
-        // information of the icon
         <Modal
-            title=move||"".to_string()
-            is_open=move||current_icon_view().is_some()
-            on_close=move|_|{
+            title=move || "".to_string()
+            is_open=move || current_icon_view().is_some()
+            on_close=move |_| {
                 current_icon_view.update(|state| *state = None);
             }
         >
             <div class="flex flex-col" id=ICON_DETAILS_MODAL_ID>
                 <div class="flex flex-row flex-grow">
-                    <IconDetailsModalPreview />
-                    <IconDetailsModalInformation />
+                    <IconDetailsModalPreview/>
+                    <IconDetailsModalInformation/>
                 </div>
                 <IconDetailsModalFooter/>
             </div>
         </Modal>
-
     }
 }

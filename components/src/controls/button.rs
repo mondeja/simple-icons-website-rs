@@ -19,12 +19,7 @@ where
     A: ActiveFn,
 {
     view! { cx,
-        <button
-            // The class is defined at component scoped CSS
-            class:selected=active
-            type="button"
-            title=title
-        >
+        <button class:selected=active type="button" title=title>
             {children(cx)}
         </button>
     }
@@ -48,7 +43,7 @@ where
     view! { cx,
         <ControlButton title=title active=active>
             <svg role="img" viewBox="0 0 24 24">
-                <path d=svg_path/>
+                <path d=svg_path></path>
             </svg>
         </ControlButton>
     }

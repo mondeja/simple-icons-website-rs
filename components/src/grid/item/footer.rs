@@ -31,10 +31,7 @@ pub fn IconGridItemFooter(
     let current_icon_view = use_context::<CurrentIconViewSignal>(cx).unwrap().0;
 
     view! { cx,
-        // TODO: use defs SVG tags to optimize size
         <div>
-            // Hex color
-            // TODO: short hexes when possible
             <button
                 title=move_gettext!(cx, "Copy hex color")
                 class:dark=icon.hex_is_relatively_light
@@ -47,8 +44,6 @@ pub fn IconGridItemFooter(
             >
                 {css_hex_copy}
             </button>
-
-            // Open card
             <button
                 title=move_gettext!(cx, "View {}", icon.title)
                 on:click=move |_| {
@@ -57,19 +52,12 @@ pub fn IconGridItemFooter(
                 }
             >
                 <svg viewBox="0 0 24 24">
-                    <use_ href=format!("#{}", SVGDefs::ViewPath.id()) />
+                    <use_ href=format!("#{}", SVGDefs::ViewPath.id())></use_>
                 </svg>
             </button>
-
-            // Download
             <button
                 title=move_gettext!(cx, "Download")
-                // Error in data attribute to handle localization without JS
-                // TODO: any better way to do this?
-                data-error-generating-pdf-msg-schema=move_gettext!(
-                    cx,
-                    "Error generating PDF with PDFKit library: {}"
-                )
+                data-error-generating-pdf-msg-schema=move_gettext!(cx, "Error generating PDF with PDFKit library: {}")
                 on:click=move |_| {
                     if download_type() == DownloadType::SVG {
                         download_svg(icon.slug);
@@ -79,7 +67,7 @@ pub fn IconGridItemFooter(
                 }
             >
                 <svg viewBox="0 0 24 24">
-                    <use_ href=format!("#{}", SVGDefs::DownloadPath.id()) />
+                    <use_ href=format!("#{}", SVGDefs::DownloadPath.id())></use_>
                 </svg>
             </button>
         </div>

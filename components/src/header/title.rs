@@ -19,28 +19,18 @@ pub fn HeaderTitle(cx: Scope) -> impl IntoView {
             }
             cls
         }>
-            <h1
-                class="text-[1.7rem] font-semibold whitespace-nowrap"
-            >
-                "Simple Icons"
-            </h1>
+            <h1 class="text-[1.7rem] font-semibold whitespace-nowrap">"Simple Icons"</h1>
             <p
                 class=concat!(
-                    "font-sans tracking-wider leading-5 lg:leading-6",
-                    " text-sm md:text-base pr-3",
+                    "font-sans tracking-wider leading-5 lg:leading-6", " text-sm md:text-base pr-3",
                     " whitespace-normal xs:whitespace-nowrap"
                 )
                 inner_html=move_gettext!(
-                    cx,
-                    "{} free {} icons for popular brands",
-                    get_number_of_icons!().to_string().as_str(),
-                    &format!(
-                        "<abbr title=\"{}\">{}</abbr>",
-                        gettext!(cx, "Scalable Vector Graphic"),
-                        gettext!(cx, "SVG"),
-                    )
+                    cx, "{} free {} icons for popular brands", get_number_of_icons!() .to_string()
+                    .as_str(), & format!("<abbr title=\"{}\">{}</abbr>", gettext!(cx,
+                    "Scalable Vector Graphic"), gettext!(cx, "SVG"),)
                 )
-            />
+            ></p>
         </div>
     }
 }

@@ -47,22 +47,10 @@ pub fn SVGDefsDefinition(cx: Scope) -> impl IntoView {
     view! { cx,
         <svg class="hidden">
             <defs>
-                <path
-                    id=SVGDefs::ViewPath.id()
-                    d=SVGDefs::ViewPath.as_str()
-                />
-                <path
-                    id=SVGDefs::DownloadPath.id()
-                    d=SVGDefs::DownloadPath.as_str()
-                />
-                <path
-                    id=SVGDefs::ControlsPath.id()
-                    d=SVGDefs::ControlsPath.as_str()
-                />
-                <path
-                    id=SVGDefs::CrossPath.id()
-                    d=SVGDefs::CrossPath.as_str()
-                />
+                <path id=SVGDefs::ViewPath.id() d=SVGDefs::ViewPath.as_str()></path>
+                <path id=SVGDefs::DownloadPath.id() d=SVGDefs::DownloadPath.as_str()></path>
+                <path id=SVGDefs::ControlsPath.id() d=SVGDefs::ControlsPath.as_str()></path>
+                <path id=SVGDefs::CrossPath.id() d=SVGDefs::CrossPath.as_str()></path>
             </defs>
         </svg>
     }

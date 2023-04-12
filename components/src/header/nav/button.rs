@@ -20,14 +20,16 @@ where
     let header_state = use_context::<HeaderStateSignal>(cx).unwrap().0;
 
     view! { cx,
-        <li class=move || if header_state.get().menu_open {
-            "block".to_string()
-        } else {
-            "hidden lg:block".to_string()
+        <li class=move || {
+            if header_state.get().menu_open {
+                "block".to_string()
+            } else {
+                "hidden lg:block".to_string()
+            }
         }>
             <a title=title href=href>
                 <svg role="link" viewBox="0 0 24 24">
-                    <path d=svg_path/>
+                    <path d=svg_path></path>
                 </svg>
             </a>
         </li>
@@ -54,7 +56,7 @@ where
     view! { cx,
         <li title=title class=additional_classes>
             <svg role="button" viewBox="0 0 24 24">
-                <path d=svg_path/>
+                <path d=svg_path></path>
             </svg>
         </li>
     }

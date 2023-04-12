@@ -15,29 +15,53 @@
   "editor.formatOnSave": true,
   "css.validate": false,
   "[json]": {
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[css]": {
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[html]": {
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescript]": {
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+
+  // TailwindCSS IntelliSense configuration
   "tailwindCSS.includeLanguages": {
     "rust": "html",
-    "*.rs": "html"
+    "css": "css",
+    "typescript": "javascript",
+    "javascript": "javascript"
   },
   "tailwindCSS.emmetCompletions": true,
   "tailwindCSS.lint.cssConflict": "error",
   "tailwindCSS.lint.recommendedVariantOrder": "error",
+
+  // VSBrowser configuration
   "vs-browser.url": "http://localhost:8080",
+
+  // Rust Analyzer configuration
   // Clipboard API of wasm_bindgen needs unstable API
   // https://docs.rs/web-sys/latest/web_sys/struct.Navigator.html#method.clipboard
   "rust-analyzer.server.extraEnv": {
     "RUSTFLAGS": "--cfg=web_sys_unstable_apis"
   },
-  "rust-analyzer.showUnlinkedFileNotification": false
+  "rust-analyzer.showUnlinkedFileNotification": false,
+
+  // RunOnSave extension configuration
+  // This is currently needed to format leptos `view!` macros content
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": "\\.rs",
+        "isAsync": true,
+        "cmd": "leptosfmt ${file}"
+      }
+    ]
+  }
 }

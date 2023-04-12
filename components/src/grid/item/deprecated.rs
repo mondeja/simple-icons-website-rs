@@ -13,13 +13,12 @@ pub fn IconIsDeprecatedNotice(
 ) -> impl IntoView {
     view! { cx,
         <a
-            href=pull_request_url class="deprecated"
-            title=move_gettext!(
-                cx,
-                "{} will be removed at v{}", title, removal_at_version
-            )
+            href=pull_request_url
+            class="deprecated"
+            title=move_gettext!(cx, "{} will be removed at v{}", title, removal_at_version)
         >
-            <span>/*Image*/</span><p>{move_gettext!(cx, "Deprecated")}</p>
+            <span></span>
+            <p>{move_gettext!(cx, "Deprecated")}</p>
         </a>
     }
 }

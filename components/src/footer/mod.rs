@@ -92,12 +92,8 @@ fn ReportLink(
     view! { cx,
         <a
             class=concat!(
-                // Light theme colors
-                "text-[#00e] hover:text-[#3434ee]",
-                " visited:text-[#551a8b]",
-                // Dark theme colors
-                " dark:text-[#227fff] dark:hover:text-[#3c8eff]",
-                " dark:visited:text-[#a990bd]",
+                "text-[#00e] hover:text-[#3434ee]", " visited:text-[#551a8b]",
+                " dark:text-[#227fff] dark:hover:text-[#3c8eff]", " dark:visited:text-[#a990bd]",
             )
             href=href
         >
@@ -111,20 +107,14 @@ pub fn ReportProblems(cx: Scope) -> impl IntoView {
     view! { cx,
         <div class="flex flex-col py-8">
             <p>
-                {move_gettext!(cx, "Icon missing?")}
-                {" "}
-                <ReportLink
-                    href="https://github.com/simple-icons/simple-icons/issues/new?assignees=&labels=new+icon&template=icon_request.yml"
-                >
+                {move_gettext!(cx, "Icon missing?")} {" "}
+                <ReportLink href="https://github.com/simple-icons/simple-icons/issues/new?assignees=&labels=new+icon&template=icon_request.yml">
                     {move_gettext!(cx, "Submit a request")}
                 </ReportLink>
             </p>
             <p>
-                {move_gettext!(cx, "Icon outdated?")}
-                {" "}
-                <ReportLink
-                    href="https://github.com/simple-icons/simple-icons/issues/new?assignees=&labels=icon+outdated&template=icon_update.yml"
-                >
+                {move_gettext!(cx, "Icon outdated?")} {" "}
+                <ReportLink href="https://github.com/simple-icons/simple-icons/issues/new?assignees=&labels=icon+outdated&template=icon_update.yml">
                     {move_gettext!(cx, "Report outdated icon")}
                 </ReportLink>
             </p>
@@ -145,10 +135,10 @@ pub fn TwitterButton(cx: Scope) -> impl IntoView {
             target="_blank"
             href="https://twitter.com/intent/tweet?url=https://simpleicons.org&amp;text=Simple%20Icons%3A%20free%20SVG%20icons%20for%20popular%20brands."
         >
-                <svg fill="white" class="h-4 mr-3" role="img" viewBox="0 0 24 24">
-                    <path d=TWITTER_ICON_SVG_PATH/>
-                </svg>
-                <span>{move_gettext!(cx, "Share this on Twitter!")}</span>
+            <svg fill="white" class="h-4 mr-3" role="img" viewBox="0 0 24 24">
+                <path d=TWITTER_ICON_SVG_PATH></path>
+            </svg>
+            <span>{move_gettext!(cx, "Share this on Twitter!")}</span>
         </a>
     }
 }

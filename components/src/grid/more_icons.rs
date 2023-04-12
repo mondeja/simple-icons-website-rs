@@ -29,20 +29,14 @@ pub fn LoadMoreIconsButton(cx: Scope) -> impl IntoView {
     let grid_icons_loader = use_context::<GridIconsLoaderSignal>(cx).unwrap().0;
 
     view! { cx,
-        <div
-            class="load-more-icons"
-            class:hidden=move||grid_icons_loader().load_more_icons
-        >
-            <button
-                on:click=move|_| {
-                    grid_icons_loader.update(|loader| {
+        <div class="load-more-icons" class:hidden=move || grid_icons_loader().load_more_icons>
+            <button on:click=move |_| {
+                grid_icons_loader
+                    .update(|loader| {
                         loader.load_more_icons = true;
                     });
-                    icons_grid.update(|grid| grid.load_next_icons());
-                }
-            >
-                {move_gettext!(cx, "Load more icons")}
-            </button>
+                icons_grid.update(|grid| grid.load_next_icons());
+            }>{move_gettext!(cx, "Load more icons")}</button>
         </div>
     }
 }

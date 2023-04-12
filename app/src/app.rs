@@ -62,35 +62,27 @@ pub fn App(cx: Scope) -> impl IntoView {
     view! { cx,
         <Title text=TITLE/>
         <Meta charset="utf-8"/>
-        <Meta
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-            name="viewport"
-        />
+        <Meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
         <Meta name="description" content=description/>
-        <Link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <Link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
         <Link
             rel="search"
             type_="application/opensearchdescription+xml"
             title=TITLE
             href="/opensearch.xml"
         />
-        <Link rel="license" href="/license.txt" />
-        <Link rel="canonical" href=URL />
-
-        // Fonts from Google API
-        <Link rel="preconnect" href="https://fonts.gstatic.com" />
+        <Link rel="license" href="/license.txt"/>
+        <Link rel="canonical" href=URL/>
+        <Link rel="preconnect" href="https://fonts.gstatic.com"/>
         <Link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&family=Roboto+Mono:wght@400;600"
         />
-
         <MetaOpenGraph description=description/>
         <MetaTwitter description=description/>
         <Meta name="msvalidate.01" content="14319924BC1F00DC15EF0EAA29E72404"/>
         <Meta name="yandex-verification" content="8b467a0b98aa2725"/>
-
         <LdJSONMetadata/>
-
         <AppBody/>
     }
 }
@@ -111,7 +103,6 @@ where
         <Meta name="og:description" content=description/>
         <Meta name="og:url" content=URL/>
         <Meta name="og:site_name" content=TITLE/>
-        // Note that the image is linked for Trunk at index.html
         <Meta name="og:image" content="/og.png"/>
     }
 }
@@ -142,19 +133,13 @@ pub fn LdJSONMetadata(cx: Scope) -> impl IntoView {
     view! { cx,
         <script type="application/ld+json">
             {{
-                serde_json::json!({
-                    "@context": "https://schema.org",
-                    "@type": "Organization",
-                    "name": TITLE,
-                    "url": URL,
-                    "logo": LOGO_URL,
-                    "image": LOGO_URL,
-                    "potentialAction": {
-                        "@type": "SearchAction",
-                        "target": URL.to_owned() + "/?q={search-term}",
-                        "query-input": "required name=search-term",
-                    },
-                }).to_string()
+                serde_json::json!(
+                    { "@context" : "https://schema.org", "@type" : "Organization", "name" : TITLE,
+                    "url" : URL, "logo" : LOGO_URL, "image" : LOGO_URL, "potentialAction" : { "@type"
+                    : "SearchAction", "target" : URL.to_owned() + "/?q={search-term}", "query-input"
+                    : "required name=search-term", }, }
+                )
+                    .to_string()
             }}
         </script>
     }
@@ -228,7 +213,13 @@ pub fn AppBody(cx: Scope) -> impl IntoView {
             ColorScheme::Dark => "dark",
             ColorScheme::Light => "light",
             ColorScheme::System => {
-                if web_sys::window().unwrap().match_media("(prefers-color-scheme: dark)").unwrap().unwrap().matches() {
+                if web_sys::window()
+                    .unwrap()
+                    .match_media("(prefers-color-scheme: dark)")
+                    .unwrap()
+                    .unwrap()
+                    .matches()
+                {
                     "dark"
                 } else {
                     "light"

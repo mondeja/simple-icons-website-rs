@@ -81,24 +81,26 @@ pub fn DownloadFileTypeControl(cx: Scope) -> impl IntoView {
                 <ControlButtonText
                     text=move_gettext!(cx, "SVG")
                     title=move_gettext!(cx, "Download SVG")
-                    active=move || {download_type() == DownloadType::SVG}
+                    active=move || { download_type() == DownloadType::SVG }
                     on:click=move |_| {
-                        download_type.update(move |state| {
-                            *state = DownloadType::SVG;
-                            set_download_type_on_localstorage(*state);
-                        });
+                        download_type
+                            .update(move |state| {
+                                *state = DownloadType::SVG;
+                                set_download_type_on_localstorage(*state);
+                            });
                     }
                 />
                 <ControlButtonText
                     text=move_gettext!(cx, "PDF")
                     title=move_gettext!(cx, "Download PDF")
-                    active=move || {download_type() == DownloadType::PDF}
+                    active=move || { download_type() == DownloadType::PDF }
                     on:click=move |_| {
-                        download_type.update(|state| {
-                            *state = DownloadType::PDF;
-                            set_download_type_on_localstorage(*state);
-                            maybe_initialize_pdfkit();
-                        });
+                        download_type
+                            .update(|state| {
+                                *state = DownloadType::PDF;
+                                set_download_type_on_localstorage(*state);
+                                maybe_initialize_pdfkit();
+                            });
                     }
                 />
             </div>

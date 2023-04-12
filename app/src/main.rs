@@ -24,8 +24,6 @@ pub fn main() {
         .dyn_into::<HtmlElement>()
         .unwrap();
     mount_to(html, |cx| {
-        view! { cx,
-            <App/>
-        }
+        view! { cx, <App/> }
     })
 }

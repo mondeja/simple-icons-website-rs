@@ -33,7 +33,7 @@ where
             on:click=on_click
         >
             <svg viewBox="0 0 24 24">
-                <path d=svg_path />
+                <path d=svg_path></path>
             </svg>
         </button>
     }
@@ -46,9 +46,9 @@ pub fn ScrollToHeaderButton(cx: Scope) -> impl IntoView {
     view! { cx,
         <ScrollButton
             class="top-2"
-            hidden=move|| grid_icons_loader().load_more_icons
+            hidden=move || grid_icons_loader().load_more_icons
             title=move_gettext!(cx, "Go to header")
-            on_click=move|_|{
+            on_click=move |_| {
                 let footer = document().query_selector("header").unwrap().unwrap();
                 footer.scroll_into_view();
             }
@@ -64,9 +64,9 @@ pub fn ScrollToFooterButton(cx: Scope) -> impl IntoView {
     view! { cx,
         <ScrollButton
             class="bottom-2"
-            hidden=move|| !grid_icons_loader().load_more_icons
+            hidden=move || !grid_icons_loader().load_more_icons
             title=move_gettext!(cx, "Go to footer")
-            on_click=move|_|{
+            on_click=move |_| {
                 grid_icons_loader.update(|loader| loader.load_more_icons = false);
                 let footer = document().query_selector("footer").unwrap().unwrap();
                 footer.scroll_into_view();

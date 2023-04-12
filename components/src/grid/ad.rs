@@ -10,6 +10,6 @@ pub fn CarbonAdsAdGridItem(cx: Scope) -> impl IntoView {
             async
             src="//cdn.carbonads.com/carbon.js?serve=CKYIPK7M&placement=simpleiconsorg"
             type="text/javascript"
-        />
+        ></script>
     }
 }

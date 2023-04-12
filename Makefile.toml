@@ -52,7 +52,7 @@ args = ["doc", "--open", "--no-deps"]
 
 [tasks.formats]
 description = "Format files"
-run_task = { name = ["format-rust", "format-prettier"], parallel = true }
+run_task = { name = ["format-rust", "format-prettier"], parallel = false }
 workspace = false
 
 [tasks.tests]
@@ -85,7 +85,6 @@ args = [
 ]
 workspace = false
 cwd = "."
-private = true
 
 [tasks.dev]
 description = "Run the app and watch CSS on development"
@@ -121,7 +120,6 @@ workspace = false
 command = "npx"
 args = ["playwright", "test"]
 workspace = false
-private = true
 
 [tasks.serve-for-tests]
 install_crate = "trunk"
@@ -129,20 +127,30 @@ command = "trunk"
 args = ["serve", "--watch", "../.vscode", "--port", "8081"]
 workspace = false
 cwd = "./app"
-private = true
 
-[tasks.format-rust]
+[tasks.format-rust-code]
 install_crate = "rustfmt"
+workspace = false
 command = "cargo"
 args = ["fmt", "--all"]
+
+[tasks.format-leptos-code]
+install_crate = "leptosfmt"
 workspace = false
-private = true
+command = "leptosfmt"
+args = ["*/src/**/*.rs"]
+
+[tasks.format-rust]
+run_task = { name = [
+    "format-rust-code",
+    "format-leptos-code"
+], parallel = false }
+workspace = false
 
 [tasks.format-prettier]
 command = "prettier"
 args = ["--write", ".", "--ignore-path", ".gitignore"]
 workspace = false
-private = true
 
 [tasks.fetch-deprecated-icons]
 description = "Fetch deprecated icons from simple-icons repository"

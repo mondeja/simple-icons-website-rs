@@ -14,35 +14,28 @@ pub fn ThirdPartyExtensionsTable(cx: Scope) -> impl IntoView {
     view! { cx,
         <table class="table-auto border-collapse mx-8 my-1">
             <tbody>
-                {THIRD_PARTY_EXTENSIONS.iter().map(|extension| {
-                    view! { cx,
-                        <tr>
-                            <td>
-                                <a
-                                    href={extension.url}
-                                    class="hover:opacity-80"
-                                >
-                                    <svg
-                                        class="h-6 w-6 inline"
-                                        fill="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path d={extension.icon_slug}/>
-                                    </svg>
-                                    <span class="ml-4">{extension.name}</span>
-                                </a>
-                            </td>
-                            <td>
-                                <a
-                                    class="hover:opacity-80 ml-6"
-                                    href={extension.author_url}
-                                >
-                                    {extension.author_name}
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                }).collect::<Vec<_>>()}
+                {THIRD_PARTY_EXTENSIONS
+                    .iter()
+                    .map(|extension| {
+                        view! { cx,
+                            <tr>
+                                <td>
+                                    <a href=extension.url class="hover:opacity-80">
+                                        <svg class="h-6 w-6 inline" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d=extension.icon_slug></path>
+                                        </svg>
+                                        <span class="ml-4">{extension.name}</span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="hover:opacity-80 ml-6" href=extension.author_url>
+                                        {extension.author_name}
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    })
+                    .collect::<Vec<_>>()}
             </tbody>
         </table>
     }
@@ -77,15 +70,15 @@ pub fn ThirdPartyExtensions(cx: Scope) -> impl IntoView {
     let header_state = use_context::<HeaderStateSignal>(cx).unwrap().0;
 
     view! { cx,
-        <ThirdPartyExtensionsButton />
+        <ThirdPartyExtensionsButton/>
         <Modal
             title=move_gettext!(cx, "Third party extensions")
-            is_open=move||header_state().extensions_open
+            is_open=move || header_state().extensions_open
             on_close=move |_| {
                 header_state.update(|state: &mut HeaderState| state.extensions_open = false);
             }
         >
-            <ThirdPartyExtensionsTable />
+            <ThirdPartyExtensionsTable/>
         </Modal>
     }
 }

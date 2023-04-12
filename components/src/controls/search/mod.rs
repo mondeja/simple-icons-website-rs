@@ -254,26 +254,21 @@ pub fn SearchControl(cx: Scope) -> impl IntoView {
                             &mut timeout,
                             CONFIG.search_debounce_ms as u64,
                             Box::new(move || {
-                                spawn_local(
-                                    on_search(
-                                        search_input_ref,
-                                        search,
-                                        icons_grid,
-                                        order_mode,
-                                    )
-                                )
-                            })
+                                spawn_local(on_search(search_input_ref, search, icons_grid, order_mode))
+                            }),
                         );
                     }
                 />
                 <span
-                    class:hidden=move||search().is_empty()
+                    class:hidden=move || search().is_empty()
                     title=move_gettext!(cx, "Clear search")
-                    on:click=move|_|{
+                    on:click=move |_| {
                         search_input_ref.get().unwrap().set_value("");
                         fire_on_search_event();
                     }
-                >"×"</span>
+                >
+                    "×"
+                </span>
             </div>
         </div>
     }

@@ -1,5 +1,7 @@
 #![feature(trait_alias)]
 #![feature(const_option_ext)]
+#![feature(stmt_expr_attributes)]
+
 pub mod controls;
 mod copy;
 mod debounce;

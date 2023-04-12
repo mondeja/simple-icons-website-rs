@@ -126,10 +126,14 @@ pub fn GridIcons(cx: Scope) -> impl IntoView {
 
     view! { cx,
         {move || {
-            icons_grid().loaded_icons.iter().map(|icon: &StaticSimpleIcon| {
-                view!{ cx, <IconGridItem icon=*icon/> }
-            }).collect::<Vec<_>>()}
-        }
+            icons_grid()
+                .loaded_icons
+                .iter()
+                .map(|icon: &StaticSimpleIcon| {
+                    view! { cx, <IconGridItem icon=*icon/> }
+                })
+                .collect::<Vec<_>>()
+        }}
     }
 }
 
@@ -144,9 +148,9 @@ pub fn Grid(cx: Scope) -> impl IntoView {
 
     view! { cx,
         <IconDetailsModal/>
-        <ul class:layout-compact=move||layout() == Layout::Compact>
+        <ul class:layout-compact=move || layout() == Layout::Compact>
             <CarbonAdsAdGridItem/>
-            <GridIcons />
+            <GridIcons/>
         </ul>
         <LoadMoreIconsButton/>
     }
