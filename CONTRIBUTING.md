@@ -28,6 +28,11 @@ Before testing you must build the website for development or production. You can
 
 You'll find useful to only run certain tests for development displaying the GUI, you can change to `end2end` directory and run `npx playwright test --headed --project={browser} --grep={regex}`.
 
+Typically the development of tests involucrates two terminals:
+
+1. Build for production and run with `cargo make serve`
+1. Change directory to `end2end` and run `npx playwright test --headed --project={browser} --grep={regex}` (for example `npx playwright test --headed --project=chromium --grep=nav`)
+
 ## Arquitecture
 
 ### Technologies

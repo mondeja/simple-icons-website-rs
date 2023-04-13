@@ -1,6 +1,6 @@
 @layer components {
   .footer-about {
-    @apply flex flex-col;
+    @apply flex flex-col flex-grow text-center md:text-left;
   }
 
   .footer-about a {

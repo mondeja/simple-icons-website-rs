@@ -213,9 +213,7 @@ fn IconDetailsModalInformation(cx: Scope) -> impl IntoView {
                 }
                 title=move_gettext!(cx, "Copy hex color")
             ></button>
-            <a target="_blank" title=move_gettext!(cx, "Brand guidelines")>
-                {move_gettext!(cx, "Brand guidelines")}
-            </a>
+            <a target="_blank">{move_gettext!(cx, "Brand guidelines")}</a>
             <a target="_blank" title=move_gettext!(cx, "License")></a>
         </div>
     }

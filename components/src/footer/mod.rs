@@ -64,7 +64,7 @@ pub fn Footer(cx: Scope) -> impl IntoView {
     view! { cx,
         <footer _ref=footer_ref>
             <ReportProblems/>
-            <div class="flex flex-row justify-between">
+            <div class="flex flex-col md:flex-row justify-between">
                 <About/>
                 <TwitterButton/>
             </div>
@@ -130,6 +130,7 @@ pub fn TwitterButton(cx: Scope) -> impl IntoView {
             class=concat!(
                 "flex flex-row items-center h-0 my-auto align-middle bg-[#1DA1F2]",
                 " text-white rounded-md px-3 py-5 hover:bg-[#55b8f5] focus:bg-[#55b8f5]",
+                " whitespace-nowrap mx-auto md:mx-4 lg:mx-12 mt-4 md:mt-auto text-center"
             )
             rel="noopener"
             role="button"

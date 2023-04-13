@@ -34,7 +34,7 @@
 
   // TailwindCSS IntelliSense configuration
   "tailwindCSS.includeLanguages": {
-    "rust": "html",
+    "rust": "javascript",
     "css": "css",
     "typescript": "javascript",
     "javascript": "javascript"

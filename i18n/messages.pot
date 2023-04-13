@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-12 20:10+0000\n"
+"POT-Creation-Date: 2023-04-13 22:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,7 +41,7 @@ msgstr ""
 msgid "SVG"
 msgstr ""
 
-#: components/src/controls/download/mod.rs:93 components/src/grid/item/details.rs:218 components/src/grid/item/details.rs:220
+#: components/src/controls/download/mod.rs:93 components/src/grid/item/details.rs:228 components/src/grid/item/details.rs:230
 msgid "Download SVG"
 msgstr ""
 
@@ -49,7 +49,7 @@ msgstr ""
 msgid "PDF"
 msgstr ""
 
-#: components/src/controls/download/mod.rs:105 components/src/grid/item/details.rs:227 components/src/grid/item/details.rs:229
+#: components/src/controls/download/mod.rs:105 components/src/grid/item/details.rs:240 components/src/grid/item/details.rs:242
 msgid "Download PDF"
 msgstr ""
 
@@ -65,31 +65,31 @@ msgstr ""
 msgid "Compact"
 msgstr ""
 
-#: components/src/controls/order.rs:166
+#: components/src/controls/order.rs:167
 msgid "Order"
 msgstr ""
 
-#: components/src/controls/order.rs:171
+#: components/src/controls/order.rs:172
 msgid "Sort alphabetically"
 msgstr ""
 
-#: components/src/controls/order.rs:176
+#: components/src/controls/order.rs:177
 msgid "Sort by color"
 msgstr ""
 
-#: components/src/controls/order.rs:187
+#: components/src/controls/order.rs:188
 msgid "Sort by search match score"
 msgstr ""
 
-#: components/src/controls/search/mod.rs:258
+#: components/src/controls/search/mod.rs:251
 msgid "Search"
 msgstr ""
 
-#: components/src/controls/search/mod.rs:264
+#: components/src/controls/search/mod.rs:257
 msgid "Search by brand..."
 msgstr ""
 
-#: components/src/controls/search/mod.rs:278
+#: components/src/controls/search/mod.rs:263
 msgid "Clear search"
 msgstr ""
 
@@ -129,27 +129,27 @@ msgstr ""
 msgid "Open Collective"
 msgstr ""
 
-#: components/src/footer/mod.rs:78
+#: components/src/footer/mod.rs:79
 msgid "Made with ❤️ on GitHub"
 msgstr ""
 
-#: components/src/footer/mod.rs:110
+#: components/src/footer/mod.rs:111
 msgid "Icon missing?"
 msgstr ""
 
-#: components/src/footer/mod.rs:112
+#: components/src/footer/mod.rs:113
 msgid "Submit a request"
 msgstr ""
 
-#: components/src/footer/mod.rs:116
+#: components/src/footer/mod.rs:117
 msgid "Icon outdated?"
 msgstr ""
 
-#: components/src/footer/mod.rs:118
+#: components/src/footer/mod.rs:119
 msgid "Report outdated icon"
 msgstr ""
 
-#: components/src/footer/mod.rs:141
+#: components/src/footer/mod.rs:143
 msgid "Share this on Twitter!"
 msgstr ""
 
@@ -161,19 +161,19 @@ msgstr ""
 msgid "Deprecated"
 msgstr ""
 
-#: components/src/grid/item/details.rs:199 components/src/grid/item/footer.rs:36
+#: components/src/grid/item/details.rs:214 components/src/grid/item/footer.rs:36
 msgid "Copy hex color"
 msgstr ""
 
-#: components/src/grid/item/details.rs:203 components/src/grid/item/details.rs:205 components/src/grid/item/links.rs:24 components/src/grid/item/links.rs:27
+#: components/src/grid/item/details.rs:216 components/src/grid/item/links.rs:24 components/src/grid/item/links.rs:27
 msgid "Brand guidelines"
 msgstr ""
 
-#: components/src/grid/item/details.rs:207 components/src/grid/item/links.rs:35
+#: components/src/grid/item/details.rs:217 components/src/grid/item/links.rs:35
 msgid "License"
 msgstr ""
 
-#: components/src/grid/item/details.rs:222 components/src/grid/item/details.rs:223
+#: components/src/grid/item/details.rs:232 components/src/grid/item/details.rs:233
 msgid "Download colored SVG"
 msgstr ""
 
@@ -185,11 +185,11 @@ msgstr ""
 msgid "Error generating PDF with PDFKit library: {}"
 msgstr ""
 
-#: components/src/grid/item/icon_preview.rs:37
+#: components/src/grid/item/icon_preview.rs:39
 msgid "Copy {} SVG"
 msgstr ""
 
-#: components/src/grid/item/icon_preview.rs:58
+#: components/src/grid/item/icon_preview.rs:60
 msgid "{} icon"
 msgstr ""
 
