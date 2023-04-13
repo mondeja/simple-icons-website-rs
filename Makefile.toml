@@ -8,7 +8,7 @@ alias = "dev"
 
 [tasks.serve]
 description = "Serve the app on development"
-install_crate = "trunk"
+install_crate = { crate_name = "trunk", binary = "trunk", test_arg = "--help" }
 command = "trunk"
 args = [
     "serve",
@@ -102,13 +102,13 @@ workspace = false
 
 [tasks.builds]
 description = "Build the app for production"
-install_crate = "trunk"
+install_crate = { crate_name = "trunk", binary = "trunk", test_arg = "--help" }
 run_task = { name = ["run-pre-build-scripts", "build-css", "build-wasm"] }
 workspace = false
 
 [tasks.build-wasm]
 description = "Build the WASM app for production"
-install_crate = "trunk"
+install_crate = { crate_name = "trunk", binary = "trunk", test_arg = "--help" }
 command = "trunk"
 args = ["build", "--release"]
 cwd = "./app"
