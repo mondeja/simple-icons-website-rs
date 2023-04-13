@@ -55,7 +55,7 @@ jobs:
         if: matrix.cargo-make-command == 'tests'
         run: npx playwright install --with-deps
       - name: Install tooling dependencies
-        run: cargo install cargo-make
+        run: which cargo-make || cargo install cargo-make
       - name: Build for testing
         if: matrix.cargo-make-command == 'tests'
         run: cargo make builds
