@@ -18,6 +18,7 @@
 - `cargo make formats`: Format files. If you are using VSCode they should be formatted at save.
 - `cargo make lint`: Check formatting of files. If you are using VSCode they should be formatted at save.
 - `cargo make builds`: Build the website for production.
+- `cargo make serve`: Build the website for production and serve it with [anywhere](https://www.npmjs.com/package/anywhere).
 - `cargo make docs`: Build and open documentation.
 - `cargo make locales`: Extract new translations. See [Localization](#localization) section.
 

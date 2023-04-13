@@ -1,7 +1,7 @@
 use leptos::*;
 
 pub trait ActiveFn = Fn() -> bool + 'static;
-pub trait TextFn = Fn() -> String + 'static;
+pub trait TextFn = Fn() -> String + 'static + Copy;
 
 /// Abstract control button
 #[component]
@@ -19,7 +19,7 @@ where
     A: ActiveFn,
 {
     view! { cx,
-        <button class:selected=active type="button" title=title>
+        <button class:selected=active type="button" title=title tabindex=0>
             {children(cx)}
         </button>
     }
@@ -42,7 +42,7 @@ where
 {
     view! { cx,
         <ControlButton title=title active=active>
-            <svg role="img" viewBox="0 0 24 24">
+            <svg role="img" aria-label=title viewBox="0 0 24 24">
                 <path d=svg_path></path>
             </svg>
         </ControlButton>

@@ -6,7 +6,17 @@ RUSTFLAGS = "--cfg=web_sys_unstable_apis"
 [tasks.default]
 alias = "dev"
 
-[tasks.serve]
+[tasks.dev]
+description = "Run the app and watch CSS on development"
+run_task = { name = ["run-pre-build-scripts", "serve-and-watch-css"] }
+workspace = false
+
+[tasks.serve-and-watch-css]
+description = "Run the app and watch CSS on development"
+run_task = { name = ["serve-for-dev", "watch-css-for-dev"], parallel = true }
+workspace = false
+
+[tasks.serve-for-dev]
 description = "Serve the app on development"
 install_crate = { crate_name = "trunk", binary = "trunk", test_arg = "--help" }
 command = "trunk"
@@ -31,11 +41,6 @@ args = [
 ]
 workspace = false
 cwd = "./app"
-
-[tasks.serve-and-watch-css]
-description = "Run the app and watch CSS on development"
-run_task = { name = ["serve", "watch-css-for-dev"], parallel = true }
-workspace = false
 
 [tasks.locales]
 description = "Generate or update locales"
@@ -95,11 +100,6 @@ args = [
 workspace = false
 cwd = "."
 
-[tasks.dev]
-description = "Run the app and watch CSS on development"
-run_task = { name = ["run-pre-build-scripts", "serve-and-watch-css"] }
-workspace = false
-
 [tasks.builds]
 description = "Build the app for production"
 install_crate = { crate_name = "trunk", binary = "trunk", test_arg = "--help" }
@@ -110,7 +110,7 @@ workspace = false
 description = "Build the WASM app for production"
 install_crate = { crate_name = "trunk", binary = "trunk", test_arg = "--help" }
 command = "trunk"
-args = ["build", "--release"]
+args = ["--config", "Trunk.prod.toml", "build", "--release"]
 cwd = "./app"
 workspace = false
 
@@ -125,6 +125,18 @@ args = [
     "--minify"
 ]
 cwd = "./app"
+workspace = false
+
+[tasks.serve-for-prod]
+description = "Serve the app with anywhere"
+command = "../node_modules/.bin/anywhere"
+args = ["-d", "dist"]
+cwd = "./app"
+workspace = false
+
+[tasks.serve]
+description = "Build for production and serve"
+run_task = { name = ["builds", "serve-for-prod"] }
 workspace = false
 
 [tasks.format-rust-code]

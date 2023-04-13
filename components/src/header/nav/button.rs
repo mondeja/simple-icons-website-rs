@@ -1,6 +1,8 @@
 use crate::header::HeaderStateSignal;
 use leptos::*;
 
+pub trait TitleFn = Fn() -> String + 'static + Copy;
+
 /// Header menu link
 ///
 /// Each link of the header menu
@@ -15,7 +17,7 @@ pub fn HeaderMenuLink<T>(
     svg_path: &'static str,
 ) -> impl IntoView
 where
-    T: Fn() -> String + 'static + Clone,
+    T: TitleFn,
 {
     let header_state = use_context::<HeaderStateSignal>(cx).unwrap().0;
 
@@ -28,7 +30,7 @@ where
             }
         }>
             <a title=title href=href>
-                <svg role="link" viewBox="0 0 24 24">
+                <svg role="link" aria-label=title viewBox="0 0 24 24">
                     <path d=svg_path></path>
                 </svg>
             </a>
@@ -50,12 +52,12 @@ pub fn HeaderMenuButton<C, T>(
     svg_path: &'static str,
 ) -> impl IntoView
 where
-    C: Fn() -> String + 'static + Clone,
-    T: Fn() -> String + 'static + Clone,
+    C: Fn() -> String + 'static + Copy,
+    T: TitleFn,
 {
     view! { cx,
-        <li title=title class=additional_classes>
-            <svg role="button" viewBox="0 0 24 24">
+        <li title=title class=additional_classes tabindex=0>
+            <svg role="button" aria-label=title viewBox="0 0 24 24">
                 <path d=svg_path></path>
             </svg>
         </li>

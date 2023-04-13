@@ -161,6 +161,7 @@ pub fn OrderControl(cx: Scope) -> impl IntoView {
     let icons_grid = use_context::<IconsGridSignal>(cx).unwrap().0;
     let search_signal = use_context::<SearchValueSignal>(cx).unwrap().0;
 
+    // TODO: the views inside a vec! are bad formatted by leptosfmt
     view! { cx,
         <div class="control">
             <label>{move_gettext!(cx, "Order")}</label>

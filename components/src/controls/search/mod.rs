@@ -3,9 +3,9 @@ mod fuzzy;
 use crate::controls::order::{
     set_order_mode, OrderMode, OrderModeSignal, OrderModeVariant,
 };
-use crate::debounce::debounce;
 use crate::grid::{IconsGrid, IconsGridSignal, ICONS};
 use crate::storage::LocalStorage;
+use crate::Ids;
 use crate::Url;
 use config::CONFIG;
 use fuzzy::{build_searcher, search};
@@ -48,9 +48,6 @@ fn initial_search_value(cx: Scope) -> String {
         },
     };
 
-    use log::info;
-    info!("initial_search_value: {:?}", search_value);
-
     init_searcher();
     search_value
 }
@@ -74,6 +71,19 @@ pub fn set_search_value_on_localstorage(search_value: &str) {
     local_storage
         .set_item(LocalStorage::Keys::SearchValue.as_str(), search_value)
         .unwrap();
+}
+
+pub fn fire_on_search_event() {
+    let document = web_sys::window().unwrap().document().unwrap();
+    let input = document
+        .get_element_by_id(Ids::SearchInput.as_str())
+        .unwrap();
+    let event = web_sys::Event::new_with_event_init_dict(
+        "input",
+        web_sys::EventInit::new().bubbles(true),
+    )
+    .unwrap();
+    input.dispatch_event(&event).unwrap();
 }
 
 fn init_searcher() {
@@ -229,20 +239,6 @@ async fn on_search(
     });
 }
 
-pub fn fire_on_search_event() {
-    let document = web_sys::window().unwrap().document().unwrap();
-    let input = document
-        .query_selector(".control input[type='search']")
-        .unwrap()
-        .unwrap();
-    let event = web_sys::Event::new_with_event_init_dict(
-        "input",
-        web_sys::EventInit::new().bubbles(true),
-    )
-    .unwrap();
-    input.dispatch_event(&event).unwrap();
-}
-
 #[component]
 pub fn SearchControl(cx: Scope) -> impl IntoView {
     let icons_grid = use_context::<IconsGridSignal>(cx).unwrap().0;
@@ -250,28 +246,17 @@ pub fn SearchControl(cx: Scope) -> impl IntoView {
     let search_input_ref = create_node_ref::<Input>(cx);
     let order_mode = use_context::<OrderModeSignal>(cx).unwrap().0;
 
-    let mut timeout: Option<::leptos::leptos_dom::helpers::TimeoutHandle> =
-        None;
-
     view! { cx,
         <div class="control">
-            <label for="search">{move_gettext!(cx, "Search")}</label>
+            <label for=Ids::SearchInput.as_str()>{move_gettext!(cx, "Search")}</label>
             <div class="search">
                 <input
                     _ref=search_input_ref
-                    id="search"
+                    id=Ids::SearchInput.as_str()
                     type="search"
                     placeholder=move_gettext!(cx, "Search by brand...")
                     value=search
-                    on:input=move |_| {
-                        debounce(
-                            &mut timeout,
-                            CONFIG.search_debounce_ms as u64,
-                            Box::new(move || {
-                                spawn_local(on_search(cx, search_input_ref, search, icons_grid, order_mode))
-                            }),
-                        );
-                    }
+                    on:input=move |_| { spawn_local(on_search(cx, search_input_ref, search, icons_grid, order_mode)) }
                 />
                 <span
                     class:hidden=move || search().is_empty()

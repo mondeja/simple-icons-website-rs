@@ -1,7 +1,0 @@
-[build]
-# TODO: Very ugly fix to make the build work on Github pages where
-# the base url is not the root of the domain. Seems that
-# the environment variable TRUNK_PUBLIC_URL and the CLI option
-# --public-url are not working:
-# https://github.com/thedodd/trunk/issues/395
-public_url = "./"

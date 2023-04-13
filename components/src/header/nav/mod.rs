@@ -124,7 +124,7 @@ pub fn HeaderMenuCloseButton(cx: Scope) -> impl IntoView {
             additional_classes=move || {
                 if header_state.get().menu_open { "block".to_string() } else { "hidden".to_string() }
             }
-            svg_path=SVGDefs::CrossPath.as_str()
+            svg_path=SVGDefs::CrossPath.d()
         />
     }
 }

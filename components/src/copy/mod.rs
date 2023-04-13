@@ -23,7 +23,10 @@ pub async fn copy_setting_copied_transition_in_element(
             button.class_list().add_1("copied").unwrap();
             _ = set_timeout_with_handle(
                 move || {
-                    button.class_list().remove_1("copied").unwrap();
+                    button.class_list().remove_1("copied").ok();
+
+                    // Unset focus
+                    button.blur().ok();
                 },
                 Duration::from_millis(1000),
             );

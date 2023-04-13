@@ -70,8 +70,9 @@ pub fn Footer(cx: Scope) -> impl IntoView {
             </div>
             <a
                 class=concat!(
-                    "w-full text-center mt-6 hover:underline",
+                    "w-full text-center mt-6 hover:underline focus:underline",
                     " text-[var(--link-color)] hover:text-[var(--link-color-hover)]",
+                    " focus:text-[var(--link-color-hover)]"
                 )
                 href="https://github.com/simple-icons/simple-icons-website"
             >
@@ -92,8 +93,8 @@ fn ReportLink(
     view! { cx,
         <a
             class=concat!(
-                "text-[#00e] hover:text-[#3434ee]", " visited:text-[#551a8b]",
-                " dark:text-[#227fff] dark:hover:text-[#3c8eff]", " dark:visited:text-[#a990bd]",
+                "text-[#00e] hover:text-[#3434ee] focus:text-[#3434ee] visited:text-[#551a8b]",
+                " dark:text-[#227fff] dark:hover:text-[#3c8eff] dark:focus:text-[#3c8eff] dark:visited:text-[#a990bd]",
             )
             href=href
         >
@@ -128,7 +129,7 @@ pub fn TwitterButton(cx: Scope) -> impl IntoView {
         <a
             class=concat!(
                 "flex flex-row items-center h-0 my-auto align-middle bg-[#1DA1F2]",
-                " text-white rounded-md px-3 py-5"
+                " text-white rounded-md px-3 py-5 hover:bg-[#55b8f5] focus:bg-[#55b8f5]",
             )
             rel="noopener"
             role="button"

@@ -1,12 +1,20 @@
+/**
+ * TODO: when a link element is active (`a:active`), the `fill`
+ * property is not applied on the parent. This is something that
+ * maybe could be fixed with the `:has` selector but Firefox does
+ * not support it yet. We will need to use a weird code solution
+ * to fix this, but currently is not a priority.
+ **/
 header > nav > ul > li {
   @apply w-14 h-14
     p-2 md:p-[10px]
     rounded-md cursor-pointer
     fill-custom-button-content-default-color
     hover:bg-custom-button-background-hover-color
-    hover:fill-custom-button-content-hover-color;
+    hover:fill-custom-button-content-hover-color
+    focus:opacity-70;
 }
 
 header > nav > ul > li a {
-  @apply fill-inherit;
+  @apply fill-inherit focus:opacity-70;
 }

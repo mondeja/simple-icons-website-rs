@@ -9,7 +9,7 @@ use i18n::move_gettext;
 use leptos::ev::MouseEvent;
 use leptos::*;
 use simple_icons::StaticSimpleIcon;
-use web_sys::HtmlElement;
+use web_sys;
 
 /// Icon grid item footer
 ///
@@ -37,7 +37,7 @@ pub fn IconGridItemFooter(
                 class:dark=icon.hex_is_relatively_light
                 style=format!("background: {}", css_hex)
                 on:click=move |ev: MouseEvent| {
-                    let target = event_target::<HtmlElement>(&ev);
+                    let target = event_target::<web_sys::HtmlElement>(&ev);
                     let value = target.text_content().unwrap();
                     spawn_local(copy_setting_copied_transition_in_element(value, target));
                 }

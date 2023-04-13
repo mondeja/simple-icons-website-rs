@@ -4,7 +4,7 @@ use leptos::{ev::MouseEvent, *};
 
 pub trait TitleFn = Fn() -> String + 'static;
 pub trait IsOpenFn = Fn() -> bool + 'static;
-pub trait OnCloseFn = FnMut(MouseEvent) + 'static + Copy;
+pub trait OnCloseFn = Fn(MouseEvent) + 'static + Copy;
 
 #[component]
 fn ModalHeader<T, C>(
@@ -16,8 +16,8 @@ fn ModalHeader<T, C>(
     on_close: C,
 ) -> impl IntoView
 where
-    T: TitleFn + 'static,
-    C: OnCloseFn + 'static,
+    T: TitleFn,
+    C: OnCloseFn,
 {
     view! { cx,
         <div>
@@ -46,11 +46,22 @@ fn ModalShadow<O, C>(
     on_close: C,
 ) -> impl IntoView
 where
-    O: IsOpenFn + 'static,
-    C: OnCloseFn + 'static,
+    O: IsOpenFn,
+    C: OnCloseFn,
 {
+    let class: &'static str = "modal-shadow";
+
     view! { cx,
-        <div class="modal-shadow" class:hidden=move || !is_open() on:click=on_close>
+        <div
+            class=class
+            class:hidden=move || !is_open()
+            on:click=move |ev: MouseEvent| {
+                let target = event_target::<web_sys::HtmlElement>(&ev);
+                if target.class_list().contains(class) {
+                    on_close(ev);
+                }
+            }
+        >
             {children(cx)}
         </div>
     }
@@ -69,9 +80,9 @@ pub fn Modal<T, O, C>(
     on_close: C,
 ) -> impl IntoView
 where
-    O: IsOpenFn + 'static,
-    T: TitleFn + 'static,
-    C: OnCloseFn + 'static,
+    O: IsOpenFn,
+    T: TitleFn,
+    C: OnCloseFn,
 {
     view! { cx,
         <ModalShadow is_open=is_open on_close=on_close>

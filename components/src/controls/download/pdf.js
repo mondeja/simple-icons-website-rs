@@ -1,4 +1,29 @@
-export async function download_pdf_(slug, errorMessageSchema) {
+const sleepUntil = async (f, timeoutMs) => {
+  return new Promise((resolve, reject) => {
+    const timeWas = new Date();
+    const wait = setInterval(function () {
+      if (f()) {
+        clearInterval(wait);
+        resolve();
+      } else if (new Date() - timeWas > timeoutMs) {
+        clearInterval(wait);
+        reject();
+      }
+    }, 20);
+  });
+};
+
+export const download_pdf_ = async (slug, errorGeneratingPdfMessageSchema) => {
+  try {
+    await sleepUntil(() => window.PDFDocument && window.blobStream, 60000);
+  } catch {
+    // TODO: show error message to user
+    console.error(
+      'pdkit or blobStream not loaded after {} seconds. Check yout network connection.',
+    );
+    return;
+  }
+
   const icon_svg_url = `/icons/${slug}.svg`;
   const res = await fetch(icon_svg_url);
   const svg = await res.text();
@@ -16,7 +41,7 @@ export async function download_pdf_(slug, errorMessageSchema) {
     stream = doc.pipe(blobStream());
     console.error(e);
     doc.fontSize(12);
-    doc.text(errorMessageSchema.replace('{}', e.message), 0, 0, {
+    doc.text(errorGeneratingPdfMessageSchema.replace('{}', e.message), 0, 0, {
       align: 'center',
     });
   }
@@ -31,4 +56,4 @@ export async function download_pdf_(slug, errorMessageSchema) {
     a.click();
     URL.revokeObjectURL(url);
   });
-}
+};

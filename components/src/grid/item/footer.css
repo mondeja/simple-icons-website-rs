@@ -7,7 +7,8 @@ main > ul > li > :last-child {
 main > ul > li > :last-child > :first-child {
   @apply w-1/2 text-xs
     text-[var(--light-contrast-color)]
-    hover:!text-transparent
+    /* Without !important doesn't work */
+    hover:!text-transparent focus:!text-transparent
     copy-button-white before:bg-[size:1.2rem]
     before:top-[2px];
 }
@@ -20,7 +21,9 @@ main > ul > li > :last-child > :first-child.dark {
     @apply w-1/4
       fill-custom-button-content-default-color
       hover:bg-custom-button-background-hover-color
-      hover:fill-custom-button-content-hover-color;
+      hover:fill-custom-button-content-hover-color
+      focus:bg-custom-button-background-hover-color
+      focus:fill-custom-button-content-hover-color;
     border-top: 1px solid var(--divider-color);
   }
 

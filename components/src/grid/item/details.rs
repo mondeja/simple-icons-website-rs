@@ -1,19 +1,21 @@
-use crate::controls::download::{download_pdf, download_svg};
+use crate::controls::download::{
+    download_pdf, download_svg, pdf::maybe_initialize_pdfkit,
+};
+use crate::copy::copy_setting_copied_transition_in_element;
 use crate::grid::CurrentIconViewSignal;
 use crate::modal::*;
+use crate::Ids;
 use i18n::move_gettext;
-use leptos::*;
+use leptos::{ev::MouseEvent, *};
 use reqwasm::http::Request;
 use simple_icons::StaticSimpleIcon;
 use wasm_bindgen::JsCast;
-use web_sys::{window, HtmlButtonElement, HtmlElement, HtmlImageElement};
-
-static ICON_DETAILS_MODAL_ID: &str = "icon-details-modal";
+use web_sys;
 
 async fn fetch_svg_value_and_set_download_colored_button_href(
     slug: &'static str,
     icon_hex: &'static str,
-    download_colored_icon_container: HtmlElement,
+    download_colored_icon_container: web_sys::HtmlElement,
 ) {
     // TODO: handle http errors
     let svg = Request::get(&format!("/icons/{}.svg", slug))
@@ -38,23 +40,23 @@ async fn fetch_svg_value_and_set_download_colored_button_href(
 
 fn get_slug_from_modal_container() -> String {
     document()
-        .get_element_by_id(ICON_DETAILS_MODAL_ID)
+        .get_element_by_id(Ids::IconDetailsModal.as_str())
         .unwrap()
         .get_elements_by_tag_name("h3")
         .item(0)
         .unwrap()
-        .dyn_into::<HtmlElement>()
+        .dyn_into::<web_sys::HtmlElement>()
         .unwrap()
         .inner_text()
 }
 
 pub fn fill_icon_details_modal_with_icon(icon: StaticSimpleIcon) {
-    let document = window().unwrap().document().unwrap();
+    let document = web_sys::window().unwrap().document().unwrap();
 
     let modal_body = document
-        .get_element_by_id(ICON_DETAILS_MODAL_ID)
+        .get_element_by_id(Ids::IconDetailsModal.as_str())
         .unwrap()
-        .dyn_into::<HtmlElement>()
+        .dyn_into::<web_sys::HtmlElement>()
         .unwrap();
 
     // Set the modal title
@@ -65,7 +67,7 @@ pub fn fill_icon_details_modal_with_icon(icon: StaticSimpleIcon) {
         .unwrap()
         .first_element_child()
         .unwrap()
-        .dyn_into::<HtmlElement>()
+        .dyn_into::<web_sys::HtmlElement>()
         .unwrap();
     modal_header.set_inner_text(icon.title);
 
@@ -74,7 +76,7 @@ pub fn fill_icon_details_modal_with_icon(icon: StaticSimpleIcon) {
         .get_elements_by_tag_name("h3")
         .item(0)
         .unwrap()
-        .dyn_into::<HtmlElement>()
+        .dyn_into::<web_sys::HtmlElement>()
         .unwrap();
     modal_slug.set_inner_text(icon.slug);
 
@@ -83,9 +85,9 @@ pub fn fill_icon_details_modal_with_icon(icon: StaticSimpleIcon) {
         .get_elements_by_tag_name("button")
         .item(0)
         .unwrap()
-        .dyn_into::<HtmlButtonElement>()
+        .dyn_into::<web_sys::HtmlButtonElement>()
         .unwrap();
-    modal_hex_color_button.set_inner_text(icon.hex);
+    modal_hex_color_button.set_inner_text(&format!("#{}", icon.hex));
     modal_hex_color_button
         .set_attribute(
             "style",
@@ -99,13 +101,20 @@ pub fn fill_icon_details_modal_with_icon(icon: StaticSimpleIcon) {
             ),
         )
         .unwrap();
+    modal_hex_color_button
+        .class_list()
+        .add_1(match icon.hex_is_relatively_light {
+            true => "copy-button-black",
+            false => "copy-button-white",
+        })
+        .unwrap();
 
     // Set preview image container src
     modal_body
         .get_elements_by_tag_name("img")
         .item(0)
         .unwrap()
-        .dyn_into::<HtmlImageElement>()
+        .dyn_into::<web_sys::HtmlImageElement>()
         .unwrap()
         .set_attribute("src", &format!("/icons/{}.svg", icon.slug))
         .unwrap();
@@ -115,7 +124,7 @@ pub fn fill_icon_details_modal_with_icon(icon: StaticSimpleIcon) {
         .get_elements_by_tag_name("a")
         .item(0)
         .unwrap()
-        .dyn_into::<HtmlElement>()
+        .dyn_into::<web_sys::HtmlElement>()
         .unwrap();
     if let Some(guidelines_url) = icon.guidelines_url {
         modal_brand_guidelines_link
@@ -137,7 +146,7 @@ pub fn fill_icon_details_modal_with_icon(icon: StaticSimpleIcon) {
         .get_elements_by_tag_name("a")
         .item(1)
         .unwrap()
-        .dyn_into::<HtmlElement>()
+        .dyn_into::<web_sys::HtmlElement>()
         .unwrap();
     if icon.license_url.is_some() || icon.license_type.is_some() {
         modal_license_link.class_list().remove_1("hidden").unwrap();
@@ -167,14 +176,14 @@ pub fn fill_icon_details_modal_with_icon(icon: StaticSimpleIcon) {
         .unwrap()
         .next_element_sibling()
         .unwrap()
-        .dyn_into::<HtmlElement>()
+        .dyn_into::<web_sys::HtmlElement>()
         .unwrap();
 
     let download_colored_icon_container = modal_footer
         .get_elements_by_tag_name("a")
         .item(0)
         .unwrap()
-        .dyn_into::<HtmlElement>()
+        .dyn_into::<web_sys::HtmlElement>()
         .unwrap();
 
     spawn_local(fetch_svg_value_and_set_download_colored_button_href(
@@ -187,24 +196,27 @@ pub fn fill_icon_details_modal_with_icon(icon: StaticSimpleIcon) {
 /// Details modal icon preview
 #[component]
 fn IconDetailsModalPreview(cx: Scope) -> impl IntoView {
-    view! { cx, <img class="w-1/2 p-10 dark:invert"/> }
+    view! { cx, <img/> }
 }
 
 /// Details modal icon information
 #[component]
 fn IconDetailsModalInformation(cx: Scope) -> impl IntoView {
     view! { cx,
-        <div class="flex flex-col w-1/2 space-y-2">
+        <div>
             <h3></h3>
-            <button title=move_gettext!(cx, "Copy hex color")></button>
-            <a
-                class="pt-7 hover:opacity-70"
-                target="_blank"
-                title=move_gettext!(cx, "Brand guidelines")
-            >
+            <button
+                on:click=move |ev: MouseEvent| {
+                    let target = event_target::<web_sys::HtmlElement>(&ev);
+                    let value = target.text_content().unwrap();
+                    spawn_local(copy_setting_copied_transition_in_element(value, target));
+                }
+                title=move_gettext!(cx, "Copy hex color")
+            ></button>
+            <a target="_blank" title=move_gettext!(cx, "Brand guidelines")>
                 {move_gettext!(cx, "Brand guidelines")}
             </a>
-            <a class="pt-7 hover:opacity-70" target="_blank" title=move_gettext!(cx, "License")></a>
+            <a target="_blank" title=move_gettext!(cx, "License")></a>
         </div>
     }
 }
@@ -215,16 +227,19 @@ fn IconDetailsModalFooter(cx: Scope) -> impl IntoView {
         <div>
             <button
                 on:click=move |_| download_svg(&get_slug_from_modal_container())
-                title=move_gettext!(cx, "Download SVG")
+                aria-label=move_gettext!(cx, "Download SVG")
             >
                 {move_gettext!(cx, "Download SVG")}
             </button>
-            <a title=move_gettext!(cx, "Download colored SVG")>
+            <a aria-label=move_gettext!(cx, "Download colored SVG")>
                 {move_gettext!(cx, "Download colored SVG")}
             </a>
             <button
-                on:click=move |_| download_pdf(&get_slug_from_modal_container())
-                title=move_gettext!(cx, "Download PDF")
+                on:click=move |_| {
+                    maybe_initialize_pdfkit();
+                    download_pdf(&get_slug_from_modal_container())
+                }
+                aria-label=move_gettext!(cx, "Download PDF")
             >
                 {move_gettext!(cx, "Download PDF")}
             </button>
@@ -245,8 +260,8 @@ pub fn IconDetailsModal(cx: Scope) -> impl IntoView {
                 current_icon_view.update(|state| *state = None);
             }
         >
-            <div class="flex flex-col" id=ICON_DETAILS_MODAL_ID>
-                <div class="flex flex-row flex-grow">
+            <div id=Ids::IconDetailsModal.as_str()>
+                <div>
                     <IconDetailsModalPreview/>
                     <IconDetailsModalInformation/>
                 </div>

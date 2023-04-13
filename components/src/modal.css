@@ -6,9 +6,10 @@
 
   /* Modal */
   .modal {
-    @apply z-50 flex flex-col self-center justify-center m-auto mt-0 md:mt-10 rounded
-     max-w-full md:max-w-[80%] lg:max-w-[50%] max-h-[80%]
-     bg-custom-background-color shadow-[0_0_3px_0_var(--shadows-color)];
+    @apply relative z-50 flex flex-col self-center justify-center m-auto
+      mt-0 md:mt-10 rounded
+      max-w-full md:max-w-[80%] lg:max-w-[50%] max-h-[80%]
+      bg-custom-background-color shadow-[0_0_3px_0_var(--shadows-color)];
   }
 
   /* Modal header */
