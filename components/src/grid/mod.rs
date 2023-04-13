@@ -9,7 +9,6 @@ use crate::controls::search::{
 use crate::grid::item::details::*;
 pub use crate::grid::more_icons::*;
 use crate::order::{sort_icons, OrderMode, OrderModeVariant};
-use ad::*;
 use config::CONFIG;
 use item::*;
 use lazy_static::lazy_static;
@@ -168,7 +167,6 @@ pub fn Grid(cx: Scope) -> impl IntoView {
     view! { cx,
         <IconDetailsModal/>
         <ul class:layout-compact=move || layout() == Layout::Compact>
-            <CarbonAdsAdGridItem/>
             <GridIcons/>
         </ul>
         <LoadMoreIconsButton/>
