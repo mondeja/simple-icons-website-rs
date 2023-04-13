@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: Test${{ github.ref == 'refs/heads/master' && ' and deploy' || '' }}
+          - name: Test${{ github.ref == 'refs/heads/master' && ' and publish' || '' }}
             cargo-make-command: tests
           - name: Lint
             cargo-make-command: lint
@@ -28,8 +28,6 @@ jobs:
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
           rustup default nightly
           rustup target add wasm32-unknown-unknown
-      - name: Install tooling dependencies
-        run: cargo install cargo-make
       - name: Cache Rust dependencies
         uses: actions/cache@v3
         with:
@@ -39,7 +37,7 @@ jobs:
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
             target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-${{ matrix.cargo-make-command }}
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-${{ matrix.cargo-make-command }}-nightly
       - name: Use Node.js v18
         uses: actions/setup-node@v3
         with:
@@ -56,6 +54,8 @@ jobs:
       - name: Install Playwright browsers
         if: matrix.cargo-make-command == 'tests'
         run: npx playwright install --with-deps
+      - name: Install tooling dependencies
+        run: cargo install cargo-make
       - name: Build for testing
         if: matrix.cargo-make-command == 'tests'
         run: cargo make builds
@@ -70,7 +70,7 @@ jobs:
         with:
           name: playwright-report
           path: playwright-report
-      - name: Deploy website
+      - name: Publish website
         if: github.ref == 'refs/heads/master' && matrix.cargo-make-command == 'tests'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
