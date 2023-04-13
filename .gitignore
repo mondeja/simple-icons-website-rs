@@ -1,6 +1,5 @@
 /target/
 pkg
-Cargo.lock
 app/dist/
 /dist/
 playwright-report/

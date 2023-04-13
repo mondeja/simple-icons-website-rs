@@ -34,11 +34,13 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.toml') }}-nightly
-      - name: Use Node.js 18.x
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-nightly
+      - name: Use Node.js v18
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
@@ -46,7 +48,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-v18
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Install Node.js dependencies
@@ -68,7 +70,7 @@ jobs:
         with:
           name: playwright-report
           path: playwright-report
-      - name: Deploy
+      - name: Deploy website
         if: github.ref == 'refs/heads/master' && matrix.cargo-make-command == 'tests'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
