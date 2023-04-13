@@ -78,6 +78,13 @@ const config: PlaywrightTestConfig = {
       },
     },
 
+    {
+      name: 'Mobile Chrome landscape',
+      use: {
+        ...devices['Pixel 5 landscape'],
+      },
+    },
+
     /* Safari fails on production
     {
       name: 'Mobile Safari',
