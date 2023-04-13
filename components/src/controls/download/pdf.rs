@@ -35,7 +35,7 @@ pub fn maybe_initialize_pdfkit() {
     {
         let script = document.create_element("script").unwrap();
         script
-            .set_attribute("src", "/pdfkit.standalone.js")
+            .set_attribute("src", "./pdfkit.standalone.js")
             .unwrap();
         script.set_attribute("id", "pdfkit-standalone").unwrap();
         head.append_child(&script).unwrap();
@@ -48,7 +48,7 @@ pub fn maybe_initialize_pdfkit() {
         .is_none()
     {
         let script = document.create_element("script").unwrap();
-        script.set_attribute("src", "/.js").unwrap();
+        script.set_attribute("src", "./blob-stream.js").unwrap();
         script
             .set_attribute("id", "blob-stream-standalone")
             .unwrap();
