@@ -6,7 +6,7 @@ on:
   pull_request:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   run:
@@ -69,7 +69,7 @@ jobs:
           name: playwright-report
           path: playwright-report
       - name: Deploy
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master' && matrix.cargo-make-command == 'tests'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
