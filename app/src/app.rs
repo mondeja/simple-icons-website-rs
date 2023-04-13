@@ -6,6 +6,7 @@ use components::controls::download::provide_download_type_context;
 use components::controls::layout::provide_layout_context;
 use components::controls::order::provide_order_mode_context;
 use components::controls::search::provide_search_context;
+use components::copy::*;
 use components::grid::provide_icons_grid_contexts;
 use components::header::nav::language_selector::provide_language_context;
 use components::*;
@@ -109,6 +110,7 @@ fn AppBodyContent(cx: Scope) -> impl IntoView {
 
     view! { cx,
         <SVGDefsDefinition/>
+        <CopyInput/>
         <Header/>
         <ScrollToHeaderButton/>
         <main>

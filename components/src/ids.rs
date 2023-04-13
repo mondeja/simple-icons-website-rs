@@ -4,6 +4,7 @@
 
 pub enum Ids {
     SearchInput,
+    CopyInput,
     IconDetailsModal,
     ViewSVGPath,
     DownloadSVGPath,
@@ -13,35 +14,24 @@ pub enum Ids {
 
 impl Ids {
     pub fn as_str(&self) -> &'static str {
+        #[cfg(debug_assertions)]
         match self {
-            #[cfg(debug_assertions)]
             Ids::IconDetailsModal => "icon-details-modal",
-            #[cfg(not(debug_assertions))]
-            Ids::IconDetailsModal => "i",
-
-            #[cfg(debug_assertions)]
             Ids::SearchInput => "search-input",
-            #[cfg(not(debug_assertions))]
-            Ids::SearchInput => "s",
-
-            #[cfg(debug_assertions)]
+            Ids::CopyInput => "copy-input",
             Ids::ViewSVGPath => "view-path",
-            #[cfg(not(debug_assertions))]
-            Ids::ViewSVGPath => "v",
-
-            #[cfg(debug_assertions)]
             Ids::DownloadSVGPath => "download-path",
-            #[cfg(not(debug_assertions))]
-            Ids::DownloadSVGPath => "d",
-
-            #[cfg(debug_assertions)]
             Ids::ControlsSVGPath => "controls-path",
-            #[cfg(not(debug_assertions))]
-            Ids::ControlsSVGPath => "c",
-
-            #[cfg(debug_assertions)]
             Ids::CrossSVGPath => "cross-path",
-            #[cfg(not(debug_assertions))]
+        }
+        #[cfg(not(debug_assertions))]
+        match self {
+            Ids::IconDetailsModal => "i",
+            Ids::SearchInput => "s",
+            Ids::CopyInput => "t",
+            Ids::ViewSVGPath => "v",
+            Ids::DownloadSVGPath => "d",
+            Ids::ControlsSVGPath => "c",
             Ids::CrossSVGPath => "x",
         }
     }

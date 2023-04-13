@@ -46,7 +46,7 @@ impl fmt::Display for SVGDefs {
 #[component]
 pub fn SVGDefsDefinition(cx: Scope) -> impl IntoView {
     view! { cx,
-        <svg class="hidden">
+        <svg class="hidden" aria-hidden=true>
             <defs>
                 <path id=SVGDefs::ViewPath.id() d=SVGDefs::ViewPath.d()></path>
                 <path id=SVGDefs::DownloadPath.id() d=SVGDefs::DownloadPath.d()></path>

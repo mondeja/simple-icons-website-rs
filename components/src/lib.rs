@@ -7,7 +7,7 @@
 // instead of the current `use my_crate::*;`
 
 pub mod controls;
-mod copy;
+pub mod copy;
 mod footer;
 pub mod grid;
 pub mod header;
