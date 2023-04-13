@@ -26,14 +26,14 @@ pub fn AppPage(cx: Scope, children: Children) -> impl IntoView {
         <Meta charset="utf-8"/>
         <Meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
         <Meta name="description" content=description/>
-        <Link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+        <Link rel="apple-touch-icon" href="./apple-touch-icon.png"/>
         <Link
             rel="search"
             type_="application/opensearchdescription+xml"
             title=TITLE
-            href="/opensearch.xml"
+            href="./opensearch.xml"
         />
-        <Link rel="license" href="/license.txt"/>
+        <Link rel="license" href="./license.txt"/>
         <Link rel="canonical" href=URL/>
         <Link rel="preconnect" href="https://fonts.gstatic.com"/>
         <Link
