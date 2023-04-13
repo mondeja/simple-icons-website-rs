@@ -66,6 +66,7 @@ pub mod params {
 
     // `to_query_string` has currently bad support by Leptos,
     // see https://github.com/leptos-rs/leptos/pull/854
+    // TODO: remove when the merged PR is released
     #[inline(always)]
     pub fn to_query_string(params: &ParamsMap) -> String {
         if params.0.is_empty() {

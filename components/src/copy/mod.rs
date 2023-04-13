@@ -11,10 +11,10 @@ fn on_copied(button: web_sys::HtmlElement) {
     button.class_list().add_1("copied").unwrap();
     _ = set_timeout_with_handle(
         move || {
-            button.class_list().remove_1("copied").ok();
+            button.class_list().remove_1("copied").unwrap();
 
             // Unset focus
-            button.blur().ok();
+            button.blur().unwrap();
         },
         Duration::from_millis(1000),
     );
@@ -65,8 +65,6 @@ pub async fn copy_setting_copied_transition_in_element(
             copy_input.set_value(&value);
             copy_input.select();
             match document
-                .document_element()
-                .unwrap()
                 .dyn_into::<web_sys::HtmlDocument>()
                 .unwrap()
                 .exec_command("copy")

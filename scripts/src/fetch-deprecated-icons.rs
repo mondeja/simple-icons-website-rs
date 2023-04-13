@@ -64,7 +64,6 @@ async fn main() {
         .unwrap();
 
     if let Some(message) = resp.get("message") {
-        fs::remove_file(tmp_file_path).unwrap();
         panic!("Error retrieving data from GITHUB Graphql API: {}", message);
     }
     let mut tmp_file = fs::File::create(&tmp_file_path).unwrap();
