@@ -260,7 +260,7 @@ pub fn IconDetailsModal(cx: Scope) -> impl IntoView {
                 current_icon_view.update(|state| *state = None);
             }
         >
-            <div id=Ids::IconDetailsModal.as_str()>
+            <div class="icon-details-modal" id=Ids::IconDetailsModal.as_str()>
                 <div>
                     <IconDetailsModalPreview/>
                     <IconDetailsModalInformation/>

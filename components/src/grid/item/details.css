@@ -1,42 +1,42 @@
-#icon-details-modal {
+.icon-details-modal {
   @apply flex flex-col;
 }
 
-#icon-details-modal > :first-child {
+.icon-details-modal > :first-child {
   @apply flex flex-row flex-grow;
 }
 
 /* Icon preview */
-#icon-details-modal > :first-child > img {
+.icon-details-modal > :first-child > img {
   @apply w-1/2 p-10 dark:invert;
 }
 
 /* Icon information */
-#icon-details-modal > :first-child > :last-child {
+.icon-details-modal > :first-child > :last-child {
   @apply flex flex-col w-1/2 space-y-2;
 }
 
 /*   Copy hex color button */
-#icon-details-modal > :first-child > :last-child > :nth-child(2) {
+.icon-details-modal > :first-child > :last-child > :nth-child(2) {
   @apply w-1/3 py-0.5 before:-mt-0.5 rounded
     hover:!text-transparent focus:!text-transparent
     before:bg-[size:1.2rem] before:bg-center;
 }
 
 /*  Information links */
-#icon-details-modal > :first-child > :last-child > a {
+.icon-details-modal > :first-child > :last-child > a {
   @apply pt-7 hover:opacity-70;
 }
 
 /* Footer */
-#icon-details-modal > :last-child {
+.icon-details-modal > :last-child {
   @apply flex flex-row justify-between px-4
     text-sm font-semibold;
 }
 
 /* Footer buttons */
-#icon-details-modal > :last-child button,
-#icon-details-modal > :last-child a {
+.icon-details-modal > :last-child button,
+.icon-details-modal > :last-child a {
   @apply px-2 py-1 rounded text-custom-button-content-default-color
     bg-custom-button-background-default-color
     hover:bg-custom-button-background-hover-color

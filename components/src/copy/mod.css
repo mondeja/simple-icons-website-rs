@@ -6,8 +6,6 @@
    * Adds a copy icon in top of the element using a ::before pseudo-element.
    * The icon is hidden by default and shown on hover.
    *
-   * # Usage
-   *
    * It offers three variants of the icon:
    *
    * - `copy-button-white` for light icon.
