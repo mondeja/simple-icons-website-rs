@@ -8,9 +8,12 @@ edition.workspace = true
 name = "fetch-deprecated-icons"
 path = "src/fetch-deprecated-icons.rs"
 
+[[bin]]
+name = "bump-simple-icons"
+path = "src/bump-simple-icons.rs"
+
 [dependencies]
 simple-icons-website-config.workspace = true
 dotenv.workspace = true
 reqwest.workspace = true
 serde_json.workspace = true
-tokio.workspace = true

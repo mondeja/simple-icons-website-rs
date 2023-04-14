@@ -35,8 +35,7 @@ const GRAPHQL_QUERY: &str = "{
   }
 }";
 
-#[tokio::main]
-async fn main() {
+fn main() {
     let tmp_file_path =
         Path::new(&env::temp_dir()).join(DEPRECATED_ICONS_FILE_NAME);
     // Don't execute the request if the cache exists
@@ -46,7 +45,7 @@ async fn main() {
 
     dotenv::dotenv().ok();
 
-    let client = reqwest::Client::new();
+    let client = reqwest::blocking::Client::new();
     let query = format!("{{\"query\":\"{}\"}}", GRAPHQL_QUERY);
     let resp: serde_json::Value = client
         .post("https://api.github.com/graphql")
@@ -57,10 +56,8 @@ async fn main() {
         .header("User-Agent", "simple-icons-website")
         .body(query.replace("\n", ""))
         .send()
-        .await
         .unwrap()
         .json()
-        .await
         .unwrap();
 
     if let Some(message) = resp.get("message") {

@@ -20,7 +20,8 @@
     "postinstall": "npm run setup:husky && npm run setup:blobstream",
     "setup:husky": "node -e 'process.exit(process.env.CI === undefined)' || husky install",
     "setup:blobstream": "node -e 'require(\"fs\").copyFileSync(\"node_modules/blob-stream/.js\", \"node_modules/blob-stream/blob-stream.js\")'",
-    "fetch-deprecated-icons": "(node -e 'process.exit(!require(\"fs\").existsSync(\"target/release/fetch-deprecated-icons\"))' || cargo build --release --bin fetch-deprecated-icons) && target/release/fetch-deprecated-icons"
+    "fetch-deprecated-icons": "(node -e 'process.exit(!require(\"fs\").existsSync(\"target/release/fetch-deprecated-icons\"))' || cargo build --release --bin fetch-deprecated-icons) && target/release/fetch-deprecated-icons",
+    "bump-simple-icons": "(node -e 'process.exit(!require(\"fs\").existsSync(\"target/release/bump-simple-icons\"))' || cargo build --release --bin bump-simple-icons) && target/release/bump-simple-icons"
   },
   "devDependencies": {
     "@playwright/test": "1.32.3",
@@ -33,12 +34,12 @@
     "postcss-cli": "10.1.0",
     "postcss-import": "15.1.0",
     "prettier": "2.8.7",
+    "simple-icons": "8.10.0",
     "tailwindcss": "3.3.1"
   },
   "dependencies": {
     "blob-stream": "0.1.3",
     "fast-fuzzy": "1.12.0",
-    "pdfkit": "0.13.0",
-    "simple-icons": "8.9.0"
+    "pdfkit": "0.13.0"
   }
 }

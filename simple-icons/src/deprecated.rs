@@ -27,8 +27,10 @@ pub fn fetch_deprecated_simple_icons() -> Vec<DeprecatedIcon> {
         panic!("You need to run the script fetch-deprecated-icons.rs before building")
     }
 
-    let file_content = fs::read_to_string(&tmp_file_path).unwrap();
-    let resp: serde_json::Value = serde_json::from_str(&file_content).unwrap();
+    let resp: serde_json::Value = serde_json::from_str::<serde_json::Value>(
+        &fs::read_to_string(&tmp_file_path).unwrap(),
+    )
+    .unwrap();
 
     if let Some(message) = resp.get("message") {
         fs::remove_file(tmp_file_path).unwrap();

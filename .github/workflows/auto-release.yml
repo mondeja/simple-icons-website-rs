@@ -23,13 +23,27 @@ jobs:
           ref: master
           # Ensure custom credentials are used when pushing
           persist-credentials: false
+      - name: Setup Rust nightly
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          rustup default nightly
+      - name: Cache Rust dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-${{ hashFiles('**/scripts/src/bump-simple-icons.rs') }}-nightly
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
       - name: Update simple-icons
         id: update
-        run: echo "::set-output name=NEW_VERSION::$(node scripts/bump-simpleicons.js)"
+        run: echo "::set-output name=NEW_VERSION::$(npm run bump-simple-icons)"
       - name: Commit updates
         run: |
           # Set up git credential

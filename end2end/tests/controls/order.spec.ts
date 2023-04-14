@@ -21,6 +21,7 @@ test.describe('order mode', () => {
     const gridItemIconsTitles = await getGridItemsIconsTitles(page);
 
     // Check that the page has the correct number of icons
+    // TODO: separate this in a test for grid?
     expect(gridItemIconsTitles).toHaveLength(N_ICONS_PER_PAGE);
 
     // Check that the icons are sorted alphabetically
