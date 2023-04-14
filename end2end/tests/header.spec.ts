@@ -3,8 +3,7 @@
  **/
 
 import { test, expect } from '@playwright/test';
-import { minBreakpoint, maxBreakpoint } from './helpers.ts';
-
+import { minBreakpoint } from '../helpers.ts';
 import * as icons from 'simple-icons';
 
 test.describe('header', () => {
@@ -17,38 +16,44 @@ test.describe('header', () => {
     );
   });
 
-  test.describe('nav', () => {
-    const NAV = 'header > nav';
+  test('nav', async ({ page }) => {
+    const NAV_SELECTOR = 'header > nav';
     const N_MENU_BUTTONS = 9;
 
-    test('nav buttons are visible on desktop', async ({ page }) => {
-      test.skip(!minBreakpoint('lg', page));
+    await page.goto('/');
 
-      await page.goto('/');
-      await expect(page.locator(`${NAV} > ul:first-child`)).toBeVisible();
-      await expect(page.locator(`${NAV} > ul > li:visible`)).toHaveCount(
-        N_MENU_BUTTONS,
-      );
+    if (minBreakpoint('lg', page)) {
+      // desktop
+      await expect(
+        page.locator(`${NAV_SELECTOR} > ul:first-child`),
+      ).toBeVisible();
+      await expect(
+        page.locator(`${NAV_SELECTOR} > ul > li:visible`),
+      ).toHaveCount(N_MENU_BUTTONS);
 
       // burger menu is hidden
-      await expect(page.locator(`${NAV} > ul:last-child`)).toBeHidden();
-    });
-
-    test('use nav burger menu on mobile', async ({ page }) => {
-      test.skip(!maxBreakpoint('md', page));
-
-      await page.goto('/');
-      await expect(page.locator(`${NAV} > ul:first-child`)).toBeHidden();
-      await expect(page.locator(`${NAV} > ul li:visible`)).toHaveCount(1);
+      await expect(
+        page.locator(`${NAV_SELECTOR} > ul:last-child`),
+      ).toBeHidden();
+    } else {
+      // mobile
+      await expect(
+        page.locator(`${NAV_SELECTOR} > ul:first-child`),
+      ).toBeHidden();
+      await expect(page.locator(`${NAV_SELECTOR} > ul li:visible`)).toHaveCount(
+        1,
+      );
 
       // burger menu is visible
-      const burgerButton = page.locator(`${NAV} > ul:last-child`);
+      const burgerButton = page.locator(`${NAV_SELECTOR} > ul:last-child`);
       await expect(burgerButton).toBeVisible();
       burgerButton.click();
-      await expect(page.locator(`${NAV} > ul:first-child`)).toBeVisible();
-      await expect(page.locator(`${NAV} > ul > li:visible`)).toHaveCount(
-        N_MENU_BUTTONS + 1,
-      );
-    });
+      await expect(
+        page.locator(`${NAV_SELECTOR} > ul:first-child`),
+      ).toBeVisible();
+      await expect(
+        page.locator(`${NAV_SELECTOR} > ul > li:visible`),
+      ).toHaveCount(N_MENU_BUTTONS + 1);
+    }
   });
 });

@@ -12,11 +12,11 @@ pub struct Config {
 
 pub const CONFIG: Config = Config {
     max_icons: None,
-    // WARNING: If you put a great number here on development, the search functionality
+    // WARNING: If you put a great number here, the search functionality
     // will be very slow
     icons_per_page: 30,
-    // WARNING: If you put a low level here on development, the search functionality will be
-    // very expensive
+    // WARNING: If you put a low level here on development, the search
+    // functionality will be very slow
     #[cfg(debug_assertions)]
     search_debounce_ms: 20,
     #[cfg(not(debug_assertions))]

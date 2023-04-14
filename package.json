@@ -18,9 +18,9 @@
   },
   "scripts": {
     "postinstall": "npm run setup:husky && npm run setup:blobstream",
-    "setup:husky": "is-ci || husky install",
+    "setup:husky": "node -e 'process.exit(process.env.CI === undefined)' || husky install",
     "setup:blobstream": "node -e 'require(\"fs\").copyFileSync(\"node_modules/blob-stream/.js\", \"node_modules/blob-stream/blob-stream.js\")'",
-    "fetch-deprecated-icons": "node -e 'process.exit(require(\"fs\").existsSync(\"target/release/fetch-deprecated-icon\") ? 1 : 0)' && target/release/fetch-deprecated-icons || cargo build --release --bin fetch-deprecated-icons && target/release/fetch-deprecated-icons"
+    "fetch-deprecated-icons": "(node -e 'process.exit(!require(\"fs\").existsSync(\"target/release/fetch-deprecated-icons\"))' || cargo build --release --bin fetch-deprecated-icons) && target/release/fetch-deprecated-icons"
   },
   "devDependencies": {
     "@playwright/test": "1.32.3",
@@ -29,7 +29,6 @@
     "autoprefixer": "10.4.14",
     "esbuild": "0.17.16",
     "husky": "8.0.3",
-    "is-ci": "3.0.1",
     "postcss": "8.4.21",
     "postcss-cli": "10.1.0",
     "postcss-import": "15.1.0",

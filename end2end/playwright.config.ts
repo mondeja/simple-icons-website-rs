@@ -1,5 +1,5 @@
-import type { PlaywrightTestConfig } from '@playwright/test';
-import { devices } from '@playwright/test';
+import { devices, type PlaywrightTestConfig } from '@playwright/test';
+import { OUTPUT_DIR } from './helpers.ts';
 
 const TIMEOUT = 10 * 1000;
 
@@ -110,7 +110,7 @@ const config: PlaywrightTestConfig = {
   ],
 
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
-  outputDir: 'test-results/',
+  outputDir: OUTPUT_DIR,
 };
 
 export default config;
