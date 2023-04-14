@@ -1,16 +1,15 @@
 import { test, expect } from '@playwright/test';
 import {
   selectors,
-  minBreakpoint,
+  screenWidthIsAtLeast,
   SIMPLE_ICONS_DIRPATH,
   saveDownload,
-} from '../../helpers.ts';
+} from '../helpers.ts';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
 const DOWNLOAD_TYPE_CONTROL_SELECTOR =
   selectors.controls.buttons.getByNthChild(3);
-const GRID_ITEM_DOWNLOAD_BUTTON_SELECTOR = `${selectors.grid.item.first} > :last-child > :last-child`;
 
 test.describe('download type', () => {
   test('is SVG by default', async ({ page }) => {
@@ -25,7 +24,7 @@ test.describe('download type', () => {
   test('download SVG', async ({ page }) => {
     await page.goto('/');
     const gridItemDownloadButton = await page.locator(
-      GRID_ITEM_DOWNLOAD_BUTTON_SELECTOR,
+      selectors.grid.item.first.icon.footer.downloadButton,
     );
 
     const downloadPromise = page.waitForEvent('download');
@@ -49,7 +48,7 @@ test.describe('download type', () => {
   test('download PDF', async ({ page }) => {
     await page.goto('/');
 
-    if (!minBreakpoint('lg', page)) {
+    if (!screenWidthIsAtLeast('lg', page)) {
       await page.locator(selectors.controls.toggler).click();
     }
 
@@ -59,7 +58,7 @@ test.describe('download type', () => {
     await downloadTypeButtons.nth(1).click();
 
     const gridItemDownloadButton = await page.locator(
-      GRID_ITEM_DOWNLOAD_BUTTON_SELECTOR,
+      selectors.grid.item.first.icon.footer.downloadButton,
     );
 
     const downloadPromise = page.waitForEvent('download');

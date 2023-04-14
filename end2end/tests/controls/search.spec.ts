@@ -2,8 +2,10 @@ import { test, expect } from '@playwright/test';
 import {
   selectors,
   getGridItemsIconsTitles,
-  minBreakpoint,
-} from '../../helpers.ts';
+  screenWidthIsAtLeast,
+  N_ICONS_PER_PAGE,
+  getSimpleIconsData,
+} from '../helpers.ts';
 
 const ORDER_MODE_CONTROL_SELECTOR = selectors.controls.buttons.getByNthChild(1);
 
@@ -25,9 +27,9 @@ test.describe('search', () => {
       await page.goto('/');
 
       await page.fill(selectors.controls.search.input, searchValue);
-      await expect(page.locator(`${selectors.grid.item.first} h2`)).toHaveText(
-        expectedTitle,
-      );
+      await expect(
+        page.locator(selectors.grid.item.first.icon.title),
+      ).toHaveText(expectedTitle);
     });
   }
 
@@ -62,7 +64,7 @@ test.describe('search', () => {
         page,
       );
 
-      if (!minBreakpoint('lg', page)) {
+      if (!screenWidthIsAtLeast('lg', page)) {
         await page.locator(selectors.controls.toggler).click();
       }
 
@@ -100,6 +102,29 @@ test.describe('search', () => {
       await expect(
         await page.evaluate(() => localStorage.getItem('order-mode')),
       ).toBe(orderMode);
+
+      if (!screenWidthIsAtLeast('lg', page)) {
+        await page.locator(selectors.controls.toggler).click();
+      }
+
+      // remove search value, revert to selected order
+      await page.fill(selectors.controls.search.input, '');
+
+      const matchScoreGridItemsIconsTitles3 = await getGridItemsIconsTitles(
+        page,
+      );
+      expect(matchScoreGridItemsIconsTitles3.length).toBe(N_ICONS_PER_PAGE);
+
+      let alphabeticalIconTitles = getSimpleIconsData()
+        .slice(0, N_ICONS_PER_PAGE)
+        .map((icon) => icon.title);
+      if (orderName == 'alphabetical') {
+        expect(matchScoreGridItemsIconsTitles3).toEqual(alphabeticalIconTitles);
+      } else {
+        expect(matchScoreGridItemsIconsTitles3).not.toEqual(
+          alphabeticalIconTitles,
+        );
+      }
     });
   }
 });

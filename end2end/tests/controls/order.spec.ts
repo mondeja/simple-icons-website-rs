@@ -1,11 +1,11 @@
 import { test, expect, type Page } from '@playwright/test';
 import {
-  minBreakpoint,
+  screenWidthIsAtLeast,
   selectors,
   getSimpleIconsData,
   N_ICONS_PER_PAGE,
   getGridItemsIconsTitles,
-} from '../../helpers.ts';
+} from '../helpers.ts';
 
 const ORDER_MODE_CONTROL_SELECTOR = selectors.controls.buttons.getByNthChild(1);
 
@@ -20,10 +20,6 @@ test.describe('order mode', () => {
 
     const gridItemIconsTitles = await getGridItemsIconsTitles(page);
 
-    // Check that the page has the correct number of icons
-    // TODO: separate this in a test for grid?
-    expect(gridItemIconsTitles).toHaveLength(N_ICONS_PER_PAGE);
-
     // Check that the icons are sorted alphabetically
     expect(gridItemIconsTitles).toEqual(
       getSimpleIconsData()
@@ -36,7 +32,7 @@ test.describe('order mode', () => {
     await page.goto('/');
     const alphabeticalGridItemIconsTitles = await getGridItemsIconsTitles(page);
 
-    if (!minBreakpoint('lg', page)) {
+    if (!screenWidthIsAtLeast('lg', page)) {
       await page.locator(selectors.controls.toggler).click();
     }
 

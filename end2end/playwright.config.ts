@@ -1,5 +1,5 @@
 import { devices, type PlaywrightTestConfig } from '@playwright/test';
-import { OUTPUT_DIR } from './helpers.ts';
+import { OUTPUT_DIR } from './tests/helpers.ts';
 
 const TIMEOUT = 10 * 1000;
 
@@ -82,6 +82,17 @@ const config: PlaywrightTestConfig = {
       name: 'Mobile Chrome landscape',
       use: {
         ...devices['Pixel 5 landscape'],
+        viewport: {
+          width: 802,
+          /**
+           * The default height of the landscape viewport is 293, but when
+           * we scroll to footer in the tests with `.scrollIntoViewIfNeeded()`
+           * the grid is not visible and no icons are loaded because the intersection
+           * observer does not detect the intersection. So decided to increase the
+           * height of the viewport to 393 to ensure that the intersection is detected.
+           */
+          height: 393,
+        },
       },
     },
 

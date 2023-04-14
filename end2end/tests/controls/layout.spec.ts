@@ -1,5 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
-import { minBreakpoint, selectors } from '../../helpers.ts';
+import { screenWidthIsAtLeast, selectors } from '../helpers.ts';
 
 const LAYOUT_CONTROL_SELECTOR =
   'menu > .controls-group:not(:first-child) > .control:last-child';
@@ -17,11 +17,11 @@ test.describe('layout', () => {
   test.describe('comfortable -> compact', () => {
     test('switch', async ({ page }) => {
       await page.goto('/');
-      const gridItem = await page.locator(selectors.grid.item.any());
+      const gridItem = await page.locator(selectors.grid.item.any.container);
       const { height: prevHeight, width: prevWidth } =
         await gridItem.boundingBox();
 
-      if (!minBreakpoint('lg', page)) {
+      if (!screenWidthIsAtLeast('lg', page)) {
         await page.locator(selectors.controls.toggler).click();
       }
 
@@ -64,11 +64,11 @@ test.describe('layout', () => {
     test('switch', async () => {
       page.reload();
 
-      const gridItem = await page.locator(selectors.grid.item.any());
+      const gridItem = await page.locator(selectors.grid.item.any.container);
       const { height: prevHeight, width: prevWidth } =
         await gridItem.boundingBox();
 
-      if (!minBreakpoint('lg', page)) {
+      if (!screenWidthIsAtLeast('lg', page)) {
         await page.locator(selectors.controls.toggler).click();
       }
 

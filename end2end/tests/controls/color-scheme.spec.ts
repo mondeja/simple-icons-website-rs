@@ -1,5 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
-import { minBreakpoint, selectors } from '../../helpers.ts';
+import { screenWidthIsAtLeast, selectors } from '../helpers.ts';
 
 const COLOR_SCHEME_CONTROL_SELECTOR =
   selectors.controls.buttons.getByNthChild(2);
@@ -16,7 +16,7 @@ test.describe('color scheme', () => {
   test('discovered from system by default', async ({ page }) => {
     await page.goto('/');
 
-    if (!minBreakpoint('lg', page)) {
+    if (!screenWidthIsAtLeast('lg', page)) {
       await page.locator(selectors.controls.toggler).click();
     }
 
@@ -34,7 +34,7 @@ test.describe('color scheme', () => {
   test('system -> opposite', async ({ page }) => {
     await page.goto('/');
 
-    if (!minBreakpoint('lg', page)) {
+    if (!screenWidthIsAtLeast('lg', page)) {
       await page.locator(selectors.controls.toggler).click();
     }
 
