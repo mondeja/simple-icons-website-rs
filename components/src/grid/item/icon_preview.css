@@ -12,8 +12,5 @@ main > ul > li > :first-child {
 }
 
 main > ul > li > :first-child img {
-  @apply h-14 dark:invert opacity-0;
-}
-main > ul > li > :first-child img.loaded {
-  @apply opacity-100 transition-opacity duration-[260ms];
+  @apply h-14 dark:invert;
 }

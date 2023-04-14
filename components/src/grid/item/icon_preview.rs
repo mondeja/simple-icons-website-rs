@@ -1,6 +1,6 @@
 use crate::copy::copy_setting_copied_transition_in_element;
 use i18n::move_gettext;
-use leptos::{ev::MouseEvent, html::Img, *};
+use leptos::{ev::MouseEvent, *};
 use reqwasm::http::Request;
 use wasm_bindgen::JsCast;
 use web_sys;
@@ -32,8 +32,6 @@ pub fn IconGridItemPreview(
     /// Brand title
     title: &'static str,
 ) -> impl IntoView {
-    let image_ref = create_node_ref::<Img>(cx);
-
     view! { cx,
         <button
             title=move_gettext!(cx, "Copy {} SVG", title)
@@ -54,14 +52,7 @@ pub fn IconGridItemPreview(
                 spawn_local(future);
             }
         >
-            <img
-                _ref=image_ref
-                src=format!("/icons/{}.svg", slug)
-                alt=move_gettext!(cx, "{} icon", title)
-                on:load=move |_| {
-                    image_ref.get().unwrap().class_list().add_1("loaded").unwrap();
-                }
-            />
+            <img src=format!("/icons/{}.svg", slug) alt=move_gettext!(cx, "{} icon", title)/>
         </button>
     }
 }
