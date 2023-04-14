@@ -1,4 +1,4 @@
-use crate::page::*;
+use crate::meta::*;
 use components::controls::color_scheme::{
     provide_color_scheme_context, ColorScheme,
 };
@@ -10,8 +10,9 @@ use components::copy::*;
 use components::grid::provide_icons_grid_contexts;
 use components::header::nav::language_selector::provide_language_context;
 use components::*;
+use i18n::{gettext, move_gettext};
 use leptos::*;
-use leptos_meta::provide_meta_context;
+use leptos_meta::*;
 use leptos_router::{
     Route, RouteProps, Router, RouterProps, Routes, RoutesProps,
 };
@@ -38,15 +39,13 @@ pub static LOGO_URL: &str = concat!(url!(), "/icons/simpleicons.svg");
 /// The main application component
 #[component]
 pub fn App(cx: Scope) -> impl IntoView {
-    provide_meta_context(cx);
-
     view! { cx,
         <Router>
             <Routes>
                 <Route
                     path="/"
                     view=move |cx| {
-                        view! { cx, <AppIndex/> }
+                        view! { cx, <Index/> }
                     }
                 />
             </Routes>
@@ -55,24 +54,49 @@ pub fn App(cx: Scope) -> impl IntoView {
 }
 
 #[component]
-fn AppIndex(cx: Scope) -> impl IntoView {
+fn Index(cx: Scope) -> impl IntoView {
     provide_language_context(cx);
-
-    view! { cx,
-        <AppPage>
-            <AppBody/>
-        </AppPage>
-    }
-}
-
-/// Body of the page
-///
-/// Initializes the color scheme context
-#[component]
-pub fn AppBody(cx: Scope) -> impl IntoView {
+    provide_meta_context(cx);
     let color_scheme = provide_color_scheme_context(cx).0;
 
+    let initial_search_value = provide_search_context(cx);
+    let initial_order_mode =
+        provide_order_mode_context(cx, &initial_search_value);
+    provide_download_type_context(cx);
+    provide_layout_context(cx);
+    provide_icons_grid_contexts(cx, &initial_search_value, &initial_order_mode);
+
+    let description = move_gettext!(
+        cx,
+        "{} free {} icons for popular brands",
+        NUMBER_OF_ICONS.to_string().as_str(),
+        &gettext!(cx, "SVG")
+    );
+
     view! { cx,
+        <Title text=TITLE/>
+        <Meta charset="utf-8"/>
+        <Meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+        <Meta name="description" content=description/>
+        <Link rel="apple-touch-icon" href="./apple-touch-icon.png"/>
+        <Link
+            rel="search"
+            type_="application/opensearchdescription+xml"
+            title=TITLE
+            href="./opensearch.xml"
+        />
+        <Link rel="license" href="./license.txt"/>
+        <Link rel="canonical" href=URL/>
+        <Link rel="preconnect" href="https://fonts.gstatic.com"/>
+        <Link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&family=Roboto+Mono:wght@400;600"
+        />
+        <MetaOpenGraph description=description/>
+        <MetaTwitter description=description/>
+        <Meta name="msvalidate.01" content="14319924BC1F00DC15EF0EAA29E72404"/>
+        <Meta name="yandex-verification" content="8b467a0b98aa2725"/>
+        <LdJSONMetadata/>
         <body class=move || match color_scheme() {
             ColorScheme::Dark => "dark",
             ColorScheme::Light => "light",
@@ -90,34 +114,16 @@ pub fn AppBody(cx: Scope) -> impl IntoView {
                 }
             }
         }>
-            <AppBodyContent/>
+            <SVGDefsDefinition/>
+            <CopyInput/>
+            <Header/>
+            <ScrollToHeaderButton/>
+            <main>
+                <Controls/>
+                <Grid/>
+            </main>
+            <Footer/>
+            <ScrollToFooterButton/>
         </body>
-    }
-}
-
-/// Content of the body of the page
-///
-/// Initializes the top level contexts for the application in order
-/// to be used by the child components.
-#[component]
-fn AppBodyContent(cx: Scope) -> impl IntoView {
-    let initial_search_value = provide_search_context(cx);
-    let initial_order_mode =
-        provide_order_mode_context(cx, &initial_search_value);
-    provide_download_type_context(cx);
-    provide_layout_context(cx);
-    provide_icons_grid_contexts(cx, &initial_search_value, &initial_order_mode);
-
-    view! { cx,
-        <SVGDefsDefinition/>
-        <CopyInput/>
-        <Header/>
-        <ScrollToHeaderButton/>
-        <main>
-            <Controls/>
-            <Grid/>
-        </main>
-        <Footer/>
-        <ScrollToFooterButton/>
     }
 }

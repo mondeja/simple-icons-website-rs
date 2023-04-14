@@ -2,10 +2,6 @@ use crate::app::{LOGO_URL, TITLE, URL};
 use leptos::*;
 use leptos_meta::{Meta, MetaProps};
 
-// TODO: There is a `link` tag with a 'color' attribute in the index.html
-// Arbitrary attributes in Link components are not currently supported by
-// leptos_meta
-
 /// Open graph meta tags
 #[component]
 pub fn MetaOpenGraph<F>(
