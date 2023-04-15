@@ -11,7 +11,7 @@ use config::CONFIG;
 use fuzzy::{build_searcher, search};
 use i18n::move_gettext;
 use js_sys::JsString;
-use leptos::{html::Input, *};
+use leptos::{document, html::Input, window, *};
 use simple_icons::StaticSimpleIcon;
 use web_sys;
 
@@ -53,8 +53,7 @@ fn initial_search_value(cx: Scope) -> String {
 }
 
 fn initial_search_value_from_localstorage() -> Option<String> {
-    let window = web_sys::window().unwrap();
-    let local_storage = window.local_storage().unwrap().unwrap();
+    let local_storage = window().local_storage().unwrap().unwrap();
 
     match local_storage.get_item(LocalStorage::Keys::SearchValue.as_str()) {
         Ok(Some(search_value)) => match search_value.is_empty() {
@@ -66,16 +65,14 @@ fn initial_search_value_from_localstorage() -> Option<String> {
 }
 
 pub fn set_search_value_on_localstorage(search_value: &str) {
-    let window = web_sys::window().unwrap();
-    let local_storage = window.local_storage().unwrap().unwrap();
+    let local_storage = window().local_storage().unwrap().unwrap();
     local_storage
         .set_item(LocalStorage::Keys::SearchValue.as_str(), search_value)
         .unwrap();
 }
 
 pub fn fire_on_search_event() {
-    let document = web_sys::window().unwrap().document().unwrap();
-    let input = document
+    let input = document()
         .get_element_by_id(Ids::SearchInput.as_str())
         .unwrap();
     let event = web_sys::Event::new_with_event_init_dict(

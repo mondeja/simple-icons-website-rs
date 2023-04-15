@@ -1,7 +1,7 @@
 use crate::controls::button::*;
 use crate::storage::LocalStorage;
 use i18n::move_gettext;
-use leptos::*;
+use leptos::{window, *};
 use std::fmt;
 
 #[derive(Default, Copy, Clone, PartialEq)]
@@ -40,8 +40,7 @@ pub fn provide_layout_context(cx: Scope) {
 }
 
 fn initial_layout_from_localstorage() -> Layout {
-    let window = web_sys::window().unwrap();
-    let local_storage = window.local_storage().unwrap().unwrap();
+    let local_storage = window().local_storage().unwrap().unwrap();
 
     match local_storage.get_item(LocalStorage::Keys::Layout.as_str()) {
         Ok(Some(layout)) => Layout::from(layout.as_str()),
@@ -50,8 +49,7 @@ fn initial_layout_from_localstorage() -> Layout {
 }
 
 fn set_layout_on_localstorage(layout: &Layout) {
-    let window = web_sys::window().unwrap();
-    let local_storage = window.local_storage().unwrap().unwrap();
+    let local_storage = window().local_storage().unwrap().unwrap();
     local_storage
         .set_item(LocalStorage::Keys::Layout.as_str(), &layout.to_string())
         .unwrap();

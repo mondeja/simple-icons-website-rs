@@ -5,7 +5,7 @@
   }
 
   .scroll-to-header-button {
-    @apply top-2;
+    @apply top-2 hidden md:block;
   }
 
   .scroll-to-footer-button {

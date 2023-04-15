@@ -57,7 +57,8 @@ pub fn Footer(cx: Scope) -> impl IntoView {
 
         // TODO: this is a memory leak
         // https://rustwasm.github.io/docs/wasm-bindgen/examples/closures.html
-        // Use Leptos' `on_cleanup`?
+        // Use `window.onbeforeunload` + `std::alloc::dealloc`?
+        // Seems so much complicated for such a small thing, not a priority
         intersection_callback.forget();
     });
 

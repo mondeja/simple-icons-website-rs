@@ -1,14 +1,12 @@
 use crate::header::{nav::button::*, HeaderState, HeaderStateSignal};
 use crate::modal::*;
 use crate::Url;
-use i18n::{move_gettext, Language, LocaleState, LocaleStateSignal, LANGUAGES};
-use leptos::*;
+use i18n::{move_gettext, Language, LocaleStateSignal, LANGUAGES};
+use leptos::{window, *};
 
 pub fn provide_language_context(cx: Scope) -> LocaleStateSignal {
-    let language = LocaleStateSignal(create_rw_signal(
-        cx,
-        LocaleState::new(initial_language(cx)),
-    ));
+    let language =
+        LocaleStateSignal(create_rw_signal(cx, initial_language(cx)));
     provide_context(cx, language);
     language
 }
@@ -18,7 +16,7 @@ pub fn initial_language(cx: Scope) -> Language {
 }
 
 fn initial_language_from_navigator_languages() -> Option<Language> {
-    let languages = web_sys::window().unwrap().navigator().languages().to_vec();
+    let languages = window().navigator().languages().to_vec();
     for raw_language in languages {
         let mut language =
             raw_language.as_string().expect("Language not parseable");
@@ -60,8 +58,7 @@ fn initial_language_from_url_localstorage_or_navigator_languages(
 }
 
 fn initial_language_from_localstorage() -> Option<Language> {
-    let window = web_sys::window().unwrap();
-    let local_storage = window.local_storage().unwrap().unwrap();
+    let local_storage = window().local_storage().unwrap().unwrap();
 
     match local_storage.get_item("language") {
         Ok(Some(language)) => match Language::from_str(language.as_str()) {
@@ -73,9 +70,7 @@ fn initial_language_from_localstorage() -> Option<Language> {
 }
 
 pub fn set_language_in_localstorage(lang: Language) {
-    let window = web_sys::window().unwrap();
-    let local_storage = window.local_storage().unwrap().unwrap();
-
+    let local_storage = window().local_storage().unwrap().unwrap();
     local_storage.set_item("language", lang.code).unwrap();
 }
 
@@ -88,16 +83,16 @@ pub fn LanguagesList(cx: Scope) -> impl IntoView {
     view! { cx,
         <ul class="language-selector">
             {move || {
-                let current_language_code = locale_state().current_language.code;
+                let current_language = locale_state();
                 LANGUAGES
                     .iter()
                     .map(|lang: &Language| {
                         view! { cx,
                             <li
-                                class:hidden=lang.code == current_language_code
+                                class:hidden=*lang == current_language
                                 on:click=move |_| {
                                     header_state.update(|state: &mut HeaderState| state.toggle_languages());
-                                    locale_state.update(|state: &mut LocaleState| state.set_current_language(lang.code));
+                                    locale_state.update(|state: &mut Language| *state = *lang);
                                     set_language_in_localstorage(lang.clone());
                                 }
                             >

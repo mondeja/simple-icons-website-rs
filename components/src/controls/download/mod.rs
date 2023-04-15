@@ -5,7 +5,7 @@ use crate::controls::button::*;
 use crate::controls::download::pdf::maybe_initialize_pdfkit;
 use crate::storage::LocalStorage;
 use i18n::move_gettext;
-use leptos::*;
+use leptos::{window, *};
 pub use pdf::download_pdf;
 use std::fmt;
 pub use svg::download_svg;
@@ -51,8 +51,7 @@ pub fn provide_download_type_context(cx: Scope) {
 pub struct DownloadTypeSignal(pub RwSignal<DownloadType>);
 
 fn initial_download_type_from_localstorage() -> DownloadType {
-    let window = web_sys::window().unwrap();
-    let local_storage = window.local_storage().unwrap().unwrap();
+    let local_storage = window().local_storage().unwrap().unwrap();
 
     let download_type = match local_storage
         .get_item(LocalStorage::Keys::DownloadType.as_str())
@@ -70,8 +69,7 @@ fn initial_download_type_from_localstorage() -> DownloadType {
 }
 
 fn set_download_type_on_localstorage(download_type: DownloadType) {
-    let window = web_sys::window().unwrap();
-    let local_storage = window.local_storage().unwrap().unwrap();
+    let local_storage = window().local_storage().unwrap().unwrap();
     local_storage
         .set_item(
             LocalStorage::Keys::DownloadType.as_str(),
@@ -120,8 +118,7 @@ pub fn DownloadFileTypeControl(cx: Scope) -> impl IntoView {
 
 /// Download a SVG icon by its slug
 pub fn download(filename: &str, href: &str) {
-    let window = web_sys::window().unwrap();
-    let document = window.document().unwrap();
+    let document = window().document().unwrap();
     let link: web_sys::HtmlElement = document
         .create_element("a")
         .unwrap()

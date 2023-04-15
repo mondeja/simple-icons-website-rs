@@ -1,6 +1,5 @@
 use crate::Ids;
-use leptos::leptos_dom::helpers::set_timeout_with_handle;
-use leptos::*;
+use leptos::{document, set_timeout_with_handle, window, *};
 use log;
 use std::time::Duration;
 use wasm_bindgen::{JsCast, JsValue};
@@ -32,7 +31,7 @@ pub async fn copy_setting_copied_transition_in_element(
     value: String,
     button: web_sys::HtmlElement,
 ) {
-    match web_sys::window().unwrap().navigator().clipboard() {
+    match window().navigator().clipboard() {
         Some(navigator_clipboard) => {
             #[cfg(debug_assertions)]
             log::debug!(
@@ -56,7 +55,7 @@ pub async fn copy_setting_copied_transition_in_element(
                 &value
             );
 
-            let document = web_sys::window().unwrap().document().unwrap();
+            let document = document();
             let copy_input = document
                 .get_element_by_id(Ids::CopyInput.as_str())
                 .unwrap()

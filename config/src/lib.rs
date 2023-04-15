@@ -6,19 +6,22 @@ pub struct Config {
     pub max_icons: Option<usize>,
     /// Number of icons per page in the grid
     pub icons_per_page: u32,
-    /// Time to wait between search input taps and search execution
-    pub search_debounce_ms: u32,
 }
 
+/// Development config
+#[cfg(debug_assertions)]
+pub const CONFIG: Config = Config {
+    max_icons: Some(300),
+    // WARNING: If you put a great number here, the search functionality
+    // will be very slow
+    icons_per_page: 30,
+};
+
+/// Production config
+#[cfg(not(debug_assertions))]
 pub const CONFIG: Config = Config {
     max_icons: None,
     // WARNING: If you put a great number here, the search functionality
     // will be very slow
     icons_per_page: 30,
-    // WARNING: If you put a low level here on development, the search
-    // functionality will be very slow
-    #[cfg(debug_assertions)]
-    search_debounce_ms: 20,
-    #[cfg(not(debug_assertions))]
-    search_debounce_ms: 0,
 };

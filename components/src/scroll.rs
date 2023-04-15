@@ -2,10 +2,6 @@ use crate::grid::more_icons::GridIconsLoaderSignal;
 use i18n::move_gettext;
 use leptos::{ev::MouseEvent, *};
 
-// TODO: When the user scrolls to the bottom manually, not using the
-// scroll button, the button should be hidden also. This is a very strange
-// case though, so it's not a priority.
-
 #[component]
 pub fn ScrollButton<H, T, C>(
     cx: Scope,
@@ -25,10 +21,15 @@ where
     T: Fn() -> String + 'static,
     C: Fn(MouseEvent) + 'static,
 {
+    // TODO: following the Leptos documentation, the class of the button could
+    // be setted by a tuple instead of this ugly `format!` call, however I'm receiveing
+    // the error `the trait `leptos::IntoClass` is not implemented for `(leptos::Scope, &str)``,
+    // which is really strange because `class` is a static string,
+    // is the trait implemented for `&'static str` or is this a bug from the view! macro?
     view! { cx,
         <button
             class=format!("scroll-button {}", class)
-            class:hidden=hidden
+            style=move || format!("display:{}", if hidden() { "none" } else { "" })
             title=title
             on:click=on_click
         >
@@ -46,10 +47,7 @@ pub fn ScrollToHeaderButton(cx: Scope) -> impl IntoView {
     view! { cx,
         <ScrollButton
             class="scroll-to-header-button"
-            hidden=move || {
-                web_sys::window().unwrap().inner_width().unwrap().as_f64().unwrap() < 768 as f64
-                    || grid_icons_loader().load_more_icons
-            }
+            hidden=move || grid_icons_loader().load_more_icons
             title=move_gettext!(cx, "Go to header")
             on_click=move |_| {
                 let footer = document().query_selector("header").unwrap().unwrap();

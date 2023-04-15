@@ -1,7 +1,7 @@
 use crate::controls::button::*;
 use crate::storage::LocalStorage;
 use i18n::move_gettext;
-use leptos::*;
+use leptos::{window, *};
 use std::fmt;
 
 #[derive(Clone, Copy, PartialEq)]
@@ -50,8 +50,7 @@ pub fn provide_color_scheme_context(cx: Scope) -> ColorSchemeSignal {
 }
 
 fn initial_color_scheme_from_localstorage() -> ColorScheme {
-    let window = web_sys::window().unwrap();
-    let local_storage = window.local_storage().unwrap().unwrap();
+    let local_storage = window().local_storage().unwrap().unwrap();
 
     match local_storage.get_item(LocalStorage::Keys::ColorScheme.as_str()) {
         Ok(Some(color_scheme)) => ColorScheme::from(color_scheme.as_str()),
@@ -60,8 +59,7 @@ fn initial_color_scheme_from_localstorage() -> ColorScheme {
 }
 
 fn set_color_scheme_on_localstorage(color_scheme: &ColorScheme) {
-    let window = web_sys::window().unwrap();
-    let local_storage = window.local_storage().unwrap().unwrap();
+    let local_storage = window().local_storage().unwrap().unwrap();
     local_storage
         .set_item(
             LocalStorage::Keys::ColorScheme.as_str(),

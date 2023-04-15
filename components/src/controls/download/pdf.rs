@@ -1,3 +1,4 @@
+use leptos::document;
 use wasm_bindgen::prelude::*;
 use web_sys::{window, HtmlButtonElement};
 
@@ -24,7 +25,7 @@ pub fn download_pdf(slug: &str) {
 
 /// Lazy loading of PDFKit JS library
 pub fn maybe_initialize_pdfkit() {
-    let document = web_sys::window().unwrap().document().unwrap();
+    let document = document();
     let head = document.head().unwrap();
 
     // Load PDFKit JS library if it's not already loaded

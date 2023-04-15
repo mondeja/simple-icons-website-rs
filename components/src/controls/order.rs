@@ -3,7 +3,7 @@ use crate::controls::search::SearchValueSignal;
 use crate::storage::LocalStorage;
 use crate::{IconsGrid, IconsGridSignal};
 use i18n::move_gettext;
-use leptos::*;
+use leptos::{window, *};
 use simple_icons::StaticSimpleIcon;
 use std::fmt;
 
@@ -107,8 +107,7 @@ impl fmt::Display for OrderModeVariant {
 pub struct OrderModeSignal(pub RwSignal<OrderMode>);
 
 fn initial_order_mode_from_localstorage() -> OrderMode {
-    let window = web_sys::window().unwrap();
-    let local_storage = window.local_storage().unwrap().unwrap();
+    let local_storage = window().local_storage().unwrap().unwrap();
 
     match local_storage.get_item(LocalStorage::Keys::OrderMode.as_str()) {
         Ok(Some(order_mode)) => OrderMode::from(order_mode.as_str()),
@@ -127,8 +126,7 @@ fn initial_order_mode_from_localstorage_and_search_value(
 }
 
 fn set_order_mode_on_localstorage(order_mode: &OrderModeVariant) {
-    let window = web_sys::window().unwrap();
-    let local_storage = window.local_storage().unwrap().unwrap();
+    let local_storage = window().local_storage().unwrap().unwrap();
     local_storage
         .set_item(
             LocalStorage::Keys::OrderMode.as_str(),

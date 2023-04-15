@@ -63,16 +63,10 @@ const config: PlaywrightTestConfig = {
     },
 
     /**
-     * Safari fails on production, mostly of the times with the next message:
-     * https://github.com/rustwasm/wasm-bindgen/issues/2646
-     *
-     * I've investigated this for a few hours and it seems to be a memory bug
-     * with WASM in Safari. Sometimes iit fails before after mounting with the
-     * router not being created, sometimes in the first unwrap of a signal,
-     * it doesn't follows a consistent pattern. I'm not sure how to report this,
-     * I've tried to reproduce it in a minimal example but I can't get it.
-     *
-     * Maybe it would be worth to wait some months and see if it gets fixed.
+     * Webkit browsers are crashing on production, investigated at
+     * https://github.com/mondeja/webkit-wasm-bug
+     * and opened issue on wasm-bindgen
+     * https://github.com/rustwasm/wasm-bindgen/issues/3389
      **/
     /* {
       name: 'webkit',
@@ -107,7 +101,7 @@ const config: PlaywrightTestConfig = {
       },
     },
 
-    /* Safari fails on production
+    /* Webkit browsers are crashing on production
     {
       name: 'Mobile Safari',
       use: {

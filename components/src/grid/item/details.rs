@@ -6,7 +6,7 @@ use crate::grid::CurrentIconViewSignal;
 use crate::modal::*;
 use crate::Ids;
 use i18n::move_gettext;
-use leptos::{ev::MouseEvent, *};
+use leptos::{document, ev::MouseEvent, *};
 use reqwasm::http::Request;
 use simple_icons::StaticSimpleIcon;
 use wasm_bindgen::JsCast;
@@ -51,9 +51,7 @@ fn get_slug_from_modal_container() -> String {
 }
 
 pub fn fill_icon_details_modal_with_icon(icon: StaticSimpleIcon) {
-    let document = web_sys::window().unwrap().document().unwrap();
-
-    let modal_body = document
+    let modal_body = document()
         .get_element_by_id(Ids::IconDetailsModal.as_str())
         .unwrap()
         .dyn_into::<web_sys::HtmlElement>()

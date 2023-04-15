@@ -83,7 +83,7 @@ export const selectors = {
   body: 'body:last-child',
   header: {
     container: 'header',
-    title: 'header h1',
+    title: 'h1',
     description: 'header > :first-child > p',
     nav: {
       container: 'header > nav',

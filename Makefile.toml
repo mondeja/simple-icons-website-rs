@@ -13,7 +13,7 @@ workspace = false
 
 [tasks.serve-and-watch-css]
 description = "Run the app and watch CSS on development"
-run_task = { name = ["serve-for-dev", "watch-css-for-dev"], parallel = true }
+run_task = { name = ["serve-for-dev", "watch-css"], parallel = true }
 workspace = false
 
 [tasks.serve-for-dev]
@@ -74,19 +74,6 @@ workspace = false
 cwd = "./end2end"
 
 [tasks.watch-css]
-description = "Build CSS with Tailwind on development"
-command = "../node_modules/.bin/postcss"
-args = ["./stylesheet.css", "-o", "./assets/dist/stylesheet.css", "--watch"]
-workspace = false
-cwd = "./app"
-
-[tasks.watch-css-for-dev]
-# Very dirty copy paste of the previous task to make work with serve
-# in parallel because cwd must be different
-# see the cargo-make documentation:
-# "Setting the task’s current working directory via cwd attribute will
-# result in all parallel tasks being affected."
-# TODO: can we define these options in a single place?
 description = "Build CSS with Tailwind on development"
 command = "../node_modules/.bin/tailwindcss"
 args = [

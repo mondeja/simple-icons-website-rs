@@ -11,7 +11,7 @@ use components::grid::provide_icons_grid_contexts;
 use components::header::nav::language_selector::provide_language_context;
 use components::*;
 use i18n::{gettext, move_gettext};
-use leptos::*;
+use leptos::{document, window, *};
 use leptos_meta::*;
 use leptos_router::{
     Route, RouteProps, Router, RouterProps, Routes, RoutesProps,
@@ -75,16 +75,13 @@ fn Index(cx: Scope) -> impl IntoView {
     );
 
     create_effect(cx, move |_| {
-        let html = web_sys::window()
-            .unwrap()
-            .document()
-            .unwrap()
+        let html = document()
             .get_elements_by_tag_name("html")
             .get_with_index(0)
             .unwrap()
             .dyn_into::<web_sys::HtmlHtmlElement>()
             .unwrap();
-        html.set_lang(&language().current_language.code);
+        html.set_lang(&language().code);
     });
 
     view! { cx,
@@ -115,8 +112,7 @@ fn Index(cx: Scope) -> impl IntoView {
             ColorScheme::Dark => "dark",
             ColorScheme::Light => "light",
             ColorScheme::System => {
-                if web_sys::window()
-                    .unwrap()
+                if window()
                     .match_media("(prefers-color-scheme: dark)")
                     .unwrap()
                     .unwrap()

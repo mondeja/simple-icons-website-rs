@@ -6,10 +6,9 @@
 
 /// Single source of thruth for the URL params state
 pub mod params {
-    use leptos::Scope;
+    use leptos::{window, Scope};
     use leptos_router::{use_location, ParamsMap};
     use wasm_bindgen;
-    use web_sys;
 
     /// Enum to ensure that the params names are unique
     pub enum Names {
@@ -38,8 +37,7 @@ pub mod params {
         }
 
         let query = to_query_string(&params);
-        web_sys::window()
-            .unwrap()
+        window()
             .history()
             .unwrap()
             .replace_state_with_url(

@@ -14,7 +14,7 @@
 - `cargo make serve`: Serve the website with [Trunk](https://trunkrs.dev/).
 - `cargo make watch-css`: Watch the CSS files with [TailwindCSS](https://tailwindcss.com/).
 - `cargo make`: Run `serve` and `watch-css` in parallel. Recommended for development.
-- `cargo make tests`: Run the tests with [Playwright](https://playwright.dev/) (you need to build the app before).
+- `cargo make tests`: Run the tests with [Playwright](https://playwright.dev/) (you need to build the app for production before).
 - `cargo make formats`: Format files. If you are using VSCode they should be formatted at save.
 - `cargo make lint`: Check formatting of files. If you are using VSCode they should be formatted at save.
 - `cargo make builds`: Build the website for production.
@@ -24,13 +24,13 @@
 
 ## Testing
 
-Before testing you must build the website for development or production. You can run `cargo make` to build for development or `cargo make builds` to build for production. The distributed folder will be located at `app/dist/`.
+Before testing you must build the website for production. You can run `cargo make builds` to build for that. The distributed folder will be located at `app/dist/`.
 
-You'll find useful to only run certain tests for development displaying the GUI, you can change to `end2end` directory and run `npx playwright test --headed --project={browser} --grep={regex}`.
+Is convenient to only run certain tests for development displaying the GUI, you can change to `end2end` directory and run `npx playwright test --headed --project={browser} --grep={regex}`.
 
 Typically the development of tests involucrates two terminals:
 
-1. Build for production and run with `cargo make serve`
+1. Build for production with `cargo make builds`
 1. Change directory to `end2end` and run `npx playwright test --headed --project={browser} --grep={regex}` (for example `npx playwright test --headed --project=chromium --grep=nav`)
 
 ## Arquitecture
@@ -40,6 +40,7 @@ Typically the development of tests involucrates two terminals:
 - [Leptos](https://docs.rs/leptos) as the components library with a client side rendering approach.
 - [TailwindCSS](https://tailwindcss.com/) as the CSS framework.
 - [Trunk](https://trunkrs.dev/) as the web server (on development) and application builder (on production).
+- [Playwright](https://playwright.dev/) for end to end testing.
 
 ### Rust crates
 
