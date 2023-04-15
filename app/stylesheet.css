@@ -1,21 +1,8 @@
-/* Header */
-@import './../components/src/header/mod.css';
-/* Controls */
-@import './../components/src/controls/mod.css';
-/* Grid */
-@import './../components/src/grid/mod.css';
-/* Footer */
-@import './../components/src/footer/mod.css';
-/* Copy buttons */
-@import './../components/src/copy/mod.css';
-/* Modal */
-@import './../components/src/modal.css';
-/* Scroll buttons */
-@import './../components/src/scroll.css';
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+/* Custom components */
+@import './../components/src/mod.css';
 
 :root {
   --dark-contrast-color: rgb(34, 34, 34);

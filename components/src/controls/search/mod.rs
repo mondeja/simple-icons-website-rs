@@ -87,7 +87,6 @@ pub fn fire_on_search_event() {
 }
 
 fn init_searcher() {
-    // TODO: include aliases in the search
     let icons_titles_ids = ICONS
         .iter()
         .map(|icon| {

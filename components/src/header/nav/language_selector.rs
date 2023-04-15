@@ -4,14 +4,13 @@ use crate::Url;
 use i18n::{move_gettext, Language, LocaleState, LocaleStateSignal, LANGUAGES};
 use leptos::*;
 
-pub fn provide_language_context(cx: Scope) {
-    provide_context(
+pub fn provide_language_context(cx: Scope) -> LocaleStateSignal {
+    let language = LocaleStateSignal(create_rw_signal(
         cx,
-        LocaleStateSignal(create_rw_signal(
-            cx,
-            LocaleState::new(initial_language(cx)),
-        )),
-    );
+        LocaleState::new(initial_language(cx)),
+    ));
+    provide_context(cx, language);
+    language
 }
 
 pub fn initial_language(cx: Scope) -> Language {

@@ -8,7 +8,7 @@ use nav::*;
 use title::*;
 
 /// State of the header
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct HeaderState {
     /// Indicates if the menu is currently open (only used on tablet and mobile screens)
     pub menu_open: bool,
@@ -44,13 +44,15 @@ impl HeaderState {
 }
 
 #[derive(Copy, Clone)]
-struct HeaderStateSignal(RwSignal<HeaderState>);
+pub struct HeaderStateSignal(pub RwSignal<HeaderState>);
 
 /// Header at the top of the page
 #[component]
 pub fn Header(cx: Scope) -> impl IntoView {
-    let header_state = create_rw_signal(cx, HeaderState::default());
-    provide_context(cx, HeaderStateSignal(header_state));
+    provide_context(
+        cx,
+        HeaderStateSignal(create_rw_signal(cx, HeaderState::default())),
+    );
 
     view! { cx,
         <header>

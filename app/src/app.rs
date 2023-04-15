@@ -17,6 +17,7 @@ use leptos_router::{
     Route, RouteProps, Router, RouterProps, Routes, RoutesProps,
 };
 use macros::get_number_of_icons;
+use wasm_bindgen::JsCast;
 
 macro_rules! url {
     () => {
@@ -55,7 +56,7 @@ pub fn App(cx: Scope) -> impl IntoView {
 
 #[component]
 fn Index(cx: Scope) -> impl IntoView {
-    provide_language_context(cx);
+    let language = provide_language_context(cx).0;
     provide_meta_context(cx);
     let color_scheme = provide_color_scheme_context(cx).0;
 
@@ -72,6 +73,19 @@ fn Index(cx: Scope) -> impl IntoView {
         NUMBER_OF_ICONS.to_string().as_str(),
         &gettext!(cx, "SVG")
     );
+
+    create_effect(cx, move |_| {
+        let html = web_sys::window()
+            .unwrap()
+            .document()
+            .unwrap()
+            .get_elements_by_tag_name("html")
+            .get_with_index(0)
+            .unwrap()
+            .dyn_into::<web_sys::HtmlHtmlElement>()
+            .unwrap();
+        html.set_lang(&language().current_language.code);
+    });
 
     view! { cx,
         <Title text=TITLE/>

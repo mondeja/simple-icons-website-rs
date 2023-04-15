@@ -19,6 +19,7 @@ use web_sys::HtmlElement;
 pub fn main() {
     _ = console_log::init_with_level(Level::Debug);
     console_error_panic_hook::set_once();
+
     let html = document()
         .document_element()
         .unwrap()

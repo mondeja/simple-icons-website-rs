@@ -1,13 +1,15 @@
 import { devices, type PlaywrightTestConfig } from '@playwright/test';
 import { OUTPUT_DIR } from './tests/helpers.ts';
 
-const TIMEOUT = 10 * 1000;
+const TIMEOUT = process.env.CI ? 30 * 1000 : 10 * 1000;
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 const config: PlaywrightTestConfig = {
   testDir: './tests',
+  /* Folder for test artifacts such as screenshots, videos, traces, etc. */
+  outputDir: OUTPUT_DIR,
   /* Maximum time one test can run for. */
   timeout: TIMEOUT,
   expect: {
@@ -60,15 +62,24 @@ const config: PlaywrightTestConfig = {
       },
     },
 
-    /* // TODO: Safari fails on production with the next message:
-       // https://github.com/rustwasm/wasm-bindgen/issues/2646
-    {
+    /**
+     * Safari fails on production, mostly of the times with the next message:
+     * https://github.com/rustwasm/wasm-bindgen/issues/2646
+     *
+     * I've investigated this for a few hours and it seems to be a memory bug
+     * with WASM in Safari. Sometimes iit fails before after mounting with the
+     * router not being created, sometimes in the first unwrap of a signal,
+     * it doesn't follows a consistent pattern. I'm not sure how to report this,
+     * I've tried to reproduce it in a minimal example but I can't get it.
+     *
+     * Maybe it would be worth to wait some months and see if it gets fixed.
+     **/
+    /* {
       name: 'webkit',
       use: {
         ...devices['Desktop Safari'],
       },
-    },
-    */
+    }, */
 
     /* Test against mobile viewports. */
     {
@@ -119,9 +130,6 @@ const config: PlaywrightTestConfig = {
       },
     },
   ],
-
-  /* Folder for test artifacts such as screenshots, videos, traces, etc. */
-  outputDir: OUTPUT_DIR,
 };
 
 export default config;
