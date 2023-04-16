@@ -159,7 +159,7 @@ workspace = false
 description = "Lint Rust code and leptos view! macros"
 run_task = { name = [
     "lint-rust-code",
-    # TODO: https://github.com/bram209/leptosfmt/issues/12
+    # TODO (pending): https://github.com/bram209/leptosfmt/issues/12
 
 ], parallel = false }
 workspace = false

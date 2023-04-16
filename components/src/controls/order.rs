@@ -1,7 +1,7 @@
 use crate::controls::button::*;
 use crate::controls::search::SearchValueSignal;
+use crate::grid::{IconsGrid, IconsGridSignal};
 use crate::storage::LocalStorage;
-use crate::{IconsGrid, IconsGridSignal};
 use i18n::move_gettext;
 use leptos::{window, *};
 use simple_icons::StaticSimpleIcon;

@@ -1,18 +1,17 @@
 use crate::header::{nav::button::*, HeaderState, HeaderStateSignal};
 use crate::modal::*;
 use crate::Url;
-use i18n::{move_gettext, Language, LocaleStateSignal, LANGUAGES};
+use i18n::{move_gettext, Language, LocaleSignal, LANGUAGES};
 use leptos::{window, *};
 
-pub fn provide_language_context(cx: Scope) -> LocaleStateSignal {
-    let language =
-        LocaleStateSignal(create_rw_signal(cx, initial_language(cx)));
-    provide_context(cx, language);
-    language
+pub fn provide_language_context(cx: Scope) -> LocaleSignal {
+    let locale_signal = LocaleSignal(create_rw_signal(cx, initial_language()));
+    provide_context(cx, locale_signal);
+    locale_signal
 }
 
-pub fn initial_language(cx: Scope) -> Language {
-    initial_language_from_url_localstorage_or_navigator_languages(cx)
+pub fn initial_language() -> Language {
+    initial_language_from_url_localstorage_or_navigator_languages()
 }
 
 fn initial_language_from_navigator_languages() -> Option<Language> {
@@ -30,11 +29,9 @@ fn initial_language_from_navigator_languages() -> Option<Language> {
     None
 }
 
-fn initial_language_from_url_localstorage_or_navigator_languages(
-    cx: Scope,
-) -> Language {
+fn initial_language_from_url_localstorage_or_navigator_languages() -> Language {
     let language: Option<Language> =
-        match Url::params::get(cx, &Url::params::Names::Language) {
+        match Url::params::get_vanilla(&Url::params::Names::Language) {
             Some(value) => match Language::from_str(value.as_str()) {
                 Some(lang) => {
                     set_language_in_localstorage(lang);
@@ -78,7 +75,7 @@ pub fn set_language_in_localstorage(lang: Language) {
 #[component]
 pub fn LanguagesList(cx: Scope) -> impl IntoView {
     let header_state = use_context::<HeaderStateSignal>(cx).unwrap().0;
-    let locale_state = use_context::<LocaleStateSignal>(cx).unwrap().0;
+    let locale_state = use_context::<LocaleSignal>(cx).unwrap().0;
 
     view! { cx,
         <ul class="language-selector">

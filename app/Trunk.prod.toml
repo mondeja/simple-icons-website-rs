@@ -1,5 +1,5 @@
 [build]
-# TODO: Very ugly fix to make the page serve from paths
+# TODO: Ugly fix to make the page serve from paths
 # (like in Github pages with default domain) where
 # the base url is not the root of the domain. Seems that
 # the environment variable TRUNK_PUBLIC_URL and the CLI option

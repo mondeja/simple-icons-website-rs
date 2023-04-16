@@ -80,7 +80,7 @@ export const selectors = {
    * Selector for the body.
    * Using `:last-child` because Trunk injectes their own body on development.
    */
-  body: 'body:last-child',
+  body: 'body',
   header: {
     container: 'header',
     title: 'h1',

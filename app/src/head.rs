@@ -1,10 +1,50 @@
 use crate::app::{LOGO_URL, TITLE, URL};
+use i18n::{gettext, move_gettext};
 use leptos::*;
-use leptos_meta::{Meta, MetaProps};
+use leptos_meta::*;
+use macros::get_number_of_icons;
+
+#[component]
+pub fn Head(cx: Scope) -> impl IntoView {
+    provide_meta_context(cx);
+
+    let description = move_gettext!(
+        cx,
+        "{} free {} icons for popular brands",
+        get_number_of_icons!().to_string().as_str(),
+        &gettext!(cx, "SVG")
+    );
+
+    view! { cx,
+        <Title text=TITLE/>
+        <Meta charset="utf-8"/>
+        <Meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+        <Meta name="description" content=description/>
+        <Link rel="apple-touch-icon" href="./apple-touch-icon.png"/>
+        <Link
+            rel="search"
+            type_="application/opensearchdescription+xml"
+            title=TITLE
+            href="./opensearch.xml"
+        />
+        <Link rel="license" href="./license.txt"/>
+        <Link rel="canonical" href=URL/>
+        <Link rel="preconnect" href="https://fonts.gstatic.com"/>
+        <Link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&family=Roboto+Mono:wght@400;600"
+        />
+        <MetaOpenGraph description=description/>
+        <MetaTwitter description=description/>
+        <Meta name="msvalidate.01" content="14319924BC1F00DC15EF0EAA29E72404"/>
+        <Meta name="yandex-verification" content="8b467a0b98aa2725"/>
+        <LdJSONMetadata/>
+    }
+}
 
 /// Open graph meta tags
 #[component]
-pub fn MetaOpenGraph<F>(
+fn MetaOpenGraph<F>(
     cx: Scope,
     /// Site description
     description: F,
@@ -24,7 +64,7 @@ where
 
 /// Twitter meta tags
 #[component]
-pub fn MetaTwitter<F>(
+fn MetaTwitter<F>(
     cx: Scope,
     /// Site description
     description: F,
@@ -44,7 +84,7 @@ where
 /// JSON-LD metadata
 /// See https://developers.google.com/search/docs/data-types/logo
 #[component]
-pub fn LdJSONMetadata(cx: Scope) -> impl IntoView {
+fn LdJSONMetadata(cx: Scope) -> impl IntoView {
     view! { cx,
         <script type="application/ld+json">
             {{

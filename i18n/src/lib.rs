@@ -83,12 +83,12 @@ impl Default for Language {
 include!(concat!(env!("OUT_DIR"), "/translations.rs"));
 
 #[derive(Copy, Clone)]
-pub struct LocaleStateSignal(pub RwSignal<Language>);
+pub struct LocaleSignal(pub RwSignal<Language>);
 
 #[macro_export]
 macro_rules! gettext_impl {
     ($cx:ident, $key:expr) => {
-        ((&use_context::<::i18n::LocaleStateSignal>($cx).unwrap().0)()
+        ((&use_context::<::i18n::LocaleSignal>($cx).unwrap().0)()
             .translate($key))
         .to_string()
     };

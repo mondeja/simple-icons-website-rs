@@ -90,8 +90,7 @@ body.light {
     padding: 0;
   }
 
-  /* TODO: using :last-child because Trunk includes another <body> element */
-  body:last-child {
+  body {
     @apply font-mono flex flex-col min-h-[100vh]
       bg-custom-background-color
       text-custom-text-default-color;

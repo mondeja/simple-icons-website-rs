@@ -1,20 +1,29 @@
 mod ad;
 mod item;
 pub mod more_icons;
+mod scroll;
 
 use crate::controls::layout::{Layout, LayoutSignal};
+use crate::controls::order::{sort_icons, OrderMode, OrderModeVariant};
 use crate::controls::search::{
     fire_on_search_event, search_icons_and_returns_first_page,
 };
 use crate::grid::item::details::*;
-pub use crate::grid::more_icons::*;
-use crate::order::{sort_icons, OrderMode, OrderModeVariant};
+use crate::grid::more_icons::*;
+use crate::grid::scroll::*;
 use config::CONFIG;
 use item::*;
 use lazy_static::lazy_static;
-use leptos::*;
+use leptos::{
+    html::{Footer, HtmlElement},
+    NodeRef, *,
+};
 use macros::{get_number_of_icons, simple_icons_array};
 use simple_icons::StaticSimpleIcon;
+use wasm_bindgen::{closure::Closure, JsCast};
+use web_sys::{
+    IntersectionObserver, IntersectionObserverEntry, IntersectionObserverInit,
+};
 
 pub const ICONS: [StaticSimpleIcon;
     CONFIG.max_icons.unwrap_or(get_number_of_icons!())] = simple_icons_array!();
@@ -139,7 +148,7 @@ fn initial_icons_from_search_value_and_order_mode(
 /// scrolls to the footer. See the `IntersectionObserver` used inside the
 /// `Footer` component.
 #[component]
-pub fn GridIcons(cx: Scope) -> impl IntoView {
+pub fn Icons(cx: Scope) -> impl IntoView {
     let icons_grid = use_context::<IconsGridSignal>(cx).unwrap().0;
 
     view! { cx,
@@ -158,17 +167,65 @@ pub fn GridIcons(cx: Scope) -> impl IntoView {
 /// Main grid
 ///
 /// Includes the Carbon Ads ad and the icons
+///
+/// When the user scrolls nearly to the footer, the next page of icons are loaded.
+/// This is accomplished by using an `IntersectionObserver`.
 #[component]
 pub fn Grid(cx: Scope) -> impl IntoView {
+    // Get layout view signal
     let layout = use_context::<LayoutSignal>(cx).unwrap().0;
 
+    // Provide the context for the current icon details view
     provide_context(cx, CurrentIconViewSignal(create_rw_signal(cx, None)));
+
+    // Get the context of the page footer node reference and, when the footer element
+    // has been created, load the intersection callback for loading more icons when
+    // the viewport of the screen intersects into the footer
+    let footer_ref = use_context::<NodeRef<Footer>>(cx).unwrap();
+    footer_ref.on_load(cx, move |footer: HtmlElement<Footer>| {
+        let icons_grid = use_context::<IconsGridSignal>(cx).unwrap().0;
+        let grid_icons_loader =
+            use_context::<GridIconsLoaderSignal>(cx).unwrap().0;
+
+        let intersection_callback: Closure<
+            dyn Fn(Vec<IntersectionObserverEntry>, IntersectionObserver),
+        > = Closure::wrap(Box::new(
+            move |entries: Vec<IntersectionObserverEntry>,
+                  _observer: IntersectionObserver| {
+                let footer_entry = &entries[0];
+
+                if footer_entry.is_intersecting() {
+                    if grid_icons_loader().load_more_icons {
+                        icons_grid.update(|grid| grid.load_next_icons());
+                    }
+                } else if !grid_icons_loader().load_more_icons {
+                    grid_icons_loader
+                        .update(|loader| loader.load_more_icons = true);
+                }
+            },
+        ));
+
+        let intersection_observer = IntersectionObserver::new_with_options(
+            intersection_callback.as_ref().unchecked_ref(),
+            // 300px before the footer is reached, load the next page
+            IntersectionObserverInit::new().root_margin("300px 0px 0px 0px"),
+        )
+        .unwrap();
+        intersection_observer.observe(&footer);
+
+        // TODO: this is a memory leak
+        // https://rustwasm.github.io/docs/wasm-bindgen/examples/closures.html
+        // See https://stackoverflow.com/a/68944438/9167585 for the possible solution
+        // Seems so much complicated for such a small thing, not a priority
+        intersection_callback.forget();
+    });
 
     view! { cx,
         <IconDetailsModal/>
         <ul class:layout-compact=move || layout() == Layout::Compact>
-            <GridIcons/>
+            <Icons/>
         </ul>
         <LoadMoreIconsButton/>
+        <ScrollButtons/>
     }
 }

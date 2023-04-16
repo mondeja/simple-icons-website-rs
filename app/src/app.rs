@@ -1,22 +1,18 @@
-use crate::meta::*;
+use crate::head::{Head, HeadProps};
+use crate::pages::{Index, IndexProps};
 use components::controls::color_scheme::{
     provide_color_scheme_context, ColorScheme,
 };
-use components::controls::download::provide_download_type_context;
-use components::controls::layout::provide_layout_context;
-use components::controls::order::provide_order_mode_context;
-use components::controls::search::provide_search_context;
-use components::copy::*;
-use components::grid::provide_icons_grid_contexts;
-use components::header::nav::language_selector::provide_language_context;
-use components::*;
-use i18n::{gettext, move_gettext};
-use leptos::{document, window, *};
-use leptos_meta::*;
+use components::footer::{Footer, FooterProps};
+use components::header::{
+    nav::language_selector::provide_language_context, Header, HeaderProps,
+};
+use leptos::{
+    document, html::Footer as FooterHtmlElement, provide_context, window, *,
+};
 use leptos_router::{
     Route, RouteProps, Router, RouterProps, Routes, RoutesProps,
 };
-use macros::get_number_of_icons;
 use wasm_bindgen::JsCast;
 
 macro_rules! url {
@@ -24,9 +20,6 @@ macro_rules! url {
         "https://simpleicons.org"
     };
 }
-
-/// Number of icons available in the library
-pub static NUMBER_OF_ICONS: usize = get_number_of_icons!();
 
 /// Title of the page
 pub static TITLE: &str = "Simple Icons";
@@ -40,7 +33,55 @@ pub static LOGO_URL: &str = concat!(url!(), "/icons/simpleicons.svg");
 /// The main application component
 #[component]
 pub fn App(cx: Scope) -> impl IntoView {
+    let color_scheme = provide_color_scheme_context(cx).0;
+
+    create_effect(cx, move |_| {
+        let body = document()
+            .get_elements_by_tag_name("body")
+            .get_with_index(0)
+            .unwrap()
+            .dyn_into::<web_sys::Element>()
+            .unwrap();
+        let body_class_list = body.class_list();
+        body_class_list.remove_2("dark", "light").unwrap();
+        body_class_list
+            .add_1(match color_scheme() {
+                ColorScheme::Dark => "dark",
+                ColorScheme::Light => "light",
+                ColorScheme::System => {
+                    if window()
+                        .match_media("(prefers-color-scheme: dark)")
+                        .unwrap()
+                        .unwrap()
+                        .matches()
+                    {
+                        "dark"
+                    } else {
+                        "light"
+                    }
+                }
+            })
+            .unwrap();
+    });
+
+    let locale_signal = provide_language_context(cx).0;
+    create_effect(cx, move |_| {
+        let html = document()
+            .document_element()
+            .unwrap()
+            .dyn_into::<web_sys::HtmlHtmlElement>()
+            .unwrap();
+        html.set_lang(&locale_signal().code);
+    });
+
+    // Create a context to store a node reference to the footer
+    // to use it in other components of pages
+    let footer_ref = create_node_ref::<FooterHtmlElement>(cx);
+    provide_context::<NodeRef<FooterHtmlElement>>(cx, footer_ref);
+
     view! { cx,
+        <Head/>
+        <Header/>
         <Router>
             <Routes>
                 <Route
@@ -51,89 +92,6 @@ pub fn App(cx: Scope) -> impl IntoView {
                 />
             </Routes>
         </Router>
-    }
-}
-
-#[component]
-fn Index(cx: Scope) -> impl IntoView {
-    let language = provide_language_context(cx).0;
-    provide_meta_context(cx);
-    let color_scheme = provide_color_scheme_context(cx).0;
-
-    let initial_search_value = provide_search_context(cx);
-    let initial_order_mode =
-        provide_order_mode_context(cx, &initial_search_value);
-    provide_download_type_context(cx);
-    provide_layout_context(cx);
-    provide_icons_grid_contexts(cx, &initial_search_value, &initial_order_mode);
-
-    let description = move_gettext!(
-        cx,
-        "{} free {} icons for popular brands",
-        NUMBER_OF_ICONS.to_string().as_str(),
-        &gettext!(cx, "SVG")
-    );
-
-    create_effect(cx, move |_| {
-        let html = document()
-            .get_elements_by_tag_name("html")
-            .get_with_index(0)
-            .unwrap()
-            .dyn_into::<web_sys::HtmlHtmlElement>()
-            .unwrap();
-        html.set_lang(&language().code);
-    });
-
-    view! { cx,
-        <Title text=TITLE/>
-        <Meta charset="utf-8"/>
-        <Meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-        <Meta name="description" content=description/>
-        <Link rel="apple-touch-icon" href="./apple-touch-icon.png"/>
-        <Link
-            rel="search"
-            type_="application/opensearchdescription+xml"
-            title=TITLE
-            href="./opensearch.xml"
-        />
-        <Link rel="license" href="./license.txt"/>
-        <Link rel="canonical" href=URL/>
-        <Link rel="preconnect" href="https://fonts.gstatic.com"/>
-        <Link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&family=Roboto+Mono:wght@400;600"
-        />
-        <MetaOpenGraph description=description/>
-        <MetaTwitter description=description/>
-        <Meta name="msvalidate.01" content="14319924BC1F00DC15EF0EAA29E72404"/>
-        <Meta name="yandex-verification" content="8b467a0b98aa2725"/>
-        <LdJSONMetadata/>
-        <body class=move || match color_scheme() {
-            ColorScheme::Dark => "dark",
-            ColorScheme::Light => "light",
-            ColorScheme::System => {
-                if window()
-                    .match_media("(prefers-color-scheme: dark)")
-                    .unwrap()
-                    .unwrap()
-                    .matches()
-                {
-                    "dark"
-                } else {
-                    "light"
-                }
-            }
-        }>
-            <SVGDefsDefinition/>
-            <CopyInput/>
-            <Header/>
-            <ScrollToHeaderButton/>
-            <main>
-                <Controls/>
-                <Grid/>
-            </main>
-            <Footer/>
-            <ScrollToFooterButton/>
-        </body>
+        <Footer container_ref=footer_ref/>
     }
 }

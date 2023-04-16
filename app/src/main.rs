@@ -7,25 +7,18 @@
 //! develop and build for production.
 //!
 pub(crate) mod app;
-pub(crate) mod meta;
+pub(crate) mod head;
+pub(crate) mod pages;
 
 use crate::app::{App, AppProps};
 use console_error_panic_hook;
-use leptos::{document, mount_to, view};
+use leptos::{mount_to_body, view};
 use log::Level;
-use wasm_bindgen::JsCast;
-use web_sys::HtmlElement;
 
 pub fn main() {
     _ = console_log::init_with_level(Level::Debug);
     console_error_panic_hook::set_once();
-
-    let html = document()
-        .document_element()
-        .unwrap()
-        .dyn_into::<HtmlElement>()
-        .unwrap();
-    mount_to(html, |cx| {
+    mount_to_body(|cx| {
         view! { cx, <App/> }
-    })
+    });
 }

@@ -25,6 +25,7 @@ pub mod params {
         }
     }
 
+    /// Update a parameter value in the URL query using window history
     #[inline(always)]
     pub fn update(cx: Scope, k: &Names, v: &str) {
         let location = use_location(cx);
@@ -51,6 +52,7 @@ pub mod params {
             .ok();
     }
 
+    /// Get a URL param value using the Leptos router
     #[inline(always)]
     pub fn get(cx: Scope, k: &Names) -> Option<String> {
         match (use_location(cx).query)().get(k.as_str()) {
@@ -60,6 +62,37 @@ pub mod params {
             },
             None => None,
         }
+    }
+
+    /// Get a URL param value directly from URL of the browser
+    ///
+    /// This method has the advantadge that it doesn't needs a Leptos,
+    /// so it can be used before the initialization of it. Useful
+    /// to get information that must be setted before the initialization
+    /// of the body of the page.
+    #[inline(always)]
+    pub fn get_vanilla(k: &Names) -> Option<String> {
+        let query = window().location().search().unwrap();
+        if !query.starts_with("?") {
+            return None;
+        }
+        for key_value in query.split("?").last().unwrap().split("&").into_iter()
+        {
+            if key_value.contains("=") {
+                let mut split = key_value.split("=");
+                if split.next().unwrap() == k.as_str() {
+                    let ret = split.next().unwrap();
+                    return if ret.is_empty() {
+                        None
+                    } else {
+                        Some(ret.to_string())
+                    };
+                }
+            } else if key_value == k.as_str() {
+                return None;
+            }
+        }
+        None
     }
 
     // `to_query_string` has currently bad support by Leptos,

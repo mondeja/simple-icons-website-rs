@@ -76,3 +76,11 @@ pub fn ScrollToFooterButton(cx: Scope) -> impl IntoView {
         />
     }
 }
+
+#[component]
+pub fn ScrollButtons(cx: Scope) -> impl IntoView {
+    view! { cx,
+        <ScrollToHeaderButton/>
+        <ScrollToFooterButton/>
+    }
+}

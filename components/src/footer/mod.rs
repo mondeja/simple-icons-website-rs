@@ -2,68 +2,22 @@
 
 mod about;
 
-use crate::grid::more_icons::GridIconsLoaderSignal;
-use crate::grid::IconsGridSignal;
 use about::*;
 use i18n::move_gettext;
-use leptos::{
-    html::{Footer, HtmlElement},
-    *,
-};
+use leptos::{html::Footer as FooterHtmlElement, NodeRef, *};
 use macros::simple_icon_svg_path;
-use wasm_bindgen::{closure::Closure, JsCast};
-use web_sys::{
-    IntersectionObserver, IntersectionObserverEntry, IntersectionObserverInit,
-};
 
 static TWITTER_ICON_SVG_PATH: &str = simple_icon_svg_path!("twitter");
 
 /// Footer of the website
-///
-/// When the user scrolls nearly to the footer, the next page of icons are loaded.
-/// This is accomplished by using an `IntersectionObserver`.
 #[component]
-pub fn Footer(cx: Scope) -> impl IntoView {
-    let footer_ref = create_node_ref::<Footer>(cx);
-    let icons_grid = use_context::<IconsGridSignal>(cx).unwrap().0;
-    let grid_icons_loader = use_context::<GridIconsLoaderSignal>(cx).unwrap().0;
-
-    let intersection_callback: Closure<
-        dyn Fn(Vec<IntersectionObserverEntry>, IntersectionObserver),
-    > = Closure::wrap(Box::new(
-        move |entries: Vec<IntersectionObserverEntry>,
-              _observer: IntersectionObserver| {
-            let footer_entry = &entries[0];
-
-            if footer_entry.is_intersecting() {
-                if grid_icons_loader().load_more_icons {
-                    icons_grid.update(|grid| grid.load_next_icons());
-                }
-            } else if !grid_icons_loader().load_more_icons {
-                grid_icons_loader
-                    .update(|loader| loader.load_more_icons = true);
-            }
-        },
-    ));
-
-    footer_ref.on_load(cx, move |footer: HtmlElement<Footer>| {
-        let intersection_observer = IntersectionObserver::new_with_options(
-            intersection_callback.as_ref().unchecked_ref(),
-            // 300px before the footer is reached, load the next page
-            IntersectionObserverInit::new().root_margin("300px 0px 0px 0px"),
-        )
-        .unwrap();
-        intersection_observer.observe(&footer);
-
-        // TODO: this is a memory leak
-        // https://rustwasm.github.io/docs/wasm-bindgen/examples/closures.html
-        // Use `window.onbeforeunload` + `std::alloc::dealloc`?
-        // Seems so much complicated for such a small thing, not a priority
-        intersection_callback.forget();
-    });
-
+pub fn Footer(
+    cx: Scope,
+    /// Reference to the footer container, for using in sibling components
+    container_ref: NodeRef<FooterHtmlElement>,
+) -> impl IntoView {
     view! { cx,
-        <footer _ref=footer_ref>
+        <footer _ref=container_ref>
             <ReportProblems/>
             <div class="flex flex-col md:flex-row justify-between">
                 <About/>
