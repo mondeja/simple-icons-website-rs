@@ -7,9 +7,7 @@ use components::controls::{Controls, ControlsProps};
 use components::copy::{CopyInput, CopyInputProps};
 use components::grid::{provide_icons_grid_contexts, Grid, GridProps};
 use components::svg_defs::{SVGDefsDefinition, SVGDefsDefinitionProps};
-/// TODO: tracing needs to be imported? This seems like something
-/// that can be improved in Leptos as is part of the component macro
-use leptos::{component, tracing, view, IntoView, Scope};
+use leptos::*;
 
 #[component]
 pub fn Index(cx: Scope) -> impl IntoView {

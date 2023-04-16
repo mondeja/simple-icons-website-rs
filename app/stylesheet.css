@@ -8,7 +8,8 @@
   --dark-contrast-color: rgb(34, 34, 34);
   --light-contrast-color: rgb(238, 238, 238);
 
-  --margin-x: 1.5rem;
+  --margin-x: 1rem;
+  --margin-x-sm: 1.5rem;
   --margin-x-md: 3rem;
 }
 
@@ -65,7 +66,9 @@ body.light {
 @layer components {
   /* Margin X of the page */
   .page-margin-x {
-    @apply mx-[var(--margin-x)] md:mx-[var(--margin-x-md)];
+    @apply mx-[var(--margin-x)]
+      sm:mx-[var(--margin-x-sm)]
+      md:mx-[var(--margin-x-md)];
   }
 
   /**
@@ -75,7 +78,9 @@ body.light {
    * like the controls one.
    **/
   .page-padding-x {
-    @apply px-[var(--margin-x)] md:px-[var(--margin-x-md)];
+    @apply px-[var(--margin-x)]
+      sm:px-[var(--margin-x-sm)]
+      md:px-[var(--margin-x-md)];
   }
 }
 
