@@ -1,6 +1,4 @@
-use crate::controls::download::{
-    download_pdf, download_svg, pdf::maybe_initialize_pdfkit,
-};
+use crate::controls::download::{download_pdf, download_svg};
 use crate::copy::copy_setting_copied_transition_in_element;
 use crate::grid::CurrentIconViewSignal;
 use crate::modal::*;
@@ -231,10 +229,7 @@ fn IconDetailsModalFooter(cx: Scope) -> impl IntoView {
                 {move_gettext!(cx, "Download colored SVG")}
             </a>
             <button
-                on:click=move |_| {
-                    maybe_initialize_pdfkit();
-                    download_pdf(&get_slug_from_modal_container())
-                }
+                on:click=move |_| download_pdf(&get_slug_from_modal_container())
                 aria-label=move_gettext!(cx, "Download PDF")
             >
                 {move_gettext!(cx, "Download PDF")}

@@ -2,15 +2,14 @@ pub mod pdf;
 pub mod svg;
 
 use crate::controls::button::*;
-use crate::controls::download::pdf::maybe_initialize_pdfkit;
 use crate::storage::LocalStorage;
 use i18n::move_gettext;
-use leptos::{window, *};
+use leptos::{document, window, *};
 pub use pdf::download_pdf;
 use std::fmt;
 pub use svg::download_svg;
 use wasm_bindgen::JsCast;
-use web_sys::HtmlElement;
+use web_sys;
 
 #[derive(Default, Copy, Clone, PartialEq)]
 pub enum DownloadType {
@@ -60,11 +59,6 @@ fn initial_download_type_from_localstorage() -> DownloadType {
         _ => DownloadType::default(),
     };
 
-    // if the download type is PDF we need to lazy load the PDFKit library
-    if download_type == DownloadType::PDF {
-        maybe_initialize_pdfkit();
-    }
-
     download_type
 }
 
@@ -107,7 +101,6 @@ pub fn DownloadFileTypeControl(cx: Scope) -> impl IntoView {
                             .update(|state| {
                                 *state = DownloadType::PDF;
                                 set_download_type_on_localstorage(*state);
-                                maybe_initialize_pdfkit();
                             });
                     }
                 />
@@ -118,16 +111,15 @@ pub fn DownloadFileTypeControl(cx: Scope) -> impl IntoView {
 
 /// Download a SVG icon by its slug
 pub fn download(filename: &str, href: &str) {
-    let document = window().document().unwrap();
-    let link: web_sys::HtmlElement = document
+    let link = document()
         .create_element("a")
         .unwrap()
-        .dyn_into::<HtmlElement>()
+        .dyn_into::<web_sys::HtmlElement>()
         .unwrap();
     link.set_attribute("class", "hidden").unwrap();
     link.set_attribute("download", filename).unwrap();
     link.set_attribute("href", href).unwrap();
-    let body = document.body().unwrap();
+    let body = document().body().unwrap();
     body.append_child(&link).unwrap();
     link.click();
     body.remove_child(&link).unwrap();

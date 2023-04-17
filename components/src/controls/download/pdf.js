@@ -1,29 +1,4 @@
-const sleepUntil = async (f, timeoutMs) => {
-  return new Promise((resolve, reject) => {
-    const timeWas = new Date();
-    const wait = setInterval(function () {
-      if (f()) {
-        clearInterval(wait);
-        resolve();
-      } else if (new Date() - timeWas > timeoutMs) {
-        clearInterval(wait);
-        reject();
-      }
-    }, 20);
-  });
-};
-
 export const download_pdf_ = async (slug, errorGeneratingPdfMessageSchema) => {
-  try {
-    await sleepUntil(() => window.PDFDocument && window.blobStream, 60000);
-  } catch {
-    // TODO: show error message to user
-    console.error(
-      'pdkit or blobStream not loaded after {} seconds. Check yout network connection.',
-    );
-    return;
-  }
-
   const icon_svg_url = `/icons/${slug}.svg`;
   const res = await fetch(icon_svg_url);
   const svg = await res.text();
