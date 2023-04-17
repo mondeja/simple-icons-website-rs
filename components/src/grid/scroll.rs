@@ -21,11 +21,6 @@ where
     T: Fn() -> String + 'static,
     C: Fn(MouseEvent) + 'static,
 {
-    // TODO: following the Leptos documentation, the class of the button could
-    // be setted by a tuple instead of this ugly `format!` call, however I'm receiveing
-    // the error `the trait `leptos::IntoClass` is not implemented for `(leptos::Scope, &str)``,
-    // which is really strange because `class` is a static string,
-    // is the trait implemented for `&'static str` or is this a bug from the view! macro?
     view! { cx,
         <button
             class=format!("scroll-button {}", class)
