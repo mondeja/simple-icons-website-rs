@@ -2,7 +2,7 @@
 
 ## Setup
 
-- Install Rust with [rustup](https://rustup.rs/) and setup nightly as default.
+- Install Rust with [rustup](https://rustup.rs/).
 - Add `wasm32-unknown-unknown` target with `rustup target add wasm32-unknown-unknown`.
 - Install [cargo-make](https://sagiegurari.github.io/cargo-make/) with `cargo install --force cargo-make`.
 - Install NodeJS with npm and dependencies with `npm install`.
