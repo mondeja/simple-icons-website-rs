@@ -18,7 +18,7 @@
 
 /*   Copy hex color button */
 .icon-details-modal > :first-child > :last-child > :nth-child(2) {
-  @apply w-1/3 py-0.5 before:-mt-0.5 rounded
+  @apply w-20 py-0.5 before:-mt-0.5 rounded
     hover:!text-transparent focus:!text-transparent
     before:bg-[size:1.2rem] before:bg-center;
 }

@@ -8,7 +8,7 @@
   .modal {
     @apply relative z-50 flex flex-col self-center justify-center m-auto
       mt-0 md:mt-10 rounded
-      max-w-full md:max-w-[80%] lg:max-w-[50%] max-h-[80%]
+      max-w-full md:max-w-[80%] lg:max-w-[50%] max-h-full
       bg-custom-background-color shadow-[0_0_3px_0_var(--shadows-color)];
   }
 
@@ -19,7 +19,7 @@
   }
 
   .modal > :first-child > h2 {
-    @apply flex-grow text-lg;
+    @apply flex-grow text-base xs:text-lg;
   }
 
   .modal > :first-child > button {
@@ -30,6 +30,6 @@
 
   /* Modal body */
   .modal > :last-child {
-    @apply w-full p-4 overflow-y-auto;
+    @apply w-full px-1 xs:px-4 py-4 overflow-auto;
   }
 }
