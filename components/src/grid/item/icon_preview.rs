@@ -5,21 +5,6 @@ use reqwasm::http::Request;
 use wasm_bindgen::JsCast;
 use web_sys;
 
-async fn fetch_svg_value_and_copy_setting_copied_transition_in_element(
-    src: String,
-    button: web_sys::HtmlElement,
-) {
-    // TODO: Handle HTTP failures here
-    let svg = Request::get(&src)
-        .send()
-        .await
-        .unwrap()
-        .text()
-        .await
-        .unwrap();
-    copy_setting_copied_transition_in_element(svg, button).await;
-}
-
 /// Icon grid item preview
 ///
 /// The icon preview in the grid.
@@ -32,6 +17,8 @@ pub fn IconGridItemPreview(
     /// Brand title
     title: &'static str,
 ) -> impl IntoView {
+    // TODO: Handle HTTP failures here
+
     view! { cx,
         <button
             title=move_gettext!(cx, "Copy {} SVG", title)
@@ -45,11 +32,12 @@ pub fn IconGridItemPreview(
                     .unwrap()
                     .get_attribute("src")
                     .unwrap();
-                let future = fetch_svg_value_and_copy_setting_copied_transition_in_element(
-                    src,
-                    target,
+                spawn_local(
+                    (async move || {
+                        let svg = Request::get(&src).send().await.unwrap().text().await.unwrap();
+                        copy_setting_copied_transition_in_element(svg, target).await;
+                    })(),
                 );
-                spawn_local(future);
             }
         >
             <img src=format!("/icons/{}.svg", slug) alt=move_gettext!(cx, "{} icon", title)/>

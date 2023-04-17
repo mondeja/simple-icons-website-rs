@@ -10,32 +10,6 @@ use simple_icons::StaticSimpleIcon;
 use wasm_bindgen::JsCast;
 use web_sys;
 
-async fn fetch_svg_value_and_set_download_colored_button_href(
-    slug: &'static str,
-    icon_hex: &'static str,
-    download_colored_icon_container: web_sys::HtmlElement,
-) {
-    // TODO: handle http errors
-    let svg = Request::get(&format!("/icons/{}.svg", slug))
-        .send()
-        .await
-        .unwrap()
-        .text()
-        .await
-        .unwrap();
-    let colored_icon_svg =
-        svg.replace("<svg", &format!("<svg fill=\"%23{}\"", icon_hex));
-    download_colored_icon_container
-        .set_attribute(
-            "href",
-            &format!("data:image/svg+xml,{}", &colored_icon_svg),
-        )
-        .unwrap();
-    download_colored_icon_container
-        .set_attribute("download", &format!("{}-color.svg", slug))
-        .unwrap();
-}
-
 fn get_slug_from_modal_container() -> String {
     document()
         .get_element_by_id(Ids::IconDetailsModal.as_str())
@@ -182,11 +156,27 @@ pub fn fill_icon_details_modal_with_icon(icon: StaticSimpleIcon) {
         .dyn_into::<web_sys::HtmlElement>()
         .unwrap();
 
-    spawn_local(fetch_svg_value_and_set_download_colored_button_href(
-        icon.slug,
-        icon.hex,
-        download_colored_icon_container,
-    ));
+    spawn_local((async move || {
+        let svg = Request::get(&format!("/icons/{}.svg", icon.slug))
+            .send()
+            .await
+            // TODO: handle http errors
+            .unwrap()
+            .text()
+            .await
+            .unwrap();
+        let colored_icon_svg =
+            svg.replace("<svg", &format!("<svg fill=\"%23{}\"", icon.hex));
+        download_colored_icon_container
+            .set_attribute(
+                "href",
+                &format!("data:image/svg+xml,{}", &colored_icon_svg),
+            )
+            .unwrap();
+        download_colored_icon_container
+            .set_attribute("download", &format!("{}-color.svg", icon.slug))
+            .unwrap();
+    })());
 }
 
 /// Details modal icon preview

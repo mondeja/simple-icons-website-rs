@@ -1,6 +1,7 @@
 #![feature(trait_alias)]
 #![feature(const_option_ext)]
 #![feature(stmt_expr_attributes)]
+#![feature(async_closure)]
 
 // TODO: In v0.3.0 Leptos will allow imports of components without needing to
 // import the Props struct, so then refactor imports with `use my_crate::MyComponent;`
