@@ -57,8 +57,10 @@ test.describe('grid', () => {
     await page.locator(selectors.grid.scrollToFooter).click();
     await expect(await page.locator(selectors.footer)).toBeInViewport();
 
-    await page.locator(selectors.grid.loadMoreIcons).scrollIntoViewIfNeeded();
-    await page.locator(selectors.grid.loadMoreIcons).click();
+    await page
+      .locator(selectors.grid.iconsLoader.button)
+      .scrollIntoViewIfNeeded();
+    await page.locator(selectors.grid.iconsLoader.button).click();
     await expectNIconsLoadedInGrid(page, N_ICONS_PER_PAGE * 2);
   });
 

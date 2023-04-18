@@ -150,7 +150,9 @@ export const selectors = {
       /* Button to go to header from footer */
       scrollToHeader: '.scroll-to-header-button',
       /* Button to load more icons */
-      loadMoreIcons: '.load-more-icons button',
+      iconsLoader: {
+        button: '.icons-loaded button',
+      },
     };
   })(),
   footer: 'footer',
