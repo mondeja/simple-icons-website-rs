@@ -1,19 +1,16 @@
 mod ad;
+pub mod icons_loader;
 mod item;
-pub mod more_icons;
 mod scroll;
 
 use crate::controls::layout::{Layout, LayoutSignal};
 use crate::controls::order::{sort_icons, OrderMode, OrderModeVariant};
-use crate::controls::search::{
-    fire_on_search_event, search_icons_and_returns_first_page,
-};
+use crate::controls::search::search_icons_and_returns_first_page;
+use crate::grid::icons_loader::*;
 use crate::grid::item::details::*;
-use crate::grid::more_icons::*;
 use crate::grid::scroll::*;
 use config::CONFIG;
 use item::*;
-use lazy_static::lazy_static;
 use leptos::{
     html::{Footer, HtmlElement},
     NodeRef, *,
@@ -28,15 +25,9 @@ use web_sys::{
 pub const ICONS: [StaticSimpleIcon;
     CONFIG.max_icons.unwrap_or(get_number_of_icons!())] = simple_icons_array!();
 
-lazy_static! {
-    pub static ref FIRST_LOADED_ICONS: Vec<StaticSimpleIcon> =
-        ICONS[..(CONFIG.icons_per_page as usize)].to_vec();
-}
-
 /// Icons grid
 #[derive(Clone)]
 pub struct IconsGrid {
-    // TODO: split into two signals
     /// Icons currently loaded
     pub loaded_icons: Vec<StaticSimpleIcon>,
     /// Icons in order of the grid
@@ -56,41 +47,13 @@ impl IconsGrid {
         }
     }
 
-    pub fn reset(&mut self) {
-        self.icons = ICONS.to_vec();
-        self.loaded_icons = FIRST_LOADED_ICONS.to_vec();
-    }
-
-    pub fn set_icons(&mut self, icons: Vec<StaticSimpleIcon>) {
-        self.icons = icons;
-    }
-
-    pub fn set_loaded_icons(&mut self, loaded_icons: &Vec<StaticSimpleIcon>) {
-        self.loaded_icons = loaded_icons.clone();
-    }
-
     pub fn load_next_icons(&mut self) {
-        let next_icons: Vec<StaticSimpleIcon> = self
-            .icons
-            .iter()
-            .skip(self.loaded_icons.len())
-            .take(CONFIG.icons_per_page as usize)
-            .cloned()
-            .collect();
-        self.loaded_icons.extend(next_icons);
-    }
-
-    pub fn set_order_mode(&mut self, order_mode: &OrderModeVariant) {
-        match order_mode {
-            &OrderModeVariant::Alphabetic | &OrderModeVariant::Color => {
-                sort_icons(order_mode, &mut self.icons);
-                self.loaded_icons = vec![];
-                self.load_next_icons()
+        for i in 0..CONFIG.icons_per_page as usize {
+            if self.loaded_icons.len() + i >= self.icons.len() {
+                break;
             }
-            &OrderModeVariant::SearchMatch => {
-                // Fire a search event to update the grid
-                fire_on_search_event();
-            }
+            self.loaded_icons
+                .push(self.icons[self.loaded_icons.len() + i]);
         }
     }
 }
@@ -117,7 +80,7 @@ pub fn provide_icons_grid_contexts(
     );
     provide_context(
         cx,
-        GridIconsLoaderSignal(create_rw_signal(cx, GridIconsLoader::new())),
+        IconsLoaderSignal(create_rw_signal(cx, IconsLoader::new())),
     );
 }
 
@@ -131,9 +94,11 @@ fn initial_icons_from_search_value_and_order_mode(
             // Alphabetical is the default order of the icons in the static array
             sort_icons(order_mode, &mut icons);
         }
-        let mut loaded_icons =
-            Vec::with_capacity(CONFIG.icons_per_page as usize);
-        loaded_icons.extend(icons.iter().take(CONFIG.icons_per_page as usize));
+        let loaded_icons = icons
+            .iter()
+            .take(CONFIG.icons_per_page as usize)
+            .map(|icon| *icon)
+            .collect();
 
         (icons, loaded_icons)
     } else {
@@ -184,8 +149,8 @@ pub fn Grid(cx: Scope) -> impl IntoView {
     let footer_ref = use_context::<NodeRef<Footer>>(cx).unwrap();
     footer_ref.on_load(cx, move |footer: HtmlElement<Footer>| {
         let icons_grid = use_context::<IconsGridSignal>(cx).unwrap().0;
-        let grid_icons_loader =
-            use_context::<GridIconsLoaderSignal>(cx).unwrap().0;
+        let icons_loader: RwSignal<IconsLoader> =
+            use_context::<IconsLoaderSignal>(cx).unwrap().0;
 
         let intersection_callback: Closure<
             dyn Fn(Vec<IntersectionObserverEntry>, IntersectionObserver),
@@ -195,12 +160,11 @@ pub fn Grid(cx: Scope) -> impl IntoView {
                 let footer_entry = &entries[0];
 
                 if footer_entry.is_intersecting() {
-                    if grid_icons_loader().load_more_icons {
+                    if icons_loader().load {
                         icons_grid.update(|grid| grid.load_next_icons());
                     }
-                } else if !grid_icons_loader().load_more_icons {
-                    grid_icons_loader
-                        .update(|loader| loader.load_more_icons = true);
+                } else if !icons_loader().load {
+                    icons_loader.update(|state| state.load = true);
                 }
             },
         ));
@@ -225,7 +189,7 @@ pub fn Grid(cx: Scope) -> impl IntoView {
         <ul class:layout-compact=move || layout() == Layout::Compact>
             <Icons/>
         </ul>
-        <LoadMoreIconsButton/>
+        <IconsLoader/>
         <ScrollButtons/>
     }
 }

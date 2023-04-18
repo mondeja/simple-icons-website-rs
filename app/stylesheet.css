@@ -28,8 +28,6 @@ body.dark {
   --button-content-hover-color: rgb(34, 34, 34);
   /* Color of the buttons content when there are selected */
   --button-content-selected-color: rgb(34, 34, 34);
-  /* Color of the buttons content when there are not selected */
-  --button-content-default-color: rgb(212, 212, 212);
   /* Color of the buttons background when there are selected */
   --button-background-selected-color: rgb(212, 212, 212);
   /* Color of the buttons background when there are not selected */

@@ -1,9 +1,13 @@
 @layer components {
-  .load-more-icons {
-    @apply flex flex-row justify-center pt-4 page-margin-x;
+  .icons-loader {
+    @apply flex flex-row justify-center page-margin-x;
+  }
+  .icons-loader:not(.hidden) {
+    @apply pt-4;
   }
 
-  .load-more-icons > button {
+  /* Button to load more icons manually */
+  .icons-loader > button {
     @apply py-2 px-4 rounded text-sm
       text-custom-button-content-default-color
       hover:text-custom-button-content-hover-color
@@ -12,5 +16,10 @@
       hover:bg-custom-button-background-hover-color
       focus:bg-custom-button-background-hover-color
       shadow-[0_0_3px_0_var(--shadows-color)];
+  }
+
+  /* Spinner to show when loading more icons */
+  .icons-loader > svg > circle {
+    @apply fill-custom-button-content-default-color;
   }
 }

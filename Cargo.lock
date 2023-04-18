@@ -1951,7 +1951,6 @@ name = "simple-icons-website-components"
 version = "0.1.0"
 dependencies = [
  "js-sys",
- "lazy_static",
  "leptos",
  "leptos_router",
  "log",

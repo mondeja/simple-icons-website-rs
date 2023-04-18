@@ -184,7 +184,7 @@ pub async fn search_icons(
     let new_displayed_icons_for_signal = new_displayed_icons.clone();
 
     icons_grid_signal.update(move |grid| {
-        grid.set_loaded_icons(&new_displayed_icons_for_signal)
+        grid.loaded_icons = new_displayed_icons_for_signal;
     });
 
     let mut new_icons = Vec::with_capacity(search_result_length as usize);
@@ -195,7 +195,7 @@ pub async fn search_icons(
         &mut new_icons,
     );
 
-    icons_grid_signal.update(move |grid| grid.set_icons(new_icons));
+    icons_grid_signal.update(move |grid| grid.icons = new_icons);
 }
 
 async fn on_search(
@@ -210,7 +210,17 @@ async fn on_search(
         Url::params::update(cx, &Url::params::Names::Search, &value);
 
         if value.is_empty() {
-            icons_grid_signal.update(|grid| grid.reset());
+            // Reset grid
+            icons_grid_signal.update(|grid| {
+                grid.icons = ICONS.to_vec();
+                grid.loaded_icons = grid
+                    .icons
+                    .iter()
+                    .take(CONFIG.icons_per_page as usize)
+                    .map(|icon| *icon)
+                    .collect();
+            });
+            // Set new order mode
             set_order_mode(
                 &order_mode_signal().favorite,
                 &order_mode_signal,

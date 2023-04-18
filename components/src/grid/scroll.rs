@@ -1,4 +1,4 @@
-use crate::grid::more_icons::GridIconsLoaderSignal;
+use crate::grid::icons_loader::IconsLoaderSignal;
 use i18n::move_gettext;
 use leptos::{ev::MouseEvent, *};
 
@@ -37,12 +37,12 @@ where
 
 #[component]
 pub fn ScrollToHeaderButton(cx: Scope) -> impl IntoView {
-    let grid_icons_loader = use_context::<GridIconsLoaderSignal>(cx).unwrap().0;
+    let icons_loader = use_context::<IconsLoaderSignal>(cx).unwrap().0;
 
     view! { cx,
         <ScrollButton
             class="scroll-to-header-button"
-            hidden=move || grid_icons_loader().load_more_icons
+            hidden=move || icons_loader().load
             title=move_gettext!(cx, "Go to header")
             on_click=move |_| {
                 let footer = document().query_selector("header").unwrap().unwrap();
@@ -55,15 +55,15 @@ pub fn ScrollToHeaderButton(cx: Scope) -> impl IntoView {
 
 #[component]
 pub fn ScrollToFooterButton(cx: Scope) -> impl IntoView {
-    let grid_icons_loader = use_context::<GridIconsLoaderSignal>(cx).unwrap().0;
+    let icons_loader = use_context::<IconsLoaderSignal>(cx).unwrap().0;
 
     view! { cx,
         <ScrollButton
             class="scroll-to-footer-button"
-            hidden=move || !grid_icons_loader().load_more_icons
+            hidden=move || !icons_loader().load
             title=move_gettext!(cx, "Go to footer")
             on_click=move |_| {
-                grid_icons_loader.update(|loader| loader.load_more_icons = false);
+                icons_loader.update(|state| state.load = false);
                 let footer = document().query_selector("footer").unwrap().unwrap();
                 footer.scroll_into_view();
             }
