@@ -29,9 +29,9 @@ pub const ICONS: [StaticSimpleIcon;
 #[derive(Clone)]
 pub struct IconsGrid {
     /// Icons currently loaded
-    pub loaded_icons: Vec<StaticSimpleIcon>,
+    pub loaded_icons: Vec<&'static StaticSimpleIcon>,
     /// Icons in order of the grid
-    pub icons: Vec<StaticSimpleIcon>,
+    pub icons: Vec<&'static StaticSimpleIcon>,
 }
 
 impl IconsGrid {
@@ -64,7 +64,9 @@ pub struct IconsGridSignal(pub RwSignal<IconsGrid>);
 
 /// Signal to control the current detail view modal of icons
 #[derive(Copy, Clone)]
-pub struct CurrentIconViewSignal(pub RwSignal<Option<StaticSimpleIcon>>);
+pub struct CurrentIconViewSignal(
+    pub RwSignal<Option<&'static StaticSimpleIcon>>,
+);
 
 pub fn provide_icons_grid_contexts(
     cx: Scope,
@@ -87,14 +89,17 @@ pub fn provide_icons_grid_contexts(
 fn initial_icons_from_search_value_and_order_mode(
     search_value: &str,
     order_mode: &OrderModeVariant,
-) -> (Vec<StaticSimpleIcon>, Vec<StaticSimpleIcon>) {
+) -> (
+    Vec<&'static StaticSimpleIcon>,
+    Vec<&'static StaticSimpleIcon>,
+) {
     if search_value.is_empty() {
-        let mut icons: Vec<StaticSimpleIcon> = ICONS.to_vec();
+        let mut icons: Vec<&'static StaticSimpleIcon> = ICONS.iter().collect();
         if order_mode != &OrderModeVariant::Alphabetic {
             // Alphabetical is the default order of the icons in the static array
             sort_icons(order_mode, &mut icons);
         }
-        let loaded_icons = icons
+        let loaded_icons: Vec<&'static StaticSimpleIcon> = icons
             .iter()
             .take(CONFIG.icons_per_page as usize)
             .map(|icon| *icon)
@@ -121,7 +126,7 @@ pub fn Icons(cx: Scope) -> impl IntoView {
             icons_grid()
                 .loaded_icons
                 .iter()
-                .map(|icon: &StaticSimpleIcon| {
+                .map(|icon: &&'static StaticSimpleIcon| {
                     view! { cx, <IconGridItem icon=*icon/> }
                 })
                 .collect::<Vec<_>>()

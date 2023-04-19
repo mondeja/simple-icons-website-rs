@@ -18,7 +18,7 @@ use web_sys;
 pub fn IconGridItemFooter(
     cx: Scope,
     /// The icon
-    icon: StaticSimpleIcon,
+    icon: &'static StaticSimpleIcon,
 ) -> impl IntoView {
     // Hex color formatted for CSS
     let css_hex = format!("#{}", icon.hex);

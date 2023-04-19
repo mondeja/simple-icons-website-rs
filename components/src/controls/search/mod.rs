@@ -114,14 +114,13 @@ fn init_searcher() {
 fn new_displayed_icons_from_search_result(
     search_result: &js_sys::Array,
     search_result_length: &u32,
-) -> Vec<StaticSimpleIcon> {
-    let mut new_displayed_icons: Vec<StaticSimpleIcon> = Vec::new();
+) -> Vec<&'static StaticSimpleIcon> {
+    let mut new_displayed_icons: Vec<&'static StaticSimpleIcon> = Vec::new();
     for i in 0..*search_result_length {
         let result_icon_array = js_sys::Array::from(&search_result.get(i));
         let icon_order_alpha =
             result_icon_array.get(1).as_f64().unwrap() as usize;
-        let icon = ICONS[icon_order_alpha as usize];
-        new_displayed_icons.push(icon);
+        new_displayed_icons.push(&ICONS[icon_order_alpha as usize]);
         if new_displayed_icons.len() >= (CONFIG.icons_per_page as usize) {
             break;
         }
@@ -134,22 +133,24 @@ fn new_displayed_icons_from_search_result(
 fn extend_new_icons_with_search_result(
     search_result: &js_sys::Array,
     search_result_length: &u32,
-    new_icons: &mut Vec<StaticSimpleIcon>,
+    new_icons: &mut Vec<&'static StaticSimpleIcon>,
 ) {
     if *search_result_length > CONFIG.icons_per_page {
         for i in CONFIG.icons_per_page..*search_result_length {
             let result_icon_array = js_sys::Array::from(&search_result.get(i));
             let icon_order_alpha =
                 result_icon_array.get(1).as_f64().unwrap() as usize;
-            let icon = ICONS[icon_order_alpha as usize];
-            new_icons.push(icon);
+            new_icons.push(&ICONS[icon_order_alpha as usize]);
         }
     }
 }
 
 pub fn search_icons_and_returns_first_page(
     search_value: &str,
-) -> (Vec<StaticSimpleIcon>, Vec<StaticSimpleIcon>) {
+) -> (
+    Vec<&'static StaticSimpleIcon>,
+    Vec<&'static StaticSimpleIcon>,
+) {
     let search_result = js_sys::Array::from(&search(search_value));
 
     let search_result_length = search_result.length();
@@ -212,7 +213,7 @@ async fn on_search(
         if value.is_empty() {
             // Reset grid
             icons_grid_signal.update(|grid| {
-                grid.icons = ICONS.to_vec();
+                grid.icons = ICONS.iter().collect();
                 grid.loaded_icons = grid
                     .icons
                     .iter()

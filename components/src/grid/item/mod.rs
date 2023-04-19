@@ -21,7 +21,7 @@ use leptos::*;
 pub fn IconGridItem(
     cx: Scope,
     /// Icon
-    icon: StaticSimpleIcon,
+    icon: &'static StaticSimpleIcon,
 ) -> impl IntoView {
     view! { cx,
         <li>

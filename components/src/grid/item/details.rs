@@ -22,7 +22,7 @@ fn get_slug_from_modal_container() -> String {
         .inner_text()
 }
 
-pub fn fill_icon_details_modal_with_icon(icon: StaticSimpleIcon) {
+pub fn fill_icon_details_modal_with_icon(icon: &'static StaticSimpleIcon) {
     let modal_body = document()
         .get_element_by_id(Ids::IconDetailsModal.as_str())
         .unwrap()

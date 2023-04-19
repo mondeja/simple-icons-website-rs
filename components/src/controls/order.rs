@@ -49,7 +49,7 @@ pub fn provide_order_mode_context(
 
 pub fn sort_icons(
     order_mode: &OrderModeVariant,
-    icons: &mut Vec<StaticSimpleIcon>,
+    icons: &mut Vec<&'static StaticSimpleIcon>,
 ) {
     match order_mode {
         OrderModeVariant::Alphabetic => {
