@@ -1,4 +1,3 @@
-/* Grid items are composed to generate the minimum HTML possible */
 @import './icon_preview.css';
 @import './deprecated.css';
 @import './details.css';
@@ -11,6 +10,6 @@ main > ul > li {
   @apply flex flex-col space-y-2
     rounded-md border-spacing-0 border-collapse
     overflow-hidden
-    bg-custom-background-color
+    bg-custom-grid-item-background-color
     shadow-[0_0_3px_0_var(--shadows-color)];
 }

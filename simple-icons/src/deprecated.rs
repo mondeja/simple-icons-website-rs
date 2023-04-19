@@ -5,6 +5,7 @@ use std::fs;
 use std::path::Path;
 
 /// Deprecated icons for next versions of Simple Icons
+#[derive(Debug)]
 pub struct DeprecatedIcon {
     pub slug: String,
     pub removal_at_version: String,
@@ -53,9 +54,12 @@ pub fn fetch_deprecated_simple_icons() -> Vec<DeprecatedIcon> {
     for milestone_data in milestones_data.into_iter() {
         let title = milestone_data.get("title").unwrap().as_str().unwrap();
         let removal_at_version = title.replace("v", "");
-        let milestone_url = milestone_data.get("url").unwrap();
-        let milestone_number = milestone_data.get("number").unwrap();
-        let milestone_due_on = milestone_data.get("dueOn").unwrap();
+        let milestone_url =
+            milestone_data.get("url").unwrap().as_str().unwrap();
+        let milestone_number =
+            milestone_data.get("number").unwrap().as_u64().unwrap();
+        let milestone_due_on =
+            milestone_data.get("dueOn").unwrap().as_str().unwrap();
 
         let pull_requests_data = milestone_data
             .get("pullRequests")
@@ -65,8 +69,10 @@ pub fn fetch_deprecated_simple_icons() -> Vec<DeprecatedIcon> {
             .as_array()
             .unwrap();
         for pull_request_data in pull_requests_data.into_iter() {
-            let pull_request_url = pull_request_data.get("url").unwrap();
-            let pull_request_number = pull_request_data.get("number").unwrap();
+            let pull_request_url =
+                pull_request_data.get("url").unwrap().as_str().unwrap();
+            let pull_request_number =
+                pull_request_data.get("number").unwrap().as_u64().unwrap();
 
             let files_data = pull_request_data
                 .get("files")
@@ -82,7 +88,13 @@ pub fn fetch_deprecated_simple_icons() -> Vec<DeprecatedIcon> {
                     continue;
                 }
 
-                let path = file_data.get("node").unwrap().get("path").unwrap();
+                let path = file_data
+                    .get("node")
+                    .unwrap()
+                    .get("path")
+                    .unwrap()
+                    .as_str()
+                    .unwrap();
                 let slug =
                     path.to_string().replace("icons/", "").replace(".svg", "");
 

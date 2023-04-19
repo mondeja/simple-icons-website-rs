@@ -32,13 +32,17 @@ pub fn IconGridItem(
                 license_type=icon.license_type
             />
             {if icon.is_deprecated {
-                vec![
-                    view! { cx, < IconIsDeprecatedNotice title = icon.title pull_request_url = icon
-                    .deprecation_pull_request_url.unwrap() removal_at_version = icon
-                    .removal_at_version.unwrap() /> }
-                ]
+                Some(
+                    view! { cx,
+                        <IconIsDeprecatedNotice
+                            title=icon.title
+                            pull_request_url=icon.deprecation_pull_request_url.unwrap()
+                            removal_at_version=icon.removal_at_version.unwrap()
+                        />
+                    },
+                )
             } else {
-                vec![]
+                None
             }}
             <IconGridItemTitle title=icon.title slug=icon.slug/>
             <IconGridItemFooter icon=icon/>
