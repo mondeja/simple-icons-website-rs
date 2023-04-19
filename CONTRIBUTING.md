@@ -68,10 +68,3 @@ Typically the development of tests involucrates two terminals:
 
 - Add the locale to the `LANGUAGES` array in `i18n/src/lib.rs`.
 - Copy the file `i18n/messages.pot` to the new locale po file at `i18n/locales/{code}.po`.
-
-## Recommended VSCode extensions
-
-- [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
-- [Rust Analyzer](https://marketplace.visualstudio.com/items?itemName=matklad.rust-analyzer)
-- [Run On Save](https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave)
-- [Prettier Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)

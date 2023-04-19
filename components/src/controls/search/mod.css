@@ -13,12 +13,14 @@ menu .control .search > input {
     bg-custom-background-color
     shadow-[0_0_3px_0_var(--shadows-color)];
 }
+
 menu .control .search > input::-webkit-search-decoration,
 menu .control .search > input::-webkit-search-cancel-button,
 menu .control .search > input::-webkit-search-results-button,
 menu .control .search > input::-webkit-search-results-decoration {
-  -webkit-appearance: none;
+  appearance: none;
 }
+
 menu .control .search > input::-ms-clear,
 menu .control .search > input::-ms-reveal {
   display: none;

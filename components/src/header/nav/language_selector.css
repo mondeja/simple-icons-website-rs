@@ -3,6 +3,7 @@
     @apply grid grid-cols-1 xs:grid-cols-2 space-y-1 w-full
       uppercase;
   }
+
   .language-selector > li {
     @apply cursor-pointer w-full p-2 text-center rounded
       text-custom-button-content-default-color

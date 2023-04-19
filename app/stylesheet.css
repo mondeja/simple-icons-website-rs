@@ -1,13 +1,13 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
 /* Custom components */
 @import './../components/src/mod.css';
 
 :root {
-  --dark-contrast-color: rgb(34, 34, 34);
-  --light-contrast-color: rgb(238, 238, 238);
-
+  --dark-contrast-color: rgb(34 34 34);
+  --light-contrast-color: rgb(238 238 238);
   --margin-x: 1rem;
   --margin-x-sm: 1.5rem;
   --margin-x-md: 3rem;
@@ -16,48 +16,59 @@
 /* Dark color scheme */
 body.dark {
   /* Color of the background of the site */
-  --background-color: rgb(34, 34, 34);
+  --background-color: rgb(34 34 34);
+
   /* Color of the text by default */
-  --text-default-color: rgb(236, 236, 236);
+  --text-default-color: rgb(236 236 236);
+
   /* Color of divider lines */
-  --divider-color: rgb(64, 64, 64);
+  --divider-color: rgb(64 64 64);
 
   /* Color of the buttons content by default */
-  --button-content-default-color: rgb(212, 212, 212);
+  --button-content-default-color: rgb(212 212 212);
+
   /* Color of the buttons content on hover */
-  --button-content-hover-color: rgb(34, 34, 34);
+  --button-content-hover-color: rgb(34 34 34);
+
   /* Color of the buttons content when there are selected */
-  --button-content-selected-color: rgb(34, 34, 34);
+  --button-content-selected-color: rgb(34 34 34);
+
   /* Color of the buttons background when there are selected */
-  --button-background-selected-color: rgb(212, 212, 212);
+  --button-background-selected-color: rgb(212 212 212);
+
   /* Color of the buttons background when there are not selected */
-  --button-background-default-color: rgb(34, 34, 34);
+  --button-background-default-color: rgb(34 34 34);
+
   /* Color of the buttons background on hover */
-  --button-background-hover-color: rgb(212, 212, 212);
+  --button-background-hover-color: rgb(212 212 212);
+
   /* Color of shadows */
-  --shadows-color: rgba(212, 212, 212, 0.7);
+  --shadows-color: rgba(212 212 212 70%);
+
   /* Color of transparent background for some elements, like copy buttons in icon previews */
-  --transparent-element-background-color: rgba(34, 34, 34, 0.6);
+  --transparent-element-background-color: rgba(34 34 34 60%);
+
   /* Color of links */
-  --link-color: rgb(236, 236, 236);
+  --link-color: rgb(236 236 236);
+
   /* Color of on hover */
-  --link-color-hover: rgb(212, 212, 212);
+  --link-color-hover: rgb(212 212 212);
 }
 
 /* Light color scheme */
 body.light {
-  --background-color: rgb(252, 252, 252);
-  --text-default-color: rgb(0, 0, 0);
-  --divider-color: rgb(204, 204, 204);
-  --button-content-default-color: rgb(51, 51, 51);
-  --button-content-hover-color: rgb(252, 252, 252);
-  --button-content-selected-color: rgb(252, 252, 252);
-  --button-background-selected-color: rgb(51, 51, 51);
-  --button-background-hover-color: rgb(51, 51, 51);
-  --shadows-color: rgba(0, 0, 0, 0.5);
-  --transparent-element-background-color: rgba(255, 255, 255, 0.7);
-  --link-color: rgb(0, 0, 0);
-  --link-color-hover: rgb(51, 51, 51);
+  --background-color: rgb(252 252 252);
+  --text-default-color: rgb(0 0 0);
+  --divider-color: rgb(204 204 204);
+  --button-content-default-color: rgb(51 51 51);
+  --button-content-hover-color: rgb(252 252 252);
+  --button-content-selected-color: rgb(252 252 252);
+  --button-background-selected-color: rgb(51 51 51);
+  --button-background-hover-color: rgb(51 51 51);
+  --shadows-color: rgba(0 0 0 50%);
+  --transparent-element-background-color: rgba(255 255 255 70%);
+  --link-color: rgb(0 0 0);
+  --link-color-hover: rgb(51 51 51);
 }
 
 /* Global components */
@@ -84,13 +95,13 @@ body.light {
 
 /* Global resets */
 @layer base {
-  *:focus {
-    @apply outline-none;
-  }
-
   * {
     margin: 0;
     padding: 0;
+  }
+
+  *:focus {
+    @apply outline-none;
   }
 
   body {

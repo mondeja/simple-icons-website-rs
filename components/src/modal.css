@@ -14,8 +14,8 @@
 
   /* Modal header */
   .modal > :first-child {
-    @apply flex flex-row w-full px-5 py-3;
-    border-bottom: 1px solid var(--divider-color);
+    @apply flex flex-row w-full px-5 py-3
+      [border-bottom:_1px_solid_var(--divider-color)];
   }
 
   .modal > :first-child > h2 {

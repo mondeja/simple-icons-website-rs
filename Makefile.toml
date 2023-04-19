@@ -63,7 +63,11 @@ workspace = false
 
 [tasks.lint]
 description = "Check format of files and run linters"
-run_task = { name = ["lint-prettier", "lint-rust"], parallel = false }
+run_task = { name = [
+    "lint-prettier",
+    "lint-rust",
+    "lint-css"
+], parallel = false }
 workspace = false
 
 [tasks.tests]
@@ -162,6 +166,18 @@ run_task = { name = [
     # TODO (pending): https://github.com/bram209/leptosfmt/issues/12
 
 ], parallel = false }
+workspace = false
+
+[tasks.lint-css]
+description = "Lint CSS with stylelint"
+command = "node_modules/.bin/stylelint"
+args = [
+    "{components,app}/**/*.css",
+    "--ignore-path",
+    ".gitignore",
+    "--config",
+    "app/.stylelintrc.json"
+]
 workspace = false
 
 [tasks.format-prettier]

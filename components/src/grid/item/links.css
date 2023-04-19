@@ -3,16 +3,15 @@
  **/
 
 main > ul > li > .links {
-  @apply flex flex-col text-xs;
-  padding-left: var(--links-container-padding-left);
+  @apply flex flex-col text-xs pl-[var(--links-container-padding-left)];
 }
 
 main > ul > li > .links > a {
   @apply dark:before:invert hover:underline opacity-70 hover:opacity-100
-    bg-no-repeat bg-[size:0.9rem] bg-left whitespace-nowrap;
-  font-size: var(--links-font-size);
-  line-height: var(--links-line-height);
-  padding-left: var(--links-text-padding-left);
+    bg-no-repeat bg-[size:0.9rem] bg-left whitespace-nowrap
+    [font-size:var(--links-font-size)]
+    [line-height:var(--links-line-height)]
+    [padding-left:var(--links-text-padding-left)];
 }
 
 main > ul > li > .links > a.brand-guidelines {

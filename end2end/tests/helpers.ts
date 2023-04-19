@@ -223,7 +223,7 @@ export const useLocalStorage = (
  *
  * @returns Simple Icons data
  */
-export const getSimpleIconsData = (): Array<any> => {
+export const getSimpleIconsData = (): any[] => {
   const dataFilepath = path.resolve(
     SIMPLE_ICONS_DIRPATH,
     '_data/simple-icons.json',

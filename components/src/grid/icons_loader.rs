@@ -51,8 +51,8 @@ pub fn IconsLoader(cx: Scope) -> impl IntoView {
     };
 
     // TODO: Currently, we need to set a timeout to display the spinner
-    // I suspect that this is happening because the .update() call is
-    // blocking the main thread.
+    // I suspect that this is happening because the rendering of icon
+    // grid items is blocking the main thread
     // See https://stackoverflow.com/q/10180391/9167585
     view! { cx,
         <div class="icons-loader">

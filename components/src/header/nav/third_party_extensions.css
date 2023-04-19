@@ -19,6 +19,7 @@
 .third-party-extensions td:first-child svg {
   @apply w-4 xs:w-6 hidden xs:inline;
 }
+
 /* Extension name */
 .third-party-extensions td:first-child span {
   @apply ml-2 sm:ml-4;

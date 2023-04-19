@@ -12,6 +12,7 @@ main > ul > li > :last-child > :first-child {
     copy-button-white before:bg-[size:1.2rem]
     before:top-[2px];
 }
+
 main > ul > li > :last-child > :first-child.dark {
   @apply text-[var(--dark-contrast-color)] copy-button-black;
 }
@@ -23,8 +24,8 @@ main > ul > li > :last-child > :first-child.dark {
       hover:bg-custom-button-background-hover-color
       hover:fill-custom-button-content-hover-color
       focus:bg-custom-button-background-hover-color
-      focus:fill-custom-button-content-hover-color;
-    border-top: 1px solid var(--divider-color);
+      focus:fill-custom-button-content-hover-color
+      [border-top:_1px_solid_var(--divider-color)];
   }
 
   .grid-item-button svg {

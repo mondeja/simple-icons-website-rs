@@ -93,8 +93,6 @@ fn init_searcher() {
         })
         .collect::<Vec<(Vec<&str>, usize)>>();
 
-    // TODO: `js_sys::Array::new_with_length` generates an array with a first
-    // undefined value (investigate why)
     let icon_titles_ids_js_array = js_sys::Array::new();
     for (icon_titles, icon_order_alpha) in &icons_titles_ids {
         let titles_array = js_sys::Array::new();
@@ -107,6 +105,7 @@ fn init_searcher() {
         );
         icon_titles_ids_js_array.push(&icon_title_id_array);
     }
+
     build_searcher(&icon_titles_ids_js_array);
 }
 

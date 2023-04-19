@@ -17,8 +17,6 @@ pub fn IconGridItemPreview(
     /// Brand title
     title: &'static str,
 ) -> impl IntoView {
-    // TODO: Handle HTTP failures here
-
     view! { cx,
         <button
             title=move_gettext!(cx, "Copy {} SVG", title)

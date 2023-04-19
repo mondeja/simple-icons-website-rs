@@ -6,6 +6,21 @@
   @apply flex flex-row flex-grow;
 }
 
+/* Footer */
+.icon-details-modal > :last-child {
+  @apply flex flex-row justify-between px-4
+    text-sm font-semibold;
+}
+
+/* Footer buttons */
+.icon-details-modal > :last-child button,
+.icon-details-modal > :last-child a {
+  @apply px-2 py-1 rounded text-custom-button-content-default-color
+    bg-custom-button-background-default-color
+    hover:bg-custom-button-background-hover-color
+    hover:text-custom-button-content-hover-color;
+}
+
 /* Icon preview */
 .icon-details-modal > :first-child > img {
   @apply w-1/2 p-10 dark:invert;
@@ -26,19 +41,4 @@
 /*  Information links */
 .icon-details-modal > :first-child > :last-child > a {
   @apply pt-7 hover:opacity-70;
-}
-
-/* Footer */
-.icon-details-modal > :last-child {
-  @apply flex flex-row justify-between px-4
-    text-sm font-semibold;
-}
-
-/* Footer buttons */
-.icon-details-modal > :last-child button,
-.icon-details-modal > :last-child a {
-  @apply px-2 py-1 rounded text-custom-button-content-default-color
-    bg-custom-button-background-default-color
-    hover:bg-custom-button-background-hover-color
-    hover:text-custom-button-content-hover-color;
 }

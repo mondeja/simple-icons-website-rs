@@ -43,6 +43,9 @@
   "tailwindCSS.lint.cssConflict": "error",
   "tailwindCSS.lint.recommendedVariantOrder": "error",
 
+  // TODO: Stylelint VSCode extension just don't work
+  // https://github.com/stylelint/vscode-stylelint/issues/366
+
   // VSBrowser configuration
   "vs-browser.url": "http://localhost:8080",
 
