@@ -1,7 +1,7 @@
 use crate::copy::copy_setting_copied_transition_in_element;
+use crate::fetch::fetch_text_forcing_cache;
 use i18n::move_gettext;
 use leptos::{ev::MouseEvent, *};
-use reqwasm::http::Request;
 use wasm_bindgen::JsCast;
 use web_sys;
 
@@ -34,8 +34,9 @@ pub fn IconGridItemPreview(
                     .unwrap();
                 spawn_local(
                     (async move || {
-                        let svg = Request::get(&src).send().await.unwrap().text().await.unwrap();
-                        copy_setting_copied_transition_in_element(svg, target).await;
+                        if let Some(svg) = fetch_text_forcing_cache(&src).await {
+                            copy_setting_copied_transition_in_element(svg, target).await
+                        }
                     })(),
                 );
             }

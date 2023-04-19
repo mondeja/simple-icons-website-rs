@@ -1,11 +1,11 @@
 use crate::controls::download::{download_pdf, download_svg};
 use crate::copy::copy_setting_copied_transition_in_element;
+use crate::fetch::fetch_text_forcing_cache;
 use crate::grid::CurrentIconViewSignal;
 use crate::modal::*;
 use crate::Ids;
 use i18n::move_gettext;
 use leptos::{document, ev::MouseEvent, *};
-use reqwasm::http::Request;
 use simple_icons::StaticSimpleIcon;
 use wasm_bindgen::JsCast;
 use web_sys;
@@ -157,25 +157,21 @@ pub fn fill_icon_details_modal_with_icon(icon: &'static StaticSimpleIcon) {
         .unwrap();
 
     spawn_local((async move || {
-        let svg = Request::get(&format!("/icons/{}.svg", icon.slug))
-            .send()
-            .await
-            // TODO: handle http errors
-            .unwrap()
-            .text()
-            .await
-            .unwrap();
-        let colored_icon_svg =
-            svg.replace("<svg", &format!("<svg fill=\"%23{}\"", icon.hex));
-        download_colored_icon_container
-            .set_attribute(
-                "href",
-                &format!("data:image/svg+xml,{}", &colored_icon_svg),
-            )
-            .unwrap();
-        download_colored_icon_container
-            .set_attribute("download", &format!("{}-color.svg", icon.slug))
-            .unwrap();
+        if let Some(svg) =
+            fetch_text_forcing_cache(&format!("/icons/{}.svg", icon.slug)).await
+        {
+            let colored_icon_svg =
+                svg.replace("<svg", &format!("<svg fill=\"%23{}\"", icon.hex));
+            download_colored_icon_container
+                .set_attribute(
+                    "href",
+                    &format!("data:image/svg+xml,{}", &colored_icon_svg),
+                )
+                .unwrap();
+            download_colored_icon_container
+                .set_attribute("download", &format!("{}-color.svg", icon.slug))
+                .unwrap();
+        }
     })());
 }
 

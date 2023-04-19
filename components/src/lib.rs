@@ -9,6 +9,7 @@
 
 pub mod controls;
 pub mod copy;
+pub(crate) mod fetch;
 pub mod footer;
 pub mod grid;
 pub mod header;
