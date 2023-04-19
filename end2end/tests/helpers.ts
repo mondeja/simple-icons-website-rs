@@ -151,7 +151,7 @@ export const selectors = {
       scrollToHeader: '.scroll-to-header-button',
       /* Button to load more icons */
       iconsLoader: {
-        button: '.icons-loaded button',
+        button: '.icons-loader button',
       },
     };
   })(),
