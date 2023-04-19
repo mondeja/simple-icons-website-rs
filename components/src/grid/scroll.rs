@@ -1,4 +1,4 @@
-use crate::grid::icons_loader::IconsLoaderSignal;
+use crate::grid::{icons_loader::IconsLoaderSignal, IconsGridSignal};
 use i18n::move_gettext;
 use leptos::{ev::MouseEvent, *};
 
@@ -56,11 +56,14 @@ pub fn ScrollToHeaderButton(cx: Scope) -> impl IntoView {
 #[component]
 pub fn ScrollToFooterButton(cx: Scope) -> impl IntoView {
     let icons_loader = use_context::<IconsLoaderSignal>(cx).unwrap().0;
+    let icons_grid = use_context::<IconsGridSignal>(cx).unwrap().0;
 
     view! { cx,
         <ScrollButton
             class="scroll-to-footer-button"
-            hidden=move || !icons_loader().load
+            hidden=move || {
+                !icons_loader().load || (icons_grid().loaded_icons.len() >= icons_grid().icons.len())
+            }
             title=move_gettext!(cx, "Go to footer")
             on_click=move |_| {
                 icons_loader.update(|state| state.load = false);

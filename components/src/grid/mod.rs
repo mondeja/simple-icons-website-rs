@@ -6,16 +6,15 @@ mod scroll;
 use crate::controls::layout::{Layout, LayoutSignal};
 use crate::controls::order::{sort_icons, OrderMode, OrderModeVariant};
 use crate::controls::search::search_icons_and_returns_first_page;
-use crate::grid::icons_loader::*;
-use crate::grid::item::details::*;
-use crate::grid::scroll::*;
 use config::CONFIG;
-use item::*;
+use icons_loader::*;
+use item::{details::*, *};
 use leptos::{
     html::{Footer, HtmlElement},
     NodeRef, *,
 };
 use macros::{get_number_of_icons, simple_icons_array};
+use scroll::*;
 use simple_icons::StaticSimpleIcon;
 use wasm_bindgen::{closure::Closure, JsCast};
 use web_sys::{
@@ -48,12 +47,14 @@ impl IconsGrid {
     }
 
     pub fn load_next_icons(&mut self) {
-        for i in 0..CONFIG.icons_per_page as usize {
-            if self.loaded_icons.len() + i >= self.icons.len() {
+        for i in self.loaded_icons.len()..self.icons.len() {
+            if self.loaded_icons.len() == self.icons.len() {
                 break;
             }
-            self.loaded_icons
-                .push(self.icons[self.loaded_icons.len() + i]);
+            self.loaded_icons.push(self.icons[i]);
+            if self.loaded_icons.len() % CONFIG.icons_per_page as usize == 0 {
+                break;
+            }
         }
     }
 }
