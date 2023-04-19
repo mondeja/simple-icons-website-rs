@@ -153,8 +153,7 @@ pub fn set_order_mode(
             &OrderModeVariant::Alphabetic | &OrderModeVariant::Color => {
                 icons_grid_signal.update(|grid| {
                     sort_icons(order_mode, &mut grid.icons);
-                    grid.loaded_icons = vec![];
-                    grid.load_next_icons()
+                    sort_icons(order_mode, &mut grid.loaded_icons);
                 });
             }
             &OrderModeVariant::SearchMatch => {

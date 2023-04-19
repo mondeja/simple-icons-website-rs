@@ -152,7 +152,6 @@ pub fn search_icons_and_returns_first_page(
     Vec<&'static StaticSimpleIcon>,
 ) {
     let search_result = js_sys::Array::from(&search(search_value));
-
     let search_result_length = search_result.length();
 
     let new_displayed_icons = new_displayed_icons_from_search_result(

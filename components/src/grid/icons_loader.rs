@@ -59,19 +59,16 @@ pub fn IconsLoader(cx: Scope) -> impl IntoView {
             <button
                 class:hidden=hide_load_more_icons_button
                 on:click=move |_| {
-                    use std::time::Duration;
-                    icons_loader.update(|state| state.loading = true);
-                    _ = set_timeout_with_handle(
-                        move || {
-                            icons_grid_signal.update(|grid| grid.load_next_icons());
-                            icons_loader
-                                .update(|state| {
-                                    state.loading = false;
-                                    state.load = true;
-                                });
-                        },
-                        Duration::from_millis(100),
-                    );
+                    icons_loader
+                        .update(|state| {
+                            state.loading = true;
+                        });
+                    icons_grid_signal.update(|grid| grid.load_next_icons());
+                    icons_loader
+                        .update(|state| {
+                            state.loading = false;
+                            state.load = true;
+                        });
                 }
             >
                 {move_gettext!(cx, "Load more icons")}
