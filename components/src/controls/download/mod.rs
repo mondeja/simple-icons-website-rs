@@ -3,6 +3,7 @@ pub mod svg;
 
 use crate::controls::button::*;
 use crate::storage::LocalStorage;
+use crate::Url;
 use i18n::move_gettext;
 use leptos::{document, window, *};
 pub use pdf::download_pdf;
@@ -18,11 +19,12 @@ pub enum DownloadType {
     PDF,
 }
 
-impl From<&str> for DownloadType {
-    fn from(download_type: &str) -> Self {
+impl DownloadType {
+    fn from_str(download_type: &str) -> Option<Self> {
         match download_type {
-            "svg" => Self::SVG,
-            _ => Self::PDF,
+            "svg" => Some(Self::SVG),
+            "pdf" => Some(Self::PDF),
+            _ => None,
         }
     }
 }
@@ -39,32 +41,57 @@ impl fmt::Display for DownloadType {
 pub fn provide_download_type_context(cx: Scope) {
     provide_context(
         cx,
-        DownloadTypeSignal(create_rw_signal(
-            cx,
-            initial_download_type_from_localstorage(),
-        )),
+        DownloadTypeSignal(create_rw_signal(cx, initial_download_type(cx))),
     );
 }
 
 #[derive(Copy, Clone)]
 pub struct DownloadTypeSignal(pub RwSignal<DownloadType>);
 
-fn initial_download_type_from_localstorage() -> DownloadType {
-    let local_storage = window().local_storage().unwrap().unwrap();
-
-    let download_type = match local_storage
-        .get_item(LocalStorage::Keys::DownloadType.as_str())
-    {
-        Ok(Some(download_type)) => DownloadType::from(download_type.as_str()),
-        _ => DownloadType::default(),
-    };
-
-    download_type
+fn initial_download_type(cx: Scope) -> DownloadType {
+    match download_type_from_url(cx) {
+        Some(download_type) => download_type,
+        None => match download_type_from_localstorage() {
+            Some(download_type) => download_type,
+            None => DownloadType::default(),
+        },
+    }
 }
 
-fn set_download_type_on_localstorage(download_type: DownloadType) {
+fn download_type_from_url(cx: Scope) -> Option<DownloadType> {
+    match Url::params::get(cx, &Url::params::Names::DownloadType) {
+        Some(download_type) => {
+            match DownloadType::from_str(download_type.as_str()) {
+                Some(download_type) => {
+                    set_download_type_on_localstorage(&download_type);
+                    Some(download_type)
+                }
+                None => None,
+            }
+        }
+        None => None,
+    }
+}
+
+fn download_type_from_localstorage() -> Option<DownloadType> {
     let local_storage = window().local_storage().unwrap().unwrap();
-    local_storage
+
+    match local_storage.get_item(LocalStorage::Keys::DownloadType.as_str()) {
+        Ok(Some(download_type)) => {
+            match DownloadType::from_str(download_type.as_str()) {
+                Some(download_type) => Some(download_type),
+                None => None,
+            }
+        }
+        _ => None,
+    }
+}
+
+fn set_download_type_on_localstorage(download_type: &DownloadType) {
+    window()
+        .local_storage()
+        .unwrap()
+        .unwrap()
         .set_item(
             LocalStorage::Keys::DownloadType.as_str(),
             &download_type.to_string(),
@@ -88,7 +115,7 @@ pub fn DownloadFileTypeControl(cx: Scope) -> impl IntoView {
                         download_type
                             .update(move |state| {
                                 *state = DownloadType::SVG;
-                                set_download_type_on_localstorage(*state);
+                                set_download_type_on_localstorage(state);
                             });
                     }
                 />
@@ -100,7 +127,7 @@ pub fn DownloadFileTypeControl(cx: Scope) -> impl IntoView {
                         download_type
                             .update(|state| {
                                 *state = DownloadType::PDF;
-                                set_download_type_on_localstorage(*state);
+                                set_download_type_on_localstorage(state);
                             });
                     }
                 />

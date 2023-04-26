@@ -14,6 +14,7 @@ pub mod params {
     pub enum Names {
         Search,
         Language,
+        DownloadType,
     }
 
     impl Names {
@@ -21,6 +22,7 @@ pub mod params {
             match self {
                 Self::Search => "q",
                 Self::Language => "lang",
+                Self::DownloadType => "download-type",
             }
         }
     }

@@ -68,4 +68,11 @@ test.describe('download type', () => {
     await expect(filename).toMatch(/[^.]+\.pdf/);
     await saveDownload(download, `download-control-${filename}`);
   });
+
+  test('change to PDF through URL', async ({ page }) => {
+    await page.goto('/?download-type=pdf');
+    await expect(
+      await page.locator(`${DOWNLOAD_TYPE_CONTROL_SELECTOR} button`).nth(1),
+    ).toHaveClass('selected');
+  });
 });

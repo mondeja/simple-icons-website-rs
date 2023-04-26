@@ -41,31 +41,46 @@ test.describe('language selector', () => {
     });
   }
 
-  test('change language', async ({ page }) => {
-    await page.goto('/');
+  test.describe('change language', () => {
+    test('through language selector', async ({ page }) => {
+      await page.goto('/');
 
-    // English by default
-    await expect(page.locator(selectors.header.description)).toHaveText(
-      DESCRIPTIONS.en,
-    );
+      // English by default
+      await expect(page.locator(selectors.header.description)).toHaveText(
+        DESCRIPTIONS.en,
+      );
 
-    if (!screenWidthIsAtLeast('lg', page)) {
-      page.locator(selectors.header.nav.toggler).click();
-    }
+      if (!screenWidthIsAtLeast('lg', page)) {
+        page.locator(selectors.header.nav.toggler).click();
+      }
 
-    await page.locator(selectors.header.nav.buttons.languageSelector).click();
+      await page.locator(selectors.header.nav.buttons.languageSelector).click();
 
-    const languageSelector = page.locator(selectors.modals.languageSelector);
-    await expect(languageSelector).toBeInViewport();
+      const languageSelector = page.locator(selectors.modals.languageSelector);
+      await expect(languageSelector).toBeInViewport();
 
-    await languageSelector.getByText('Español').click();
-    await expect(page.locator(selectors.header.description)).toHaveText(
-      DESCRIPTIONS.es,
-    );
+      await languageSelector.getByText('Español').click();
+      await expect(page.locator(selectors.header.description)).toHaveText(
+        DESCRIPTIONS.es,
+      );
 
-    await expect(languageSelector).toBeHidden();
-    await expect(
-      await page.evaluate(() => localStorage.getItem('language')),
-    ).toBe('es');
+      await expect(languageSelector).toBeHidden();
+      await expect(
+        await page.evaluate(() => localStorage.getItem('language')),
+      ).toBe('es');
+    });
+
+    test('through URL', async ({ page }) => {
+      for (const lang of ['es', 'fr']) {
+        await page.goto(`/?lang=${lang}`);
+
+        await expect(page.locator(selectors.header.description)).toHaveText(
+          DESCRIPTIONS[lang],
+        );
+        await expect(
+          await page.evaluate(() => localStorage.getItem('language')),
+        ).toBe(lang);
+      }
+    });
   });
 });

@@ -10,8 +10,20 @@ pub fn provide_language_context(cx: Scope) -> LocaleSignal {
     locale_signal
 }
 
-pub fn initial_language() -> Language {
-    initial_language_from_url_localstorage_or_navigator_languages()
+fn initial_language() -> Language {
+    match initial_language_from_url() {
+        Some(lang) => {
+            set_language_in_localstorage(&lang);
+            lang
+        }
+        None => match initial_language_from_localstorage() {
+            Some(lang) => lang,
+            None => match initial_language_from_navigator_languages() {
+                Some(lang) => lang,
+                None => Language::default(),
+            },
+        },
+    }
 }
 
 fn initial_language_from_navigator_languages() -> Option<Language> {
@@ -29,28 +41,13 @@ fn initial_language_from_navigator_languages() -> Option<Language> {
     None
 }
 
-fn initial_language_from_url_localstorage_or_navigator_languages() -> Language {
-    let language: Option<Language> =
-        match Url::params::get_vanilla(&Url::params::Names::Language) {
-            Some(value) => match Language::from_str(value.as_str()) {
-                Some(lang) => {
-                    set_language_in_localstorage(lang);
-                    Some(lang)
-                }
-                None => None,
-            },
+fn initial_language_from_url() -> Option<Language> {
+    match Url::params::get_vanilla(&Url::params::Names::Language) {
+        Some(value) => match Language::from_str(value.as_str()) {
+            Some(lang) => Some(lang),
             None => None,
-        };
-
-    match language {
-        Some(lang) => lang,
-        None => match initial_language_from_localstorage() {
-            Some(lang) => lang,
-            None => match initial_language_from_navigator_languages() {
-                Some(lang) => lang,
-                None => Language::default(),
-            },
         },
+        None => None,
     }
 }
 
@@ -66,7 +63,7 @@ fn initial_language_from_localstorage() -> Option<Language> {
     }
 }
 
-pub fn set_language_in_localstorage(lang: Language) {
+pub fn set_language_in_localstorage(lang: &Language) {
     let local_storage = window().local_storage().unwrap().unwrap();
     local_storage.set_item("language", lang.code).unwrap();
 }
@@ -90,7 +87,7 @@ pub fn LanguagesList(cx: Scope) -> impl IntoView {
                                 on:click=move |_| {
                                     header_state.update(|state: &mut HeaderState| state.toggle_languages());
                                     locale_state.update(|state: &mut Language| *state = *lang);
-                                    set_language_in_localstorage(lang.clone());
+                                    set_language_in_localstorage(&lang);
                                 }
                             >
                                 {lang.name}
