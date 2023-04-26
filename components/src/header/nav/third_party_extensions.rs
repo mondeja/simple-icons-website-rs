@@ -3,9 +3,9 @@ use crate::modal::*;
 use i18n::move_gettext;
 use leptos::*;
 use macros::get_simple_icons_3rd_party_extensions;
-use simple_icons::SimpleIconsExtension;
+use simple_icons::ThirdPartyExtension;
 
-static THIRD_PARTY_EXTENSIONS: &[SimpleIconsExtension] =
+static THIRD_PARTY_EXTENSIONS: &[ThirdPartyExtension] =
     get_simple_icons_3rd_party_extensions!();
 
 /// Third party extensions table

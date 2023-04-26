@@ -1,3 +1,5 @@
 # simple-icons-website
 
-Currently a reimplementation of the Simple Icons website with Leptos.
+A reimplementation of the Simple Icons website with Leptos.
+
+https://wasm.simpleicons.org

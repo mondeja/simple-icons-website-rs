@@ -22,13 +22,22 @@
 }
 
 /* Icon preview */
-.icon-details-modal > :first-child > img {
-  @apply w-1/2 p-10 dark:invert;
+.icon-details-modal > :first-child > button {
+  @apply copy-button-color-scheme w-1/2 before:bg-[size:2.5rem];
+}
+
+.icon-details-modal > :first-child > button > img {
+  @apply p-10 dark:invert;
 }
 
 /* Icon information */
 .icon-details-modal > :first-child > :last-child {
   @apply flex flex-col w-1/2 space-y-2;
+}
+
+/*   Icon slug */
+.icon-details-modal > :first-child > :last-child > :nth-child(1) {
+  @apply copy-button-color-scheme before:bg-right;
 }
 
 /*   Copy hex color button */

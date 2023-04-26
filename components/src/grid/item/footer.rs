@@ -8,7 +8,7 @@ use crate::svg_defs::SVGDefs;
 use i18n::move_gettext;
 use leptos::ev::MouseEvent;
 use leptos::*;
-use simple_icons::StaticSimpleIcon;
+use simple_icons::SimpleIconForWebsite;
 use web_sys;
 
 /// Icon grid item footer
@@ -18,7 +18,7 @@ use web_sys;
 pub fn IconGridItemFooter(
     cx: Scope,
     /// The icon
-    icon: &'static StaticSimpleIcon,
+    icon: &'static SimpleIconForWebsite,
 ) -> impl IntoView {
     // Hex color formatted for CSS
     let css_hex = format!("#{}", icon.hex);
@@ -47,7 +47,7 @@ pub fn IconGridItemFooter(
             <button
                 title=move_gettext!(cx, "View {}", icon.title)
                 on:click=move |_| {
-                    fill_icon_details_modal_with_icon(icon);
+                    fill_icon_details_modal_with_icon(cx, icon);
                     current_icon_view.update(|state| *state = Some(icon));
                 }
             >

@@ -1,12 +1,13 @@
 use crate::controls::download::{download_pdf, download_svg};
-use crate::copy::copy_setting_copied_transition_in_element;
+use crate::copy::copy_inner_text_on_click;
 use crate::fetch::fetch_text_forcing_cache;
+use crate::grid::item::icon_preview::on_click_copy_image_children_src_content;
 use crate::grid::CurrentIconViewSignal;
 use crate::modal::*;
 use crate::Ids;
-use i18n::move_gettext;
-use leptos::{document, ev::MouseEvent, *};
-use simple_icons::StaticSimpleIcon;
+use i18n::{gettext, move_gettext};
+use leptos::{document, *};
+use simple_icons::SimpleIconForWebsite;
 use wasm_bindgen::JsCast;
 use web_sys;
 
@@ -22,7 +23,10 @@ fn get_slug_from_modal_container() -> String {
         .inner_text()
 }
 
-pub fn fill_icon_details_modal_with_icon(icon: &'static StaticSimpleIcon) {
+pub fn fill_icon_details_modal_with_icon(
+    cx: Scope,
+    icon: &'static SimpleIconForWebsite,
+) {
     let modal_body = document()
         .get_element_by_id(Ids::IconDetailsModal.as_str())
         .unwrap()
@@ -49,11 +53,17 @@ pub fn fill_icon_details_modal_with_icon(icon: &'static StaticSimpleIcon) {
         .dyn_into::<web_sys::HtmlElement>()
         .unwrap();
     modal_slug.set_inner_text(icon.slug);
+    modal_slug
+        .set_attribute(
+            "title",
+            &gettext!(cx, "Copy {} slug ({})", icon.title, icon.slug),
+        )
+        .unwrap();
 
     // Set the copy hex color button
     let modal_hex_color_button = modal_body
-        .get_elements_by_tag_name("button")
-        .item(0)
+        .query_selector(":first-child > :last-child > button")
+        .unwrap()
         .unwrap()
         .dyn_into::<web_sys::HtmlButtonElement>()
         .unwrap();
@@ -79,9 +89,18 @@ pub fn fill_icon_details_modal_with_icon(icon: &'static StaticSimpleIcon) {
         })
         .unwrap();
 
-    // Set preview image container src
-    modal_body
-        .get_elements_by_tag_name("img")
+    // Set preview image container src and button title
+    let modal_preview_button = modal_body
+        .query_selector(":first-child > :first-child > button")
+        .unwrap()
+        .unwrap()
+        .dyn_into::<web_sys::HtmlButtonElement>()
+        .unwrap();
+    modal_preview_button
+        .set_attribute("title", &gettext!(cx, "Copy {} SVG", icon.title))
+        .unwrap();
+    modal_preview_button
+        .children()
         .item(0)
         .unwrap()
         .dyn_into::<web_sys::HtmlImageElement>()
@@ -178,7 +197,11 @@ pub fn fill_icon_details_modal_with_icon(icon: &'static StaticSimpleIcon) {
 /// Details modal icon preview
 #[component]
 fn IconDetailsModalPreview(cx: Scope) -> impl IntoView {
-    view! { cx, <img/> }
+    view! { cx,
+        <button on:click=on_click_copy_image_children_src_content>
+            <img/>
+        </button>
+    }
 }
 
 /// Details modal icon information
@@ -186,13 +209,9 @@ fn IconDetailsModalPreview(cx: Scope) -> impl IntoView {
 fn IconDetailsModalInformation(cx: Scope) -> impl IntoView {
     view! { cx,
         <div>
-            <h3></h3>
+            <h3 on:click=copy_inner_text_on_click></h3>
             <button
-                on:click=move |ev: MouseEvent| {
-                    let target = event_target::<web_sys::HtmlElement>(&ev);
-                    let value = target.text_content().unwrap();
-                    spawn_local(copy_setting_copied_transition_in_element(value, target));
-                }
+                on:click=copy_inner_text_on_click
                 title=move_gettext!(cx, "Copy hex color")
             ></button>
             <a target="_blank">{move_gettext!(cx, "Brand guidelines")}</a>
@@ -232,6 +251,7 @@ pub fn IconDetailsModal(cx: Scope) -> impl IntoView {
     view! { cx,
         <Modal
             title=move || "".to_string()
+            title_is_copyable=true
             is_open=move || current_icon_view().is_some()
             on_close=move |_| {
                 current_icon_view.update(|state| *state = None);

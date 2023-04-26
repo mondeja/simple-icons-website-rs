@@ -99,10 +99,11 @@ pub fn ControlsToggler(cx: Scope) -> impl IntoView {
             >
                 <svg role="button" viewBox="0 0 24 24">
                     {move || {
-                        if controls_state().buttons_group_open {
-                            view! { cx, <use_ href=format!("#{}", SVGDefs::ViewPath.id())></use_> }
-                        } else {
-                            view! { cx, <use_ href=format!("#{}", SVGDefs::ControlsPath.id())></use_> }
+                        view! { cx,
+                            <use_ href=format!(
+                                "#{}", if controls_state().buttons_group_open { SVGDefs::ViewPath.id() } else {
+                                SVGDefs::ControlsPath.id() }
+                            )></use_>
                         }
                     }}
                 </svg>

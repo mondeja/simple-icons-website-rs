@@ -11,7 +11,7 @@ pub use svg_path::get_simple_icon_svg_path_by_slug;
 use unicode_normalization::UnicodeNormalization;
 
 /// Third party extensions of Simple Icons
-pub struct SimpleIconsExtension {
+pub struct ThirdPartyExtension {
     pub name: &'static str,
     pub url: &'static str,
     pub author_name: &'static str,
@@ -19,8 +19,9 @@ pub struct SimpleIconsExtension {
     pub icon_slug: &'static str,
 }
 
+/// Struct for a Simple Icon with data to be used in the website
 #[derive(Clone, Copy)]
-pub struct StaticSimpleIcon {
+pub struct SimpleIconForWebsite {
     pub slug: &'static str,
     pub title: &'static str,
     pub hex: &'static str,
@@ -37,6 +38,7 @@ pub struct StaticSimpleIcon {
     pub removal_at_version: Option<&'static str>,
 }
 
+/// Struct for a Simple Icon
 #[derive(Clone)]
 pub struct SimpleIcon {
     pub slug: String,

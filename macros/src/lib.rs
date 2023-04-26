@@ -96,7 +96,7 @@ pub fn get_simple_icons_3rd_party_extensions(_: TokenStream) -> TokenStream {
         // so the extension struct is provided the `simple_icons` crate
         extensions_array_code.push_str(&format!(
             concat!(
-                "::simple_icons::SimpleIconsExtension{{",
+                "::simple_icons::ThirdPartyExtension{{",
                 "name: \"{}\",",
                 "url: \"{}\",",
                 "author_name: \"{}\",",
@@ -142,7 +142,7 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
 
         simple_icons_array_code.push_str(&format!(
             concat!(
-                "::simple_icons::StaticSimpleIcon{{",
+                "::simple_icons::SimpleIconForWebsite{{",
                 "slug: \"{}\",",
                 "title: \"{}\",",
                 "hex: \"{}\",",

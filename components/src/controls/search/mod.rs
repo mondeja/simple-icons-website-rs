@@ -12,7 +12,7 @@ use fuzzy::{build_searcher, search};
 use i18n::move_gettext;
 use js_sys::JsString;
 use leptos::{document, html::Input, window, *};
-use simple_icons::StaticSimpleIcon;
+use simple_icons::SimpleIconForWebsite;
 use web_sys;
 
 #[derive(Copy, Clone)]
@@ -113,8 +113,9 @@ fn init_searcher() {
 fn new_displayed_icons_from_search_result(
     search_result: &js_sys::Array,
     search_result_length: &u32,
-) -> Vec<&'static StaticSimpleIcon> {
-    let mut new_displayed_icons: Vec<&'static StaticSimpleIcon> = Vec::new();
+) -> Vec<&'static SimpleIconForWebsite> {
+    let mut new_displayed_icons: Vec<&'static SimpleIconForWebsite> =
+        Vec::new();
     for i in 0..*search_result_length {
         let result_icon_array = js_sys::Array::from(&search_result.get(i));
         let icon_order_alpha =
@@ -132,7 +133,7 @@ fn new_displayed_icons_from_search_result(
 fn extend_new_icons_with_search_result(
     search_result: &js_sys::Array,
     search_result_length: &u32,
-    new_icons: &mut Vec<&'static StaticSimpleIcon>,
+    new_icons: &mut Vec<&'static SimpleIconForWebsite>,
 ) {
     if *search_result_length > CONFIG.icons_per_page {
         for i in CONFIG.icons_per_page..*search_result_length {
@@ -147,8 +148,8 @@ fn extend_new_icons_with_search_result(
 pub fn search_icons_and_returns_first_page(
     search_value: &str,
 ) -> (
-    Vec<&'static StaticSimpleIcon>,
-    Vec<&'static StaticSimpleIcon>,
+    Vec<&'static SimpleIconForWebsite>,
+    Vec<&'static SimpleIconForWebsite>,
 ) {
     let search_result = js_sys::Array::from(&search(search_value));
     let search_result_length = search_result.length();

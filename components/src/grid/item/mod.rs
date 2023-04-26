@@ -1,7 +1,7 @@
 mod deprecated;
 pub mod details;
 mod footer;
-mod icon_preview;
+pub(crate) mod icon_preview;
 mod links;
 mod title;
 
@@ -9,7 +9,7 @@ use deprecated::*;
 use footer::*;
 use icon_preview::*;
 use links::*;
-use simple_icons::StaticSimpleIcon;
+use simple_icons::SimpleIconForWebsite;
 use title::*;
 
 use leptos::*;
@@ -21,7 +21,7 @@ use leptos::*;
 pub fn IconGridItem(
     cx: Scope,
     /// Icon
-    icon: &'static StaticSimpleIcon,
+    icon: &'static SimpleIconForWebsite,
 ) -> impl IntoView {
     view! { cx,
         <li>

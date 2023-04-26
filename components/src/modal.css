@@ -22,6 +22,10 @@
     @apply flex-grow text-base xs:text-lg;
   }
 
+  .modal > :first-child > h2.copyable {
+    @apply copy-button-color-scheme before:[background-position-x:80%];
+  }
+
   .modal > :first-child > button {
     @apply w-[1.3rem] h-[1.3rem] self-center 
       fill-custom-text-default-color

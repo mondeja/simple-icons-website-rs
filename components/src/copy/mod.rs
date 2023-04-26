@@ -1,5 +1,5 @@
 use crate::Ids;
-use leptos::{document, set_timeout_with_handle, window, *};
+use leptos::{document, ev::MouseEvent, set_timeout_with_handle, window, *};
 use log;
 use std::time::Duration;
 use wasm_bindgen::{JsCast, JsValue};
@@ -73,6 +73,13 @@ pub async fn copy_setting_copied_transition_in_element(
             }
         }
     }
+}
+
+/// Copy the inner text of the event target to the clipboard
+pub(crate) fn copy_inner_text_on_click(ev: MouseEvent) {
+    let target = event_target::<web_sys::HtmlElement>(&ev);
+    let value = target.text_content().unwrap();
+    spawn_local(copy_setting_copied_transition_in_element(value, target));
 }
 
 #[component]

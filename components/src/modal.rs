@@ -1,3 +1,4 @@
+use crate::copy::copy_inner_text_on_click;
 use crate::svg_defs::SVGDefs;
 use i18n::move_gettext;
 use leptos::{ev::MouseEvent, *};
@@ -11,6 +12,9 @@ fn ModalHeader<T, C>(
     cx: Scope,
     /// Title of the modal
     title: T,
+    /// Indicates whether the title is copyable
+    #[prop(optional)]
+    title_is_copyable: bool,
     /// Function executed when the close button is clicked
     /// or the user clicks outside the modal
     on_close: C,
@@ -21,7 +25,16 @@ where
 {
     view! { cx,
         <div>
-            <h2>{title}</h2>
+            <h2
+                class:copyable=move || title_is_copyable
+                on:click=move |ev: MouseEvent| {
+                    if title_is_copyable {
+                        copy_inner_text_on_click(ev);
+                    }
+                }
+            >
+                {title}
+            </h2>
             <button type="button" title=move_gettext!(cx, "Close") on:click=on_close>
                 <svg role="img" viewBox="0 0 24 24">
                     <use_ href=format!("#{}", SVGDefs::CrossPath.id())></use_>
@@ -73,6 +86,9 @@ pub fn Modal<T, O, C>(
     children: Children,
     /// Title of the modal
     title: T,
+    /// Indicates whether the title is copyable
+    #[prop(optional)]
+    title_is_copyable: bool,
     /// Indicates whether the modal is open or not
     is_open: O,
     /// Function executed when the close button is clicked
@@ -87,7 +103,7 @@ where
     view! { cx,
         <ModalShadow is_open=is_open on_close=on_close>
             <div class="modal">
-                <ModalHeader title=title on_close=on_close/>
+                <ModalHeader title=title title_is_copyable=title_is_copyable on_close=on_close/>
                 <ModalBody>{children(cx)}</ModalBody>
             </div>
         </ModalShadow>
