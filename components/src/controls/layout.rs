@@ -1,5 +1,6 @@
 use crate::controls::button::*;
 use crate::storage::LocalStorage;
+use crate::Url;
 use i18n::move_gettext;
 use leptos::{window, *};
 use std::fmt;
@@ -11,11 +12,12 @@ pub enum Layout {
     Compact,
 }
 
-impl From<&str> for Layout {
-    fn from(layout: &str) -> Self {
+impl Layout {
+    fn from_str(layout: &str) -> Option<Self> {
         match layout {
-            "comfortable" => Self::Comfortable,
-            _ => Self::Compact,
+            "comfortable" => Some(Self::Comfortable),
+            "compact" => Some(Self::Compact),
+            _ => None,
         }
     }
 }
@@ -33,24 +35,46 @@ impl fmt::Display for Layout {
 pub struct LayoutSignal(pub RwSignal<Layout>);
 
 pub fn provide_layout_context(cx: Scope) {
-    provide_context(
-        cx,
-        LayoutSignal(create_rw_signal(cx, initial_layout_from_localstorage())),
-    );
+    provide_context(cx, LayoutSignal(create_rw_signal(cx, initial_layout())));
 }
 
-fn initial_layout_from_localstorage() -> Layout {
-    let local_storage = window().local_storage().unwrap().unwrap();
+fn initial_layout() -> Layout {
+    match layout_from_url() {
+        Some(layout) => {
+            set_layout_on_localstorage(&layout);
+            layout
+        }
+        None => match layout_from_localstorage() {
+            Some(layout) => layout,
+            None => Layout::default(),
+        },
+    }
+}
 
-    match local_storage.get_item(LocalStorage::Keys::Layout.as_str()) {
-        Ok(Some(layout)) => Layout::from(layout.as_str()),
-        _ => Layout::default(),
+fn layout_from_url() -> Option<Layout> {
+    match Url::params::get(&Url::params::Names::Layout) {
+        Some(layout) => Layout::from_str(layout.as_str()),
+        None => None,
+    }
+}
+
+fn layout_from_localstorage() -> Option<Layout> {
+    match window()
+        .local_storage()
+        .unwrap()
+        .unwrap()
+        .get_item(LocalStorage::Keys::Layout.as_str())
+    {
+        Ok(Some(layout)) => Layout::from_str(layout.as_str()),
+        _ => None,
     }
 }
 
 fn set_layout_on_localstorage(layout: &Layout) {
-    let local_storage = window().local_storage().unwrap().unwrap();
-    local_storage
+    window()
+        .local_storage()
+        .unwrap()
+        .unwrap()
         .set_item(LocalStorage::Keys::Layout.as_str(), &layout.to_string())
         .unwrap();
 }

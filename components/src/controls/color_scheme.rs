@@ -1,5 +1,6 @@
 use crate::controls::button::*;
 use crate::storage::LocalStorage;
+use crate::Url;
 use i18n::move_gettext;
 use leptos::{window, *};
 use std::fmt;
@@ -17,12 +18,13 @@ impl Default for ColorScheme {
     }
 }
 
-impl From<&str> for ColorScheme {
-    fn from(color_scheme: &str) -> Self {
-        match color_scheme {
-            "light" => Self::Light,
-            "dark" => Self::Dark,
-            _ => Self::System,
+impl ColorScheme {
+    fn from_str(value: &str) -> Option<Self> {
+        match value {
+            "light" => Some(Self::Light),
+            "dark" => Some(Self::Dark),
+            "system" => Some(Self::System),
+            _ => None,
         }
     }
 }
@@ -41,20 +43,41 @@ impl fmt::Display for ColorScheme {
 pub struct ColorSchemeSignal(pub RwSignal<ColorScheme>);
 
 pub fn provide_color_scheme_context(cx: Scope) -> ColorSchemeSignal {
-    let color_scheme_signal = ColorSchemeSignal(create_rw_signal(
-        cx,
-        initial_color_scheme_from_localstorage(),
-    ));
+    let color_scheme_signal =
+        ColorSchemeSignal(create_rw_signal(cx, initial_color_scheme()));
     provide_context(cx, color_scheme_signal);
     color_scheme_signal
 }
 
-fn initial_color_scheme_from_localstorage() -> ColorScheme {
-    let local_storage = window().local_storage().unwrap().unwrap();
+fn initial_color_scheme() -> ColorScheme {
+    match color_scheme_from_url() {
+        Some(color_scheme) => {
+            set_color_scheme_on_localstorage(&color_scheme);
+            color_scheme
+        }
+        None => match color_scheme_from_localstorage() {
+            Some(color_scheme) => color_scheme,
+            None => ColorScheme::default(),
+        },
+    }
+}
 
-    match local_storage.get_item(LocalStorage::Keys::ColorScheme.as_str()) {
-        Ok(Some(color_scheme)) => ColorScheme::from(color_scheme.as_str()),
-        _ => ColorScheme::default(),
+fn color_scheme_from_url() -> Option<ColorScheme> {
+    match Url::params::get(&Url::params::Names::ColorScheme) {
+        Some(color_scheme) => ColorScheme::from_str(color_scheme.as_str()),
+        None => None,
+    }
+}
+
+fn color_scheme_from_localstorage() -> Option<ColorScheme> {
+    match window()
+        .local_storage()
+        .unwrap()
+        .unwrap()
+        .get_item(LocalStorage::Keys::ColorScheme.as_str())
+    {
+        Ok(Some(color_scheme)) => ColorScheme::from_str(color_scheme.as_str()),
+        _ => None,
     }
 }
 

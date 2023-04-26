@@ -69,10 +69,21 @@ test.describe('download type', () => {
     await saveDownload(download, `download-control-${filename}`);
   });
 
-  test('change to PDF through URL', async ({ page }) => {
-    await page.goto('/?download-type=pdf');
-    await expect(
-      await page.locator(`${DOWNLOAD_TYPE_CONTROL_SELECTOR} button`).nth(1),
-    ).toHaveClass('selected');
-  });
+  const downloadTypeButtons = ['svg', 'pdf'];
+  for (const downloadTypeButtonIndex in downloadTypeButtons) {
+    const downloadType = downloadTypeButtons[downloadTypeButtonIndex];
+    test(`change to ${downloadType.toUpperCase()} through URL`, async ({
+      page,
+    }) => {
+      await page.goto(`/?download-type=${downloadType}`);
+      await expect(
+        await page
+          .locator(`${DOWNLOAD_TYPE_CONTROL_SELECTOR} button`)
+          .nth(parseInt(downloadTypeButtonIndex)),
+      ).toHaveClass('selected');
+      await expect(
+        await page.evaluate(() => localStorage.getItem('download-type')),
+      ).toBe(downloadType);
+    });
+  }
 });

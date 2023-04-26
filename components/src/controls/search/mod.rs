@@ -29,7 +29,7 @@ pub fn provide_search_context(cx: Scope) -> String {
 }
 
 fn initial_search_value(cx: Scope) -> String {
-    let search_value = match Url::params::get(cx, &Url::params::Names::Search) {
+    let search_value = match Url::params::get(&Url::params::Names::Search) {
         Some(value) => {
             set_search_value_on_localstorage(value.as_str());
             value.to_string()

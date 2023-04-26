@@ -42,7 +42,7 @@ fn initial_language_from_navigator_languages() -> Option<Language> {
 }
 
 fn initial_language_from_url() -> Option<Language> {
-    match Url::params::get_vanilla(&Url::params::Names::Language) {
+    match Url::params::get(&Url::params::Names::Language) {
         Some(value) => match Language::from_str(value.as_str()) {
             Some(lang) => Some(lang),
             None => None,

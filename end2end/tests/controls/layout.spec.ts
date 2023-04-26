@@ -1,5 +1,9 @@
-import { test, expect, type Page } from '@playwright/test';
-import { screenWidthIsAtLeast, selectors } from '../helpers.ts';
+import { test, expect } from '@playwright/test';
+import {
+  screenWidthIsAtLeast,
+  selectors,
+  useLocalStorage,
+} from '../helpers.ts';
 
 const LAYOUT_CONTROL_SELECTOR =
   'menu > .controls-group:not(:first-child) > .control:last-child';
@@ -14,8 +18,24 @@ test.describe('layout', () => {
     await expect(layoutButtons.nth(0)).toHaveClass('selected');
   });
 
+  const layoutButtons = ['comfortable', 'compact'];
+  for (const layoutButtonIndex in layoutButtons) {
+    const layout = layoutButtons[layoutButtonIndex];
+    test(`change to ${layout} through URL`, async ({ page }) => {
+      await page.goto(`/?layout=${layout}`);
+      await expect(
+        await page
+          .locator(`${LAYOUT_CONTROL_SELECTOR} button`)
+          .nth(parseInt(layoutButtonIndex)),
+      ).toHaveClass('selected');
+      await expect(
+        await page.evaluate(() => localStorage.getItem('layout')),
+      ).toBe(layout);
+    });
+  }
+
   test.describe('comfortable -> compact', () => {
-    test('switch', async ({ page }) => {
+    test('change through button', async ({ page }) => {
       await page.goto('/');
       const gridItem = await page.locator(selectors.grid.item.any.container);
       const { height: prevHeight, width: prevWidth } =
@@ -45,24 +65,10 @@ test.describe('layout', () => {
   });
 
   test.describe('compact -> comfortable', () => {
-    test.describe.configure({ mode: 'serial' });
+    useLocalStorage(test, { layout: 'compact' });
 
-    let page: Page;
-
-    test.beforeAll(async ({ browser }) => {
-      page = await browser.newPage();
+    test('change through button', async ({ page }) => {
       await page.goto('/');
-      await page.evaluate(() => {
-        localStorage.setItem('layout', 'compact');
-      });
-    });
-
-    test.afterAll(async () => {
-      await page.close();
-    });
-
-    test('switch', async () => {
-      page.reload();
 
       const gridItem = await page.locator(selectors.grid.item.any.container);
       const { height: prevHeight, width: prevWidth } =

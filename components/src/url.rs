@@ -15,6 +15,8 @@ pub mod params {
         Search,
         Language,
         DownloadType,
+        Layout,
+        ColorScheme,
     }
 
     impl Names {
@@ -23,6 +25,8 @@ pub mod params {
                 Self::Search => "q",
                 Self::Language => "lang",
                 Self::DownloadType => "download-type",
+                Self::Layout => "layout",
+                Self::ColorScheme => "color-scheme",
             }
         }
     }
@@ -54,26 +58,9 @@ pub mod params {
             .ok();
     }
 
-    /// Get a URL param value using the Leptos router
+    /// Get a URL param value from the URL of the browser
     #[inline(always)]
-    pub fn get(cx: Scope, k: &Names) -> Option<String> {
-        match (use_location(cx).query)().get(k.as_str()) {
-            Some(value) => match value.is_empty() {
-                true => None,
-                false => Some(value.to_string()),
-            },
-            None => None,
-        }
-    }
-
-    /// Get a URL param value directly from URL of the browser
-    ///
-    /// This method has the advantadge that it doesn't needs a Leptos,
-    /// so it can be used before the initialization of it. Useful
-    /// to get information that must be setted before the initialization
-    /// of the body of the page.
-    #[inline(always)]
-    pub fn get_vanilla(k: &Names) -> Option<String> {
+    pub fn get(k: &Names) -> Option<String> {
         let query = window().location().search().unwrap();
         if !query.starts_with("?") {
             return None;

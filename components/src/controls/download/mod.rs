@@ -41,16 +41,19 @@ impl fmt::Display for DownloadType {
 pub fn provide_download_type_context(cx: Scope) {
     provide_context(
         cx,
-        DownloadTypeSignal(create_rw_signal(cx, initial_download_type(cx))),
+        DownloadTypeSignal(create_rw_signal(cx, initial_download_type())),
     );
 }
 
 #[derive(Copy, Clone)]
 pub struct DownloadTypeSignal(pub RwSignal<DownloadType>);
 
-fn initial_download_type(cx: Scope) -> DownloadType {
-    match download_type_from_url(cx) {
-        Some(download_type) => download_type,
+fn initial_download_type() -> DownloadType {
+    match download_type_from_url() {
+        Some(download_type) => {
+            set_download_type_on_localstorage(&download_type);
+            download_type
+        }
         None => match download_type_from_localstorage() {
             Some(download_type) => download_type,
             None => DownloadType::default(),
@@ -58,30 +61,22 @@ fn initial_download_type(cx: Scope) -> DownloadType {
     }
 }
 
-fn download_type_from_url(cx: Scope) -> Option<DownloadType> {
-    match Url::params::get(cx, &Url::params::Names::DownloadType) {
-        Some(download_type) => {
-            match DownloadType::from_str(download_type.as_str()) {
-                Some(download_type) => {
-                    set_download_type_on_localstorage(&download_type);
-                    Some(download_type)
-                }
-                None => None,
-            }
-        }
+fn download_type_from_url() -> Option<DownloadType> {
+    match Url::params::get(&Url::params::Names::DownloadType) {
+        Some(download_type) => DownloadType::from_str(download_type.as_str()),
         None => None,
     }
 }
 
 fn download_type_from_localstorage() -> Option<DownloadType> {
-    let local_storage = window().local_storage().unwrap().unwrap();
-
-    match local_storage.get_item(LocalStorage::Keys::DownloadType.as_str()) {
+    match window()
+        .local_storage()
+        .unwrap()
+        .unwrap()
+        .get_item(LocalStorage::Keys::DownloadType.as_str())
+    {
         Ok(Some(download_type)) => {
-            match DownloadType::from_str(download_type.as_str()) {
-                Some(download_type) => Some(download_type),
-                None => None,
-            }
+            DownloadType::from_str(download_type.as_str())
         }
         _ => None,
     }
