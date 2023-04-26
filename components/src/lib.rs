@@ -1,5 +1,4 @@
 #![feature(trait_alias)]
-#![feature(const_option_ext)]
 #![feature(stmt_expr_attributes)]
 #![feature(async_closure)]
 

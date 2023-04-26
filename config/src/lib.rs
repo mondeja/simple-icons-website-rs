@@ -11,7 +11,7 @@ pub struct Config {
 /// Development config
 #[cfg(debug_assertions)]
 pub const CONFIG: Config = Config {
-    max_icons: None,
+    max_icons: Some(500),
     // WARNING: If you put a great number here, the search functionality
     // will be very slow
     icons_per_page: 30,

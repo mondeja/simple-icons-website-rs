@@ -21,8 +21,8 @@ use web_sys::{
     IntersectionObserver, IntersectionObserverEntry, IntersectionObserverInit,
 };
 
-pub const ICONS: [SimpleIconForWebsite;
-    CONFIG.max_icons.unwrap_or(get_number_of_icons!())] = simple_icons_array!();
+pub const ICONS: [SimpleIconForWebsite; get_number_of_icons!()] =
+    simple_icons_array!();
 
 /// Icons grid
 #[derive(Clone)]

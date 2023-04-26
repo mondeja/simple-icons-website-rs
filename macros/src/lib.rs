@@ -18,13 +18,17 @@ use syn::{parse_macro_input, LitStr};
 /// Get number of icons available in the simple-icons npm package
 #[proc_macro]
 pub fn get_number_of_icons(_: TokenStream) -> TokenStream {
-    Path::new("node_modules/simple-icons/icons")
-        .read_dir()
-        .unwrap()
-        .count()
-        .to_string()
-        .parse()
-        .unwrap()
+    if let Some(max_icons) = CONFIG.max_icons {
+        max_icons.to_string().parse().unwrap()
+    } else {
+        Path::new("node_modules/simple-icons/icons")
+            .read_dir()
+            .unwrap()
+            .count()
+            .to_string()
+            .parse()
+            .unwrap()
+    }
 }
 
 /// Get a string with the SVG path of a simple icon
