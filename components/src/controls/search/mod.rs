@@ -84,29 +84,30 @@ pub fn fire_on_search_event() {
 }
 
 fn init_searcher() {
-    let icons_titles_ids = ICONS
+    let icons_candidates_ids = ICONS
         .iter()
         .map(|icon| {
-            let mut titles: Vec<&str> = vec![icon.title];
-            titles.extend(icon.plain_aliases);
-            (titles, icon.order_alpha)
+            let mut candidates: Vec<&str> = vec![icon.title, icon.slug];
+            candidates.extend(icon.plain_aliases);
+            (candidates, icon.order_alpha)
         })
         .collect::<Vec<(Vec<&str>, usize)>>();
 
-    let icon_titles_ids_js_array = js_sys::Array::new();
-    for (icon_titles, icon_order_alpha) in &icons_titles_ids {
-        let titles_array = js_sys::Array::new();
-        for icon_title in icon_titles {
-            titles_array.push(&JsString::from(*icon_title).into());
+    let icon_candidates_ids_js_array = js_sys::Array::new();
+    for (icon_candidates, icon_order_alpha) in &icons_candidates_ids {
+        let candidates_array = js_sys::Array::new();
+        for icon_title in icon_candidates {
+            candidates_array.push(&JsString::from(*icon_title).into());
         }
+
         let icon_title_id_array = js_sys::Array::of2(
-            &titles_array,
+            &candidates_array,
             &js_sys::Number::from(*icon_order_alpha as u32).into(),
         );
-        icon_titles_ids_js_array.push(&icon_title_id_array);
+        icon_candidates_ids_js_array.push(&icon_title_id_array);
     }
 
-    build_searcher(&icon_titles_ids_js_array);
+    build_searcher(&icon_candidates_ids_js_array);
 }
 
 #[inline(always)]

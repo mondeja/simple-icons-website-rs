@@ -12,6 +12,8 @@ const ORDER_MODE_CONTROL_SELECTOR = selectors.controls.buttons.getByNthChild(1);
 test.describe('search', () => {
   const searchValues = [
     ['simple icons', 'Simple Icons'],
+    // slug
+    ['dotnet', '.NET'],
     // aka alias
     ['drawio', 'diagrams.net'],
     // dup alias
