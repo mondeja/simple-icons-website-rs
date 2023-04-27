@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-27 19:57+0000\n"
+"POT-Creation-Date: 2023-04-27 20:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,31 +65,31 @@ msgstr ""
 msgid "Compact"
 msgstr ""
 
-#: components/src/controls/order.rs:177
+#: components/src/controls/order.rs:168
 msgid "Sort alphabetically"
 msgstr ""
 
-#: components/src/controls/order.rs:190
+#: components/src/controls/order.rs:181
 msgid "Sort by color"
 msgstr ""
 
-#: components/src/controls/order.rs:207
+#: components/src/controls/order.rs:198
 msgid "Sort by search match score"
 msgstr ""
 
-#: components/src/controls/order.rs:220
+#: components/src/controls/order.rs:211
 msgid "Order"
 msgstr ""
 
-#: components/src/controls/search/mod.rs:258
+#: components/src/controls/search/mod.rs:256
 msgid "Search"
 msgstr ""
 
-#: components/src/controls/search/mod.rs:264
+#: components/src/controls/search/mod.rs:262
 msgid "Search by brand..."
 msgstr ""
 
-#: components/src/controls/search/mod.rs:270
+#: components/src/controls/search/mod.rs:268
 msgid "Clear search"
 msgstr ""
 
@@ -209,11 +209,11 @@ msgstr ""
 msgid "Go to footer"
 msgstr ""
 
-#: components/src/header/nav/language_selector.rs:110
+#: components/src/header/nav/language_selector.rs:104
 msgid "Change language"
 msgstr ""
 
-#: components/src/header/nav/language_selector.rs:135
+#: components/src/header/nav/language_selector.rs:129
 msgid "Select a language"
 msgstr ""
 
