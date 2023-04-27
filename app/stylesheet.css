@@ -1,8 +1,6 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-
-/* Custom components */
 @import './../components/src/mod.css';
 
 :root {
@@ -45,7 +43,7 @@ body.dark {
   /* Color of shadows */
   --shadows-color: rgb(212 212 212 / 70%);
 
-  /* Color of transparent background for some elements, like copy buttons in icon previews */
+  /* Color of transparent background non grid item elements, like copy buttons in icon detail modals */
   --transparent-element-background-color: rgb(34 34 34 / 60%);
 
   /* Color of links */
@@ -56,6 +54,9 @@ body.dark {
 
   /* Background color of grid items */
   --grid-item-background-color: rgb(20 20 20);
+
+  /* Transparent background on grid items */
+  --grid-item-transparent-background-color: rgb(20 20 20 / 60%);
 }
 
 /* Light color scheme */
@@ -73,6 +74,7 @@ body.light {
   --link-color: rgb(0 0 0);
   --link-color-hover: rgb(51 51 51);
   --grid-item-background-color: rgb(255 255 255);
+  --grid-item-transparent-background-color: rgb(255 255 255 / 70%);
 }
 
 /* Global components */

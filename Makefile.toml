@@ -79,14 +79,15 @@ cwd = "./end2end"
 
 [tasks.watch-css]
 description = "Build CSS with Tailwind on development"
-command = "../node_modules/.bin/tailwindcss"
+command = "npx"
 args = [
-    "-i",
-    "./stylesheet.css",
-    "-o",
-    "./assets/dist/stylesheet.css",
+    "tailwindcss",
+    "--input",
+    "stylesheet.css",
+    "--output",
+    "assets/dist/stylesheet.css",
     "--watch",
-    "--no-minify"
+    "--no-minify",
 ]
 workspace = false
 cwd = "."
@@ -107,21 +108,21 @@ workspace = false
 
 [tasks.build-css]
 description = "Build CSS with TailwindCSS for production"
-command = "../node_modules/.bin/tailwindcss"
+command = "npx"
 args = [
-    "-i",
+    "tailwindcss",
+    "--input",
     "./stylesheet.css",
-    "-o",
+    "--output",
     "./assets/dist/stylesheet.css",
-    "--minify"
 ]
 cwd = "./app"
 workspace = false
 
 [tasks.serve-for-prod]
 description = "Serve the app with anywhere"
-command = "../node_modules/.bin/anywhere"
-args = ["-d", "dist"]
+command = "npx"
+args = ["anywhere", "-d", "dist"]
 cwd = "./app"
 workspace = false
 
@@ -182,8 +183,9 @@ workspace = false
 
 [tasks.lint-css]
 description = "Lint CSS with stylelint"
-command = "node_modules/.bin/stylelint"
+command = "npx"
 args = [
+    "stylelint",
     "{components,app}/**/*.css",
     "--ignore-path",
     ".gitignore",
@@ -194,14 +196,14 @@ workspace = false
 
 [tasks.format-prettier]
 description = "Format non Rust files in the project with prettier"
-command = "node_modules/.bin/prettier"
-args = ["--write", ".", "--ignore-path", ".gitignore"]
+command = "npx"
+args = ["prettier", "--write", ".", "--ignore-path", ".gitignore"]
 workspace = false
 
 [tasks.lint-prettier]
 description = "Check formatting of non Rust files in the project with prettier"
-command = "node_modules/.bin/prettier"
-args = ["--check", ".", "--ignore-path", ".gitignore"]
+command = "npx"
+args = ["prettier", "--check", ".", "--ignore-path", ".gitignore"]
 workspace = false
 
 [tasks.fetch-deprecated-icons]
@@ -212,8 +214,9 @@ workspace = false
 
 [tasks.build-fast-fuzzy]
 description = "Build the fast-fuzzy JS library for the web"
-command = "node_modules/.bin/esbuild"
+command = "npx"
 args = [
+    "esbuild",
     "components/src/controls/search/fast-fuzzy.js",
     "--bundle",
     "--outfile=app/assets/dist/fast-fuzzy.js",

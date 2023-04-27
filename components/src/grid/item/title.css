@@ -9,5 +9,6 @@ main > ul > li > h2 {
     [white-space:var(--title-white-space)]
     copy-button-color-scheme
     before:bg-[size:_var(--title-copy-button-size)]
+    before:bg-[color:var(--grid-item-transparent-background-color)]
     before:bg-[position:calc(100%-var(--title-copy-button-margin-right))_var(--title-copy-button-margin-top)];
 }
