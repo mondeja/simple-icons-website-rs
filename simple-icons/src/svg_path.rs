@@ -10,7 +10,7 @@ pub fn get_simple_icon_svg_path_by_slug(filename: &str) -> String {
         .split_once("d=\"")
         .unwrap()
         .1
-        .split_once("\"")
+        .split_once('"')
         .unwrap()
         .0;
     icon_path.to_string()

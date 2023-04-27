@@ -46,7 +46,7 @@ cwd = "./app"
 description = "Generate or update locales"
 install_crate = "xtr"
 script = [
-    "xtr components/src/lib.rs app/src/main.rs --keyword=gettext:2 --keyword=move_gettext:2 --output=i18n/messages.pot",
+    "xtr components/src/lib.rs app/src/main.rs --keywords=gettext:2 --keywords=move_gettext:2 --output=i18n/messages.pot",
 ]
 workspace = false
 
@@ -137,7 +137,19 @@ workspace = false
 command = "cargo"
 args = ["fmt", "--all"]
 
+[tasks.clippy]
+description = "Run clippy"
+install_crate = "clippy"
+workspace = false
+command = "cargo"
+args = ["clippy", "--", "-D", "warnings"]
+
 [tasks.lint-rust-code]
+description = "Lint Rust code"
+run_task = { name = ["clippy", "rustfmt-check"], parallel = false }
+workspace = false
+
+[tasks.rustfmt-check]
 description = "Format Rust code with rustfmt"
 install_crate = "rustfmt"
 workspace = false
@@ -204,7 +216,8 @@ command = "node_modules/.bin/esbuild"
 args = [
     "components/src/controls/search/fast-fuzzy.js",
     "--bundle",
-    "--outfile=app/assets/dist/fast-fuzzy.js"
+    "--outfile=app/assets/dist/fast-fuzzy.js",
+    "--minify",
 ]
 workspace = false
 

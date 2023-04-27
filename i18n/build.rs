@@ -34,13 +34,13 @@ fn generate_lazy_static_translations_hashmap(
             ));
         }
         code.push_str(&format!(
-            "        translations.insert(\"{}\".into(), {});\n",
+            "        translations.insert(\"{}\", {});\n",
             language_code, language_code_variable
         ));
     }
     code.push_str("        translations\n");
     code.push_str("    };\n");
-    code.push_str("}");
+    code.push('}');
     code
 }
 
@@ -57,11 +57,11 @@ fn main() {
 
         // Generate translations
         let language_code = path
-            .split(".")
+            .split('.')
             .next()
             .unwrap()
             .to_string()
-            .split("/")
+            .split('/')
             .last()
             .unwrap()
             .to_string();

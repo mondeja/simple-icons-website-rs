@@ -1,6 +1,7 @@
 #!/bin/sh
 . "$(dirname $0)/_/husky.sh"
 
-set -e
+set -ex
 
+cargo make locales
 cargo make lint

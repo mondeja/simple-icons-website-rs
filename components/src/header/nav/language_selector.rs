@@ -34,7 +34,7 @@ fn initial_language_from_navigator_languages() -> Option<Language> {
         if language.contains('-') {
             language = language.split_once('-').unwrap().0.to_string();
         }
-        if let Some(lang) = Language::from_str(language.as_str()) {
+        if let Ok(lang) = language.parse() {
             return Some(lang);
         }
     }
@@ -43,10 +43,7 @@ fn initial_language_from_navigator_languages() -> Option<Language> {
 
 fn initial_language_from_url() -> Option<Language> {
     match Url::params::get(&Url::params::Names::Language) {
-        Some(value) => match Language::from_str(value.as_str()) {
-            Some(lang) => Some(lang),
-            None => None,
-        },
+        Some(value) => value.parse().ok(),
         None => None,
     }
 }
@@ -55,10 +52,7 @@ fn initial_language_from_localstorage() -> Option<Language> {
     let local_storage = window().local_storage().unwrap().unwrap();
 
     match local_storage.get_item("language") {
-        Ok(Some(language)) => match Language::from_str(language.as_str()) {
-            Some(lang) => Some(lang),
-            None => None,
-        },
+        Ok(Some(language)) => language.parse().ok(),
         _ => None,
     }
 }
@@ -87,7 +81,7 @@ pub fn LanguagesList(cx: Scope) -> impl IntoView {
                                 on:click=move |_| {
                                     header_state.update(|state: &mut HeaderState| state.toggle_languages());
                                     locale_state.update(|state: &mut Language| *state = *lang);
-                                    set_language_in_localstorage(&lang);
+                                    set_language_in_localstorage(lang);
                                 }
                             >
                                 {lang.name}

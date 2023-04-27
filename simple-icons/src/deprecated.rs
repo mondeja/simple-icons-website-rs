@@ -1,5 +1,4 @@
 use config::DEPRECATED_ICONS_FILE_NAME;
-use serde_json;
 use std::env;
 use std::fs;
 use std::path::Path;
@@ -51,9 +50,9 @@ pub fn fetch_deprecated_simple_icons() -> Vec<DeprecatedIcon> {
 
     let mut deprecated_icons: Vec<DeprecatedIcon> = Vec::new();
 
-    for milestone_data in milestones_data.into_iter() {
+    for milestone_data in milestones_data.iter() {
         let title = milestone_data.get("title").unwrap().as_str().unwrap();
-        let removal_at_version = title.replace("v", "");
+        let removal_at_version = title.replace('v', "");
         let milestone_url =
             milestone_data.get("url").unwrap().as_str().unwrap();
         let milestone_number =
@@ -68,7 +67,7 @@ pub fn fetch_deprecated_simple_icons() -> Vec<DeprecatedIcon> {
             .unwrap()
             .as_array()
             .unwrap();
-        for pull_request_data in pull_requests_data.into_iter() {
+        for pull_request_data in pull_requests_data.iter() {
             let pull_request_url =
                 pull_request_data.get("url").unwrap().as_str().unwrap();
             let pull_request_number =
@@ -81,7 +80,7 @@ pub fn fetch_deprecated_simple_icons() -> Vec<DeprecatedIcon> {
                 .unwrap()
                 .as_array()
                 .unwrap();
-            for file_data in files_data.into_iter() {
+            for file_data in files_data.iter() {
                 let change_type =
                     file_data.get("node").unwrap().get("changeType").unwrap();
                 if change_type != "DELETED" {

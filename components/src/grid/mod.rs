@@ -83,7 +83,7 @@ pub fn provide_icons_grid_contexts(
     );
     provide_context(
         cx,
-        IconsLoaderSignal(create_rw_signal(cx, IconsLoader::new())),
+        IconsLoaderSignal(create_rw_signal(cx, IconsLoader::default())),
     );
 }
 
@@ -104,7 +104,7 @@ fn initial_icons_from_search_value_and_order_mode(
         let loaded_icons: Vec<&'static SimpleIconForWebsite> = icons
             .iter()
             .take(CONFIG.icons_per_page as usize)
-            .map(|icon| *icon)
+            .copied()
             .collect();
 
         (icons, loaded_icons)

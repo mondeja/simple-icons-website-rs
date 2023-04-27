@@ -62,13 +62,12 @@ pub mod params {
     #[inline(always)]
     pub fn get(k: &Names) -> Option<String> {
         let query = window().location().search().unwrap();
-        if !query.starts_with("?") {
+        if !query.starts_with('?') {
             return None;
         }
-        for key_value in query.split("?").last().unwrap().split("&").into_iter()
-        {
-            if key_value.contains("=") {
-                let mut split = key_value.split("=");
+        for key_value in query.split('?').last().unwrap().split('&') {
+            if key_value.contains('=') {
+                let mut split = key_value.split('=');
                 if split.next().unwrap() == k.as_str() {
                     let ret = split.next().unwrap();
                     return if ret.is_empty() {

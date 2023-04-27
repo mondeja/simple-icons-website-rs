@@ -15,21 +15,12 @@ pub enum OrderModeVariant {
     SearchMatch,
 }
 
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct OrderMode {
     /// The order mode preferred by the user
     pub favorite: OrderModeVariant,
     /// The order mode currently in use
     pub current: OrderModeVariant,
-}
-
-impl Default for OrderMode {
-    fn default() -> Self {
-        Self {
-            favorite: OrderModeVariant::default(),
-            current: OrderModeVariant::default(),
-        }
-    }
 }
 
 pub fn provide_order_mode_context(
@@ -38,7 +29,7 @@ pub fn provide_order_mode_context(
 ) -> OrderMode {
     let initial_order_mode =
         initial_order_mode_from_localstorage_and_search_value(
-            &initial_search_value,
+            initial_search_value,
         );
     provide_context(
         cx,
@@ -49,7 +40,7 @@ pub fn provide_order_mode_context(
 
 pub fn sort_icons(
     order_mode: &OrderModeVariant,
-    icons: &mut Vec<&'static SimpleIconForWebsite>,
+    icons: &mut [&'static SimpleIconForWebsite],
 ) {
     match order_mode {
         OrderModeVariant::Alphabetic => {

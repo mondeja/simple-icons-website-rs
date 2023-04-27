@@ -12,8 +12,8 @@ pub struct IconsLoader {
     pub loading: bool,
 }
 
-impl IconsLoader {
-    pub fn new() -> Self {
+impl Default for IconsLoader {
+    fn default() -> Self {
         Self {
             load: true,
             loading: false,

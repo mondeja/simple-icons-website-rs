@@ -71,7 +71,7 @@ pub fn App(cx: Scope) -> impl IntoView {
             .unwrap()
             .dyn_into::<web_sys::HtmlHtmlElement>()
             .unwrap();
-        html.set_lang(&locale_signal().code);
+        html.set_lang(locale_signal().code);
     });
 
     // Create a context to store a node reference to the footer

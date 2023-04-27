@@ -16,11 +16,11 @@ pub(crate) fn on_click_copy_image_children_src_content(ev: MouseEvent) {
         .unwrap()
         .get_attribute("src")
         .unwrap();
-    spawn_local((async move || {
+    spawn_local(async move {
         if let Some(svg) = fetch_text_forcing_cache(&src).await {
             copy_setting_copied_transition_in_element(svg, target).await
         }
-    })());
+    });
 }
 
 /// Icon grid item preview

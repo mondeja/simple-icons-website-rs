@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-13 22:59+0000\n"
+"POT-Creation-Date: 2023-04-27 19:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,79 +17,79 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: components/src/controls/color_scheme.rs:87
+#: components/src/controls/color_scheme.rs:108
 msgid "Theme"
 msgstr ""
 
-#: components/src/controls/color_scheme.rs:90
+#: components/src/controls/color_scheme.rs:111
 msgid "Light color scheme"
 msgstr ""
 
-#: components/src/controls/color_scheme.rs:96
+#: components/src/controls/color_scheme.rs:117
 msgid "Dark color scheme"
 msgstr ""
 
-#: components/src/controls/color_scheme.rs:102
+#: components/src/controls/color_scheme.rs:123
 msgid "System color scheme"
 msgstr ""
 
-#: components/src/controls/download/mod.rs:89 components/src/grid/item/footer.rs:59
+#: components/src/controls/download/mod.rs:103 components/src/grid/item/footer.rs:59
 msgid "Download"
 msgstr ""
 
-#: components/src/controls/download/mod.rs:92 components/src/header/title.rs:31 app/src/page.rs:21
+#: components/src/controls/download/mod.rs:106 components/src/header/title.rs:20 app/src/head.rs:15
 msgid "SVG"
 msgstr ""
 
-#: components/src/controls/download/mod.rs:93 components/src/grid/item/details.rs:228 components/src/grid/item/details.rs:230
+#: components/src/controls/download/mod.rs:107 components/src/grid/item/details.rs:229 components/src/grid/item/details.rs:231
 msgid "Download SVG"
 msgstr ""
 
-#: components/src/controls/download/mod.rs:104
+#: components/src/controls/download/mod.rs:118
 msgid "PDF"
 msgstr ""
 
-#: components/src/controls/download/mod.rs:105 components/src/grid/item/details.rs:240 components/src/grid/item/details.rs:242
+#: components/src/controls/download/mod.rs:119 components/src/grid/item/details.rs:238 components/src/grid/item/details.rs:240
 msgid "Download PDF"
 msgstr ""
 
-#: components/src/controls/layout.rs:71
+#: components/src/controls/layout.rs:93
 msgid "Layout"
 msgstr ""
 
-#: components/src/controls/layout.rs:74
+#: components/src/controls/layout.rs:96
 msgid "Comfortable"
 msgstr ""
 
-#: components/src/controls/layout.rs:80
+#: components/src/controls/layout.rs:102
 msgid "Compact"
 msgstr ""
 
-#: components/src/controls/order.rs:167
-msgid "Order"
-msgstr ""
-
-#: components/src/controls/order.rs:172
+#: components/src/controls/order.rs:177
 msgid "Sort alphabetically"
 msgstr ""
 
-#: components/src/controls/order.rs:177
+#: components/src/controls/order.rs:190
 msgid "Sort by color"
 msgstr ""
 
-#: components/src/controls/order.rs:188
+#: components/src/controls/order.rs:207
 msgid "Sort by search match score"
 msgstr ""
 
-#: components/src/controls/search/mod.rs:251
+#: components/src/controls/order.rs:220
+msgid "Order"
+msgstr ""
+
+#: components/src/controls/search/mod.rs:258
 msgid "Search"
 msgstr ""
 
-#: components/src/controls/search/mod.rs:257
+#: components/src/controls/search/mod.rs:264
 msgid "Search by brand..."
 msgstr ""
 
-#: components/src/controls/search/mod.rs:263
+#: components/src/controls/search/mod.rs:270
 msgid "Clear search"
 msgstr ""
 
@@ -129,28 +129,32 @@ msgstr ""
 msgid "Open Collective"
 msgstr ""
 
-#: components/src/footer/mod.rs:79
+#: components/src/footer/mod.rs:34
 msgid "Made with ❤️ on GitHub"
 msgstr ""
 
-#: components/src/footer/mod.rs:111
+#: components/src/footer/mod.rs:66
 msgid "Icon missing?"
 msgstr ""
 
-#: components/src/footer/mod.rs:113
+#: components/src/footer/mod.rs:68
 msgid "Submit a request"
 msgstr ""
 
-#: components/src/footer/mod.rs:117
+#: components/src/footer/mod.rs:72
 msgid "Icon outdated?"
 msgstr ""
 
-#: components/src/footer/mod.rs:119
+#: components/src/footer/mod.rs:74
 msgid "Report outdated icon"
 msgstr ""
 
-#: components/src/footer/mod.rs:143
+#: components/src/footer/mod.rs:98
 msgid "Share this on Twitter!"
+msgstr ""
+
+#: components/src/grid/icons_loader.rs:74
+msgid "Load more icons"
 msgstr ""
 
 #: components/src/grid/item/deprecated.rs:18
@@ -161,19 +165,27 @@ msgstr ""
 msgid "Deprecated"
 msgstr ""
 
-#: components/src/grid/item/details.rs:214 components/src/grid/item/footer.rs:36
+#: components/src/grid/item/details.rs:59 components/src/grid/item/title.rs:17
+msgid "Copy {} slug ({})"
+msgstr ""
+
+#: components/src/grid/item/details.rs:100 components/src/grid/item/icon_preview.rs:40
+msgid "Copy {} SVG"
+msgstr ""
+
+#: components/src/grid/item/details.rs:215 components/src/grid/item/footer.rs:36
 msgid "Copy hex color"
 msgstr ""
 
-#: components/src/grid/item/details.rs:216 components/src/grid/item/links.rs:24 components/src/grid/item/links.rs:27
+#: components/src/grid/item/details.rs:217 components/src/grid/item/links.rs:24 components/src/grid/item/links.rs:27
 msgid "Brand guidelines"
 msgstr ""
 
-#: components/src/grid/item/details.rs:217 components/src/grid/item/links.rs:35
+#: components/src/grid/item/details.rs:218 components/src/grid/item/links.rs:35
 msgid "License"
 msgstr ""
 
-#: components/src/grid/item/details.rs:232 components/src/grid/item/details.rs:233
+#: components/src/grid/item/details.rs:233 components/src/grid/item/details.rs:234
 msgid "Download colored SVG"
 msgstr ""
 
@@ -185,31 +197,27 @@ msgstr ""
 msgid "Error generating PDF with PDFKit library: {}"
 msgstr ""
 
-#: components/src/grid/item/icon_preview.rs:39
-msgid "Copy {} SVG"
-msgstr ""
-
-#: components/src/grid/item/icon_preview.rs:60
+#: components/src/grid/item/icon_preview.rs:43
 msgid "{} icon"
 msgstr ""
 
-#: components/src/grid/item/title.rs:17
-msgid "Copy {} slug ({})"
+#: components/src/grid/scroll.rs:46
+msgid "Go to header"
 msgstr ""
 
-#: components/src/grid/more_icons.rs:41
-msgid "Load more icons"
+#: components/src/grid/scroll.rs:67
+msgid "Go to footer"
 msgstr ""
 
-#: components/src/header/nav/language_selector.rs:122
+#: components/src/header/nav/language_selector.rs:110
 msgid "Change language"
 msgstr ""
 
-#: components/src/header/nav/language_selector.rs:147
+#: components/src/header/nav/language_selector.rs:135
 msgid "Select a language"
 msgstr ""
 
-#: components/src/header/nav/third_party_extensions.rs:51 components/src/header/nav/third_party_extensions.rs:75
+#: components/src/header/nav/third_party_extensions.rs:49 components/src/header/nav/third_party_extensions.rs:73
 msgid "Third party extensions"
 msgstr ""
 
@@ -237,22 +245,14 @@ msgstr ""
 msgid "Close menu"
 msgstr ""
 
-#: components/src/header/title.rs:29 app/src/page.rs:19
+#: components/src/header/title.rs:18 app/src/head.rs:13
 msgid "{} free {} icons for popular brands"
 msgstr ""
 
-#: components/src/header/title.rs:31
+#: components/src/header/title.rs:20
 msgid "Scalable Vector Graphic"
 msgstr ""
 
-#: components/src/modal.rs:25
+#: components/src/modal.rs:38
 msgid "Close"
-msgstr ""
-
-#: components/src/scroll.rs:53
-msgid "Go to header"
-msgstr ""
-
-#: components/src/scroll.rs:71
-msgid "Go to footer"
 msgstr ""

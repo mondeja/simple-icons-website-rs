@@ -32,7 +32,7 @@ fn initial_search_value(cx: Scope) -> String {
     let search_value = match Url::params::get(&Url::params::Names::Search) {
         Some(value) => {
             set_search_value_on_localstorage(value.as_str());
-            value.to_string()
+            value
         }
         None => match initial_search_value_from_localstorage() {
             Some(value) => {
@@ -119,8 +119,7 @@ fn new_displayed_icons_from_search_result(
         Vec::new();
     for i in 0..*search_result_length {
         let result_icon_array = js_sys::Array::from(&search_result.get(i));
-        let icon_order_alpha =
-            result_icon_array.get(1).as_f64().unwrap() as usize;
+        let icon_order_alpha = result_icon_array.get(1).as_f64().unwrap();
         new_displayed_icons.push(&ICONS[icon_order_alpha as usize]);
         if new_displayed_icons.len() >= (CONFIG.icons_per_page as usize) {
             break;
@@ -139,8 +138,7 @@ fn extend_new_icons_with_search_result(
     if *search_result_length > CONFIG.icons_per_page {
         for i in CONFIG.icons_per_page..*search_result_length {
             let result_icon_array = js_sys::Array::from(&search_result.get(i));
-            let icon_order_alpha =
-                result_icon_array.get(1).as_f64().unwrap() as usize;
+            let icon_order_alpha = result_icon_array.get(1).as_f64().unwrap();
             new_icons.push(&ICONS[icon_order_alpha as usize]);
         }
     }
@@ -218,7 +216,7 @@ async fn on_search(
                     .icons
                     .iter()
                     .take(CONFIG.icons_per_page as usize)
-                    .map(|icon| *icon)
+                    .copied()
                     .collect();
             });
             // Set new order mode

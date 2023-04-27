@@ -2,6 +2,7 @@
 
 use leptos::*;
 use std::collections::HashMap;
+use std::str::FromStr;
 
 #[derive(Clone, Copy)]
 pub struct Language {
@@ -64,11 +65,15 @@ impl Language {
             .unwrap_or(&key.to_string())
             .to_string()
     }
+}
 
-    pub fn from_str(code: &str) -> Option<Self> {
-        match LANGUAGES.iter().find(|lang| lang.code == code) {
-            Some(language) => Some(*language),
-            None => None,
+impl FromStr for Language {
+    type Err = ();
+
+    fn from_str(code: &str) -> Result<Self, Self::Err> {
+        match LANGUAGES.iter().find(|lang| lang.code == code).copied() {
+            Some(lang) => Ok(lang),
+            None => Err(()),
         }
     }
 }

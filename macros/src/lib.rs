@@ -60,36 +60,36 @@ pub fn get_simple_icons_3rd_party_extensions(_: TokenStream) -> TokenStream {
         if line.trim().is_empty() {
             continue;
         }
-        let name = line.split_once("[").unwrap().1.split_once("](").unwrap().0;
-        let url = line.split_once("](").unwrap().1.split_once(")").unwrap().0;
+        let name = line.split_once('[').unwrap().1.split_once("](").unwrap().0;
+        let url = line.split_once("](").unwrap().1.split_once(')').unwrap().0;
         let author_name = line
-            .split_once("|")
+            .split_once('|')
             .unwrap()
             .1
-            .split_once("[")
+            .split_once('[')
             .unwrap()
             .1
-            .split_once("]")
+            .split_once(']')
             .unwrap()
             .0;
         let author_url = line
-            .split_once("|")
+            .split_once('|')
             .unwrap()
             .1
             .split_once("](")
             .unwrap()
             .1
-            .split_once(")")
+            .split_once(')')
             .unwrap()
             .0;
         let icon_slug = line
             .split_once("<img src=\"")
             .unwrap()
             .1
-            .split_once("\"")
+            .split_once('"')
             .unwrap()
             .0
-            .split("/")
+            .split('/')
             .last()
             .unwrap()
             .split_once(".svg")
@@ -115,7 +115,7 @@ pub fn get_simple_icons_3rd_party_extensions(_: TokenStream) -> TokenStream {
             get_simple_icon_svg_path_by_slug(icon_slug)
         ));
     }
-    extensions_array_code.push_str("]");
+    extensions_array_code.push(']');
     extensions_array_code.parse().unwrap()
 }
 
@@ -237,7 +237,7 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
             },
         ));
     }
-    simple_icons_array_code.push_str("]");
+    simple_icons_array_code.push(']');
 
     simple_icons_array_code.parse().unwrap()
 }

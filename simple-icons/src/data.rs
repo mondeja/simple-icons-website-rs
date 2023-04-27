@@ -1,4 +1,8 @@
-// Information about the Simple Icons data file
+// TODO: nanoserde giving clippy warning:
+// 'this block may be rewritten with the `?` operator'
+// #[derive(DeJson)]
+//          ^^^^^^
+#![allow(clippy::question_mark)]
 
 use nanoserde::DeJson;
 use std::collections::HashMap;

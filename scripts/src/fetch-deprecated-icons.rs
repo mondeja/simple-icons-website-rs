@@ -1,7 +1,4 @@
 use config::DEPRECATED_ICONS_FILE_NAME;
-use dotenv;
-use reqwest;
-use serde_json;
 use std::env;
 use std::fs;
 use std::io::Write;
@@ -54,7 +51,7 @@ fn main() {
             " the Github API at build time."
         )))
         .header("User-Agent", "simple-icons-website")
-        .body(query.replace("\n", ""))
+        .body(query.replace('\n', ""))
         .send()
         .unwrap()
         .json()
@@ -64,7 +61,7 @@ fn main() {
         panic!("Error retrieving data from GITHUB Graphql API: {}", message);
     }
     let mut tmp_file = fs::File::create(&tmp_file_path).unwrap();
-    writeln!(&mut tmp_file, "{}", resp.to_string()).unwrap();
+    writeln!(&mut tmp_file, "{}", resp).unwrap();
     println!(
         "Fetched deprecated icons from Github API and saved to {}",
         tmp_file_path.display()

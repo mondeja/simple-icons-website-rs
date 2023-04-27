@@ -32,7 +32,7 @@ pub mod sorting {
         let [r, g, b]: [u8; 3] = Rgb::from(hsl).into();
 
         if g < GREY_RANGE || b < GREY_RANGE {
-            return true;
+            true
         } else {
             let g_plus_range = if { u8::MAX - g } < GREY_RANGE {
                 u8::MAX
@@ -44,7 +44,7 @@ pub mod sorting {
             } else {
                 b + GREY_RANGE
             };
-            return r <= g_plus_range && b <= g_plus_range && r <= b_plus_range;
+            r <= g_plus_range && b <= g_plus_range && r <= b_plus_range
         }
     }
 
@@ -77,28 +77,28 @@ pub mod sorting {
 
             // if hue is the same, sort by saturation
             let sat = a.saturation() - b.saturation();
-            return if sat > (0 as f64) {
+            if sat > (0 as f64) {
                 Ordering::Greater
             } else if sat < (0 as f64) {
                 Ordering::Less
             } else {
                 Ordering::Equal
-            };
+            }
         });
-        ret.extend(coloreds.iter().map(|c| hsl_to_upper_hex_string(c)));
+        ret.extend(coloreds.iter().map(hsl_to_upper_hex_string));
 
         // sort greys by lightness
         greys.sort_by(|a, b| {
             let lightness = a.lightness() - b.lightness();
-            return if lightness > (0 as f64) {
+            if lightness > (0 as f64) {
                 Ordering::Greater
             } else if lightness < (0 as f64) {
                 Ordering::Less
             } else {
                 Ordering::Equal
-            };
+            }
         });
-        ret.extend(greys.iter().map(|c| hsl_to_upper_hex_string(c)));
+        ret.extend(greys.iter().map(hsl_to_upper_hex_string));
 
         ret
     }

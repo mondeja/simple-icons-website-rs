@@ -217,7 +217,7 @@ export const useLocalStorage = (
 };
 
 // TODO: Use the utils file from simple-icons package, which comes with Typescript support
-// (needs https://github.com/simple-icons/simple-icons/pull/8077 merged and released)
+// (needs https://github.com/simple-icons/simple-icons/pull/8564 merged and released)
 /**
  * Get the data of the simple-icons package.
  *

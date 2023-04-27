@@ -1,9 +1,5 @@
-use js_sys;
 use leptos::window;
-use log;
 use wasm_bindgen::JsCast;
-use wasm_bindgen_futures;
-use web_sys;
 
 /// Fetch a resource forcing the retrieval from the cache
 ///

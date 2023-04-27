@@ -1,4 +1,3 @@
-use serde_json;
 use std::fs;
 use std::process;
 
@@ -25,7 +24,7 @@ fn get_simple_icons_version_from_package_json(package_json: &str) -> String {
         .lines()
         .find(|line| line.starts_with("    \"simple-icons\": \""))
         .unwrap()
-        .split("\"")
+        .split('"')
         .nth(3)
         .unwrap()
         .to_string()

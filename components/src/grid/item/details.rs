@@ -175,7 +175,7 @@ pub fn fill_icon_details_modal_with_icon(
         .dyn_into::<web_sys::HtmlElement>()
         .unwrap();
 
-    spawn_local((async move || {
+    spawn_local(async move {
         if let Some(svg) =
             fetch_text_forcing_cache(&format!("/icons/{}.svg", icon.slug)).await
         {
@@ -191,7 +191,7 @@ pub fn fill_icon_details_modal_with_icon(
                 .set_attribute("download", &format!("{}-color.svg", icon.slug))
                 .unwrap();
         }
-    })());
+    });
 }
 
 /// Details modal icon preview

@@ -11,7 +11,6 @@ pub(crate) mod head;
 pub(crate) mod pages;
 
 use crate::app::{App, AppProps};
-use console_error_panic_hook;
 use leptos::{mount_to_body, view};
 use log::Level;
 
