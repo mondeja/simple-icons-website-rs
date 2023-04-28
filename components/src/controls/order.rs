@@ -4,8 +4,8 @@ use crate::grid::{IconsGrid, IconsGridSignal};
 use crate::storage::LocalStorage;
 use i18n::move_gettext;
 use leptos::{window, *};
-use simple_icons::SimpleIconForWebsite;
 use std::fmt;
+use types::SimpleIcon;
 
 #[derive(Default, Copy, Clone, PartialEq)]
 pub enum OrderModeVariant {
@@ -40,7 +40,7 @@ pub fn provide_order_mode_context(
 
 pub fn sort_icons(
     order_mode: &OrderModeVariant,
-    icons: &mut [&'static SimpleIconForWebsite],
+    icons: &mut [&'static SimpleIcon],
 ) {
     match order_mode {
         OrderModeVariant::Alphabetic => {

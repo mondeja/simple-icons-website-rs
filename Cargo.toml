@@ -6,7 +6,8 @@ members = [
     "i18n",
     "macros",
     "simple-icons",
-    "scripts"
+    "scripts",
+    "types",
 ]
 
 [workspace.package]
@@ -18,6 +19,7 @@ simple-icons = { path = "./simple-icons" }
 simple-icons-website-macros = { path = "./macros" }
 simple-icons-website-i18n = { path = "./i18n" }
 simple-icons-website-config = { path = "./config" }
+simple-icons-website-types = { path = "./types" }
 leptos = { version = "0.2.5", default-features = false, features = ["csr"] }
 leptos_meta = { version = "0.2.5", default-features = false, features = [
     "csr"

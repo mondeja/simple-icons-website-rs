@@ -7,7 +7,7 @@ use crate::modal::*;
 use crate::Ids;
 use i18n::{gettext, move_gettext};
 use leptos::{document, *};
-use simple_icons::SimpleIconForWebsite;
+use types::SimpleIcon;
 use wasm_bindgen::JsCast;
 use web_sys;
 
@@ -23,10 +23,7 @@ fn get_slug_from_modal_container() -> String {
         .inner_text()
 }
 
-pub fn fill_icon_details_modal_with_icon(
-    cx: Scope,
-    icon: &'static SimpleIconForWebsite,
-) {
+pub fn fill_icon_details_modal_with_icon(cx: Scope, icon: &'static SimpleIcon) {
     let modal_body = document()
         .get_element_by_id(Ids::IconDetailsModal.as_str())
         .unwrap()
@@ -115,9 +112,9 @@ pub fn fill_icon_details_modal_with_icon(
         .unwrap()
         .dyn_into::<web_sys::HtmlElement>()
         .unwrap();
-    if let Some(guidelines_url) = icon.guidelines_url {
+    if let Some(guidelines) = icon.guidelines {
         modal_brand_guidelines_link
-            .set_attribute("href", guidelines_url)
+            .set_attribute("href", guidelines)
             .unwrap();
         modal_brand_guidelines_link
             .class_list()

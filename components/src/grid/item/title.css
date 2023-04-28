@@ -1,7 +1,7 @@
 /* Icon title */
 main > ul > li > h2 {
   @apply font-sans font-semibold w-full overflow-hidden
-    flex-grow align-baseline
+    flex-grow flex items-end
     p-[0.4rem_var(--title-x-padding)]
     [font-size:var(--title-font-size)]
     [line-height:var(--title-line-height)]

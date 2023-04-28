@@ -9,8 +9,8 @@ use deprecated::*;
 use footer::*;
 use icon_preview::*;
 use links::*;
-use simple_icons::SimpleIconForWebsite;
 use title::*;
+use types::SimpleIcon;
 
 use leptos::*;
 
@@ -21,29 +21,28 @@ use leptos::*;
 pub fn IconGridItem(
     cx: Scope,
     /// Icon
-    icon: &'static SimpleIconForWebsite,
+    icon: &'static SimpleIcon,
 ) -> impl IntoView {
     view! { cx,
         <li>
             <IconGridItemPreview slug=icon.slug title=icon.title/>
             <IconGridItemLinks
-                guidelines_url=icon.guidelines_url
+                guidelines_url=icon.guidelines
                 license_url=icon.license_url
                 license_type=icon.license_type
             />
-            {if icon.is_deprecated {
-                Some(
+            {icon
+                .deprecation
+                .as_ref()
+                .map(|deprecation| {
                     view! { cx,
                         <IconIsDeprecatedNotice
                             title=icon.title
-                            pull_request_url=icon.deprecation_pull_request_url.unwrap()
-                            removal_at_version=icon.removal_at_version.unwrap()
+                            pull_request_url=deprecation.get_pull_request_url()
+                            removal_at_version=deprecation.removal_at_version
                         />
-                    },
-                )
-            } else {
-                None
-            }}
+                    }
+                })}
             <IconGridItemTitle title=icon.title slug=icon.slug/>
             <IconGridItemFooter icon=icon/>
         </li>

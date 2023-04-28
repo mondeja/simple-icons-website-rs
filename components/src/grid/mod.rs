@@ -15,22 +15,21 @@ use leptos::{
 };
 use macros::{get_number_of_icons, simple_icons_array};
 use scroll::*;
-use simple_icons::SimpleIconForWebsite;
+use types::SimpleIcon;
 use wasm_bindgen::{closure::Closure, JsCast};
 use web_sys::{
     IntersectionObserver, IntersectionObserverEntry, IntersectionObserverInit,
 };
 
-pub const ICONS: [SimpleIconForWebsite; get_number_of_icons!()] =
-    simple_icons_array!();
+pub const ICONS: [SimpleIcon; get_number_of_icons!()] = simple_icons_array!();
 
 /// Icons grid
 #[derive(Clone)]
 pub struct IconsGrid {
     /// Icons currently loaded
-    pub loaded_icons: Vec<&'static SimpleIconForWebsite>,
+    pub loaded_icons: Vec<&'static SimpleIcon>,
     /// Icons in order of the grid
-    pub icons: Vec<&'static SimpleIconForWebsite>,
+    pub icons: Vec<&'static SimpleIcon>,
 }
 
 impl IconsGrid {
@@ -65,9 +64,7 @@ pub struct IconsGridSignal(pub RwSignal<IconsGrid>);
 
 /// Signal to control the current detail view modal of icons
 #[derive(Copy, Clone)]
-pub struct CurrentIconViewSignal(
-    pub RwSignal<Option<&'static SimpleIconForWebsite>>,
-);
+pub struct CurrentIconViewSignal(pub RwSignal<Option<&'static SimpleIcon>>);
 
 pub fn provide_icons_grid_contexts(
     cx: Scope,
@@ -90,18 +87,14 @@ pub fn provide_icons_grid_contexts(
 fn initial_icons_from_search_value_and_order_mode(
     search_value: &str,
     order_mode: &OrderModeVariant,
-) -> (
-    Vec<&'static SimpleIconForWebsite>,
-    Vec<&'static SimpleIconForWebsite>,
-) {
+) -> (Vec<&'static SimpleIcon>, Vec<&'static SimpleIcon>) {
     if search_value.is_empty() {
-        let mut icons: Vec<&'static SimpleIconForWebsite> =
-            ICONS.iter().collect();
+        let mut icons: Vec<&'static SimpleIcon> = ICONS.iter().collect();
         if order_mode != &OrderModeVariant::Alphabetic {
             // Alphabetical is the default order of the icons in the static array
             sort_icons(order_mode, &mut icons);
         }
-        let loaded_icons: Vec<&'static SimpleIconForWebsite> = icons
+        let loaded_icons: Vec<&'static SimpleIcon> = icons
             .iter()
             .take(CONFIG.icons_per_page as usize)
             .copied()
@@ -128,7 +121,7 @@ pub fn Icons(cx: Scope) -> impl IntoView {
             icons_grid()
                 .loaded_icons
                 .iter()
-                .map(|icon: &&'static SimpleIconForWebsite| {
+                .map(|icon: &&'static SimpleIcon| {
                     view! { cx, <IconGridItem icon=*icon/> }
                 })
                 .collect::<Vec<_>>()

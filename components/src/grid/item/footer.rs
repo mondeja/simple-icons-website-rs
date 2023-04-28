@@ -8,7 +8,7 @@ use crate::svg_defs::SVGDefs;
 use i18n::move_gettext;
 use leptos::ev::MouseEvent;
 use leptos::*;
-use simple_icons::SimpleIconForWebsite;
+use types::SimpleIcon;
 use web_sys;
 
 /// Icon grid item footer
@@ -18,7 +18,7 @@ use web_sys;
 pub fn IconGridItemFooter(
     cx: Scope,
     /// The icon
-    icon: &'static SimpleIconForWebsite,
+    icon: &'static SimpleIcon,
 ) -> impl IntoView {
     // Hex color formatted for CSS
     let css_hex = format!("#{}", icon.hex);

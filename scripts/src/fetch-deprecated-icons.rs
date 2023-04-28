@@ -9,13 +9,10 @@ const GRAPHQL_QUERY: &str = "{
     milestones(states: [OPEN], first:10) {
       nodes{
         title
-        description
-        url
         dueOn
         number
         pullRequests(states:[OPEN], first:100){
           nodes{
-            url
             number
             files(first:30) {
               edges {

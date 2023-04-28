@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-27 21:59+0000\n"
+"POT-Creation-Date: 2023-04-28 15:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,7 +41,7 @@ msgstr ""
 msgid "SVG"
 msgstr ""
 
-#: components/src/controls/download/mod.rs:107 components/src/grid/item/details.rs:229 components/src/grid/item/details.rs:231
+#: components/src/controls/download/mod.rs:107 components/src/grid/item/details.rs:226 components/src/grid/item/details.rs:228
 msgid "Download SVG"
 msgstr ""
 
@@ -49,7 +49,7 @@ msgstr ""
 msgid "PDF"
 msgstr ""
 
-#: components/src/controls/download/mod.rs:119 components/src/grid/item/details.rs:238 components/src/grid/item/details.rs:240
+#: components/src/controls/download/mod.rs:119 components/src/grid/item/details.rs:235 components/src/grid/item/details.rs:237
 msgid "Download PDF"
 msgstr ""
 
@@ -81,15 +81,15 @@ msgstr ""
 msgid "Order"
 msgstr ""
 
-#: components/src/controls/search/mod.rs:256
+#: components/src/controls/search/mod.rs:252
 msgid "Search"
 msgstr ""
 
-#: components/src/controls/search/mod.rs:262
+#: components/src/controls/search/mod.rs:259
 msgid "Search by brand..."
 msgstr ""
 
-#: components/src/controls/search/mod.rs:268
+#: components/src/controls/search/mod.rs:265
 msgid "Clear search"
 msgstr ""
 
@@ -165,27 +165,27 @@ msgstr ""
 msgid "Deprecated"
 msgstr ""
 
-#: components/src/grid/item/details.rs:59 components/src/grid/item/title.rs:17
+#: components/src/grid/item/details.rs:56 components/src/grid/item/title.rs:17
 msgid "Copy {} slug ({})"
 msgstr ""
 
-#: components/src/grid/item/details.rs:100 components/src/grid/item/icon_preview.rs:40
+#: components/src/grid/item/details.rs:97 components/src/grid/item/icon_preview.rs:40
 msgid "Copy {} SVG"
 msgstr ""
 
-#: components/src/grid/item/details.rs:215 components/src/grid/item/footer.rs:36
+#: components/src/grid/item/details.rs:212 components/src/grid/item/footer.rs:36
 msgid "Copy hex color"
 msgstr ""
 
-#: components/src/grid/item/details.rs:217 components/src/grid/item/links.rs:24 components/src/grid/item/links.rs:27
+#: components/src/grid/item/details.rs:214 components/src/grid/item/links.rs:24 components/src/grid/item/links.rs:27
 msgid "Brand guidelines"
 msgstr ""
 
-#: components/src/grid/item/details.rs:218 components/src/grid/item/links.rs:35
+#: components/src/grid/item/details.rs:215 components/src/grid/item/links.rs:35
 msgid "License"
 msgstr ""
 
-#: components/src/grid/item/details.rs:233 components/src/grid/item/details.rs:234
+#: components/src/grid/item/details.rs:230 components/src/grid/item/details.rs:231
 msgid "Download colored SVG"
 msgstr ""
 

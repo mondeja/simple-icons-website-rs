@@ -8,8 +8,8 @@ use color::{get_relative_luminance, sort_hexes};
 use config::CONFIG;
 use proc_macro::TokenStream;
 use simple_icons::{
-    fetch_deprecated_simple_icons, get_simple_icon_svg_path_by_slug,
-    get_simple_icons,
+    get_simple_icon_svg_path, get_simple_icons,
+    sdk::fetch_deprecated_simple_icons,
 };
 use std::fs;
 use std::path::Path;
@@ -35,7 +35,7 @@ pub fn get_number_of_icons(_: TokenStream) -> TokenStream {
 #[proc_macro]
 pub fn simple_icon_svg_path(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as LitStr);
-    let svg_path = get_simple_icon_svg_path_by_slug(input.value().as_str());
+    let svg_path = get_simple_icon_svg_path(input.value().as_str());
     format!("{:?}", svg_path).parse().unwrap()
 }
 
@@ -96,11 +96,9 @@ pub fn get_simple_icons_3rd_party_extensions(_: TokenStream) -> TokenStream {
             .unwrap()
             .0;
 
-        // We can't expose a struct from a procedural macro crate,
-        // so the extension struct is provided the `simple_icons` crate
         extensions_array_code.push_str(&format!(
             concat!(
-                "::simple_icons::ThirdPartyExtension{{",
+                "::types::ThirdPartyExtension{{",
                 "name: \"{}\",",
                 "url: \"{}\",",
                 "author_name: \"{}\",",
@@ -112,7 +110,7 @@ pub fn get_simple_icons_3rd_party_extensions(_: TokenStream) -> TokenStream {
             url,
             author_name,
             author_url,
-            get_simple_icon_svg_path_by_slug(icon_slug)
+            get_simple_icon_svg_path(icon_slug)
         ));
     }
     extensions_array_code.push(']');
@@ -146,13 +144,13 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
 
         simple_icons_array_code.push_str(&format!(
             concat!(
-                "::simple_icons::SimpleIconForWebsite{{",
+                "::types::SimpleIcon{{",
                 "slug: \"{}\",",
                 "title: \"{}\",",
                 "hex: \"{}\",",
                 "hex_is_relatively_light: {},",
-                "source_url: \"{}\",",
-                "guidelines_url: {},",
+                "source: \"{}\",",
+                "guidelines: {},",
                 "license_url: {},",
                 "license_type: {},",
                 "plain_aliases: {},",
@@ -160,17 +158,15 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
                 // because they are extracted from the `simple-icons.json` file
                 "order_alpha: {},",
                 "order_color: {},",
-                "is_deprecated: {},",
-                "deprecation_pull_request_url: {},",
-                "removal_at_version: {},",
+                "deprecation: {},",
                 "}},"
             ),
             icon.slug,
             icon.title,
             icon.hex,
             get_relative_luminance(&icon.hex) >= 0.4,
-            icon.source_url,
-            match icon.guidelines_url {
+            icon.source,
+            match icon.guidelines {
                 Some(ref url) => format!("Some(\"{}\")", url),
                 None => "None".to_string(),
             },
@@ -220,20 +216,26 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
             },
             i,
             order_color,
-            deprecated_icon.is_some(),
-            match deprecated_icon.is_some() {
-                true => format!(
-                    "Some(\"{}\")",
-                    deprecated_icon.unwrap().pull_request_url
-                ),
-                false => "None".to_string(),
-            },
-            match deprecated_icon.is_some() {
-                true => format!(
-                    "Some(\"{}\")",
-                    deprecated_icon.unwrap().removal_at_version
-                ),
-                false => "None".to_string(),
+            match deprecated_icon {
+                Some(icon) => {
+                    format!(
+                        concat!(
+                            "Some(",
+                            "&::types::DeprecatedIcon{{",
+                            "removal_at_version: \"{}\",",
+                            "milestone_number: {},",
+                            "milestone_due_on: \"{}\",",
+                            "pull_request_number: {},",
+                            "}}",
+                            ")",
+                        ),
+                        icon.removal_at_version,
+                        icon.milestone_number,
+                        icon.milestone_due_on,
+                        icon.pull_request_number,
+                    )
+                }
+                None => "None".to_string(),
             },
         ));
     }

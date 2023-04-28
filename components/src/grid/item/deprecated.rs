@@ -7,7 +7,7 @@ pub fn IconIsDeprecatedNotice(
     /// Icon brand title
     title: &'static str,
     /// Link to the pull request that is removing the icon
-    pull_request_url: &'static str,
+    pull_request_url: String,
     /// Removal version
     removal_at_version: &'static str,
 ) -> impl IntoView {

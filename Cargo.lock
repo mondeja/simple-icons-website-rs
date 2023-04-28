@@ -1925,10 +1925,10 @@ dependencies = [
  "leptos",
  "leptos_router",
  "log",
- "simple-icons",
  "simple-icons-website-config",
  "simple-icons-website-i18n",
  "simple-icons-website-macros",
+ "simple-icons-website-types",
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "web-sys",
@@ -1954,8 +1954,13 @@ dependencies = [
  "colorsys",
  "simple-icons",
  "simple-icons-website-config",
+ "simple-icons-website-types",
  "syn 2.0.13",
 ]
+
+[[package]]
+name = "simple-icons-website-types"
+version = "0.1.0"
 
 [[package]]
 name = "slab"

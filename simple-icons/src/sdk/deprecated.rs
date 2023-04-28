@@ -4,15 +4,13 @@ use std::fs;
 use std::path::Path;
 
 /// Deprecated icons for next versions of Simple Icons
-#[derive(Debug)]
+#[derive(Clone)]
 pub struct DeprecatedIcon {
     pub slug: String,
     pub removal_at_version: String,
-    pub milestone_number: String,
+    pub milestone_number: u64,
     pub milestone_due_on: String,
-    pub milestone_url: String,
-    pub pull_request_number: String,
-    pub pull_request_url: String,
+    pub pull_request_number: u64,
 }
 
 /**
@@ -53,8 +51,6 @@ pub fn fetch_deprecated_simple_icons() -> Vec<DeprecatedIcon> {
     for milestone_data in milestones_data.iter() {
         let title = milestone_data.get("title").unwrap().as_str().unwrap();
         let removal_at_version = title.replace('v', "");
-        let milestone_url =
-            milestone_data.get("url").unwrap().as_str().unwrap();
         let milestone_number =
             milestone_data.get("number").unwrap().as_u64().unwrap();
         let milestone_due_on =
@@ -68,8 +64,6 @@ pub fn fetch_deprecated_simple_icons() -> Vec<DeprecatedIcon> {
             .as_array()
             .unwrap();
         for pull_request_data in pull_requests_data.iter() {
-            let pull_request_url =
-                pull_request_data.get("url").unwrap().as_str().unwrap();
             let pull_request_number =
                 pull_request_data.get("number").unwrap().as_u64().unwrap();
 
@@ -100,11 +94,9 @@ pub fn fetch_deprecated_simple_icons() -> Vec<DeprecatedIcon> {
                 let deprecated_icon = DeprecatedIcon {
                     slug,
                     removal_at_version: removal_at_version.to_string(),
-                    milestone_number: milestone_number.to_string(),
+                    milestone_number,
                     milestone_due_on: milestone_due_on.to_string(),
-                    milestone_url: milestone_url.to_string(),
-                    pull_request_number: pull_request_number.to_string(),
-                    pull_request_url: pull_request_url.to_string(),
+                    pull_request_number,
                 };
                 deprecated_icons.push(deprecated_icon);
             }
