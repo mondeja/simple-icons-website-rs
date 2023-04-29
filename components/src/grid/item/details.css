@@ -33,7 +33,7 @@
 
 /* Icon information */
 .icon-details-modal > :first-child > :last-child {
-  @apply flex flex-col w-1/2 space-y-2;
+  @apply flex flex-col w-1/2 space-y-3;
 }
 
 /*   Icon slug */
@@ -48,7 +48,16 @@
     before:bg-[size:1.2rem] before:bg-center;
 }
 
-/*  Information links */
+/*   Information links */
 .icon-details-modal > :first-child > :last-child > a {
   @apply pt-7 hover:opacity-70;
+}
+
+/*   Deprecation information */
+.icon-details-modal > :first-child > :last-child > p {
+  @apply text-xs relative top-4 bg-warning-icon bg-left-top pl-5;
+}
+
+.icon-details-modal > :first-child > :last-child > p > a {
+  @apply text-link;
 }

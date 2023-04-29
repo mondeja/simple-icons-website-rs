@@ -1,7 +1,7 @@
-mod deprecated;
+mod deprecation;
 mod third_party_extension;
 
-pub use deprecated::DeprecatedIcon;
+pub use deprecation::IconDeprecation;
 pub use third_party_extension::ThirdPartyExtension;
 
 /// Static Simple Icon
@@ -18,5 +18,5 @@ pub struct SimpleIcon {
     pub plain_aliases: &'static [&'static str],
     pub order_alpha: usize,
     pub order_color: usize,
-    pub deprecation: Option<&'static DeprecatedIcon>,
+    pub deprecation: Option<&'static IconDeprecation>,
 }

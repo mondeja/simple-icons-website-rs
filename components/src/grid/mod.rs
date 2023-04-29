@@ -13,7 +13,7 @@ use leptos::{
     html::{Footer, HtmlElement},
     NodeRef, *,
 };
-use macros::{get_number_of_icons, simple_icons_array};
+use macros::{get_number_of_icons, icons_array};
 use scroll::*;
 use types::SimpleIcon;
 use wasm_bindgen::{closure::Closure, JsCast};
@@ -21,7 +21,7 @@ use web_sys::{
     IntersectionObserver, IntersectionObserverEntry, IntersectionObserverInit,
 };
 
-pub const ICONS: [SimpleIcon; get_number_of_icons!()] = simple_icons_array!();
+pub const ICONS: [SimpleIcon; get_number_of_icons!()] = icons_array!();
 
 /// Icons grid
 #[derive(Clone)]

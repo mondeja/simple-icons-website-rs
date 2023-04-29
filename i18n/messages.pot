@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-28 15:14+0000\n"
+"POT-Creation-Date: 2023-04-29 00:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgstr ""
 msgid "System color scheme"
 msgstr ""
 
-#: components/src/controls/download/mod.rs:103 components/src/grid/item/footer.rs:59
+#: components/src/controls/download/mod.rs:103 components/src/grid/item/footer.rs:61
 msgid "Download"
 msgstr ""
 
@@ -41,7 +41,7 @@ msgstr ""
 msgid "SVG"
 msgstr ""
 
-#: components/src/controls/download/mod.rs:107 components/src/grid/item/details.rs:226 components/src/grid/item/details.rs:228
+#: components/src/controls/download/mod.rs:107 components/src/grid/item/details.rs:276 components/src/grid/item/details.rs:278
 msgid "Download SVG"
 msgstr ""
 
@@ -49,7 +49,7 @@ msgstr ""
 msgid "PDF"
 msgstr ""
 
-#: components/src/controls/download/mod.rs:119 components/src/grid/item/details.rs:235 components/src/grid/item/details.rs:237
+#: components/src/controls/download/mod.rs:119 components/src/grid/item/details.rs:285 components/src/grid/item/details.rs:287
 msgid "Download PDF"
 msgstr ""
 
@@ -165,35 +165,39 @@ msgstr ""
 msgid "Deprecated"
 msgstr ""
 
-#: components/src/grid/item/details.rs:56 components/src/grid/item/title.rs:17
+#: components/src/grid/item/details.rs:60 components/src/grid/item/title.rs:17
 msgid "Copy {} slug ({})"
 msgstr ""
 
-#: components/src/grid/item/details.rs:97 components/src/grid/item/icon_preview.rs:40
+#: components/src/grid/item/details.rs:101 components/src/grid/item/icon_preview.rs:40
 msgid "Copy {} SVG"
 msgstr ""
 
-#: components/src/grid/item/details.rs:212 components/src/grid/item/footer.rs:36
+#: components/src/grid/item/details.rs:175
+msgid "{} will be removed at {} about {} (see {})"
+msgstr ""
+
+#: components/src/grid/item/details.rs:261 components/src/grid/item/footer.rs:38
 msgid "Copy hex color"
 msgstr ""
 
-#: components/src/grid/item/details.rs:214 components/src/grid/item/links.rs:24 components/src/grid/item/links.rs:27
+#: components/src/grid/item/details.rs:263 components/src/grid/item/links.rs:24 components/src/grid/item/links.rs:27
 msgid "Brand guidelines"
 msgstr ""
 
-#: components/src/grid/item/details.rs:215 components/src/grid/item/links.rs:35
+#: components/src/grid/item/details.rs:264 components/src/grid/item/links.rs:35
 msgid "License"
 msgstr ""
 
-#: components/src/grid/item/details.rs:230 components/src/grid/item/details.rs:231
+#: components/src/grid/item/details.rs:280 components/src/grid/item/details.rs:281
 msgid "Download colored SVG"
 msgstr ""
 
-#: components/src/grid/item/footer.rs:48
+#: components/src/grid/item/footer.rs:50
 msgid "View {}"
 msgstr ""
 
-#: components/src/grid/item/footer.rs:60
+#: components/src/grid/item/footer.rs:62
 msgid "Error generating PDF with PDFKit library: {}"
 msgstr ""
 

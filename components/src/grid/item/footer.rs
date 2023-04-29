@@ -5,7 +5,7 @@ use crate::copy::copy_setting_copied_transition_in_element;
 use crate::grid::item::details::fill_icon_details_modal_with_icon;
 use crate::grid::CurrentIconViewSignal;
 use crate::svg_defs::SVGDefs;
-use i18n::move_gettext;
+use i18n::{move_gettext, LocaleSignal};
 use leptos::ev::MouseEvent;
 use leptos::*;
 use types::SimpleIcon;
@@ -21,14 +21,16 @@ pub fn IconGridItemFooter(
     icon: &'static SimpleIcon,
 ) -> impl IntoView {
     // Hex color formatted for CSS
-    let css_hex = format!("#{}", icon.hex);
-    let css_hex_copy = css_hex.clone();
+    let css_hex = &format!("#{}", icon.hex);
 
     // Controls context
     let download_type = use_context::<DownloadTypeSignal>(cx).unwrap().0;
 
     // Context to handle the opening state of detail modals
     let current_icon_view = use_context::<CurrentIconViewSignal>(cx).unwrap().0;
+
+    // Locale context
+    let locale_state = use_context::<LocaleSignal>(cx).unwrap().0;
 
     view! { cx,
         <div>
@@ -42,12 +44,12 @@ pub fn IconGridItemFooter(
                     spawn_local(copy_setting_copied_transition_in_element(value, target));
                 }
             >
-                {css_hex_copy}
+                {css_hex}
             </button>
             <button
                 title=move_gettext!(cx, "View {}", icon.title)
                 on:click=move |_| {
-                    fill_icon_details_modal_with_icon(cx, icon);
+                    fill_icon_details_modal_with_icon(cx, icon, &locale_state());
                     current_icon_view.update(|state| *state = Some(icon));
                 }
             >

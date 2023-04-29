@@ -5,7 +5,7 @@ use crate::grid::item::icon_preview::on_click_copy_image_children_src_content;
 use crate::grid::CurrentIconViewSignal;
 use crate::modal::*;
 use crate::Ids;
-use i18n::{gettext, move_gettext};
+use i18n::{gettext, move_gettext, Language};
 use leptos::{document, *};
 use types::SimpleIcon;
 use wasm_bindgen::JsCast;
@@ -23,7 +23,11 @@ fn get_slug_from_modal_container() -> String {
         .inner_text()
 }
 
-pub fn fill_icon_details_modal_with_icon(cx: Scope, icon: &'static SimpleIcon) {
+pub fn fill_icon_details_modal_with_icon(
+    cx: Scope,
+    icon: &'static SimpleIcon,
+    locale: &Language,
+) {
     let modal_body = document()
         .get_element_by_id(Ids::IconDetailsModal.as_str())
         .unwrap()
@@ -157,6 +161,51 @@ pub fn fill_icon_details_modal_with_icon(cx: Scope, icon: &'static SimpleIcon) {
         modal_license_link.set_inner_text(&title);
     }
 
+    // Set the deprecation information
+    let modal_deprecation_paragraph = modal_body
+        .get_elements_by_tag_name("p")
+        .item(0)
+        .unwrap()
+        .dyn_into::<web_sys::HtmlElement>()
+        .unwrap();
+
+    if let Some(deprecation) = icon.deprecation {
+        modal_deprecation_paragraph.set_inner_html(&gettext!(
+            cx,
+            "{} will be removed at {} about {} (see {})",
+            icon.title,
+            &format!(
+                "<a href=\"{}\">v{}</a>",
+                deprecation.get_milestone_url(),
+                deprecation.removal_at_version,
+            ),
+            &js_sys::Date::new(&wasm_bindgen::JsValue::from(
+                deprecation.milestone_due_on,
+            ))
+            .to_locale_date_string(
+                locale.code,
+                &wasm_bindgen::JsValue::from(js_sys::Object::new())
+            )
+            .as_string()
+            .unwrap(),
+            &format!(
+                "<a href=\"{}\">#{}</a>",
+                deprecation.get_pull_request_url(),
+                deprecation.pull_request_number,
+            )
+        ));
+        modal_deprecation_paragraph
+            .class_list()
+            .remove_1("hidden")
+            .unwrap();
+    } else {
+        modal_deprecation_paragraph
+            .class_list()
+            .add_1("hidden")
+            .unwrap();
+    }
+
+    // Set download buttons
     let modal_footer = modal_body
         .first_element_child()
         .unwrap()
@@ -213,6 +262,7 @@ fn IconDetailsModalInformation(cx: Scope) -> impl IntoView {
             ></button>
             <a target="_blank">{move_gettext!(cx, "Brand guidelines")}</a>
             <a target="_blank" title=move_gettext!(cx, "License")></a>
+            <p></p>
         </div>
     }
 }

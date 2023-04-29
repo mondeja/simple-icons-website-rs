@@ -5,7 +5,7 @@ use std::path::Path;
 
 /// Deprecated icons for next versions of Simple Icons
 #[derive(Clone)]
-pub struct DeprecatedIcon {
+pub struct IconDeprecation {
     pub slug: String,
     pub removal_at_version: String,
     pub milestone_number: u64,
@@ -17,7 +17,7 @@ pub struct DeprecatedIcon {
  * Get all the icons that will be removed in the next major versions
  * ordered by version.
  **/
-pub fn fetch_deprecated_simple_icons() -> Vec<DeprecatedIcon> {
+pub fn fetch_deprecated_simple_icons() -> Vec<IconDeprecation> {
     let tmp_file_path =
         Path::new(&env::temp_dir()).join(DEPRECATED_ICONS_FILE_NAME);
     if !tmp_file_path.exists() {
@@ -46,7 +46,7 @@ pub fn fetch_deprecated_simple_icons() -> Vec<DeprecatedIcon> {
         .as_array()
         .unwrap();
 
-    let mut deprecated_icons: Vec<DeprecatedIcon> = Vec::new();
+    let mut deprecated_icons: Vec<IconDeprecation> = Vec::new();
 
     for milestone_data in milestones_data.iter() {
         let title = milestone_data.get("title").unwrap().as_str().unwrap();
@@ -91,7 +91,7 @@ pub fn fetch_deprecated_simple_icons() -> Vec<DeprecatedIcon> {
                 let slug =
                     path.to_string().replace("icons/", "").replace(".svg", "");
 
-                let deprecated_icon = DeprecatedIcon {
+                let deprecated_icon = IconDeprecation {
                     slug,
                     removal_at_version: removal_at_version.to_string(),
                     milestone_number,

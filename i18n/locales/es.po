@@ -244,3 +244,7 @@ msgstr "Ir al encabezado"
 #: components/src/scroll.rs:68
 msgid "Go to footer"
 msgstr "Ir al pie de página"
+
+#: components/src/grid/item/details.rs:175
+msgid "{} will be removed at {} about {} (see {})"
+msgstr "{} será eliminado en {} aproximadamente a {} (ver {})"

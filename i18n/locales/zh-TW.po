@@ -246,3 +246,7 @@ msgstr "转到标题"
 #: components/src/scroll.rs:68
 msgid "Go to footer"
 msgstr "转到页脚"
+
+#: components/src/grid/item/details.rs:175
+msgid "{} will be removed at {} about {} (see {})"
+msgstr "{} 将在 {} 时移除关于 {} 的信息（请参阅 {}）"

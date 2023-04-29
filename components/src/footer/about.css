@@ -4,8 +4,6 @@
   }
 
   .footer-about a {
-    @apply text-[var(--link-color)] hover:text-[var(--link-color-hover)]
-      focus:text-[var(--link-color-hover)]
-      font-bold hover:underline focus:underline;
+    @apply text-link;
   }
 }

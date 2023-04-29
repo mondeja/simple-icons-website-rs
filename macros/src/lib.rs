@@ -118,7 +118,7 @@ pub fn get_simple_icons_3rd_party_extensions(_: TokenStream) -> TokenStream {
 }
 
 #[proc_macro]
-pub fn simple_icons_array(_: TokenStream) -> TokenStream {
+pub fn icons_array(_: TokenStream) -> TokenStream {
     let max_icons = CONFIG.max_icons;
     let simple_icons = get_simple_icons(max_icons);
 
@@ -130,7 +130,7 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
 
     let deprecated_icons = fetch_deprecated_simple_icons();
 
-    let mut simple_icons_array_code = "[".to_string();
+    let mut icons_array_code = "[".to_string();
     for (i, icon) in simple_icons.iter().enumerate() {
         // color order index
         let order_color = sorted_hexes
@@ -142,7 +142,7 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
             .iter()
             .find(|deprecated_icon| *deprecated_icon.slug == icon.slug);
 
-        simple_icons_array_code.push_str(&format!(
+        icons_array_code.push_str(&format!(
             concat!(
                 "::types::SimpleIcon{{",
                 "slug: \"{}\",",
@@ -221,7 +221,7 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
                     format!(
                         concat!(
                             "Some(",
-                            "&::types::DeprecatedIcon{{",
+                            "&::types::IconDeprecation{{",
                             "removal_at_version: \"{}\",",
                             "milestone_number: {},",
                             "milestone_due_on: \"{}\",",
@@ -239,7 +239,7 @@ pub fn simple_icons_array(_: TokenStream) -> TokenStream {
             },
         ));
     }
-    simple_icons_array_code.push(']');
+    icons_array_code.push(']');
 
-    simple_icons_array_code.parse().unwrap()
+    icons_array_code.parse().unwrap()
 }
