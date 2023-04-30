@@ -7,14 +7,14 @@ use crate::controls::layout::{Layout, LayoutSignal};
 use crate::controls::order::{sort_icons, OrderMode, OrderModeVariant};
 use crate::controls::search::search_icons_and_returns_first_page;
 use config::CONFIG;
-use icons_loader::*;
-use item::{details::*, *};
+use icons_loader::{IconsLoader, IconsLoaderSignal};
+use item::{details::IconDetailsModal, IconGridItem};
 use leptos::{
     html::{Footer, HtmlElement},
     NodeRef, *,
 };
 use macros::{get_number_of_icons, icons_array};
-use scroll::*;
+use scroll::ScrollButtons;
 use types::SimpleIcon;
 use wasm_bindgen::{closure::Closure, JsCast};
 use web_sys::{

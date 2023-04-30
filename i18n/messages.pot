@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-30 16:01+0000\n"
+"POT-Creation-Date: 2023-04-30 19:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,7 +37,7 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
-#: components/src/controls/download/mod.rs:106 components/src/header/title.rs:20 app/src/head.rs:15
+#: components/src/controls/download/mod.rs:106 components/src/header/title.rs:20 app/src/head.rs:16
 msgid "SVG"
 msgstr ""
 
@@ -213,43 +213,43 @@ msgstr ""
 msgid "Go to footer"
 msgstr ""
 
-#: components/src/header/nav/language_selector.rs:104
+#: components/src/header/nav/language_selector.rs:106
 msgid "Change language"
 msgstr ""
 
-#: components/src/header/nav/language_selector.rs:129
+#: components/src/header/nav/language_selector.rs:131
 msgid "Select a language"
 msgstr ""
 
-#: components/src/header/nav/third_party_extensions.rs:49 components/src/header/nav/third_party_extensions.rs:73
+#: components/src/header/nav/third_party_extensions.rs:51 components/src/header/nav/third_party_extensions.rs:75
 msgid "Third party extensions"
 msgstr ""
 
-#: components/src/header/nav/mod.rs:43
+#: components/src/header/nav/mod.rs:47
 msgid "Main Repository"
 msgstr ""
 
-#: components/src/header/nav/mod.rs:58
+#: components/src/header/nav/mod.rs:62
 msgid "jsDelivr (Content Delivery Network)"
 msgstr ""
 
-#: components/src/header/nav/mod.rs:63
+#: components/src/header/nav/mod.rs:67
 msgid "UNPKG (Content Delivery Network)"
 msgstr ""
 
-#: components/src/header/nav/mod.rs:73
+#: components/src/header/nav/mod.rs:77
 msgid "Legal disclaimer"
 msgstr ""
 
-#: components/src/header/nav/mod.rs:100
+#: components/src/header/nav/mod.rs:104
 msgid "Open menu"
 msgstr ""
 
-#: components/src/header/nav/mod.rs:120
+#: components/src/header/nav/mod.rs:124
 msgid "Close menu"
 msgstr ""
 
-#: components/src/header/title.rs:18 app/src/head.rs:13
+#: components/src/header/title.rs:18 app/src/head.rs:14
 msgid "{} free {} icons for popular brands"
 msgstr ""
 

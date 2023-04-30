@@ -5,11 +5,11 @@ pub(crate) mod icon_preview;
 mod links;
 mod title;
 
-use deprecated::*;
-use footer::*;
-use icon_preview::*;
-use links::*;
-use title::*;
+use deprecated::IconIsDeprecatedNotice;
+use footer::IconGridItemFooter;
+use icon_preview::IconGridItemPreview;
+use links::IconGridItemLinks;
+use title::IconGridItemTitle;
 use types::SimpleIcon;
 
 use leptos::*;

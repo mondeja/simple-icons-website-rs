@@ -1,5 +1,5 @@
 use crate::grid::IconsGridSignal;
-use crate::spinners::*;
+use crate::spinners::TripleDotsSpinner;
 use i18n::move_gettext;
 use leptos::*;
 

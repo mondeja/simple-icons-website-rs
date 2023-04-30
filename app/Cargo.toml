@@ -5,9 +5,10 @@ version.workspace = true
 edition.workspace = true
 
 [dependencies]
-simple-icons-website-components = { path = "../components" }
-simple-icons-website-macros = { path = "../macros" }
-simple-icons-website-i18n = { path = "../i18n" }
+simple-icons-website-components.workspace = true
+simple-icons-website-macros.workspace = true
+simple-icons-website-i18n.workspace = true
+simple-icons-website-config.workspace = true
 leptos.workspace = true
 leptos_meta.workspace = true
 leptos_router.workspace = true

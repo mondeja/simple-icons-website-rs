@@ -3,10 +3,10 @@ use components::controls::download::provide_download_type_context;
 use components::controls::layout::provide_layout_context;
 use components::controls::order::provide_order_mode_context;
 use components::controls::search::provide_search_context;
-use components::controls::{Controls, ControlsProps};
-use components::copy::{CopyInput, CopyInputProps};
-use components::grid::{provide_icons_grid_contexts, Grid, GridProps};
-use components::svg_defs::{SVGDefsDefinition, SVGDefsDefinitionProps};
+use components::controls::Controls;
+use components::copy::CopyInput;
+use components::grid::{provide_icons_grid_contexts, Grid};
+use components::svg_defs::SVGDefsDefinition;
 use leptos::*;
 
 #[component]

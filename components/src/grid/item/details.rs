@@ -3,7 +3,7 @@ use crate::copy::copy_inner_text_on_click;
 use crate::fetch::fetch_text_forcing_cache;
 use crate::grid::item::icon_preview::on_click_copy_image_children_src_content;
 use crate::grid::CurrentIconViewSignal;
-use crate::modal::*;
+use crate::modal::Modal;
 use crate::Ids;
 use i18n::{gettext, move_gettext, Language};
 use leptos::{document, *};

@@ -8,13 +8,13 @@ pub mod order;
 pub mod search;
 
 use crate::svg_defs::SVGDefs;
-use color_scheme::*;
-use download::*;
+use color_scheme::ColorSchemeControl;
+use download::DownloadFileTypeControl;
 use i18n::gettext;
-use layout::*;
+use layout::LayoutControl;
 use leptos::*;
-use order::*;
-use search::*;
+use order::OrderControl;
+use search::SearchControl;
 
 /// State of the controls panel
 #[derive(Copy, Clone, Default)]

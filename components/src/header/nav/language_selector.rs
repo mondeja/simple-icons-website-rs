@@ -1,5 +1,7 @@
-use crate::header::{nav::button::*, HeaderState, HeaderStateSignal};
-use crate::modal::*;
+use crate::header::{
+    nav::button::HeaderMenuButton, HeaderState, HeaderStateSignal,
+};
+use crate::modal::Modal;
 use crate::Url;
 use i18n::{move_gettext, Language, LocaleSignal, LANGUAGES};
 use leptos::{window, *};

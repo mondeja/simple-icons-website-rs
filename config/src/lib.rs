@@ -6,6 +6,8 @@ pub struct Config {
     pub max_icons: Option<usize>,
     /// Number of icons per page in the grid
     pub icons_per_page: u32,
+    /// Public URL of the website
+    pub public_url: &'static str,
 }
 
 /// Development config
@@ -15,6 +17,7 @@ pub const CONFIG: Config = Config {
     // WARNING: If you put a great number here, the search functionality
     // will be very slow
     icons_per_page: 30,
+    public_url: "http://127.0.0.1:8080/",
 };
 
 /// Production config
@@ -24,4 +27,5 @@ pub const CONFIG: Config = Config {
     // WARNING: If you put a great number here, the search functionality
     // will be very slow
     icons_per_page: 30,
+    public_url: "https://wasm.simpleicons.org/",
 };

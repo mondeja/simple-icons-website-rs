@@ -3,7 +3,11 @@ pub mod language_selector;
 mod third_party_extensions;
 
 use crate::header::{
-    nav::{button::*, language_selector::*, third_party_extensions::*},
+    nav::{
+        button::{HeaderMenuButton, HeaderMenuLink},
+        language_selector::LanguageSelector,
+        third_party_extensions::ThirdPartyExtensions,
+    },
     HeaderState, HeaderStateSignal,
 };
 use crate::svg_defs::SVGDefs;

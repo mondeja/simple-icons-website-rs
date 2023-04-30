@@ -1,4 +1,4 @@
-use crate::controls::button::*;
+use crate::controls::button::ControlButtonSVGPath;
 use crate::controls::search::{fire_on_search_event, SearchValueSignal};
 use crate::grid::{IconsGrid, IconsGridSignal};
 use crate::storage::LocalStorage;

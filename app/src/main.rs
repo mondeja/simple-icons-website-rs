@@ -10,7 +10,7 @@ pub(crate) mod app;
 pub(crate) mod head;
 pub(crate) mod pages;
 
-use crate::app::{App, AppProps};
+use crate::app::App;
 use leptos::{mount_to_body, view};
 use log::Level;
 

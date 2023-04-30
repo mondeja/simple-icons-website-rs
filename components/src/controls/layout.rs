@@ -1,4 +1,4 @@
-use crate::controls::button::*;
+use crate::controls::button::ControlButtonSVGPath;
 use crate::storage::LocalStorage;
 use crate::Url;
 use i18n::move_gettext;

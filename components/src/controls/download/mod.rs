@@ -1,7 +1,7 @@
 pub mod pdf;
 pub mod svg;
 
-use crate::controls::button::*;
+use crate::controls::button::ControlButtonText;
 use crate::storage::LocalStorage;
 use crate::Url;
 use i18n::move_gettext;

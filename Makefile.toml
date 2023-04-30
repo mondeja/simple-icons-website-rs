@@ -224,10 +224,24 @@ args = [
 ]
 workspace = false
 
+[tasks.create-sitemap]
+description = "Create sitemap.xml asset"
+command = "npm"
+args = ["run", "create-sitemap"]
+workspace = false
+
+[tasks.create-cname]
+description = "Create CNAME"
+command = "npm"
+args = ["run", "create-cname"]
+workspace = false
+
 [tasks.run-pre-build-scripts]
 description = "Run pre-build scripts"
 run_task = { name = [
     "fetch-deprecated-icons",
     "build-fast-fuzzy",
+    "create-sitemap",
+    "create-cname",
 ], parallel = true }
 workspace = false

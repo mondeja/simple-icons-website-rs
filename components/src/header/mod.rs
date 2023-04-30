@@ -4,8 +4,8 @@ pub mod nav;
 mod title;
 
 use leptos::*;
-use nav::*;
-use title::*;
+use nav::HeaderMenu;
+use title::HeaderTitle;
 
 /// State of the header
 #[derive(Copy, Clone, Default, Debug)]

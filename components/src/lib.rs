@@ -2,10 +2,6 @@
 #![feature(stmt_expr_attributes)]
 #![feature(async_closure)]
 
-// TODO: In v0.3.0 Leptos will allow imports of components without needing to
-// import the Props struct, so then refactor imports with `use my_crate::MyComponent;`
-// instead of the current `use my_crate::*;`
-
 pub mod controls;
 pub mod copy;
 pub(crate) mod fetch;

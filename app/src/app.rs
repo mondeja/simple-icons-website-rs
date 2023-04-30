@@ -1,34 +1,20 @@
-use crate::head::{Head, HeadProps};
-use crate::pages::{Index, IndexProps};
+use crate::head::Head;
+use crate::pages::Index;
 use components::controls::color_scheme::{
     provide_color_scheme_context, ColorScheme,
 };
-use components::footer::{Footer, FooterProps};
+use components::footer::Footer;
 use components::header::{
-    nav::language_selector::provide_language_context, Header, HeaderProps,
+    nav::language_selector::provide_language_context, Header,
 };
 use leptos::{
     document, html::Footer as FooterHtmlElement, provide_context, window, *,
 };
-use leptos_router::{
-    Route, RouteProps, Router, RouterProps, Routes, RoutesProps,
-};
+use leptos_router::{Route, Router, Routes};
 use wasm_bindgen::JsCast;
-
-macro_rules! url {
-    () => {
-        "https://simpleicons.org"
-    };
-}
 
 /// Title of the page
 pub static TITLE: &str = "Simple Icons";
-
-/// URL of the website
-pub static URL: &str = url!();
-
-/// URL of Simple Icons logo
-pub static LOGO_URL: &str = concat!(url!(), "/icons/simpleicons.svg");
 
 /// The main application component
 #[component]

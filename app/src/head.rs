@@ -1,4 +1,5 @@
-use crate::app::{LOGO_URL, TITLE, URL};
+use crate::app::TITLE;
+use config::CONFIG;
 use i18n::{gettext, move_gettext};
 use leptos::*;
 use leptos_meta::*;
@@ -28,7 +29,7 @@ pub fn Head(cx: Scope) -> impl IntoView {
             href="./opensearch.xml"
         />
         <Link rel="license" href="./license.txt"/>
-        <Link rel="canonical" href=URL/>
+        <Link rel="canonical" href=CONFIG.public_url/>
         <Link rel="preconnect" href="https://fonts.gstatic.com"/>
         <Link
             rel="stylesheet"
@@ -56,7 +57,7 @@ where
         <Meta name="og:type" content="website"/>
         <Meta name="og:title" content=TITLE/>
         <Meta name="og:description" content=description/>
-        <Meta name="og:url" content=URL/>
+        <Meta name="og:url" content=CONFIG.public_url/>
         <Meta name="og:site_name" content=TITLE/>
         <Meta name="og:image" content="./og.png"/>
     }
@@ -76,7 +77,7 @@ where
         <Meta name="twitter:card" content="summary_large_image"/>
         <Meta name="twitter:title" content=TITLE/>
         <Meta name="twitter:description" content=description/>
-        <Meta name="twitter:url" content=URL/>
+        <Meta name="twitter:url" content=CONFIG.public_url/>
         <Meta name="twitter:image:src" content="./og.png"/>
     }
 }
@@ -85,17 +86,27 @@ where
 /// See https://developers.google.com/search/docs/data-types/logo
 #[component]
 fn LdJSONMetadata(cx: Scope) -> impl IntoView {
-    view! { cx,
-        <script type="application/ld+json">
-            {{
-                serde_json::json!(
-                    { "@context" : "https://schema.org", "@type" : "Organization", "name" : TITLE,
-                    "url" : URL, "logo" : LOGO_URL, "image" : LOGO_URL, "potentialAction" : { "@type"
-                    : "SearchAction", "target" : URL.to_owned() + "/?q={search-term}", "query-input"
-                    : "required name=search-term", }, }
-                )
-                    .to_string()
-            }}
-        </script>
-    }
+    let metadata = {
+        let logo_url = {
+            let mut url = CONFIG.public_url.to_string();
+            url.push_str("icons/simpleicons.svg");
+            url
+        };
+        serde_json::json!({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": TITLE,
+            "url": CONFIG.public_url,
+            "logo": logo_url,
+            "image": logo_url,
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": CONFIG.public_url.to_owned() + "/?q={search-term}",
+                "query-input": "required name=search-term",
+            },
+        })
+        .to_string()
+    };
+
+    view! { cx, <script type="application/ld+json">{metadata}</script> }
 }
