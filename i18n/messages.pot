@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-29 00:54+0000\n"
+"POT-Creation-Date: 2023-04-30 16:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,15 +81,15 @@ msgstr ""
 msgid "Order"
 msgstr ""
 
-#: components/src/controls/search/mod.rs:252
+#: components/src/controls/search/mod.rs:258
 msgid "Search"
 msgstr ""
 
-#: components/src/controls/search/mod.rs:259
+#: components/src/controls/search/mod.rs:266
 msgid "Search by brand..."
 msgstr ""
 
-#: components/src/controls/search/mod.rs:265
+#: components/src/controls/search/mod.rs:272
 msgid "Clear search"
 msgstr ""
 

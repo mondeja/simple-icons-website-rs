@@ -27,16 +27,11 @@ fn title_to_slug_replace_chars(title: &str) -> String {
             // The next implementation differs from the one in Javascript
             // TODO: should this be reported to the unicode_normalization
             // crate? Investigate
-            'á' => new_title.push('a'),
-            'é' => new_title.push('e'),
-            'í' => new_title.push('i'),
-            'ó' => new_title.push('o'),
-            'ú' => new_title.push('u'),
-            'ä' => new_title.push('a'),
-            'ë' => new_title.push('e'),
-            'ï' => new_title.push('i'),
-            'ö' => new_title.push('o'),
-            'ü' => new_title.push('u'),
+            'á' | 'à' | 'ä' => new_title.push('a'),
+            'é' | 'è' | 'ë' => new_title.push('e'),
+            'í' | 'ì' | 'ï' => new_title.push('i'),
+            'ó' | 'ò' | 'ö' => new_title.push('o'),
+            'ú' | 'ù' | 'ü' => new_title.push('u'),
             _ => continue,
         }
     }

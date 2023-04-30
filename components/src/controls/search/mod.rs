@@ -244,8 +244,14 @@ async fn on_search(
 pub fn SearchControl(cx: Scope) -> impl IntoView {
     let icons_grid = use_context::<IconsGridSignal>(cx).unwrap().0;
     let search = use_context::<SearchValueSignal>(cx).unwrap().0;
-    let search_input_ref = create_node_ref::<Input>(cx);
     let order_mode = use_context::<OrderModeSignal>(cx).unwrap().0;
+
+    let search_input_ref = create_node_ref::<Input>(cx);
+    // Focus on load. Fallback for Safari, see:
+    // https://caniuse.com/?search=autofocus
+    search_input_ref.on_load(cx, |input| {
+        _ = input.focus();
+    });
 
     view! { cx,
         <div class="control">
@@ -256,6 +262,7 @@ pub fn SearchControl(cx: Scope) -> impl IntoView {
                     id=Ids::SearchInput.as_str()
                     type="search"
                     autocomplete="off"
+                    autofocus
                     placeholder=move_gettext!(cx, "Search by brand...")
                     value=search
                     on:input=move |_| { spawn_local(on_search(cx, search_input_ref, search, icons_grid, order_mode)) }

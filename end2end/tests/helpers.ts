@@ -1,10 +1,10 @@
 import type { Page, Download, TestType } from '@playwright/test';
 import * as path from 'node:path';
 import * as fs from 'node:fs';
-import { fileURLToPath } from 'url';
 import * as simpleicons from 'simple-icons';
+import { getDirnameFromImportMeta } from 'simple-icons/sdk';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = getDirnameFromImportMeta(import.meta.url);
 
 export const OUTPUT_DIR = 'test-results/';
 const ROOT_DIR = path.resolve(__dirname, '../../');
