@@ -250,6 +250,7 @@ pub fn SearchControl() -> impl IntoView {
         _ = input.focus();
     });
 
+    /* The onfocus attribute puts the cursor at the end of the input */
     view! {
         <div class="control">
             <label for=Ids::SearchInput.as_str()>{move_gettext!( "Search")}</label>
@@ -262,6 +263,7 @@ pub fn SearchControl() -> impl IntoView {
                     autofocus
                     placeholder=move_gettext!("Search by brand...")
                     value=search
+                    onfocus="var value = this.value; this.value = null; this.value = value;"
                     on:input=move |_| { spawn_local(on_search(search_input_ref, search, icons_grid, order_mode)) }
                 />
                 <span
