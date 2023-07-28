@@ -12,6 +12,6 @@ fn main() {
     let mut cname_file = fs::File::create(cname_asset_path).unwrap();
 
     cname_file
-        .write_all(CONFIG.public_url.as_bytes())
+        .write_all(CONFIG.domain.as_bytes())
         .expect("Unable to write CNAME asset file")
 }

@@ -28,7 +28,7 @@ pub fn Head() -> impl IntoView {
             href="./opensearch.xml"
         />
         <Link rel="license" href="./license.txt"/>
-        <Link rel="canonical" href=CONFIG.public_url/>
+        <Link rel="canonical" href=format!("https://{}/", CONFIG.domain)/>
         <Link rel="preconnect" href="https://fonts.gstatic.com"/>
         <Link
             rel="stylesheet"
@@ -55,7 +55,7 @@ where
         <Meta name="og:type" content="website"/>
         <Meta name="og:title" content=TITLE/>
         <Meta name="og:description" content=description/>
-        <Meta name="og:url" content=CONFIG.public_url/>
+        <Meta name="og:url" content=format!("https://{}/", CONFIG.domain)/>
         <Meta name="og:site_name" content=TITLE/>
         <Meta name="og:image" content="./og.png"/>
     }
@@ -74,7 +74,7 @@ where
         <Meta name="twitter:card" content="summary_large_image"/>
         <Meta name="twitter:title" content=TITLE/>
         <Meta name="twitter:description" content=description/>
-        <Meta name="twitter:url" content=CONFIG.public_url/>
+        <Meta name="twitter:url" content=format!("https://{}/", CONFIG.domain)/>
         <Meta name="twitter:image:src" content="./og.png"/>
     }
 }
@@ -84,21 +84,21 @@ where
 #[component]
 fn LdJSONMetadata() -> impl IntoView {
     let metadata = {
-        let logo_url = {
-            let mut url = CONFIG.public_url.to_string();
-            url.push_str("icons/simpleicons.svg");
-            url
-        };
+        let logo_url =
+            format!("https://{}/icons/simpleicons.svg", CONFIG.domain);
         serde_json::json!({
             "@context": "https://schema.org",
             "@type": "Organization",
             "name": TITLE,
-            "url": CONFIG.public_url,
+            "url": format!("https://{}/", CONFIG.domain),
             "logo": logo_url,
             "image": logo_url,
             "potentialAction": {
                 "@type": "SearchAction",
-                "target": CONFIG.public_url.to_owned() + "/?q={search-term}",
+                "target": format!(
+                    "https://{}/?q={{search-term}}",
+                    CONFIG.domain
+                ),
                 "query-input": "required name=search-term",
             },
         })
