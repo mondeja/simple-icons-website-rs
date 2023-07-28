@@ -11,8 +11,6 @@
 
 ## Commands
 
-- `cargo make serve`: Serve the website with [Trunk](https://trunkrs.dev/).
-- `cargo make watch-css`: Watch the CSS files with [TailwindCSS](https://tailwindcss.com/).
 - `cargo make`: Run `serve` and `watch-css` in parallel. Recommended for development.
 - `cargo make tests`: Run the tests with [Playwright](https://playwright.dev/) (you need to build the app for production before).
 - `cargo make formats`: Format files. If you are using VSCode they should be formatted at save.
@@ -21,6 +19,7 @@
 - `cargo make serve`: Build the website for production and serve it with [anywhere](https://www.npmjs.com/package/anywhere).
 - `cargo make docs`: Build and open documentation.
 - `cargo make locales`: Extract new translations. See [Localization](#localization) section.
+- `cargo make watch-css`: Watch the CSS files with [TailwindCSS](https://tailwindcss.com/).
 
 ## Testing
 
