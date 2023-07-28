@@ -7,7 +7,7 @@
 /// Single source of thruth for the URL params state
 pub mod params {
     use leptos::window;
-    use leptos_router::{use_location, ParamsMap};
+    use leptos_router::use_location;
     use wasm_bindgen;
 
     /// Enum to ensure that the params names are unique
@@ -43,7 +43,7 @@ pub mod params {
             params.insert(k.as_str().to_string(), v.to_string());
         }
 
-        let query = to_query_string(&params);
+        let query = params.to_query_string();
         window()
             .history()
             .unwrap()
@@ -81,18 +81,5 @@ pub mod params {
             }
         }
         None
-    }
-
-    // `to_query_string` has currently bad support by Leptos,
-    // see https://github.com/leptos-rs/leptos/pull/854
-    // TODO: remove when the merged PR is released
-    #[inline(always)]
-    pub fn to_query_string(params: &ParamsMap) -> String {
-        if params.0.is_empty() {
-            return String::from("?");
-        }
-        let mut query = params.to_query_string();
-        query.pop();
-        query
     }
 }

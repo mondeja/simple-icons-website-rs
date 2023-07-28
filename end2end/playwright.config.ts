@@ -61,19 +61,12 @@ const config: PlaywrightTestConfig = {
         ...devices['Desktop Firefox'],
       },
     },
-
-    /**
-     * Webkit browsers are crashing on production, investigated at
-     * https://github.com/mondeja/webkit-wasm-bug
-     * and opened issue on wasm-bindgen
-     * https://github.com/rustwasm/wasm-bindgen/issues/3389
-     **/
-    /* {
+    {
       name: 'webkit',
       use: {
         ...devices['Desktop Safari'],
       },
-    }, */
+    },
 
     /* Test against mobile viewports. */
     {
@@ -100,15 +93,12 @@ const config: PlaywrightTestConfig = {
         },
       },
     },
-
-    /* Webkit browsers are crashing on production
     {
       name: 'Mobile Safari',
       use: {
         ...devices['iPhone 12'],
       },
     },
-    */
 
     /* Test against branded browsers. */
     {
