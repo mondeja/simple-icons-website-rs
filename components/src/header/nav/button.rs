@@ -8,7 +8,6 @@ pub trait TitleFn = Fn() -> String + 'static + Copy;
 /// Each link of the header menu
 #[component]
 pub fn HeaderMenuLink<T>(
-    cx: Scope,
     /// Title of the link
     title: T,
     /// URL of the link
@@ -19,9 +18,9 @@ pub fn HeaderMenuLink<T>(
 where
     T: TitleFn,
 {
-    let header_state = use_context::<HeaderStateSignal>(cx).unwrap().0;
+    let header_state = use_context::<HeaderStateSignal>().unwrap().0;
 
-    view! { cx,
+    view! {
         <li class=move || {
             if header_state.get().menu_open {
                 "block".to_string()
@@ -43,7 +42,6 @@ where
 /// Each button of the header menu that is not a link
 #[component]
 pub fn HeaderMenuButton<C, T>(
-    cx: Scope,
     /// Additional classes to add to the button
     additional_classes: C,
     /// Title of the button
@@ -55,7 +53,7 @@ where
     C: Fn() -> String + 'static + Copy,
     T: TitleFn,
 {
-    view! { cx,
+    view! {
         <li title=title class=additional_classes tabindex=0>
             <svg role="button" aria-label=title viewBox="0 0 24 24">
                 <path d=svg_path></path>

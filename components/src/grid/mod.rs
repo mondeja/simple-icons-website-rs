@@ -67,21 +67,16 @@ pub struct IconsGridSignal(pub RwSignal<IconsGrid>);
 pub struct CurrentIconViewSignal(pub RwSignal<Option<&'static SimpleIcon>>);
 
 pub fn provide_icons_grid_contexts(
-    cx: Scope,
     initial_search_value: &str,
     initial_order_mode: &OrderMode,
 ) {
-    provide_context(
-        cx,
-        IconsGridSignal(create_rw_signal(
-            cx,
-            IconsGrid::new(initial_search_value, &initial_order_mode.current),
-        )),
-    );
-    provide_context(
-        cx,
-        IconsLoaderSignal(create_rw_signal(cx, IconsLoader::default())),
-    );
+    provide_context(IconsGridSignal(create_rw_signal(IconsGrid::new(
+        initial_search_value,
+        &initial_order_mode.current,
+    ))));
+    provide_context(IconsLoaderSignal(
+        create_rw_signal(IconsLoader::default()),
+    ));
 }
 
 fn initial_icons_from_search_value_and_order_mode(
@@ -113,16 +108,16 @@ fn initial_icons_from_search_value_and_order_mode(
 /// scrolls to the footer. See the `IntersectionObserver` used inside the
 /// `Footer` component.
 #[component]
-pub fn Icons(cx: Scope) -> impl IntoView {
-    let icons_grid = use_context::<IconsGridSignal>(cx).unwrap().0;
+pub fn Icons() -> impl IntoView {
+    let icons_grid = use_context::<IconsGridSignal>().unwrap().0;
 
-    view! { cx,
+    view! {
         {move || {
             icons_grid()
                 .loaded_icons
                 .iter()
                 .map(|icon: &&'static SimpleIcon| {
-                    view! { cx, <IconGridItem icon=*icon/> }
+                    view! { <IconGridItem icon=*icon/> }
                 })
                 .collect::<Vec<_>>()
         }}
@@ -136,21 +131,21 @@ pub fn Icons(cx: Scope) -> impl IntoView {
 /// When the user scrolls nearly to the footer, the next page of icons are loaded.
 /// This is accomplished by using an `IntersectionObserver`.
 #[component]
-pub fn Grid(cx: Scope) -> impl IntoView {
+pub fn Grid() -> impl IntoView {
     // Get layout view signal
-    let layout = use_context::<LayoutSignal>(cx).unwrap().0;
+    let layout = use_context::<LayoutSignal>().unwrap().0;
 
     // Provide the context for the current icon details view
-    provide_context(cx, CurrentIconViewSignal(create_rw_signal(cx, None)));
+    provide_context(CurrentIconViewSignal(create_rw_signal(None)));
 
     // Get the context of the page footer node reference and, when the footer element
     // has been created, load the intersection callback for loading more icons when
     // the viewport of the screen intersects into the footer
-    let footer_ref = use_context::<NodeRef<Footer>>(cx).unwrap();
-    footer_ref.on_load(cx, move |footer: HtmlElement<Footer>| {
-        let icons_grid = use_context::<IconsGridSignal>(cx).unwrap().0;
+    let footer_ref = use_context::<NodeRef<Footer>>().unwrap();
+    footer_ref.on_load(move |footer: HtmlElement<Footer>| {
+        let icons_grid = use_context::<IconsGridSignal>().unwrap().0;
         let icons_loader: RwSignal<IconsLoader> =
-            use_context::<IconsLoaderSignal>(cx).unwrap().0;
+            use_context::<IconsLoaderSignal>().unwrap().0;
 
         let intersection_callback: Closure<
             dyn Fn(Vec<IntersectionObserverEntry>, IntersectionObserver),
@@ -184,7 +179,7 @@ pub fn Grid(cx: Scope) -> impl IntoView {
         intersection_callback.forget();
     });
 
-    view! { cx,
+    view! {
         <IconDetailsModal/>
         <ul class:layout-compact=move || layout() == Layout::Compact>
             <Icons/>

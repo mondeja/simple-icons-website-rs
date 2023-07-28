@@ -28,11 +28,11 @@ pub struct ControlsState {
 struct ControlsStateSignal(RwSignal<ControlsState>);
 
 #[component]
-pub fn Controls(cx: Scope) -> impl IntoView {
-    let controls_state = create_rw_signal(cx, ControlsState::default());
-    provide_context(cx, ControlsStateSignal(controls_state));
+pub fn Controls() -> impl IntoView {
+    let controls_state = create_rw_signal(ControlsState::default());
+    provide_context(ControlsStateSignal(controls_state));
 
-    view! { cx,
+    view! {
         <menu>
             <div class=move || {
                 let mut class = "controls-group flex-grow sm:flex-grow-0 mr-4".to_string();
@@ -75,31 +75,31 @@ pub fn Controls(cx: Scope) -> impl IntoView {
 /// This is only used on tablet and mobile screens. Renders different icons
 /// depending on the state of the controls panel.
 #[component]
-pub fn ControlsToggler(cx: Scope) -> impl IntoView {
-    let controls_state = use_context::<ControlsStateSignal>(cx).unwrap().0;
+pub fn ControlsToggler() -> impl IntoView {
+    let controls_state = use_context::<ControlsStateSignal>().unwrap().0;
 
-    view! { cx,
+    view! {
         <div class="control">
             <label class="block">""</label>
             <button
                 class="absolute right-0 bottom-0 rounded"
                 title=move || {
                     if controls_state().buttons_group_open {
-                        gettext!(cx, "Open search bar")
+                        gettext!( "Open search bar")
                     } else {
-                        gettext!(cx, "Open controls")
+                        gettext!( "Open controls")
                     }
                 }
                 on:click=move |_| {
                     controls_state
-                        .update(|mut state| {
+                        .update(|state| {
                             state.buttons_group_open = !state.buttons_group_open;
                         });
                 }
             >
                 <svg role="button" viewBox="0 0 24 24">
                     {move || {
-                        view! { cx,
+                        view! {
                             <use_ href=format!(
                                 "#{}", if controls_state().buttons_group_open { SVGDefs::ViewPath.id() } else {
                                 SVGDefs::ControlsPath.id() }

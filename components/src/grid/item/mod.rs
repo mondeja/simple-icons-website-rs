@@ -19,11 +19,10 @@ use leptos::*;
 /// Each icon displayed in the icons grid
 #[component]
 pub fn IconGridItem(
-    cx: Scope,
     /// Icon
     icon: &'static SimpleIcon,
 ) -> impl IntoView {
-    view! { cx,
+    view! {
         <li>
             <IconGridItemPreview slug=icon.slug title=icon.title/>
             <IconGridItemLinks
@@ -35,7 +34,7 @@ pub fn IconGridItem(
                 .deprecation
                 .as_ref()
                 .map(|deprecation| {
-                    view! { cx,
+                    view! {
                         <IconIsDeprecatedNotice
                             title=icon.title
                             pull_request_url=deprecation.get_pull_request_url()

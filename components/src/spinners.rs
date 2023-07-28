@@ -3,7 +3,6 @@ use leptos::*;
 /// A simple spinner with tree animated dots
 #[component]
 pub(crate) fn TripleDotsSpinner<H>(
-    cx: Scope,
     /// Radius of the circles in pixels (5 as default)
     #[prop(optional)]
     radius: Option<u32>,
@@ -34,7 +33,7 @@ where
     let cy = height / 2;
     let hidden_frames_values = "0;".repeat(hidden_frames.unwrap_or(3) as usize);
 
-    view! { cx,
+    view! {
         <svg
             width=format!("{}px", width)
             height=format!("{}px", height)

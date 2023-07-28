@@ -30,10 +30,10 @@ static LEGAL_DISCLAIMER_SVG_PATH: &str = "m23.9 9.7-3.54-7.89-.005-.01a.542.542 
 /// - Button to open the menu on small screens built by [`HeaderMenuButton`].
 /// - Button to open third party extensions table built by [`HeaderMenuButton`].
 #[component]
-pub fn HeaderMenu(cx: Scope) -> impl IntoView {
-    let header_state = use_context::<HeaderStateSignal>(cx).unwrap().0;
+pub fn HeaderMenu() -> impl IntoView {
+    let header_state = use_context::<HeaderStateSignal>().unwrap().0;
 
-    view! { cx,
+    view! {
         <nav class="self-center flex flex-row justify-between w-full lg:w-auto">
             <ul class=move || {
                 let mut class = "self-center md:flex md:flex-row".to_string();
@@ -44,7 +44,7 @@ pub fn HeaderMenu(cx: Scope) -> impl IntoView {
                 class
             }>
                 <HeaderMenuLink
-                    title=move_gettext!(cx, "Main Repository")
+                    title=move_gettext!( "Main Repository")
                     href="https://github.com/simple-icons/simple-icons"
                     svg_path=simple_icon_svg_path!("github")
                 />
@@ -59,12 +59,12 @@ pub fn HeaderMenu(cx: Scope) -> impl IntoView {
                     svg_path=simple_icon_svg_path!("packagist")
                 />
                 <HeaderMenuLink
-                    title=move_gettext!(cx, "jsDelivr (Content Delivery Network)")
+                    title=move_gettext!( "jsDelivr (Content Delivery Network)")
                     href="https://www.jsdelivr.com/package/npm/simple-icons"
                     svg_path=simple_icon_svg_path!("jsdelivr")
                 />
                 <HeaderMenuLink
-                    title=move_gettext!(cx, "UNPKG (Content Delivery Network)")
+                    title=move_gettext!( "UNPKG (Content Delivery Network)")
                     href="https://unpkg.com/browse/simple-icons/"
                     svg_path=UNPKG_ICON_SVG_PATH
                 />
@@ -74,7 +74,7 @@ pub fn HeaderMenu(cx: Scope) -> impl IntoView {
                     svg_path=simple_icon_svg_path!("opencollective")
                 />
                 <HeaderMenuLink
-                    title=move_gettext!(cx, "Legal disclaimer")
+                    title=move_gettext!( "Legal disclaimer")
                     href="https://github.com/simple-icons/simple-icons/blob/master/DISCLAIMER.md"
                     svg_path=LEGAL_DISCLAIMER_SVG_PATH
                 />
@@ -93,15 +93,15 @@ pub fn HeaderMenu(cx: Scope) -> impl IntoView {
 ///
 /// Button to open the menu on mobile devices
 #[component]
-pub fn HeaderMenuBurgerButton(cx: Scope) -> impl IntoView {
-    let header_state = use_context::<HeaderStateSignal>(cx).unwrap().0;
+pub fn HeaderMenuBurgerButton() -> impl IntoView {
+    let header_state = use_context::<HeaderStateSignal>().unwrap().0;
 
-    view! { cx,
+    view! {
         <HeaderMenuButton
             on:click=move |_| {
                 header_state.update(|state: &mut HeaderState| state.toggle_menu());
             }
-            title=move_gettext!(cx, "Open menu")
+            title=move_gettext!( "Open menu")
             additional_classes=move || {
                 if !header_state.get().menu_open {
                     "block lg:hidden".to_string()
@@ -116,12 +116,12 @@ pub fn HeaderMenuBurgerButton(cx: Scope) -> impl IntoView {
 
 /// Button to close the menu on mobile devices
 #[component]
-pub fn HeaderMenuCloseButton(cx: Scope) -> impl IntoView {
-    let header_state = use_context::<HeaderStateSignal>(cx).unwrap().0;
+pub fn HeaderMenuCloseButton() -> impl IntoView {
+    let header_state = use_context::<HeaderStateSignal>().unwrap().0;
 
-    view! { cx,
+    view! {
         <HeaderMenuButton
-            title=move_gettext!(cx, "Close menu")
+            title=move_gettext!( "Close menu")
             on:click=move |_| {
                 header_state.update(|state: &mut HeaderState| state.toggle_menu());
             }

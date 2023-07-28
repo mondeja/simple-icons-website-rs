@@ -48,13 +48,12 @@ pub struct HeaderStateSignal(pub RwSignal<HeaderState>);
 
 /// Header at the top of the page
 #[component]
-pub fn Header(cx: Scope) -> impl IntoView {
-    provide_context(
-        cx,
-        HeaderStateSignal(create_rw_signal(cx, HeaderState::default())),
-    );
+pub fn Header() -> impl IntoView {
+    provide_context(HeaderStateSignal(
+        create_rw_signal(HeaderState::default()),
+    ));
 
-    view! { cx,
+    view! {
         <header>
             <HeaderTitle/>
             <HeaderMenu/>

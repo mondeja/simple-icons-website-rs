@@ -9,6 +9,7 @@ members = [
     "scripts",
     "types",
 ]
+resolver = "2"
 
 [workspace.package]
 version = "0.1.0"
@@ -21,14 +22,17 @@ simple-icons-website-i18n = { path = "./i18n" }
 simple-icons-website-config = { path = "./config" }
 simple-icons-website-types = { path = "./types" }
 simple-icons-website-components = { path = "./components" }
-leptos = { version = "0.3.0-alpha", default-features = false, features = [
-    "csr"
+leptos = { version = "0.5.0-alpha", default-features = false, features = [
+    "csr",
+    "nightly"
 ] }
-leptos_meta = { version = "0.3.0-alpha", default-features = false, features = [
-    "csr"
+leptos_meta = { version = "0.5.0-alpha", default-features = false, features = [
+    "csr",
+    "nightly"
 ] }
-leptos_router = { version = "0.3.0-alpha", default-features = false, features = [
-    "csr"
+leptos_router = { version = "0.5.0-alpha", default-features = false, features = [
+    "csr",
+    "nightly"
 ] }
 console_log = "1.0.0"
 log = "0.4.17"
@@ -70,6 +74,7 @@ unicode-normalization = "0.1.22"
 icu_collator = "1.1.0"
 reqwest = { version = "0.11", default-features = false, features = [
     "json",
-    "blocking"
+    "blocking",
+    "native-tls",
 ] }
 chrono = { version = "0.4.24", features = ["clock"] }

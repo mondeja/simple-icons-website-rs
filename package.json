@@ -26,20 +26,20 @@
     "create-cname": "(node -e 'process.exit(!require(\"fs\").existsSync(\"target/release/create-cname\"))' || cargo build --release --bin create-cname) && target/release/create-cname"
   },
   "devDependencies": {
-    "@playwright/test": "1.32.3",
-    "@types/node": "18.15.5",
+    "@playwright/test": "1.36.2",
+    "@types/node": "20.4.5",
     "anywhere": "1.6.0",
     "autoprefixer": "10.4.14",
-    "esbuild": "0.17.16",
+    "esbuild": "0.18.17",
     "husky": "8.0.3",
-    "postcss": "8.4.21",
+    "postcss": "8.4.27",
     "postcss-import": "15.1.0",
-    "prettier": "2.8.7",
-    "simple-icons": "9.1.0",
-    "stylelint": "15.5.0",
-    "stylelint-config-standard": "33.0.0",
+    "prettier": "3.0.0",
+    "simple-icons": "9.7.0",
+    "stylelint": "15.10.2",
+    "stylelint-config-standard": "34.0.0",
     "stylelint-config-tailwindcss": "0.0.7",
-    "tailwindcss": "3.3.1"
+    "tailwindcss": "3.3.3"
   },
   "dependencies": {
     "blob-stream": "0.1.3",

@@ -18,10 +18,10 @@ pub static TITLE: &str = "Simple Icons";
 
 /// The main application component
 #[component]
-pub fn App(cx: Scope) -> impl IntoView {
-    let color_scheme = provide_color_scheme_context(cx).0;
+pub fn App() -> impl IntoView {
+    let color_scheme = provide_color_scheme_context().0;
 
-    create_effect(cx, move |_| {
+    create_effect(move |_| {
         let body = document()
             .get_elements_by_tag_name("body")
             .get_with_index(0)
@@ -50,8 +50,8 @@ pub fn App(cx: Scope) -> impl IntoView {
             .unwrap();
     });
 
-    let locale_signal = provide_language_context(cx).0;
-    create_effect(cx, move |_| {
+    let locale_signal = provide_language_context().0;
+    create_effect(move |_| {
         let html = document()
             .document_element()
             .unwrap()
@@ -62,18 +62,18 @@ pub fn App(cx: Scope) -> impl IntoView {
 
     // Create a context to store a node reference to the footer
     // to use it in other components of pages
-    let footer_ref = create_node_ref::<FooterHtmlElement>(cx);
-    provide_context::<NodeRef<FooterHtmlElement>>(cx, footer_ref);
+    let footer_ref = create_node_ref::<FooterHtmlElement>();
+    provide_context::<NodeRef<FooterHtmlElement>>(footer_ref);
 
-    view! { cx,
+    view! {
         <Head/>
         <Header/>
         <Router>
             <Routes>
                 <Route
                     path="/"
-                    view=move |cx| {
-                        view! { cx, <Index/> }
+                    view=move || {
+                        view! { <Index/> }
                     }
                 />
             </Routes>

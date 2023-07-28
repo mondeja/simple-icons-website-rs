@@ -29,18 +29,17 @@ pub(crate) fn on_click_copy_image_children_src_content(ev: MouseEvent) {
 /// Contains the lazy loaded logo of the brand.
 #[component]
 pub fn IconGridItemPreview(
-    cx: Scope,
     /// Icon slug
     slug: &'static str,
     /// Brand title
     title: &'static str,
 ) -> impl IntoView {
-    view! { cx,
+    view! {
         <button
-            title=move_gettext!(cx, "Copy {} SVG", title)
+            title=move_gettext!( "Copy {} SVG", title)
             on:click=on_click_copy_image_children_src_content
         >
-            <img src=format!("/icons/{}.svg", slug) alt=move_gettext!(cx, "{} icon", title)/>
+            <img src=format!("/icons/{}.svg", slug) alt=move_gettext!( "{} icon", title)/>
         </button>
     }
 }

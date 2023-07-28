@@ -12,11 +12,10 @@ static TWITTER_ICON_SVG_PATH: &str = simple_icon_svg_path!("twitter");
 /// Footer of the website
 #[component]
 pub fn Footer(
-    cx: Scope,
     /// Reference to the footer container, for using in sibling components
     container_ref: NodeRef<FooterHtmlElement>,
 ) -> impl IntoView {
-    view! { cx,
+    view! {
         <footer _ref=container_ref>
             <ReportProblems/>
             <div class="flex flex-col md:flex-row justify-between">
@@ -31,7 +30,7 @@ pub fn Footer(
                 )
                 href="https://github.com/simple-icons/simple-icons-website"
             >
-                {move_gettext!(cx, "Made with ❤️ on GitHub")}
+                {move_gettext!( "Made with ❤️ on GitHub")}
             </a>
         </footer>
     }
@@ -39,13 +38,12 @@ pub fn Footer(
 
 #[component]
 fn ReportLink(
-    cx: Scope,
     /// Link URL
     href: &'static str,
     /// Link content
     children: Children,
 ) -> impl IntoView {
-    view! { cx,
+    view! {
         <a
             class=concat!(
                 "text-[#00e] hover:text-[#3434ee] focus:text-[#3434ee] visited:text-[#551a8b]",
@@ -53,25 +51,25 @@ fn ReportLink(
             )
             href=href
         >
-            {children(cx)}
+            {children()}
         </a>
     }
 }
 
 #[component]
-pub fn ReportProblems(cx: Scope) -> impl IntoView {
-    view! { cx,
+pub fn ReportProblems() -> impl IntoView {
+    view! {
         <div class="flex flex-col py-8">
             <p>
-                {move_gettext!(cx, "Icon missing?")} {" "}
+                {move_gettext!( "Icon missing?")} {" "}
                 <ReportLink href="https://github.com/simple-icons/simple-icons/issues/new?assignees=&labels=new+icon&template=icon_request.yml">
-                    {move_gettext!(cx, "Submit a request")}
+                    {move_gettext!( "Submit a request")}
                 </ReportLink>
             </p>
             <p>
-                {move_gettext!(cx, "Icon outdated?")} {" "}
+                {move_gettext!( "Icon outdated?")} {" "}
                 <ReportLink href="https://github.com/simple-icons/simple-icons/issues/new?assignees=&labels=icon+outdated&template=icon_update.yml">
-                    {move_gettext!(cx, "Report outdated icon")}
+                    {move_gettext!( "Report outdated icon")}
                 </ReportLink>
             </p>
         </div>
@@ -79,8 +77,8 @@ pub fn ReportProblems(cx: Scope) -> impl IntoView {
 }
 
 #[component]
-pub fn TwitterButton(cx: Scope) -> impl IntoView {
-    view! { cx,
+pub fn TwitterButton() -> impl IntoView {
+    view! {
         <a
             class=concat!(
                 "flex flex-row items-center h-0 my-auto align-middle bg-[#1DA1F2]",
@@ -95,7 +93,7 @@ pub fn TwitterButton(cx: Scope) -> impl IntoView {
             <svg fill="white" class="h-4 mr-3" role="img" viewBox="0 0 24 24">
                 <path d=TWITTER_ICON_SVG_PATH></path>
             </svg>
-            <span>{move_gettext!(cx, "Share this on Twitter!")}</span>
+            <span>{move_gettext!( "Share this on Twitter!")}</span>
         </a>
     }
 }

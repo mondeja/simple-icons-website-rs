@@ -92,10 +92,9 @@ pub struct LocaleSignal(pub RwSignal<Language>);
 
 #[macro_export]
 macro_rules! gettext_impl {
-    ($cx:ident, $key:expr) => {
-        ((&use_context::<::i18n::LocaleSignal>($cx).unwrap().0)()
-            .translate($key))
-        .to_string()
+    ($key:expr) => {
+        ((&use_context::<::i18n::LocaleSignal>().unwrap().0)().translate($key))
+            .to_string()
     };
 }
 
@@ -117,7 +116,7 @@ macro_rules! replace_impl {
 /// Use it like this:
 ///
 /// ```rust,ignore
-/// <p>{move || gettext!(cx, "Hello world!")}</p>
+/// <p>{move || gettext!( "Hello world!")}</p>
 /// ```
 ///
 /// You need to wrap in a `move` closure because is the way that Leptos
@@ -129,15 +128,15 @@ macro_rules! replace_impl {
 /// but only `{}` interpolations are supported.
 ///
 /// ```rust,ignore
-/// <p>{move || gettext!(cx, "{} {}!", "Hello", "world")}</p>
+/// <p>{move || gettext!( "{} {}!", "Hello", "world")}</p>
 /// ```
 #[macro_export]
 macro_rules! gettext {
-    ($cx:ident, $key:expr) => {
-        $crate::gettext_impl!($cx, $key)
+    ($key:expr) => {
+        $crate::gettext_impl!($key)
     };
-    ($cx:ident, $key:expr, $($replacements:expr),+) => {
-        $crate::replace_impl!($crate::gettext_impl!($cx, $key), $($replacements),+)
+    ($key:expr, $($replacements:expr),+) => {
+        $crate::replace_impl!($crate::gettext_impl!($key), $($replacements),+)
     };
 }
 
@@ -147,19 +146,19 @@ macro_rules! gettext {
 ///
 /// Use it like this:
 /// ```rust,ignore
-/// <p>{move_gettext!(cx, "Hello world!")}</p>
+/// <p>{move_gettext!( "Hello world!")}</p>
 /// ```
 ///
 /// The previous code is the same as:
 /// ```rust,ignore
-/// <p>{move || gettext!(cx, "Hello world!")}</p>
+/// <p>{move || gettext!( "Hello world!")}</p>
 /// ```
 #[macro_export]
 macro_rules! move_gettext {
-    ($cx:ident, $key:expr) => {
-        move||$crate::gettext!($cx, $key)
+    ($key:expr) => {
+        move||$crate::gettext!($key)
     };
-    ($cx:ident, $key:expr, $($replacements:expr),+) => {
-        move||$crate::gettext!($cx, $key, $($replacements),+)
+    ($key:expr, $($replacements:expr),+) => {
+        move||$crate::gettext!($key, $($replacements),+)
     };
 }

@@ -38,11 +38,10 @@ impl fmt::Display for DownloadType {
     }
 }
 
-pub fn provide_download_type_context(cx: Scope) {
-    provide_context(
-        cx,
-        DownloadTypeSignal(create_rw_signal(cx, initial_download_type())),
-    );
+pub fn provide_download_type_context() {
+    provide_context(DownloadTypeSignal(create_rw_signal(
+        initial_download_type(),
+    )));
 }
 
 #[derive(Copy, Clone)]
@@ -95,16 +94,16 @@ fn set_download_type_on_localstorage(download_type: &DownloadType) {
 }
 
 #[component]
-pub fn DownloadFileTypeControl(cx: Scope) -> impl IntoView {
-    let download_type = use_context::<DownloadTypeSignal>(cx).unwrap().0;
+pub fn DownloadFileTypeControl() -> impl IntoView {
+    let download_type = use_context::<DownloadTypeSignal>().unwrap().0;
 
-    view! { cx,
+    view! {
         <div class="control">
-            <label>{move_gettext!(cx, "Download")}</label>
+            <label>{move_gettext!( "Download")}</label>
             <div class="flex flex-row">
                 <ControlButtonText
-                    text=move_gettext!(cx, "SVG")
-                    title=move_gettext!(cx, "Download SVG")
+                    text=move_gettext!( "SVG")
+                    title=move_gettext!( "Download SVG")
                     active=move || { download_type() == DownloadType::SVG }
                     on:click=move |_| {
                         download_type
@@ -115,8 +114,8 @@ pub fn DownloadFileTypeControl(cx: Scope) -> impl IntoView {
                     }
                 />
                 <ControlButtonText
-                    text=move_gettext!(cx, "PDF")
-                    title=move_gettext!(cx, "Download PDF")
+                    text=move_gettext!( "PDF")
+                    title=move_gettext!( "Download PDF")
                     active=move || { download_type() == DownloadType::PDF }
                     on:click=move |_| {
                         download_type

@@ -9,7 +9,6 @@ pub trait OnCloseFn = Fn(MouseEvent) + 'static + Copy;
 
 #[component]
 fn ModalHeader<T, C>(
-    cx: Scope,
     /// Title of the modal
     title: T,
     /// Indicates whether the title is copyable
@@ -23,7 +22,7 @@ where
     T: TitleFn,
     C: OnCloseFn,
 {
-    view! { cx,
+    view! {
         <div>
             <h2
                 class:copyable=move || title_is_copyable
@@ -35,7 +34,7 @@ where
             >
                 {title}
             </h2>
-            <button type="button" title=move_gettext!(cx, "Close") on:click=on_close>
+            <button type="button" title=move_gettext!( "Close") on:click=on_close>
                 <svg role="img" viewBox="0 0 24 24">
                     <use_ href=format!("#{}", SVGDefs::CrossPath.id())></use_>
                 </svg>
@@ -45,13 +44,12 @@ where
 }
 
 #[component]
-fn ModalBody(cx: Scope, children: Children) -> impl IntoView {
-    view! { cx, <div>{children(cx)}</div> }
+fn ModalBody(children: Children) -> impl IntoView {
+    view! { <div>{children()}</div> }
 }
 
 #[component]
 fn ModalShadow<O, C>(
-    cx: Scope,
     children: Children,
     /// Indicates whether the modal is open or not
     is_open: O,
@@ -64,7 +62,7 @@ where
 {
     let class: &'static str = "modal-shadow";
 
-    view! { cx,
+    view! {
         <div
             class=class
             class:hidden=move || !is_open()
@@ -75,14 +73,13 @@ where
                 }
             }
         >
-            {children(cx)}
+            {children()}
         </div>
     }
 }
 
 #[component]
 pub fn Modal<T, O, C>(
-    cx: Scope,
     children: Children,
     /// Title of the modal
     title: T,
@@ -100,11 +97,11 @@ where
     T: TitleFn,
     C: OnCloseFn,
 {
-    view! { cx,
+    view! {
         <ModalShadow is_open=is_open on_close=on_close>
             <div class="modal">
                 <ModalHeader title=title title_is_copyable=title_is_copyable on_close=on_close/>
-                <ModalBody>{children(cx)}</ModalBody>
+                <ModalBody>{children()}</ModalBody>
             </div>
         </ModalShadow>
     }

@@ -6,17 +6,16 @@ use leptos_meta::*;
 use macros::get_number_of_icons;
 
 #[component]
-pub fn Head(cx: Scope) -> impl IntoView {
-    provide_meta_context(cx);
+pub fn Head() -> impl IntoView {
+    provide_meta_context();
 
     let description = move_gettext!(
-        cx,
         "{} free {} icons for popular brands",
         get_number_of_icons!().to_string().as_str(),
-        &gettext!(cx, "SVG")
+        &gettext!("SVG")
     );
 
-    view! { cx,
+    view! {
         <Title text=TITLE/>
         <Meta charset="utf-8"/>
         <Meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
@@ -46,14 +45,13 @@ pub fn Head(cx: Scope) -> impl IntoView {
 /// Open graph meta tags
 #[component]
 fn MetaOpenGraph<F>(
-    cx: Scope,
     /// Site description
     description: F,
 ) -> impl IntoView
 where
     F: Fn() -> String + 'static,
 {
-    view! { cx,
+    view! {
         <Meta name="og:type" content="website"/>
         <Meta name="og:title" content=TITLE/>
         <Meta name="og:description" content=description/>
@@ -66,14 +64,13 @@ where
 /// Twitter meta tags
 #[component]
 fn MetaTwitter<F>(
-    cx: Scope,
     /// Site description
     description: F,
 ) -> impl IntoView
 where
     F: Fn() -> String + 'static,
 {
-    view! { cx,
+    view! {
         <Meta name="twitter:card" content="summary_large_image"/>
         <Meta name="twitter:title" content=TITLE/>
         <Meta name="twitter:description" content=description/>
@@ -85,7 +82,7 @@ where
 /// JSON-LD metadata
 /// See https://developers.google.com/search/docs/data-types/logo
 #[component]
-fn LdJSONMetadata(cx: Scope) -> impl IntoView {
+fn LdJSONMetadata() -> impl IntoView {
     let metadata = {
         let logo_url = {
             let mut url = CONFIG.public_url.to_string();
@@ -108,5 +105,5 @@ fn LdJSONMetadata(cx: Scope) -> impl IntoView {
         .to_string()
     };
 
-    view! { cx, <script type="application/ld+json">{metadata}</script> }
+    view! {  <script type="application/ld+json">{metadata}</script> }
 }

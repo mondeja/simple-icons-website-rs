@@ -2,256 +2,185 @@
 msgid ""
 msgstr ""
 
-#: components/src/controls/color_scheme.rs:87
-msgid "Theme"
-msgstr "Tema"
+#~ msgid "Theme"
+#~ msgstr "Tema"
 
-#: components/src/controls/color_scheme.rs:90
-msgid "Light color scheme"
-msgstr "Esquema de cores claras"
+#~ msgid "Light color scheme"
+#~ msgstr "Esquema de cores claras"
 
-#: components/src/controls/color_scheme.rs:96
-msgid "Dark color scheme"
-msgstr "Esquema de cores escuras"
+#~ msgid "Dark color scheme"
+#~ msgstr "Esquema de cores escuras"
 
-#: components/src/controls/color_scheme.rs:102
-msgid "System color scheme"
-msgstr "Esquema de cores do sistema"
+#~ msgid "System color scheme"
+#~ msgstr "Esquema de cores do sistema"
 
-#: components/src/controls/download/mod.rs:89
-#: components/src/controls/download/mod.rs:89
-msgid "Download"
-msgstr "Baixar"
+#~ msgid "Download"
+#~ msgstr "Baixar"
 
-#: components/src/controls/download/mod.rs:92
-#: components/src/controls/download/mod.rs:92 app/src/page.rs:21
-msgid "SVG"
-msgstr "SVG"
+#~ msgid "SVG"
+#~ msgstr "SVG"
 
-#: components/src/controls/download/mod.rs:93
-#: components/src/controls/download/mod.rs:93
-#: components/src/controls/download/mod.rs:93
-msgid "Download SVG"
-msgstr "Baixar SVG"
+#~ msgid "Download SVG"
+#~ msgstr "Baixar SVG"
 
-#: components/src/controls/download/mod.rs:104
-msgid "PDF"
-msgstr "PDF"
+#~ msgid "PDF"
+#~ msgstr "PDF"
 
-#: components/src/controls/download/mod.rs:105
-#: components/src/controls/download/mod.rs:105
-#: components/src/controls/download/mod.rs:105
-msgid "Download PDF"
-msgstr "Baixar PDF"
+#~ msgid "Download PDF"
+#~ msgstr "Baixar PDF"
 
-#: components/src/controls/layout.rs:71
-msgid "Layout"
-msgstr "Layout"
+#~ msgid "Layout"
+#~ msgstr "Layout"
 
-#: components/src/controls/layout.rs:74
-msgid "Comfortable"
-msgstr "Confortável"
+#~ msgid "Comfortable"
+#~ msgstr "Confortável"
 
-#: components/src/controls/layout.rs:80
-msgid "Compact"
-msgstr "Compacto"
+#~ msgid "Compact"
+#~ msgstr "Compacto"
 
-#: components/src/controls/order.rs:166
-msgid "Order"
-msgstr "Ordem"
+#~ msgid "Order"
+#~ msgstr "Ordem"
 
-#: components/src/controls/order.rs:171
-msgid "Sort alphabetically"
-msgstr "Ordenar alfabeticamente"
+#~ msgid "Sort alphabetically"
+#~ msgstr "Ordenar alfabeticamente"
 
-#: components/src/controls/order.rs:176
-msgid "Sort by color"
-msgstr "Ordenar por cor"
+#~ msgid "Sort by color"
+#~ msgstr "Ordenar por cor"
 
-#: components/src/controls/order.rs:187
-msgid "Sort by search match score"
-msgstr "Ordenar por pontuação de correspondência"
+#~ msgid "Sort by search match score"
+#~ msgstr "Ordenar por pontuação de correspondência"
 
-#: components/src/controls/search/mod.rs:258
-msgid "Search"
-msgstr "Pesquisar"
+#~ msgid "Search"
+#~ msgstr "Pesquisar"
 
-#: components/src/controls/search/mod.rs:264
-msgid "Search by brand..."
-msgstr "Pesquisar por marca..."
+#~ msgid "Search by brand..."
+#~ msgstr "Pesquisar por marca..."
 
-#: components/src/controls/search/mod.rs:278
-msgid "Clear search"
-msgstr "Limpar pesquisa"
+#~ msgid "Clear search"
+#~ msgstr "Limpar pesquisa"
 
-#: components/src/controls/mod.rs:88
-msgid "Open search bar"
-msgstr "Abrir barra de pesquisa"
+#~ msgid "Open search bar"
+#~ msgstr "Abrir barra de pesquisa"
 
-#: components/src/controls/mod.rs:90
-msgid "Open controls"
-msgstr "Abrir controles"
+#~ msgid "Open controls"
+#~ msgstr "Abrir controles"
 
-#: components/src/footer/about.rs:9
-msgid "A {} project maintained by the {}."
-msgstr "Um projeto {} mantido pelo {}."
+#~ msgid "A {} project maintained by the {}."
+#~ msgstr "Um projeto {} mantido pelo {}."
 
-#: components/src/footer/about.rs:11
-msgid "CCO"
-msgstr "CCO"
+#~ msgid "CCO"
+#~ msgstr "CCO"
 
-#: components/src/footer/about.rs:13
-msgid "Simple Icons contributors"
-msgstr "Contribuidores do Simple Icons"
+#~ msgid "Simple Icons contributors"
+#~ msgstr "Contribuidores do Simple Icons"
 
-#: components/src/footer/about.rs:16
-msgid "Use {} for requests, corrections and contributions."
-msgstr "Use {} para solicitações, correções e contribuições."
+#~ msgid "Use {} for requests, corrections and contributions."
+#~ msgstr "Use {} para solicitações, correções e contribuições."
 
-#: components/src/footer/about.rs:18
-msgid "GitHub"
-msgstr "GitHub"
+#~ msgid "GitHub"
+#~ msgstr "GitHub"
 
-#: components/src/footer/about.rs:21
-msgid "Kindly supported by your donations at {}."
-msgstr "Gentilmente apoiado por suas doações em {}."
+#~ msgid "Kindly supported by your donations at {}."
+#~ msgstr "Gentilmente apoiado por suas doações em {}."
 
-#: components/src/footer/about.rs:23
-msgid "Open Collective"
-msgstr "Open Collective"
+#~ msgid "Open Collective"
+#~ msgstr "Open Collective"
 
-#: components/src/footer/mod.rs:78
-msgid "Made with ❤️ on GitHub"
-msgstr "Feito com ❤️ no GitHub"
+#~ msgid "Made with ❤️ on GitHub"
+#~ msgstr "Feito com ❤️ no GitHub"
 
-#: components/src/footer/mod.rs:110
-msgid "Icon missing?"
-msgstr "Ícone ausente?"
+#~ msgid "Icon missing?"
+#~ msgstr "Ícone ausente?"
 
-#: components/src/footer/mod.rs:112
-msgid "Submit a request"
-msgstr "Envie uma solicitação"
+#~ msgid "Submit a request"
+#~ msgstr "Envie uma solicitação"
 
-#: components/src/footer/mod.rs:116
-msgid "Icon outdated?"
-msgstr "Ícone desatualizado?"
+#~ msgid "Icon outdated?"
+#~ msgstr "Ícone desatualizado?"
 
-#: components/src/footer/mod.rs:118
-msgid "Report outdated icon"
-msgstr "Ícone de relatório desatualizado"
+#~ msgid "Report outdated icon"
+#~ msgstr "Ícone de relatório desatualizado"
 
-#: components/src/footer/mod.rs:141
-msgid "Share this on Twitter!"
-msgstr "Compartilhe isso no Twitter!"
+#~ msgid "Share this on Twitter!"
+#~ msgstr "Compartilhe isso no Twitter!"
 
-#: components/src/grid/item/deprecated.rs:18
-msgid "{} will be removed at v{}"
-msgstr "{} será removido em v{}"
+#~ msgid "{} will be removed at v{}"
+#~ msgstr "{} será removido em v{}"
 
-#: components/src/grid/item/deprecated.rs:21
-msgid "Deprecated"
-msgstr "Descontinuado"
+#~ msgid "Deprecated"
+#~ msgstr "Descontinuado"
 
-#: components/src/grid/item/details.rs:199
-#: components/src/grid/item/details.rs:199
-msgid "Copy hex color"
-msgstr "Copiar cor hexadecimal"
+#~ msgid "Copy hex color"
+#~ msgstr "Copiar cor hexadecimal"
 
-#: components/src/grid/item/details.rs:203
-msgid "Brand guidelines"
-msgstr "Diretrizes da marca"
+#~ msgid "Brand guidelines"
+#~ msgstr "Diretrizes da marca"
 
-#: components/src/grid/item/details.rs:207
-#: components/src/grid/item/details.rs:207
-msgid "License"
-msgstr "Licença"
+#~ msgid "License"
+#~ msgstr "Licença"
 
-#: components/src/grid/item/details.rs:222
-#: components/src/grid/item/details.rs:222
-msgid "Download colored SVG"
-msgstr "Baixar SVG colorido"
+#~ msgid "Download colored SVG"
+#~ msgstr "Baixar SVG colorido"
 
-#: components/src/grid/item/footer.rs:48
-msgid "View {}"
-msgstr "Visualizar {}"
+#~ msgid "View {}"
+#~ msgstr "Visualizar {}"
 
-#: components/src/grid/item/footer.rs:60
-msgid "Error generating PDF with PDFKit library: {}"
-msgstr "Erro ao gerar PDF com a biblioteca PDFKit: {}"
+#~ msgid "Error generating PDF with PDFKit library: {}"
+#~ msgstr "Erro ao gerar PDF com a biblioteca PDFKit: {}"
 
-#: components/src/grid/item/icon_preview.rs:37
-msgid "Copy {} SVG"
-msgstr "Copiar {} SVG"
+#~ msgid "Copy {} SVG"
+#~ msgstr "Copiar {} SVG"
 
-#: components/src/grid/item/icon_preview.rs:58
-msgid "{} icon"
-msgstr "ícone {}"
+#~ msgid "{} icon"
+#~ msgstr "ícone {}"
 
-#: components/src/grid/item/title.rs:17
-msgid "Copy {} slug ({})"
-msgstr "Copiar {} slug ({})"
+#~ msgid "Copy {} slug ({})"
+#~ msgstr "Copiar {} slug ({})"
 
-#: components/src/grid/more_icons.rs:41
-msgid "Load more icons"
-msgstr "Carregar mais ícones"
+#~ msgid "Load more icons"
+#~ msgstr "Carregar mais ícones"
 
-#: components/src/header/nav/language_selector.rs:122
-msgid "Change language"
-msgstr "Mudar idioma"
+#~ msgid "Change language"
+#~ msgstr "Mudar idioma"
 
-#: components/src/header/nav/language_selector.rs:147
-msgid "Select a language"
-msgstr "Selecione um idioma"
+#~ msgid "Select a language"
+#~ msgstr "Selecione um idioma"
 
-#: components/src/header/nav/third_party_extensions.rs:51
-#: components/src/header/nav/third_party_extensions.rs:51
-msgid "Third party extensions"
-msgstr "Extensões de terceiros"
+#~ msgid "Third party extensions"
+#~ msgstr "Extensões de terceiros"
 
-#: components/src/header/nav/mod.rs:43
-msgid "Main Repository"
-msgstr "Repositório principal"
+#~ msgid "Main Repository"
+#~ msgstr "Repositório principal"
 
-#: components/src/header/nav/mod.rs:58
-msgid "jsDelivr (Content Delivery Network)"
-msgstr "jsDelivr (Rede de entrega de conteúdo)"
+#~ msgid "jsDelivr (Content Delivery Network)"
+#~ msgstr "jsDelivr (Rede de entrega de conteúdo)"
 
-#: components/src/header/nav/mod.rs:63
-msgid "UNPKG (Content Delivery Network)"
-msgstr "UPKG (Rede de entrega de conteúdo)"
+#~ msgid "UNPKG (Content Delivery Network)"
+#~ msgstr "UPKG (Rede de entrega de conteúdo)"
 
-#: components/src/header/nav/mod.rs:73
-msgid "Legal disclaimer"
-msgstr "Contrato"
+#~ msgid "Legal disclaimer"
+#~ msgstr "Contrato"
 
-#: components/src/header/nav/mod.rs:100
-msgid "Open menu"
-msgstr "Menu aberto"
+#~ msgid "Open menu"
+#~ msgstr "Menu aberto"
 
-#: components/src/header/nav/mod.rs:120
-msgid "Close menu"
-msgstr "Fechar menu"
+#~ msgid "Close menu"
+#~ msgstr "Fechar menu"
 
-#: components/src/header/title.rs:29 app/src/page.rs:19
-msgid "{} free {} icons for popular brands"
-msgstr "{} ícones gratuitos {} para marcas populares"
+#~ msgid "{} free {} icons for popular brands"
+#~ msgstr "{} ícones gratuitos {} para marcas populares"
 
-#: components/src/header/title.rs:31
-msgid "Scalable Vector Graphic"
-msgstr "Gráfico vetorial escalável"
+#~ msgid "Scalable Vector Graphic"
+#~ msgstr "Gráfico vetorial escalável"
 
-#: components/src/modal.rs:25
-msgid "Close"
-msgstr "Fechar"
+#~ msgid "Close"
+#~ msgstr "Fechar"
 
-#: components/src/scroll.rs:53
-msgid "Go to header"
-msgstr "Ir para o cabeçalho"
+#~ msgid "Go to header"
+#~ msgstr "Ir para o cabeçalho"
 
-#: components/src/scroll.rs:71
-msgid "Go to footer"
-msgstr "Ir para o rodapé"
+#~ msgid "Go to footer"
+#~ msgstr "Ir para o rodapé"
 
-#: components/src/grid/item/details.rs:175
-msgid "{} will be removed at {} about {} (see {})"
-msgstr "{} será removido em {} sobre {} (veja {})"
+#~ msgid "{} will be removed at {} about {} (see {})"
+#~ msgstr "{} será removido em {} sobre {} (veja {})"

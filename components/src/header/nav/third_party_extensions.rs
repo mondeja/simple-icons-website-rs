@@ -12,14 +12,14 @@ static THIRD_PARTY_EXTENSIONS: &[ThirdPartyExtension] =
 
 /// Third party extensions table
 #[component]
-pub fn ThirdPartyExtensionsTable(cx: Scope) -> impl IntoView {
-    view! { cx,
+pub fn ThirdPartyExtensionsTable() -> impl IntoView {
+    view! {
         <table class="third-party-extensions">
             <tbody>
                 {THIRD_PARTY_EXTENSIONS
                     .iter()
                     .map(|extension| {
-                        view! { cx,
+                        view! {
                             <tr>
                                 <td>
                                     <a href=extension.url>
@@ -43,12 +43,12 @@ pub fn ThirdPartyExtensionsTable(cx: Scope) -> impl IntoView {
 
 /// Third party extensions button
 #[component]
-pub fn ThirdPartyExtensionsButton(cx: Scope) -> impl IntoView {
-    let header_state = use_context::<HeaderStateSignal>(cx).unwrap().0;
+pub fn ThirdPartyExtensionsButton() -> impl IntoView {
+    let header_state = use_context::<HeaderStateSignal>().unwrap().0;
 
-    view! { cx,
+    view! {
         <HeaderMenuButton
-            title=move_gettext!(cx, "Third party extensions")
+            title=move_gettext!( "Third party extensions")
             additional_classes=move || {
                 if header_state().menu_open {
                     "block".to_string()
@@ -66,13 +66,13 @@ pub fn ThirdPartyExtensionsButton(cx: Scope) -> impl IntoView {
 
 /// Third party extensions
 #[component]
-pub fn ThirdPartyExtensions(cx: Scope) -> impl IntoView {
-    let header_state = use_context::<HeaderStateSignal>(cx).unwrap().0;
+pub fn ThirdPartyExtensions() -> impl IntoView {
+    let header_state = use_context::<HeaderStateSignal>().unwrap().0;
 
-    view! { cx,
+    view! {
         <ThirdPartyExtensionsButton/>
         <Modal
-            title=move_gettext!(cx, "Third party extensions")
+            title=move_gettext!( "Third party extensions")
             is_open=move || header_state().extensions_open
             on_close=move |_| {
                 header_state.update(|state: &mut HeaderState| state.extensions_open = false);

@@ -3,7 +3,6 @@ use leptos::*;
 
 #[component]
 pub fn IconGridItemLinks(
-    cx: Scope,
     /// Brand guidelines URL
     guidelines_url: Option<&'static str>,
     /// License URL
@@ -11,20 +10,20 @@ pub fn IconGridItemLinks(
     /// License type
     license_type: Option<&'static str>,
 ) -> impl IntoView {
-    view! { cx,
+    view! {
         <div class="links">
             {
                 let mut links = vec![];
                 if let Some(guidelines_url) = guidelines_url {
                     links
                         .push(
-                            view! { cx,
+                            view! {
                                 <a
                                     href=guidelines_url
-                                    title=move_gettext!(cx, "Brand guidelines")
+                                    title=move_gettext!( "Brand guidelines")
                                     class="brand-guidelines"
                                 >
-                                    {move_gettext!(cx, "Brand guidelines")}
+                                    {move_gettext!( "Brand guidelines")}
                                 </a>
                             },
                         );
@@ -32,11 +31,11 @@ pub fn IconGridItemLinks(
                 if license_type.is_some() || license_url.is_some() {
                     let title = move || match license_type {
                         Some(license_type) => license_type.to_string(),
-                        None => gettext!(cx, "License"),
+                        None => gettext!( "License"),
                     };
                     links
                         .push(
-                            view! { cx,
+                            view! {
                                 <a
                                     href=match license_url {
                                         Some(license_url) => license_url.to_string(),

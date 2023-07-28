@@ -6,7 +6,6 @@ pub trait TextFn = Fn() -> String + 'static + Copy;
 /// Abstract control button
 #[component]
 pub fn ControlButton<A, Ti>(
-    cx: Scope,
     /// Button title
     title: Ti,
     /// Button children
@@ -18,9 +17,9 @@ where
     Ti: TextFn,
     A: ActiveFn,
 {
-    view! { cx,
+    view! {
         <button class:selected=active type="button" title=title tabindex=0>
-            {children(cx)}
+            {children()}
         </button>
     }
 }
@@ -28,7 +27,6 @@ where
 /// Control button made from SVG path
 #[component]
 pub fn ControlButtonSVGPath<A, Ti>(
-    cx: Scope,
     /// Button title
     title: Ti,
     /// Button icon SVG path
@@ -40,7 +38,7 @@ where
     Ti: TextFn,
     A: ActiveFn,
 {
-    view! { cx,
+    view! {
         <ControlButton title=title active=active>
             <svg role="img" aria-label=title viewBox="0 0 24 24">
                 <path d=svg_path></path>
@@ -52,7 +50,6 @@ where
 /// Control button made from text
 #[component]
 pub fn ControlButtonText<A, Ti, Tx>(
-    cx: Scope,
     /// Button title
     title: Ti,
     /// Button text
@@ -65,7 +62,7 @@ where
     Tx: TextFn,
     A: ActiveFn,
 {
-    view! { cx,
+    view! {
         <ControlButton title=title active=active>
             {text}
         </ControlButton>

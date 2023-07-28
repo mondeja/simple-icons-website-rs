@@ -32,9 +32,9 @@ pub struct IconsLoaderSignal(pub RwSignal<IconsLoader>);
 ///   to the footer of the page and there are more icons to load.
 /// - A loading indicator. This is displayed when more icons are being loaded.
 #[component]
-pub fn IconsLoader(cx: Scope) -> impl IntoView {
-    let icons_grid_signal = use_context::<IconsGridSignal>(cx).unwrap().0;
-    let icons_loader = use_context::<IconsLoaderSignal>(cx).unwrap().0;
+pub fn IconsLoader() -> impl IntoView {
+    let icons_grid_signal = use_context::<IconsGridSignal>().unwrap().0;
+    let icons_loader = use_context::<IconsLoaderSignal>().unwrap().0;
 
     let hide_load_more_icons_button = move || {
         let loader_state = icons_loader();
@@ -54,7 +54,7 @@ pub fn IconsLoader(cx: Scope) -> impl IntoView {
     // I suspect that this is happening because the rendering of icon
     // grid items is blocking the main thread
     // See https://stackoverflow.com/q/10180391/9167585
-    view! { cx,
+    view! {
         <div class="icons-loader">
             <button
                 class:hidden=hide_load_more_icons_button
@@ -71,7 +71,7 @@ pub fn IconsLoader(cx: Scope) -> impl IntoView {
                         });
                 }
             >
-                {move_gettext!(cx, "Load more icons")}
+                {move_gettext!( "Load more icons")}
             </button>
             <TripleDotsSpinner hidden_frames=1 hidden=move || !icons_loader().loading/>
         </div>

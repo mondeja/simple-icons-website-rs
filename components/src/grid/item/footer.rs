@@ -16,7 +16,6 @@ use web_sys;
 /// Contains the buttons to copy color, view the expanded icon card and download the icon
 #[component]
 pub fn IconGridItemFooter(
-    cx: Scope,
     /// The icon
     icon: &'static SimpleIcon,
 ) -> impl IntoView {
@@ -24,18 +23,18 @@ pub fn IconGridItemFooter(
     let css_hex = &format!("#{}", icon.hex);
 
     // Controls context
-    let download_type = use_context::<DownloadTypeSignal>(cx).unwrap().0;
+    let download_type = use_context::<DownloadTypeSignal>().unwrap().0;
 
     // Context to handle the opening state of detail modals
-    let current_icon_view = use_context::<CurrentIconViewSignal>(cx).unwrap().0;
+    let current_icon_view = use_context::<CurrentIconViewSignal>().unwrap().0;
 
     // Locale context
-    let locale_state = use_context::<LocaleSignal>(cx).unwrap().0;
+    let locale_state = use_context::<LocaleSignal>().unwrap().0;
 
-    view! { cx,
+    view! {
         <div>
             <button
-                title=move_gettext!(cx, "Copy hex color")
+                title=move_gettext!( "Copy hex color")
                 class:dark=icon.hex_is_relatively_light
                 style=format!("background: {}", css_hex)
                 on:click=move |ev: MouseEvent| {
@@ -47,9 +46,9 @@ pub fn IconGridItemFooter(
                 {css_hex}
             </button>
             <button
-                title=move_gettext!(cx, "View {}", icon.title)
+                title=move_gettext!( "View {}", icon.title)
                 on:click=move |_| {
-                    fill_icon_details_modal_with_icon(cx, icon, &locale_state());
+                    fill_icon_details_modal_with_icon( icon, &locale_state());
                     current_icon_view.update(|state| *state = Some(icon));
                 }
             >
@@ -58,8 +57,8 @@ pub fn IconGridItemFooter(
                 </svg>
             </button>
             <button
-                title=move_gettext!(cx, "Download")
-                data-error-generating-pdf-msg-schema=move_gettext!(cx, "Error generating PDF with PDFKit library: {}")
+                title=move_gettext!( "Download")
+                data-error-generating-pdf-msg-schema=move_gettext!( "Error generating PDF with PDFKit library: {}")
                 on:click=move |_| {
                     if download_type() == DownloadType::SVG {
                         download_svg(icon.slug);

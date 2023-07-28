@@ -2,251 +2,185 @@
 msgid ""
 msgstr ""
 
-#: components/src/controls/download/mod.rs:73
-#: components/src/controls/download/mod.rs:73
-msgid "Download"
-msgstr "ダウンロード"
+#~ msgid "Download"
+#~ msgstr "ダウンロード"
 
-#: components/src/controls/download/mod.rs:76
-#: components/src/controls/download/mod.rs:76
-msgid "SVG"
-msgstr "SVG"
+#~ msgid "SVG"
+#~ msgstr "SVG"
 
-#: components/src/controls/download/mod.rs:77
-msgid "Download SVG"
-msgstr "SVG をダウンロード"
+#~ msgid "Download SVG"
+#~ msgstr "SVG をダウンロード"
 
-#: components/src/controls/download/mod.rs:87
-msgid "PDF"
-msgstr "PDF"
+#~ msgid "PDF"
+#~ msgstr "PDF"
 
-#: components/src/controls/download/mod.rs:88
-msgid "Download PDF"
-msgstr "PDF をダウンロード"
+#~ msgid "Download PDF"
+#~ msgstr "PDF をダウンロード"
 
-#: components/src/controls/order.rs:66
-msgid "Order"
-msgstr "注文"
+#~ msgid "Order"
+#~ msgstr "注文"
 
-#: components/src/controls/order.rs:69
-msgid "Sort alphabetically"
-msgstr "アルファベット順に並べ替え"
+#~ msgid "Sort alphabetically"
+#~ msgstr "アルファベット順に並べ替え"
 
-#: components/src/controls/order.rs:79
-msgid "Sort by color"
-msgstr "色で並べ替え"
+#~ msgid "Sort by color"
+#~ msgstr "色で並べ替え"
 
-#: components/src/controls/mod.rs:86
-msgid "Search"
-msgstr "検索"
+#~ msgid "Search"
+#~ msgstr "検索"
 
-#: components/src/controls/mod.rs:91
-msgid "Search by brand..."
-msgstr "銘柄から探す。。。"
+#~ msgid "Search by brand..."
+#~ msgstr "銘柄から探す。。。"
 
-#: components/src/controls/mod.rs:104
-msgid "Light color scheme"
-msgstr "淡い配色"
+#~ msgid "Light color scheme"
+#~ msgstr "淡い配色"
 
-#: components/src/controls/mod.rs:109
-msgid "Dark color scheme"
-msgstr "暗い配色"
+#~ msgid "Dark color scheme"
+#~ msgstr "暗い配色"
 
-#: components/src/controls/mod.rs:114
-msgid "System color scheme"
-msgstr "システム配色"
+#~ msgid "System color scheme"
+#~ msgstr "システム配色"
 
-#: components/src/controls/mod.rs:127
-msgid "Layout"
-msgstr "レイアウト"
+#~ msgid "Layout"
+#~ msgstr "レイアウト"
 
-#: components/src/controls/mod.rs:130
-msgid "Comfortable"
-msgstr "快適"
+#~ msgid "Comfortable"
+#~ msgstr "快適"
 
-#: components/src/controls/mod.rs:135
-msgid "Compact"
-msgstr "コンパクト"
+#~ msgid "Compact"
+#~ msgstr "コンパクト"
 
-#: components/src/footer.rs:19
-msgid "Made with ❤️ on GitHub"
-msgstr "GitHub の ❤️ で作成"
+#~ msgid "Made with ❤️ on GitHub"
+#~ msgstr "GitHub の ❤️ で作成"
 
-#: components/src/footer.rs:30
-msgid "Icon missing?"
-msgstr "アイコンがない？"
+#~ msgid "Icon missing?"
+#~ msgstr "アイコンがない？"
 
-#: components/src/footer.rs:33
-msgid "Submit a request"
-msgstr "リクエストを送信"
+#~ msgid "Submit a request"
+#~ msgstr "リクエストを送信"
 
-#: components/src/footer.rs:37
-msgid "Icon outdated?"
-msgstr "アイコンが古い？"
+#~ msgid "Icon outdated?"
+#~ msgstr "アイコンが古い？"
 
-#: components/src/footer.rs:40
-msgid "Report outdated icon"
-msgstr "古いアイコンを報告"
+#~ msgid "Report outdated icon"
+#~ msgstr "古いアイコンを報告"
 
-#: components/src/footer.rs:93
-msgid "Share this on Twitter!"
-msgstr "Twitter でシェア！"
+#~ msgid "Share this on Twitter!"
+#~ msgstr "Twitter でシェア！"
 
-#: components/src/grid/item/mod.rs:30
-msgid "{} icon"
-msgstr "{} アイコン"
+#~ msgid "{} icon"
+#~ msgstr "{} アイコン"
 
-#: components/src/grid/item/mod.rs:77
-msgid "View {}"
-msgstr "{} を見る"
+#~ msgid "View {}"
+#~ msgstr "{} を見る"
 
-#: components/src/grid/item/mod.rs:90
-msgid "Error generating PDF with PDFKit library: {}"
-msgstr "PDFKit ライブラリで PDF を生成中にエラーが発生しました: {}"
+#~ msgid "Error generating PDF with PDFKit library: {}"
+#~ msgstr "PDFKit ライブラリで PDF を生成中にエラーが発生しました: {}"
 
-#: components/src/header/menu.rs:29
-msgid "Main Repository"
-msgstr "メインリポジトリ"
+#~ msgid "Main Repository"
+#~ msgstr "メインリポジトリ"
 
-#: components/src/header/menu.rs:44
-msgid "jsDelivr (Content Delivery Network)"
-msgstr "jsDelivr (コンテンツ配信ネットワーク)"
+#~ msgid "jsDelivr (Content Delivery Network)"
+#~ msgstr "jsDelivr (コンテンツ配信ネットワーク)"
 
-#: components/src/header/menu.rs:49
-msgid "UNPKG (Content Delivery Network)"
-msgstr "UNPKG (コンテンツ配信ネットワーク)"
+#~ msgid "UNPKG (Content Delivery Network)"
+#~ msgstr "UNPKG (コンテンツ配信ネットワーク)"
 
-#: components/src/header/menu.rs:59
-msgid "Legal disclaimer"
-msgstr "法的放棄声明"
+#~ msgid "Legal disclaimer"
+#~ msgstr "法的放棄声明"
 
-#: components/src/header/menu.rs:157
-msgid "Open menu"
-msgstr "メニューを開く"
+#~ msgid "Open menu"
+#~ msgstr "メニューを開く"
 
-#: components/src/header/menu.rs:178
-msgid "Close menu"
-msgstr "メニューを閉じる"
+#~ msgid "Close menu"
+#~ msgstr "メニューを閉じる"
 
-#: components/src/header/menu.rs:209
-msgid "Third party extensions"
-msgstr "サードパーティの拡張機能"
+#~ msgid "Third party extensions"
+#~ msgstr "サードパーティの拡張機能"
 
-#: components/src/header/menu.rs:285
-msgid "Change language"
-msgstr "言語を変えてください"
+#~ msgid "Change language"
+#~ msgstr "言語を変えてください"
 
-#: components/src/header/title.rs:19
-msgid "{} free {} icons for popular brands"
-msgstr "{} 人気ブランドの無料 {} アイコン"
+#~ msgid "{} free {} icons for popular brands"
+#~ msgstr "{} 人気ブランドの無料 {} アイコン"
 
-#: components/src/header/title.rs:23
-msgid "Scalable Vector Graphic"
-msgstr "スケーラブルなベクター グラフィック"
+#~ msgid "Scalable Vector Graphic"
+#~ msgstr "スケーラブルなベクター グラフィック"
 
-#: components/src/controls/mod.rs:101
-msgid "Theme"
-msgstr "テーマ"
+#~ msgid "Theme"
+#~ msgstr "テーマ"
 
-#: components/src/footer.rs:54
-msgid "A {} project maintained by the {}."
-msgstr "{} によって維持される {} プロジェクト。"
+#~ msgid "A {} project maintained by the {}."
+#~ msgstr "{} によって維持される {} プロジェクト。"
 
-#: components/src/footer.rs:57
-msgid "CCO"
-msgstr "CCO"
+#~ msgid "CCO"
+#~ msgstr "CCO"
 
-#: components/src/footer.rs:61
-msgid "Simple Icons contributors"
-msgstr "Simple Icons の貢献者"
+#~ msgid "Simple Icons contributors"
+#~ msgstr "Simple Icons の貢献者"
 
-#: components/src/footer.rs:66
-msgid "Use {} for requests, corrections and contributions."
-msgstr ""
+#~ msgid "Use {} for requests, corrections and contributions."
+#~ msgstr ""
 
-#: components/src/footer.rs:69
-msgid "GitHub"
-msgstr "リクエスト、修正、投稿には {} を使用してください。"
+#~ msgid "GitHub"
+#~ msgstr "リクエスト、修正、投稿には {} を使用してください。"
 
-#: components/src/footer.rs:74
-msgid "Kindly supported by your donations at {}."
-msgstr "{} での寄付により、ご支援をお願いいたします。"
+#~ msgid "Kindly supported by your donations at {}."
+#~ msgstr "{} での寄付により、ご支援をお願いいたします。"
 
-#: components/src/footer.rs:77
-msgid "Open Collective"
-msgstr "Open Collective"
+#~ msgid "Open Collective"
+#~ msgstr "Open Collective"
 
-#: components/src/controls/order.rs:182
-msgid "Sort by search match score"
-msgstr "検索一致スコアで並べ替え"
+#~ msgid "Sort by search match score"
+#~ msgstr "検索一致スコアで並べ替え"
 
-#: components/src/controls/search/mod.rs:271
-msgid "Clear search"
-msgstr "検索をクリア"
+#~ msgid "Clear search"
+#~ msgstr "検索をクリア"
 
-#: components/src/controls/mod.rs:88
-msgid "Open search bar"
-msgstr "検索バーを開く"
+#~ msgid "Open search bar"
+#~ msgstr "検索バーを開く"
 
-#: components/src/controls/mod.rs:90
-msgid "Open controls"
-msgstr "コントロールを開く"
+#~ msgid "Open controls"
+#~ msgstr "コントロールを開く"
 
-#: components/src/grid/item/deprecated.rs:19
-msgid "{} will be removed at v{}"
-msgstr "{} は v{} で削除されます"
+#~ msgid "{} will be removed at v{}"
+#~ msgstr "{} は v{} で削除されます"
 
-#: components/src/grid/item/deprecated.rs:22
-msgid "Deprecated"
-msgstr "非推奨"
+#~ msgid "Deprecated"
+#~ msgstr "非推奨"
 
-#: components/src/grid/item/details.rs:203
-#: components/src/grid/item/details.rs:203
-msgid "Copy hex color"
-msgstr "16 進数の色をコピー"
+#~ msgid "Copy hex color"
+#~ msgstr "16 進数の色をコピー"
 
-#: components/src/grid/item/details.rs:208
-msgid "Brand guidelines"
-msgstr "ブランドガイドライン"
+#~ msgid "Brand guidelines"
+#~ msgstr "ブランドガイドライン"
 
-#: components/src/grid/item/details.rs:216
-#: components/src/grid/item/details.rs:216
-msgid "License"
-msgstr "ライセンス"
+#~ msgid "License"
+#~ msgstr "ライセンス"
 
-#: components/src/grid/item/details.rs:232
-#: components/src/grid/item/details.rs:232
-msgid "Download colored SVG"
-msgstr "カラーSVGをダウンロード"
+#~ msgid "Download colored SVG"
+#~ msgstr "カラーSVGをダウンロード"
 
-#: components/src/grid/item/icon_preview.rs:37
-msgid "Copy {} SVG"
-msgstr "{} SVG をコピー"
+#~ msgid "Copy {} SVG"
+#~ msgstr "{} SVG をコピー"
 
-#: components/src/grid/item/title.rs:17
-msgid "Copy {} slug ({})"
-msgstr "{} スラッグ ({}) をコピー"
+#~ msgid "Copy {} slug ({})"
+#~ msgstr "{} スラッグ ({}) をコピー"
 
-#: components/src/grid/more_icons.rs:44
-msgid "Load more icons"
-msgstr "さらにアイコンを読み込む"
+#~ msgid "Load more icons"
+#~ msgstr "さらにアイコンを読み込む"
 
-#: components/src/header/nav/language_selector.rs:73
-msgid "Select a language"
-msgstr "言語を選択"
+#~ msgid "Select a language"
+#~ msgstr "言語を選択"
 
-#: components/src/modal.rs:27
-msgid "Close"
-msgstr "近い"
+#~ msgid "Close"
+#~ msgstr "近い"
 
-#: components/src/scroll.rs:50
-msgid "Go to header"
-msgstr "ヘッダーに移動"
+#~ msgid "Go to header"
+#~ msgstr "ヘッダーに移動"
 
-#: components/src/scroll.rs:68
-msgid "Go to footer"
-msgstr "フッターに移動"
+#~ msgid "Go to footer"
+#~ msgstr "フッターに移動"
 
-#: components/src/grid/item/details.rs:175
-msgid "{} will be removed at {} about {} (see {})"
-msgstr "{} は {} で削除されます {} (参照 {})"
+#~ msgid "{} will be removed at {} about {} (see {})"
+#~ msgstr "{} は {} で削除されます {} (参照 {})"

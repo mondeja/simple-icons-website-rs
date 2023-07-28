@@ -6,15 +6,14 @@ use web_sys;
 /// Icon grid item title
 #[component]
 pub fn IconGridItemTitle(
-    cx: Scope,
     /// Brand title
     title: &'static str,
     /// Slug
     slug: &'static str,
 ) -> impl IntoView {
-    view! { cx,
+    view! {
         <h2
-            title=move_gettext!(cx, "Copy {} slug ({})", title, slug)
+            title=move_gettext!( "Copy {} slug ({})", title, slug)
             tabindex=0
             on:click=move |ev: MouseEvent| {
                 let target = event_target::<web_sys::HtmlElement>(&ev);

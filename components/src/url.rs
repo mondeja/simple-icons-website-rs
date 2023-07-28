@@ -6,7 +6,7 @@
 
 /// Single source of thruth for the URL params state
 pub mod params {
-    use leptos::{window, Scope};
+    use leptos::window;
     use leptos_router::{use_location, ParamsMap};
     use wasm_bindgen;
 
@@ -33,8 +33,8 @@ pub mod params {
 
     /// Update a parameter value in the URL query using window history
     #[inline(always)]
-    pub fn update(cx: Scope, k: &Names, v: &str) {
-        let location = use_location(cx);
+    pub fn update(k: &Names, v: &str) {
+        let location = use_location();
         let mut params = (location.query)();
         // Remove empty values from the URL!
         if v.is_empty() {

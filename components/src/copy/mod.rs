@@ -83,6 +83,6 @@ pub(crate) fn copy_inner_text_on_click(ev: MouseEvent) {
 }
 
 #[component]
-pub fn CopyInput(cx: Scope) -> impl IntoView {
-    view! { cx, <input aria-hidden=true class="hidden" id=Ids::CopyInput.as_str() tabindex=-1/> }
+pub fn CopyInput() -> impl IntoView {
+    view! { <input aria-hidden=true class="hidden" id=Ids::CopyInput.as_str() tabindex=-1/> }
 }

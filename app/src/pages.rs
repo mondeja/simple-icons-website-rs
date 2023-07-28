@@ -10,15 +10,14 @@ use components::svg_defs::SVGDefsDefinition;
 use leptos::*;
 
 #[component]
-pub fn Index(cx: Scope) -> impl IntoView {
-    let initial_search_value = provide_search_context(cx);
-    let initial_order_mode =
-        provide_order_mode_context(cx, &initial_search_value);
-    provide_download_type_context(cx);
-    provide_layout_context(cx);
-    provide_icons_grid_contexts(cx, &initial_search_value, &initial_order_mode);
+pub fn Index() -> impl IntoView {
+    let initial_search_value = provide_search_context();
+    let initial_order_mode = provide_order_mode_context(&initial_search_value);
+    provide_download_type_context();
+    provide_layout_context();
+    provide_icons_grid_contexts(&initial_search_value, &initial_order_mode);
 
-    view! { cx,
+    view! {
         <SVGDefsDefinition/>
         <CopyInput/>
         <main>

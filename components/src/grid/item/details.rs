@@ -24,7 +24,6 @@ fn get_slug_from_modal_container() -> String {
 }
 
 pub fn fill_icon_details_modal_with_icon(
-    cx: Scope,
     icon: &'static SimpleIcon,
     locale: &Language,
 ) {
@@ -57,7 +56,7 @@ pub fn fill_icon_details_modal_with_icon(
     modal_slug
         .set_attribute(
             "title",
-            &gettext!(cx, "Copy {} slug ({})", icon.title, icon.slug),
+            &gettext!("Copy {} slug ({})", icon.title, icon.slug),
         )
         .unwrap();
 
@@ -98,7 +97,7 @@ pub fn fill_icon_details_modal_with_icon(
         .dyn_into::<web_sys::HtmlButtonElement>()
         .unwrap();
     modal_preview_button
-        .set_attribute("title", &gettext!(cx, "Copy {} SVG", icon.title))
+        .set_attribute("title", &gettext!("Copy {} SVG", icon.title))
         .unwrap();
     modal_preview_button
         .children()
@@ -171,7 +170,6 @@ pub fn fill_icon_details_modal_with_icon(
 
     if let Some(deprecation) = icon.deprecation {
         modal_deprecation_paragraph.set_inner_html(&gettext!(
-            cx,
             "{} will be removed at {} about {} (see {})",
             icon.title,
             &format!(
@@ -242,8 +240,8 @@ pub fn fill_icon_details_modal_with_icon(
 
 /// Details modal icon preview
 #[component]
-fn IconDetailsModalPreview(cx: Scope) -> impl IntoView {
-    view! { cx,
+fn IconDetailsModalPreview() -> impl IntoView {
+    view! {
         <button on:click=on_click_copy_image_children_src_content>
             <img/>
         </button>
@@ -252,39 +250,39 @@ fn IconDetailsModalPreview(cx: Scope) -> impl IntoView {
 
 /// Details modal icon information
 #[component]
-fn IconDetailsModalInformation(cx: Scope) -> impl IntoView {
-    view! { cx,
+fn IconDetailsModalInformation() -> impl IntoView {
+    view! {
         <div>
             <h3 on:click=copy_inner_text_on_click></h3>
             <button
                 on:click=copy_inner_text_on_click
-                title=move_gettext!(cx, "Copy hex color")
+                title=move_gettext!( "Copy hex color")
             ></button>
-            <a target="_blank">{move_gettext!(cx, "Brand guidelines")}</a>
-            <a target="_blank" title=move_gettext!(cx, "License")></a>
+            <a target="_blank">{move_gettext!( "Brand guidelines")}</a>
+            <a target="_blank" title=move_gettext!( "License")></a>
             <p></p>
         </div>
     }
 }
 
 #[component]
-fn IconDetailsModalFooter(cx: Scope) -> impl IntoView {
-    view! { cx,
+fn IconDetailsModalFooter() -> impl IntoView {
+    view! {
         <div>
             <button
                 on:click=move |_| download_svg(&get_slug_from_modal_container())
-                aria-label=move_gettext!(cx, "Download SVG")
+                aria-label=move_gettext!( "Download SVG")
             >
-                {move_gettext!(cx, "Download SVG")}
+                {move_gettext!( "Download SVG")}
             </button>
-            <a aria-label=move_gettext!(cx, "Download colored SVG")>
-                {move_gettext!(cx, "Download colored SVG")}
+            <a aria-label=move_gettext!( "Download colored SVG")>
+                {move_gettext!( "Download colored SVG")}
             </a>
             <button
                 on:click=move |_| download_pdf(&get_slug_from_modal_container())
-                aria-label=move_gettext!(cx, "Download PDF")
+                aria-label=move_gettext!( "Download PDF")
             >
-                {move_gettext!(cx, "Download PDF")}
+                {move_gettext!( "Download PDF")}
             </button>
         </div>
     }
@@ -292,10 +290,10 @@ fn IconDetailsModalFooter(cx: Scope) -> impl IntoView {
 
 /// Detail modal view for icons
 #[component]
-pub fn IconDetailsModal(cx: Scope) -> impl IntoView {
-    let current_icon_view = use_context::<CurrentIconViewSignal>(cx).unwrap().0;
+pub fn IconDetailsModal() -> impl IntoView {
+    let current_icon_view = use_context::<CurrentIconViewSignal>().unwrap().0;
 
-    view! { cx,
+    view! {
         <Modal
             title=move || "".to_string()
             title_is_copyable=true

@@ -4,7 +4,6 @@ use leptos::{ev::MouseEvent, *};
 
 #[component]
 pub fn ScrollButton<H, T, C>(
-    cx: Scope,
     /// Whether the button should be hidden or visible
     hidden: H,
     /// The title of the button
@@ -21,7 +20,7 @@ where
     T: Fn() -> String + 'static,
     C: Fn(MouseEvent) + 'static,
 {
-    view! { cx,
+    view! {
         <button
             class=format!("scroll-button {}", class)
             style=move || format!("display:{}", if hidden() { "none" } else { "" })
@@ -36,14 +35,14 @@ where
 }
 
 #[component]
-pub fn ScrollToHeaderButton(cx: Scope) -> impl IntoView {
-    let icons_loader = use_context::<IconsLoaderSignal>(cx).unwrap().0;
+pub fn ScrollToHeaderButton() -> impl IntoView {
+    let icons_loader = use_context::<IconsLoaderSignal>().unwrap().0;
 
-    view! { cx,
+    view! {
         <ScrollButton
             class="scroll-to-header-button"
             hidden=move || icons_loader().load
-            title=move_gettext!(cx, "Go to header")
+            title=move_gettext!( "Go to header")
             on_click=move |_| {
                 let footer = document().query_selector("header").unwrap().unwrap();
                 footer.scroll_into_view();
@@ -54,17 +53,17 @@ pub fn ScrollToHeaderButton(cx: Scope) -> impl IntoView {
 }
 
 #[component]
-pub fn ScrollToFooterButton(cx: Scope) -> impl IntoView {
-    let icons_loader = use_context::<IconsLoaderSignal>(cx).unwrap().0;
-    let icons_grid = use_context::<IconsGridSignal>(cx).unwrap().0;
+pub fn ScrollToFooterButton() -> impl IntoView {
+    let icons_loader = use_context::<IconsLoaderSignal>().unwrap().0;
+    let icons_grid = use_context::<IconsGridSignal>().unwrap().0;
 
-    view! { cx,
+    view! {
         <ScrollButton
             class="scroll-to-footer-button"
             hidden=move || {
                 !icons_loader().load || (icons_grid().loaded_icons.len() >= icons_grid().icons.len())
             }
-            title=move_gettext!(cx, "Go to footer")
+            title=move_gettext!( "Go to footer")
             on_click=move |_| {
                 icons_loader.update(|state| state.load = false);
                 let footer = document().query_selector("footer").unwrap().unwrap();
@@ -76,8 +75,8 @@ pub fn ScrollToFooterButton(cx: Scope) -> impl IntoView {
 }
 
 #[component]
-pub fn ScrollButtons(cx: Scope) -> impl IntoView {
-    view! { cx,
+pub fn ScrollButtons() -> impl IntoView {
+    view! {
         <ScrollToHeaderButton/>
         <ScrollToFooterButton/>
     }

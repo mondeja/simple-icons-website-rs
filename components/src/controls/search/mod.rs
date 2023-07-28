@@ -18,17 +18,16 @@ use web_sys;
 #[derive(Copy, Clone)]
 pub struct SearchValueSignal(pub RwSignal<String>);
 
-pub fn provide_search_context(cx: Scope) -> String {
-    let initial_search_value = initial_search_value(cx);
-    provide_context(
-        cx,
-        SearchValueSignal(create_rw_signal(cx, initial_search_value.clone())),
-    );
+pub fn provide_search_context() -> String {
+    let initial_search_value = initial_search_value();
+    provide_context(SearchValueSignal(create_rw_signal(
+        initial_search_value.clone(),
+    )));
 
     initial_search_value
 }
 
-fn initial_search_value(cx: Scope) -> String {
+fn initial_search_value() -> String {
     let search_value = match Url::params::get(&Url::params::Names::Search) {
         Some(value) => {
             set_search_value_on_localstorage(value.as_str());
@@ -37,7 +36,6 @@ fn initial_search_value(cx: Scope) -> String {
         None => match initial_search_value_from_localstorage() {
             Some(value) => {
                 Url::params::update(
-                    cx,
                     &Url::params::Names::Search,
                     value.as_str(),
                 );
@@ -194,7 +192,6 @@ pub async fn search_icons(
 }
 
 async fn on_search(
-    cx: Scope,
     search_input_ref: NodeRef<Input>,
     search_signal: RwSignal<String>,
     icons_grid_signal: RwSignal<IconsGrid>,
@@ -202,7 +199,7 @@ async fn on_search(
 ) {
     let value = search_input_ref.get().unwrap().value();
     search_signal.update(move |state| {
-        Url::params::update(cx, &Url::params::Names::Search, &value);
+        Url::params::update(&Url::params::Names::Search, &value);
 
         if value.is_empty() {
             // Reset grid
@@ -241,21 +238,21 @@ async fn on_search(
 }
 
 #[component]
-pub fn SearchControl(cx: Scope) -> impl IntoView {
-    let icons_grid = use_context::<IconsGridSignal>(cx).unwrap().0;
-    let search = use_context::<SearchValueSignal>(cx).unwrap().0;
-    let order_mode = use_context::<OrderModeSignal>(cx).unwrap().0;
+pub fn SearchControl() -> impl IntoView {
+    let icons_grid = use_context::<IconsGridSignal>().unwrap().0;
+    let search = use_context::<SearchValueSignal>().unwrap().0;
+    let order_mode = use_context::<OrderModeSignal>().unwrap().0;
 
-    let search_input_ref = create_node_ref::<Input>(cx);
+    let search_input_ref = create_node_ref::<Input>();
     // Focus on load. Fallback for Safari, see:
     // https://caniuse.com/?search=autofocus
-    search_input_ref.on_load(cx, |input| {
+    search_input_ref.on_load(|input| {
         _ = input.focus();
     });
 
-    view! { cx,
+    view! {
         <div class="control">
-            <label for=Ids::SearchInput.as_str()>{move_gettext!(cx, "Search")}</label>
+            <label for=Ids::SearchInput.as_str()>{move_gettext!( "Search")}</label>
             <div class="search">
                 <input
                     _ref=search_input_ref
@@ -263,13 +260,13 @@ pub fn SearchControl(cx: Scope) -> impl IntoView {
                     type="search"
                     autocomplete="off"
                     autofocus
-                    placeholder=move_gettext!(cx, "Search by brand...")
+                    placeholder=move_gettext!("Search by brand...")
                     value=search
-                    on:input=move |_| { spawn_local(on_search(cx, search_input_ref, search, icons_grid, order_mode)) }
+                    on:input=move |_| { spawn_local(on_search(search_input_ref, search, icons_grid, order_mode)) }
                 />
                 <span
                     class:hidden=move || search().is_empty()
-                    title=move_gettext!(cx, "Clear search")
+                    title=move_gettext!("Clear search")
                     on:click=move |_| {
                         search_input_ref.get().unwrap().set_value("");
                         fire_on_search_event();

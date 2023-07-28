@@ -19,13 +19,13 @@ fn main() {
                     " xmlns:xhtml=\"http://www.w3.org/1999/xhtml\">\n",
                     "  <url>\n",
                     "    <loc>{}</loc>\n",
-                    "    <lastmod>{}</lastmod>\n",
+                    "    <lastmod>{:?}</lastmod>\n",
                     "    <changefreq>weekly</changefreq>\n",
                     "  </url>\n",
                     "</urlset>",
                 ),
                 CONFIG.public_url,
-                format!("{:?}", chrono::offset::Utc::now()),
+                chrono::offset::Utc::now(),
             )
             .as_bytes(),
         )
