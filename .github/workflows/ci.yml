@@ -62,9 +62,7 @@ jobs:
       - name: Install Node.js dependencies
         run: npm ci
       - name: Install Playwright browsers
-        if: |
-          matrix.cargo-make-command == 'tests' &&
-          steps.playwright-cache.outputs.cache-hit != 'true'
+        if: matrix.cargo-make-command == 'tests'
         run: npx playwright install --with-deps
       - name: Install tooling dependencies
         run: cargo install cargo-make

@@ -77,9 +77,7 @@ jobs:
         if: steps.get-releases.outputs.dep != steps.get-releases.outputs.si
         run: npm ci
       - name: Install Playwright browsers
-        if: |
-          steps.get-releases.outputs.dep != steps.get-releases.outputs.si &&
-          steps.playwright-cache.outputs.cache-hit != 'true'
+        if: steps.get-releases.outputs.dep != steps.get-releases.outputs.si
         run: npx playwright install --with-deps
       - name: Install tooling dependencies
         if: steps.get-releases.outputs.dep != steps.get-releases.outputs.si
