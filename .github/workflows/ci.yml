@@ -51,6 +51,13 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-v18
           restore-keys: |
             ${{ runner.os }}-node-
+      - name: Cache Playwright browsers
+        if: matrix.cargo-make-command == 'tests'
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}-${{ hashFiles('**/package-lock.json') }}
       - name: Install Node.js dependencies
         run: npm ci
       - name: Install Playwright browsers
