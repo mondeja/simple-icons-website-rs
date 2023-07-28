@@ -102,7 +102,7 @@ workspace = false
 description = "Build the WASM app for production"
 install_crate = { crate_name = "trunk", binary = "trunk", test_arg = "--help" }
 command = "trunk"
-args = ["build", "--release"]
+args = ["--config", "Trunk.prod.toml", "build", "--release"]
 cwd = "./app"
 workspace = false
 

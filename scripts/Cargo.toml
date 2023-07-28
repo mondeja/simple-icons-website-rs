@@ -9,10 +9,6 @@ name = "fetch-deprecated-icons"
 path = "src/fetch-deprecated-icons.rs"
 
 [[bin]]
-name = "bump-simple-icons"
-path = "src/bump-simple-icons.rs"
-
-[[bin]]
 name = "create-sitemap"
 path = "src/create-sitemap.rs"
 

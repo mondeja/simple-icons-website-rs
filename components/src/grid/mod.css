@@ -13,9 +13,10 @@ main > ul {
   @apply grid relative mt-5 page-margin-x;
 
   grid-template-columns: repeat(auto-fill, minmax(var(--grid-width), 1fr));
-  grid-gap: var(--grid-gap);
 
   /* Comfortable layout variables: */
+  grid-gap: var(--grid-gap);
+
   --grid-width: 13rem;
   --grid-gap: 0.75rem;
 
@@ -40,6 +41,7 @@ main > ul {
 }
 
 main > ul.layout-compact {
+  /* Compact layout variables: */
   --grid-width: 8rem;
   --grid-gap: 0.5rem;
 
