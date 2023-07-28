@@ -1,5 +1,8 @@
 name: Automated Releases
-on: workflow_dispatch
+on:
+  schedule:
+    - cron: 0 0 * * 1,2,3,4,5
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -39,14 +42,28 @@ jobs:
             ~/.cargo/.crates2.json
             target/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-${{ hashFiles('**/scripts/src/bump-simple-icons.rs') }}-nightly
+      - name: Cache Node.js dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-v18
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
+      - name: Compare release versions
+        id: get-releases
+        run: |
+          simple_icons_version="$(curl --retry 5 -s https://api.github.com/repos/simple-icons/simple-icons/releases/latest | jq -r .tag_name)"
+          echo "si=$simple_icons_version" >> $GITHUB_OUTPUT
+          echo "lib=$(cat package.json | grep '"simple-icons":' | cut -d'"' -f4)" >> $GITHUB_OUTPUT
       - name: Update simple-icons
-        id: update
-        run: echo "::set-output name=NEW_VERSION::$(npm run bump-simple-icons)"
+        if: steps.get-releases.outputs.lib != steps.get-releases.outputs.si
+        run: npm run bump-simple-icons
       - name: Commit updates
+        if: steps.get-releases.outputs.lib != steps.get-releases.outputs.si
         run: |
           # Set up git credential
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -55,9 +72,37 @@ jobs:
           git add .
           git commit -m "Update simple-icons to ${{ steps.update.outputs.NEW_VERSION }}"
       - name: Push updates
+        if: steps.get-releases.outputs.lib != steps.get-releases.outputs.si
         run: |
           # Set up remote using a Personal Access Token
           git remote remove origin
           git remote add origin https://${{secrets.RELEASE_TOKEN}}@github.com/simple-icons/simple-icons-website.git
           # Push updates to origin
           git push origin master
+
+      - name: Install Node.js dependencies
+        if: steps.get-releases.outputs.lib != steps.get-releases.outputs.si
+        run: npm ci
+      - name: Install Playwright browsers
+        if: steps.get-releases.outputs.lib != steps.get-releases.outputs.si
+        run: npx playwright install --with-deps
+      - name: Install tooling dependencies
+        if: steps.get-releases.outputs.lib != steps.get-releases.outputs.si
+        run: cargo install cargo-make
+      - name: Build
+        if: steps.get-releases.outputs.lib != steps.get-releases.outputs.si
+        run: cargo make builds
+        env:
+          GITHUB_TOKEN: ${{ secrets.SECRET_GITHUB_TOKEN }}
+      - name: Run `cargo make tests`
+        if: steps.get-releases.outputs.lib != steps.get-releases.outputs.si
+        run: cargo make tests
+      - name: Publish website
+        if: steps.get-releases.outputs.lib != steps.get-releases.outputs.si
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: app/dist
+          single-commit: true
+          git-config-name: github-actions[bot]
+          git-config-email: github-actions[bot]@users.noreply.github.com
