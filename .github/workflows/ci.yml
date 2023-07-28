@@ -52,6 +52,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Cache Playwright browsers
+        id: playwright-cache
         if: matrix.cargo-make-command == 'tests'
         uses: actions/cache@v3
         with:
@@ -61,7 +62,9 @@ jobs:
       - name: Install Node.js dependencies
         run: npm ci
       - name: Install Playwright browsers
-        if: matrix.cargo-make-command == 'tests'
+        if: |
+          matrix.cargo-make-command == 'tests' &&
+          steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
       - name: Install tooling dependencies
         run: cargo install cargo-make
