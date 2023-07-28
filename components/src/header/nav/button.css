@@ -11,10 +11,9 @@ header > nav > ul > li {
     rounded-md cursor-pointer
     fill-custom-button-content-default-color
     hover:bg-custom-button-background-hover-color
-    hover:fill-custom-button-content-hover-color
-    focus:opacity-70;
+    hover:fill-custom-button-content-hover-color;
 }
 
 header > nav > ul > li a {
-  @apply fill-inherit focus:opacity-70;
+  @apply fill-inherit;
 }
