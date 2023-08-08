@@ -16,10 +16,36 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: Test${{ github.ref == 'refs/heads/master' && ' and publish' || '' }}
-            cargo-make-command: tests
           - name: Lint
-            cargo-make-command: lint
+            command: lint
+          - name: Test on Chrome Desktop${{ github.ref == 'refs/heads/master' && ' and publish' || '' }}
+            command: tests
+            browser: chrome
+            project: chrome-desktop
+          - name: Test on MsEdge Desktop
+            command: tests
+            browser: msedge
+            project: msedge-desktop
+          - name: Test on Firefox Desktop
+            command: tests
+            browser: firefox
+            project: firefox-desktop
+          - name: Test on Safari Desktop
+            command: tests
+            browser: webkit
+            project: webkit-desktop
+          - name: Test on Chromium Mobile
+            command: tests
+            browser: chromium
+            project: chromium-mobile
+          - name: Test on Chromium Mobile Landscape
+            command: tests
+            browser: chromium
+            project: chromium-mobile-landscape
+          - name: Test on Safari Mobile
+            command: tests
+            browser: webkit
+            project: webkit-mobile
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -40,7 +66,7 @@ jobs:
             ~/.cargo/.crates.toml
             ~/.cargo/.crates2.json
             target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-${{ matrix.cargo-make-command }}-nightly
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-${{ matrix.command }}-nightly
       - name: Use Node.js v18
         uses: actions/setup-node@v3
         with:
@@ -52,45 +78,53 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-v18
           restore-keys: |
             ${{ runner.os }}-node-
-      - name: Cache Playwright browsers
-        id: playwright-cache
-        if: matrix.cargo-make-command == 'tests'
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}-${{ hashFiles('**/package-lock.json') }}
       - name: Install Node.js dependencies
         run: npm ci
       - name: Install Playwright browsers
-        if: matrix.cargo-make-command == 'tests'
-        run: npx playwright install --with-deps
+        if: matrix.command == 'tests'
+        run: npx playwright install ${{ matrix.browser }} --with-deps
       - name: Install tooling dependencies
         run: cargo install cargo-make
       - name: Build
         run: cargo make builds
         env:
           GITHUB_TOKEN: ${{ secrets.SECRET_GITHUB_TOKEN }}
-      - name: Run `cargo make ${{ matrix.cargo-make-command }}`
-        run: cargo make ${{ matrix.cargo-make-command }}
+      - name: Get test arguments
+        id: args
+        run: |
+          echo "arguments=${{ matrix.command == 'tests' && '--project=$PROJECT' || '' }}" \
+            >> $GITHUB_OUTPUT
+        env:
+          PROJECT: ${{ matrix.project }}
+      - name: List tests
+        if: matrix.command == 'tests'
+        run: |
+          cd end2end
+          npx playwright test --list ${{ steps.args.outputs.arguments }}
+      - name: Run `cargo make ${{ matrix.command }}`
+        run: |
+          cargo make ${{ matrix.command }} ${{ steps.args.outputs.arguments }}
         id: test
         continue-on-error: true
       - name: Upload Playwright report
         if: |
-          matrix.cargo-make-command == 'tests' &&
+          matrix.command == 'tests' &&
           steps.test.outcome != 'success'
         uses: actions/upload-artifact@v3
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.project }}
           path: playwright-report
       - name: Check test outcome
         if: |
-          matrix.cargo-make-command == 'tests' &&
+          matrix.command == 'tests' &&
           steps.test.outcome != 'success'
-        run: exit 1
+        run: |
+          echo "Tests failed, check the report"
+          exit 1
       - name: Publish website
         if: |
-          matrix.cargo-make-command == 'tests' &&
+          matrix.command == 'tests' &&
+          matrix.project == 'chrome-desktop' &&
           github.ref == 'refs/heads/master'
         uses: JamesIves/github-pages-deploy-action@v4
         with:

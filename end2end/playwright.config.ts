@@ -1,7 +1,7 @@
 import { devices, type PlaywrightTestConfig } from '@playwright/test';
 import { OUTPUT_DIR } from './tests/helpers.ts';
 
-const TIMEOUT = process.env.CI ? 30 * 1000 : 10 * 1000;
+const TIMEOUT = process.env.CI ? 30 * 1000 : 15 * 1000;
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -49,35 +49,38 @@ const config: PlaywrightTestConfig = {
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
+      name: 'chrome-desktop',
       use: {
-        ...devices['Desktop Chrome'],
+        channel: 'chrome',
       },
     },
-
     {
-      name: 'firefox',
+      name: 'msedge-desktop',
+      use: {
+        channel: 'msedge',
+      },
+    },
+    {
+      name: 'firefox-desktop',
       use: {
         ...devices['Desktop Firefox'],
       },
     },
     {
-      name: 'webkit',
+      name: 'webkit-desktop',
       use: {
         ...devices['Desktop Safari'],
       },
     },
-
-    /* Test against mobile viewports. */
     {
-      name: 'Mobile Chrome',
+      name: 'chromium-mobile',
       use: {
         ...devices['Pixel 5'],
       },
     },
 
     {
-      name: 'Mobile Chrome landscape',
+      name: 'chromium-mobile-landscape',
       use: {
         ...devices['Pixel 5 landscape'],
         viewport: {
@@ -94,23 +97,9 @@ const config: PlaywrightTestConfig = {
       },
     },
     {
-      name: 'Mobile Safari',
+      name: 'webkit-mobile',
       use: {
         ...devices['iPhone 12'],
-      },
-    },
-
-    /* Test against branded browsers. */
-    {
-      name: 'Microsoft Edge',
-      use: {
-        channel: 'msedge',
-      },
-    },
-    {
-      name: 'Google Chrome',
-      use: {
-        channel: 'chrome',
       },
     },
   ],
