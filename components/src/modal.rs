@@ -1,7 +1,10 @@
 use crate::copy::copy_inner_text_on_click;
 use crate::svg_defs::SVGDefs;
+use crate::Url;
+use core::fmt;
 use i18n::move_gettext;
 use leptos::{ev::MouseEvent, *};
+use web_sys;
 
 pub trait TitleFn = Fn() -> String + 'static;
 pub trait IsOpenFn = Fn() -> bool + 'static;
@@ -34,7 +37,7 @@ where
             >
                 {title}
             </h2>
-            <button type="button" title=move_gettext!( "Close") on:click=on_close>
+            <button type="button" title=move_gettext!("Close") on:click=on_close>
                 <svg role="img" viewBox="0 0 24 24">
                     <use_ href=format!("#{}", SVGDefs::CrossPath.id())></use_>
                 </svg>
@@ -105,4 +108,84 @@ where
             </div>
         </ModalShadow>
     }
+}
+
+#[derive(Copy, Clone, PartialEq)]
+pub enum ModalOpen {
+    Extensions,
+    Languages,
+    Icon,
+}
+
+impl fmt::Display for ModalOpen {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            ModalOpen::Extensions => write!(f, "extensions"),
+            ModalOpen::Languages => write!(f, "languages"),
+            ModalOpen::Icon => write!(f, "icon"),
+        }
+    }
+}
+
+impl TryFrom<&str> for ModalOpen {
+    type Error = ();
+
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
+        match value {
+            "extensions" => Ok(ModalOpen::Extensions),
+            "languages" => Ok(ModalOpen::Languages),
+            "icon" => Ok(ModalOpen::Icon),
+            _ => Err(()),
+        }
+    }
+}
+
+#[derive(Copy, Clone)]
+pub struct ModalOpenSignal(pub RwSignal<Option<ModalOpen>>);
+
+impl ModalOpenSignal {
+    pub fn set_none(&self) {
+        self.0.update(|mo| *mo = None);
+        Url::params::update(&Url::params::Names::Modal, "");
+    }
+
+    pub fn set_extensions(&self) {
+        self.0.update(|mo| *mo = Some(ModalOpen::Extensions));
+        Url::params::update(
+            &Url::params::Names::Modal,
+            &ModalOpen::Extensions.to_string(),
+        );
+    }
+
+    pub fn set_languages(&self) {
+        self.0.update(|mo| *mo = Some(ModalOpen::Languages));
+        Url::params::update(
+            &Url::params::Names::Modal,
+            &ModalOpen::Languages.to_string(),
+        );
+    }
+
+    pub fn set_icon(&self) {
+        self.0.update(|mo| *mo = Some(ModalOpen::Icon));
+        Url::params::update(
+            &Url::params::Names::Modal,
+            &ModalOpen::Icon.to_string(),
+        );
+    }
+}
+
+fn modal_open_from_url() -> Option<ModalOpen> {
+    match Url::params::get(&Url::params::Names::Modal) {
+        Some(modal) => {
+            if let Ok(modal) = ModalOpen::try_from(modal.as_str()) {
+                return Some(modal);
+            }
+            None
+        }
+        None => None,
+    }
+}
+
+pub fn provide_modal_open_context() {
+    provide_context(ModalOpenSignal(create_rw_signal(modal_open_from_url())));
 }
