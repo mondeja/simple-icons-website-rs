@@ -63,4 +63,4 @@ Typically the development of tests involucrates two terminals:
 
 ### Compatibility
 
-- We are currently tied to Node.js >= 18 to ensure that the fetch API is included in the standard library.
+- We are currently tied to Node.js >= 18 to ensure that the `fetch` API is included in the standard library.

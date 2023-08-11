@@ -231,8 +231,8 @@ workspace = false
 [tasks.run-pre-build-scripts]
 description = "Run pre-build scripts"
 run_task = { name = [
-    "fetch-deprecated-icons",
     "build-fast-fuzzy",
+    "fetch-deprecated-icons",
     "create-sitemap",
     "create-cname",
 ], parallel = true }
