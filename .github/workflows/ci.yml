@@ -92,35 +92,16 @@ jobs:
       - name: Get test arguments
         id: args
         run: |
-          echo "arguments=${{ matrix.command == 'tests' && '--project=$PROJECT --reporter=list' || '' }}" \
+          echo "arguments=${{ matrix.command == 'tests' && '--project=$PROJECT --reporter=github' || '' }}" \
             >> $GITHUB_OUTPUT
         env:
           PROJECT: ${{ matrix.project }}
       - name: List tests
         if: matrix.command == 'tests'
-        run: |
-          cd end2end
-          npx playwright test --list ${{ steps.args.outputs.arguments }}
+        working-directory: end2end
+        run: npx playwright test --list ${{ steps.args.outputs.arguments }}
       - name: Run `cargo make ${{ matrix.command }}`
-        run: |
-          cargo make ${{ matrix.command }} ${{ steps.args.outputs.arguments }}
-        id: test
-        continue-on-error: true
-      - name: Upload Playwright report
-        if: |
-          matrix.command == 'tests' &&
-          steps.test.outcome != 'success'
-        uses: actions/upload-artifact@v3
-        with:
-          name: playwright-report-${{ matrix.project }}
-          path: playwright-report
-      - name: Check test outcome
-        if: |
-          matrix.command == 'tests' &&
-          steps.test.outcome != 'success'
-        run: |
-          echo "Tests failed, check the report"
-          exit 1
+        run: cargo make ${{ matrix.command }} ${{ steps.args.outputs.arguments }}
       - name: Publish website
         if: |
           matrix.command == 'tests' &&
