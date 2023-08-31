@@ -96,6 +96,7 @@ const config: PlaywrightTestConfig = {
         },
       },
     },
+    // NOTE: Safari Mobile is really flaky on CI
     {
       name: 'webkit-mobile',
       use: {
