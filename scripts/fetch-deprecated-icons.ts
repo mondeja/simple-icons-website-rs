@@ -38,6 +38,17 @@ if (tmpFilePathExists) {
   process.exit(0);
 }
 
+if (global.fetch === undefined) {
+  let nodeMajorVersion = process.version.replace('v', '').split('.')[0];
+  if (parseInt(nodeMajorVersion) < 18) {
+    process.stderr.write(
+      `Detected unsupported major version of Node.js (v${nodeMajorVersion}).` +
+        ` Please upgrade to Node.js 18 or higher.\n`,
+    );
+    process.exit(1);
+  }
+}
+
 await fetch('https://api.github.com/graphql', {
   method: 'POST',
   headers: {

@@ -183,7 +183,7 @@ pub fn fill_icon_details_modal_with_icon(
 
     if let Some(deprecation) = icon.deprecation {
         modal_deprecation_paragraph.set_inner_html(&tr!(
-            "will-be-remove-at-extended",
+            "will-be-removed-at-extended",
             &{
                 let mut map = HashMap::new();
                 map.insert("icon".to_string(), icon.title.into());
