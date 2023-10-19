@@ -27,16 +27,16 @@ simple-icons-website-i18n = { path = "./i18n" }
 simple-icons-website-config = { path = "./config" }
 simple-icons-website-types = { path = "./types" }
 simple-icons-website-components = { path = "./components" }
-leptos = { version = "0.5.0-beta", default-features = false, features = [
+leptos = { version = "0.5.1", default-features = false, features = [
     "csr",
     "nightly",
     "miniserde",
 ] }
-leptos_meta = { version = "0.5.0-beta", default-features = false, features = [
+leptos_meta = { version = "0.5.1", default-features = false, features = [
     "csr",
     "nightly"
 ] }
-leptos_router = { version = "0.5.0-beta", default-features = false, features = [
+leptos_router = { version = "0.5.1", default-features = false, features = [
     "csr",
     "nightly"
 ] }
@@ -51,6 +51,10 @@ web-sys = { version = "0.3.64", default-features = false, features = [
     "HtmlElement",
     "HtmlButtonElement",
     "HtmlImageElement",
+    "HtmlInputElement",
+    "File",
+    "FileList",
+    "Blob",
     "DomTokenList",
     "EventTarget",
     "Storage",
@@ -66,6 +70,8 @@ web-sys = { version = "0.3.64", default-features = false, features = [
     "Request",
     "RequestInit",
     "RequestCache",
+    "CanvasRenderingContext2d",
+    "OffscreenCanvasRenderingContext2d",
 ] }
 js-sys = "0.3.64"
 wasm-bindgen-futures = "0.4.37"

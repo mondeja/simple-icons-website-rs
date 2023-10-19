@@ -17,12 +17,8 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "postinstall": "npm run setup:husky && npm run setup:blobstream",
-    "setup:husky": "node -e 'process.exit(process.env.CI === undefined)' || husky install",
-    "setup:blobstream": "node -e 'require(\"fs\").copyFileSync(\"node_modules/blob-stream/.js\", \"node_modules/blob-stream/blob-stream.js\")'",
-    "fetch-deprecated-icons": "ts-node --esm scripts/fetch-deprecated-icons.ts",
-    "create-sitemap": "ts-node --esm scripts/create-sitemap.ts",
-    "create-cname": "ts-node --esm scripts/create-cname.ts"
+    "postinstall": "npm run setup:husky",
+    "setup:husky": "node -e 'process.exit(process.env.CI === undefined)' || husky install"
   },
   "devDependencies": {
     "@playwright/test": "1.36.2",
@@ -43,7 +39,7 @@
     "stylelint-config-standard": "34.0.0",
     "stylelint-config-tailwindcss": "0.0.7",
     "tailwindcss": "3.3.3",
-    "ts-node": "10.9.1"
+    "tsx": "3.13.0"
   },
   "dependencies": {
     "blob-stream": "0.1.3",
