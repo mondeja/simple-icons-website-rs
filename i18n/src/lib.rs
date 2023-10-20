@@ -12,48 +12,8 @@ pub struct Language {
     pub name: &'static str,
 }
 
-pub static LANGUAGES: [Language; 10] = [
-    Language {
-        id: langid!("en-US"),
-        name: "English",
-    },
-    Language {
-        id: langid!("es-ES"),
-        name: "Español",
-    },
-    Language {
-        id: langid!("fr-FR"),
-        name: "Français",
-    },
-    Language {
-        id: langid!("it-IT"),
-        name: "Italiano",
-    },
-    Language {
-        id: langid!("ko-KR"),
-        name: "한국어",
-    },
-    Language {
-        id: langid!("pt-PT"),
-        name: "Português",
-    },
-    Language {
-        id: langid!("ja-JP"),
-        name: "日本語",
-    },
-    Language {
-        id: langid!("zh-CN"),
-        name: "中文 (简体)",
-    },
-    Language {
-        id: langid!("zh-HK"),
-        name: "中文 (香港)",
-    },
-    Language {
-        id: langid!("zh-TW"),
-        name: "中文 (繁體)",
-    },
-];
+// Exposes LANGUAGES as a public static variable
+include!(concat!(env!("OUT_DIR"), "/languages.rs"));
 
 static_loader! {
     // Declare our `StaticLoader` named `LOCALES`.
