@@ -1,12 +1,10 @@
-#![allow(clippy::redundant_closure)]
-
 mod buttons;
 mod canvas;
 pub(crate) mod helpers;
 mod inputs;
 
 use crate::fetch::fetch_text;
-use crate::svg_icon::svg_with_path_opt_fill;
+use crate::svg::svg_with_path_opt_fill;
 use buttons::PreviewButtons;
 use canvas::update_preview_canvas;
 use helpers::contrast_color_for;
@@ -14,7 +12,6 @@ use inputs::{BrandInput, ColorInput, PathInput};
 use leptos::*;
 use simple_icons::sdk;
 use simple_icons_macros::{get_number_of_icons, simple_icon_svg_path};
-use wasm_bindgen::JsCast;
 
 static INITIAL_BRAND: &str = "Simple Icons";
 static INITIAL_COLOR: &str = "111111";
@@ -30,7 +27,7 @@ pub fn PreviewGenerator() -> impl IntoView {
     view! {
         <div class="preview">
             <div>
-                <BrandInput brand=brand set_brand=set_brand set_color=set_color set_path=set_path/>
+                <BrandInput brand=brand set_brand=set_brand set_color=set_color/>
                 <ColorInput color=color set_color=set_color/>
             </div>
             <PathInput path=path set_path=set_path/>
@@ -170,11 +167,7 @@ fn PreviewBadge(
     }
 
     let on_load = move |ev: web_sys::Event| {
-        let target = ev
-            .target()
-            .unwrap()
-            .dyn_into::<web_sys::HtmlElement>()
-            .unwrap();
+        let target = event_target::<web_sys::HtmlInputElement>(&ev);
 
         if target.get_attribute("reloaded") == Some("true".to_string()) {
             target.set_attribute("reloaded", "false").unwrap();
