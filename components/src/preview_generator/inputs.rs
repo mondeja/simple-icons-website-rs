@@ -1,5 +1,6 @@
 use crate::button::Button;
 use crate::controls::search::fuzzy::search;
+use crate::event::dispatch_input_event_on_input;
 use crate::fetch::fetch_text;
 use crate::grid::ICONS;
 use crate::js_libs::svg::{svg_path_bbox, svg_path_segments};
@@ -9,7 +10,6 @@ use crate::preview_generator::{
 use i18n::move_tr;
 use leptos::{html::Input, *};
 use simple_icons::sdk;
-use std::time::Duration;
 use types::SimpleIcon;
 use wasm_bindgen::{closure::Closure, JsCast};
 
@@ -192,12 +192,7 @@ fn FixLintErrorButton(
                 let input = input_ref.get().unwrap();
                 let (new_value, (start, end)) = fixer(&input.value(), (start, end));
                 input.set_value(&new_value);
-                let event = web_sys::Event::new_with_event_init_dict(
-                        "input",
-                        web_sys::EventInit::new().bubbles(true),
-                    )
-                    .unwrap();
-                input.dispatch_event(&event).unwrap();
+                dispatch_input_event_on_input(&input);
                 _ = set_timeout_with_handle(
                     move || {
                         input.focus().unwrap();
@@ -205,7 +200,7 @@ fn FixLintErrorButton(
                         input.set_selection_start(Some(start)).unwrap();
                         input.set_selection_end(Some(end)).unwrap();
                     },
-                    Duration::from_millis(3),
+                    std::time::Duration::from_millis(3),
                 );
             }
         />
@@ -441,14 +436,9 @@ fn BrandSuggestion(
                         .dyn_into::<web_sys::HtmlInputElement>()
                         .unwrap();
                     path_input.set_value(&sdk::svg_to_path(&svg));
-                    let event = web_sys::Event::new_with_event_init_dict(
-                            "input",
-                            web_sys::EventInit::new().bubbles(true),
-                        )
-                        .unwrap();
-                    path_input.dispatch_event(&event).unwrap();
+                    dispatch_input_event_on_input(&path_input);
+                    update_preview_canvas();
                 }
-                update_preview_canvas();
             });
         }>
             <a>
