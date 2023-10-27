@@ -260,7 +260,7 @@ pub fn SearchControl() -> impl IntoView {
             <label for=Ids::SearchInput.as_str()>{move_tr!("search")}</label>
             <div class="search">
                 <input
-                    _ref=search_input_ref
+                    node_ref=search_input_ref
                     id=Ids::SearchInput.as_str()
                     type="search"
                     autocomplete="off"
@@ -281,17 +281,18 @@ pub fn SearchControl() -> impl IntoView {
                     }
                 />
 
-                <span
-                    class:hidden=move || search().is_empty()
-                    title=move_tr!("clear-search")
-                    on:click=move |_| {
-                        search_input_ref.get().unwrap().set_value("");
-                        fire_on_search_event();
-                    }
-                >
+                <Show when=move || !search().is_empty()>
+                    <span
+                        title=move_tr!("clear-search")
+                        on:click=move |_| {
+                            search_input_ref.get().unwrap().set_value("");
+                            fire_on_search_event();
+                        }
+                    >
 
-                    "×"
-                </span>
+                        "×"
+                    </span>
+                </Show>
             </div>
         </div>
     }

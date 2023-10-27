@@ -137,15 +137,13 @@ pub fn Icons() -> impl IntoView {
     let icons_grid = use_context::<IconsGridSignal>().unwrap().0;
 
     view! {
-        {move || {
-            icons_grid()
-                .loaded_icons
-                .iter()
-                .map(|icon: &&'static SimpleIcon| {
-                    view! { <IconGridItem icon=*icon/> }
-                })
-                .collect::<Vec<_>>()
-        }}
+        <For
+            each=move || icons_grid().loaded_icons
+            key=move |icon| icon.slug
+            children=move |icon: &'static SimpleIcon| {
+                view! { <IconGridItem icon=icon/> }
+            }
+        />
     }
 }
 
@@ -215,7 +213,7 @@ pub fn Grid() -> impl IntoView {
 
     view! {
         <IconDetailsModal/>
-        <ul _ref=icons_list_ref class:layout-compact=move || layout() == Layout::Compact>
+        <ul node_ref=icons_list_ref class:layout-compact=move || layout() == Layout::Compact>
             <Icons/>
         </ul>
         <IconsLoader/>
