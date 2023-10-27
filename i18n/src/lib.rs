@@ -56,9 +56,24 @@ impl FromStr for Language {
     type Err = ();
 
     fn from_str(code: &str) -> Result<Self, Self::Err> {
-        match LANGUAGES.iter().find(|lang| lang.id.to_string() == *code) {
-            Some(lang) => Ok(lang.clone()),
-            None => Err(()),
+        match LanguageIdentifier::from_str(code) {
+            Ok(target_lang) => match LANGUAGES
+                .iter()
+                .find(|lang| lang.id.matches(&target_lang, false, false))
+            {
+                Some(lang) => Ok(lang.clone()),
+                None => {
+                    let mut lazy_target_lang = target_lang.clone();
+                    lazy_target_lang.region = None;
+                    match LANGUAGES.iter().find(|lang| {
+                        lang.id.matches(&lazy_target_lang, true, true)
+                    }) {
+                        Some(lang) => Ok(lang.clone()),
+                        None => Err(()),
+                    }
+                }
+            },
+            Err(_) => Err(()),
         }
     }
 }
