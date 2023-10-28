@@ -1,4 +1,5 @@
-use crate::controls::download::{download_pdf, download_svg};
+use crate::button::Button;
+use crate::controls::download::{download, download_pdf, download_svg};
 use crate::copy::copy_inner_text_on_click;
 use crate::fetch::fetch_text;
 use crate::grid::item::icon_preview::on_click_copy_image_children_src_content;
@@ -7,7 +8,7 @@ use crate::grid::CurrentIconViewSignal;
 use crate::modal::{Modal, ModalOpenSignal};
 use crate::Ids;
 use i18n::{move_tr, tr, Language};
-use leptos::{document, *};
+use leptos::{ev::MouseEvent, *};
 use std::collections::HashMap;
 use types::SimpleIcon;
 use wasm_bindgen::JsCast;
@@ -245,8 +246,8 @@ pub fn fill_icon_details_modal_with_icon(
         .unwrap();
 
     let download_colored_icon_container = modal_footer
-        .get_elements_by_tag_name("a")
-        .item(0)
+        .get_elements_by_tag_name("button")
+        .item(1)
         .unwrap()
         .dyn_into::<web_sys::HtmlElement>()
         .unwrap();
@@ -256,15 +257,15 @@ pub fn fill_icon_details_modal_with_icon(
             fetch_text(&format!("/icons/{}.svg", icon.slug)).await
         {
             let colored_icon_svg =
-                svg.replace("<svg", &format!("<svg fill=\"%23{}\"", icon.hex));
+                svg.replace("<svg", &format!("<svg fill=\"#{}\"", icon.hex));
             download_colored_icon_container
                 .set_attribute(
-                    "href",
-                    &format!("data:image/svg+xml,{}", &colored_icon_svg),
+                    "data-url",
+                    &format!(
+                        "data:image/svg+xml;utf8,{}",
+                        js_sys::encode_uri_component(&colored_icon_svg)
+                    ),
                 )
-                .unwrap();
-            download_colored_icon_container
-                .set_attribute("download", &format!("{}-color.svg", icon.slug))
                 .unwrap();
         }
     });
@@ -313,19 +314,24 @@ fn IconDetailsModalFooter() -> impl IntoView {
     });
     view! {
         <div>
-            <button
+            <Button
                 on:click=move |_| download_svg(&get_slug_from_modal_container())
-                aria-label=download_svg_msg
-            >
-                {download_svg_msg}
-            </button>
-            <a aria-label=download_colored_svg_msg>{download_colored_svg_msg}</a>
-            <button
+                title=download_svg_msg
+            />
+            <Button
+                title=download_colored_svg_msg
+                on:click=move |ev: MouseEvent| download(
+                    &format!("{}-color.svg", get_slug_from_modal_container()),
+                    &event_target::<web_sys::HtmlButtonElement>(&ev)
+                        .get_attribute("data-url")
+                        .unwrap(),
+                )
+            />
+
+            <Button
                 on:click=move |_| download_pdf(&get_slug_from_modal_container())
-                aria-label=download_pdf_msg
-            >
-                {download_pdf_msg}
-            </button>
+                title=download_pdf_msg
+            />
         </div>
     }
 }
