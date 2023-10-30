@@ -1,3 +1,4 @@
+use crate::svg::SVGIcon;
 use leptos::*;
 
 pub trait ActiveFn = Fn() -> bool + 'static;
@@ -12,13 +13,16 @@ pub fn ControlButton<A, Ti>(
     children: Children,
     /// The control is active
     active: A,
+    /// Optional classes
+    #[prop(optional)]
+    class: &'static str,
 ) -> impl IntoView
 where
     Ti: TextFn,
     A: ActiveFn,
 {
     view! {
-        <button class:selected=active type="button" title=title tabindex=0>
+        <button class:selected=active type="button" title=title tabindex=0 class=class>
             {children()}
         </button>
     }
@@ -26,23 +30,32 @@ where
 
 /// Control button made from SVG path
 #[component]
-pub fn ControlButtonSVGPath<A, Ti>(
+pub fn ControlButtonSVGPath<A, T>(
     /// Button title
-    title: Ti,
+    title: T,
     /// Button icon SVG path
     svg_path: &'static str,
     /// The control is active
     active: A,
+    /// Optional classes
+    #[prop(optional)]
+    class: &'static str,
 ) -> impl IntoView
 where
-    Ti: TextFn,
     A: ActiveFn,
+    T: TextFn,
 {
+    let title_fn = create_memo(move |_| title());
     view! {
-        <ControlButton title=title active=active>
-            <svg role="img" aria-hidden=true aria-label=title viewBox="0 0 24 24">
-                <path d=svg_path></path>
-            </svg>
+        <ControlButton title=title active=active class=class>
+            <SVGIcon
+                role="img"
+                aria_hidden=true
+                aria_label=title_fn
+                view_box="0 0 24 24"
+                path=svg_path
+            />
+
         </ControlButton>
     }
 }
@@ -64,7 +77,7 @@ where
 {
     view! {
         <ControlButton title=title active=active>
-            {text}
+            <span>{text}</span>
         </ControlButton>
     }
 }
