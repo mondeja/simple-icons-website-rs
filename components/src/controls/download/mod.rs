@@ -2,13 +2,16 @@ pub mod pdf;
 pub mod svg;
 
 use crate::controls::button::ControlButtonText;
-use crate::storage::LocalStorage;
+use crate::storage::{
+    conversion_get_from_localstorage, set_on_localstorage, LocalStorage,
+};
 use crate::Url;
 use i18n::{move_tr, tr};
 use leptos::{document, window, *};
 pub use pdf::download_pdf;
 use std::collections::HashMap;
 use std::fmt;
+use std::str::FromStr;
 pub use svg::download_svg;
 use wasm_bindgen::JsCast;
 use web_sys;
@@ -20,12 +23,14 @@ pub enum DownloadType {
     PDF,
 }
 
-impl DownloadType {
-    fn from_str(download_type: &str) -> Option<Self> {
-        match download_type {
-            "svg" => Some(Self::SVG),
-            "pdf" => Some(Self::PDF),
-            _ => None,
+impl FromStr for DownloadType {
+    type Err = ();
+
+    fn from_str(value: &str) -> Result<Self, Self::Err> {
+        match value {
+            "svg" => Ok(Self::SVG),
+            "pdf" => Ok(Self::PDF),
+            _ => Err(()),
         }
     }
 }
@@ -49,7 +54,7 @@ pub fn provide_download_type_context() {
 pub struct DownloadTypeSignal(pub RwSignal<DownloadType>);
 
 fn initial_download_type() -> DownloadType {
-    match get_download_type_from_url() {
+    match Url::params::get_param!(DownloadType, DownloadType) {
         Some(download_type) => {
             set_download_type_on_localstorage(&download_type);
             download_type
@@ -61,37 +66,12 @@ fn initial_download_type() -> DownloadType {
     }
 }
 
-fn get_download_type_from_url() -> Option<DownloadType> {
-    match Url::params::get(&Url::params::Names::DownloadType) {
-        Some(download_type) => DownloadType::from_str(download_type.as_str()),
-        None => None,
-    }
-}
-
 fn get_download_type_from_localstorage() -> Option<DownloadType> {
-    match window()
-        .local_storage()
-        .unwrap()
-        .unwrap()
-        .get_item(LocalStorage::Keys::DownloadType.as_str())
-    {
-        Ok(Some(download_type)) => {
-            DownloadType::from_str(download_type.as_str())
-        }
-        _ => None,
-    }
+    conversion_get_from_localstorage!(DownloadType, DownloadType)
 }
 
 fn set_download_type_on_localstorage(download_type: &DownloadType) {
-    window()
-        .local_storage()
-        .unwrap()
-        .unwrap()
-        .set_item(
-            LocalStorage::Keys::DownloadType.as_str(),
-            &download_type.to_string(),
-        )
-        .unwrap();
+    set_on_localstorage!(DownloadType, &download_type.to_string())
 }
 
 #[component]

@@ -1,8 +1,12 @@
 use crate::header::{nav::button::HeaderMenuButton, HeaderStateSignal};
 use crate::modal::{Modal, ModalOpen, ModalOpenSignal};
+use crate::storage::{
+    conversion_get_from_localstorage, set_on_localstorage, LocalStorage,
+};
 use crate::Url;
 use i18n::{move_tr, Language, LocaleSignal, LANGUAGES};
 use leptos::{window, *};
+use std::str::FromStr;
 
 static LANGUAGE_SELECTOR_ICON_SVG_PATH: &str = concat!(
     "m12.87 15.07-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6",
@@ -19,7 +23,7 @@ pub fn provide_language_context() -> LocaleSignal {
 }
 
 fn initial_language() -> Language {
-    match initial_language_from_url() {
+    match Url::params::get_param!(Language, Language) {
         Some(lang) => {
             set_language_in_localstorage(&lang);
             lang
@@ -46,27 +50,12 @@ fn initial_language_from_navigator_languages() -> Option<Language> {
     None
 }
 
-fn initial_language_from_url() -> Option<Language> {
-    match Url::params::get(&Url::params::Names::Language) {
-        Some(value) => value.parse().ok(),
-        None => None,
-    }
-}
-
 fn initial_language_from_localstorage() -> Option<Language> {
-    let local_storage = window().local_storage().unwrap().unwrap();
-
-    match local_storage.get_item("language") {
-        Ok(Some(language)) => language.parse().ok(),
-        _ => None,
-    }
+    conversion_get_from_localstorage!(Language, Language)
 }
 
 pub fn set_language_in_localstorage(lang: &Language) {
-    let local_storage = window().local_storage().unwrap().unwrap();
-    local_storage
-        .set_item("language", &lang.id.to_string())
-        .unwrap();
+    set_on_localstorage!(Language, &lang.id.to_string())
 }
 
 /// Languages list
