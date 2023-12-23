@@ -213,7 +213,7 @@ description = "Build the fast-fuzzy JS library for the web"
 script_runner = "@duckscript"
 script = '''
 rm -r ./app/public/assets/js
-mkdir -p ./app/public/assets/js
+mkdir ./app/public/assets/js
 
 # fast-fuzzy
 packagejson = readfile node_modules/fast-fuzzy/package.json
