@@ -8,11 +8,13 @@ pub mod order;
 pub mod search;
 
 use crate::svg::{SVGDef, SVGIcon};
+use button::XS_ICON_SIZE;
 use color_scheme::ColorSchemeControl;
 use download::DownloadFileTypeControl;
 use i18n::tr;
 use layout::LayoutControl;
 use leptos::*;
+use leptos_use::use_media_query;
 use order::OrderControl;
 use search::SearchControl;
 
@@ -78,11 +80,16 @@ pub fn Controls() -> impl IntoView {
 pub fn ControlsToggler() -> impl IntoView {
     let controls_state = expect_context::<ControlsStateSignal>().0;
 
+    let is_xs_screen = use_media_query("(max-width: 475px)");
+    let size =
+        create_memo(move |_| if is_xs_screen() { XS_ICON_SIZE } else { "24" });
+
     view! {
         <div class="control">
             <label class="block">""</label>
             <button
-                class="absolute right-0 bottom-0 rounded"
+                class="absolute right-0 sm:bottom-0 rounded"
+
                 title=move || {
                     if controls_state().buttons_group_open {
                         tr!("open-search-bar")
@@ -105,7 +112,9 @@ pub fn ControlsToggler() -> impl IntoView {
                             <SVGIcon
                                 role="img"
                                 aria_hidden=true
-                                view_box="-1 -1 27 27"
+                                view_box=(|| "-1 -1 27 27".into()).into()
+                                width=size.into()
+                                height=size.into()
                                 path=&SVGDef::View
                             />
                         }
@@ -115,7 +124,9 @@ pub fn ControlsToggler() -> impl IntoView {
                             <SVGIcon
                                 role="img"
                                 aria_hidden=true
-                                view_box="-1 -1 27 27"
+                                view_box=(|| "-1 -1 27 27".into()).into()
+                                width=size.into()
+                                height=size.into()
                                 path=&SVGDef::Controls
                             />
                         }
