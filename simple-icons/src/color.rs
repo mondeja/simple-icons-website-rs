@@ -48,7 +48,7 @@ pub mod sorting {
         }
     }
 
-    pub fn sort_hexes(hexes: &Vec<String>) -> Vec<String> {
+    pub fn sort_hexes(hexes: &[String]) -> Vec<String> {
         let mut coloreds: Vec<Hsl> = vec![];
         let mut greys: Vec<Hsl> = vec![];
 
