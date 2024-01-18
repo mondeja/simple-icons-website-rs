@@ -29,7 +29,7 @@ test.describe('search', () => {
     });
   }
 
-  test('sets the ordering mode to search match score', async ({ page }) => {
+  test('sets the ordering mode to random', async ({ page }) => {
     await page.goto('/');
 
     await page.fill(selectors.controls.search.input, searchValues[0][0]);
@@ -41,6 +41,6 @@ test.describe('search', () => {
 
     await expect(
       await page.evaluate(() => localStorage.getItem('order-mode')),
-    ).toBe(null);
+    ).toBe('random');
   });
 });
