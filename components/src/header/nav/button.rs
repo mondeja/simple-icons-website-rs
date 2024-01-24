@@ -8,7 +8,8 @@ use leptos::*;
 #[component]
 pub fn HeaderMenuLink(
     /// Title of the link
-    title: Signal<String>,
+    #[prop(into)]
+    title: MaybeSignal<String>,
     /// URL of the link
     href: &'static str,
     /// SVG path of the icon
@@ -26,13 +27,7 @@ pub fn HeaderMenuLink(
             }
         >
 
-            <SVGIcon
-                path=svg_path
-                role="link"
-                aria_label=title_fn
-                width=(|| "36").into()
-                height=(|| "36").into()
-            />
+            <SVGIcon path=svg_path role="link" aria_label=title_fn width="36" height="36"/>
         </li>
     }
 }
@@ -43,15 +38,17 @@ pub fn HeaderMenuLink(
 #[component]
 pub fn HeaderMenuButton(
     /// Additional classes to add to the button
-    class: Signal<String>,
+    #[prop(into, optional)]
+    class: MaybeSignal<String>,
     /// Title of the button
-    title: Signal<String>,
+    #[prop(into)]
+    title: MaybeSignal<String>,
     /// SVG path of the icon
     svg_path: &'static str,
 ) -> impl IntoView {
     view! {
         <li title=title class=class tabindex=0>
-            <SVGIcon role="button" path=svg_path width=(|| "36").into() height=(|| "36").into()/>
+            <SVGIcon role="button" path=svg_path width="36" height="36"/>
         </li>
     }
 }
