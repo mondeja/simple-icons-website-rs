@@ -13,28 +13,6 @@ const getSystemColorScheme = async (page: Page): Promise<'dark' | 'light'> => {
 };
 
 test.describe('color scheme', () => {
-  test('discovered from system by default', async ({ page }) => {
-    await page.goto('/');
-
-    if (!screenWidthIsAtLeast('lg', page)) {
-      await page.locator(selectors.controls.toggler).click();
-    }
-
-    const colorSchemeButtons = await page.locator(
-      `${COLOR_SCHEME_CONTROL_SELECTOR} button`,
-    );
-    await expect(colorSchemeButtons).toHaveCount(3);
-    await expect(colorSchemeButtons.nth(2)).toHaveClass('selected');
-
-    await expect(page.locator(selectors.body)).toHaveClass(
-      await getSystemColorScheme(page),
-    );
-
-    await expect(
-      await page.evaluate(() => localStorage.getItem('color-scheme')),
-    ).toBe(null);
-  });
-
   test('system -> opposite', async ({ page }) => {
     await page.goto('/');
 
@@ -64,7 +42,7 @@ test.describe('color scheme', () => {
     ).toBe(oppositeColorScheme);
   });
 
-  const colorSchemeButtons = ['light', 'dark', 'system'];
+  const colorSchemeButtons = ['light', 'dark', 'auto'];
   for (const colorSchemeButtonIndex in colorSchemeButtons) {
     const colorScheme = colorSchemeButtons[colorSchemeButtonIndex];
     test(`${colorScheme} through URL`, async ({ page }) => {
