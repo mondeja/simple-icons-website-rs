@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: treosh/lighthouse-ci-action@10.1.0
+      - uses: treosh/lighthouse-ci-action@v11
         with:
           urls: |
             https://wasm.simpleicons.org/
