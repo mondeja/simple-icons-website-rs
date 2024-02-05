@@ -13,6 +13,7 @@ use canvas::update_preview_canvas;
 use helpers::contrast_color_for;
 use inputs::{BrandInput, ColorInput, PathInput};
 use leptos::*;
+use leptos_use::use_device_pixel_ratio;
 use simple_icons::sdk;
 use simple_icons_macros::{get_number_of_icons, simple_icon_svg_path};
 use types::SimpleIcon;
@@ -68,7 +69,7 @@ pub fn PreviewGenerator() -> impl IntoView {
     let (brand, set_brand) = create_signal(initial_brand);
     let (color, set_color) = create_signal(initial_color);
     let (path, set_path) = create_signal(initial_path);
-    if path().is_empty() {
+    if path.get_untracked().is_empty() {
         spawn_local(async move {
             if let Some(svg) =
                 fetch_text(&format!("/icons/{}.svg", icon.unwrap().slug)).await
@@ -78,23 +79,20 @@ pub fn PreviewGenerator() -> impl IntoView {
         });
     }
 
+    let pixel_ratio = use_device_pixel_ratio();
+    create_effect(move |_| update_preview_canvas(pixel_ratio()));
+
     view! {
         <div class="preview">
             <div>
-                <BrandInput brand=brand set_brand=set_brand set_color=set_color/>
-                <ColorInput color=color set_color=set_color/>
+                <BrandInput brand set_brand set_color/>
+                <ColorInput color set_color/>
             </div>
-            <PathInput path=path set_path=set_path/>
+            <PathInput path set_path/>
 
-            <PreviewFigure brand=brand color=color path=path/>
-            <PreviewBadges color=color path=path/>
-            <PreviewButtons
-                brand=brand
-                path=path
-                set_brand=set_brand
-                set_color=set_color
-                set_path=set_path
-            />
+            <PreviewFigure brand color path/>
+            <PreviewBadges color path/>
+            <PreviewButtons brand path set_brand set_color set_path/>
         </div>
     }
 }
@@ -111,18 +109,18 @@ where {
     view! {
         <figure class="preview-figure">
             <svg
-                width="740"
-                height="420"
-                viewBox="0 0 740 420"
+                width=canvas::WIDTH
+                height=canvas::HEIGHT - 70
+                viewBox=format!("0 0 {} {}", canvas::WIDTH, canvas::HEIGHT - 70)
                 xmlns="http://www.w3.org/2000/svg"
                 class="pt-3"
             >
                 <rect
                     fill=move || format!("#{}", color())
-                    height="420"
+                    height=canvas::HEIGHT - 70
                     rx="10"
                     ry="10"
-                    width="740"
+                    width=canvas::WIDTH
                     x="0"
                     y="0"
                 ></rect>
@@ -206,7 +204,7 @@ where {
                     </g>
                 </g>
             </svg>
-            <canvas height="490" width="740"></canvas>
+            <canvas height=canvas::HEIGHT width=canvas::WIDTH></canvas>
         </figure>
     }
 }
@@ -224,14 +222,14 @@ where {
 
     view! {
         <div class="preview-badges">
-            <PreviewBadge color=color svg=white_svg style="flat"/>
-            <PreviewBadge color=color svg=white_svg style="plastic"/>
-            <PreviewBadge color=color svg=white_svg style="for-the-badge"/>
-            <PreviewBadge color=color svg=color_svg style="social"/>
-            <PreviewBadge color=color svg=color_svg style="flat"/>
-            <PreviewBadge color=color svg=color_svg style="plastic"/>
-            <PreviewBadge color=color svg=color_svg style="for-the-badge"/>
-            <PreviewBadge color=color svg=color_svg style="social" text_color="4183c4"/>
+            <PreviewBadge color svg=white_svg style="flat"/>
+            <PreviewBadge color svg=white_svg style="plastic"/>
+            <PreviewBadge color svg=white_svg style="for-the-badge"/>
+            <PreviewBadge color svg=color_svg style="social"/>
+            <PreviewBadge color svg=color_svg style="flat"/>
+            <PreviewBadge color svg=color_svg style="plastic"/>
+            <PreviewBadge color svg=color_svg style="for-the-badge"/>
+            <PreviewBadge color svg=color_svg style="social" text_color="4183c4"/>
         </div>
     }
 }
@@ -243,8 +241,10 @@ fn PreviewBadge(
     style: &'static str,
     #[prop(optional)] text_color: Option<&'static str>,
 ) -> impl IntoView {
+    let pixel_ratio = use_device_pixel_ratio();
+
     /// Get the URL of a badge
-    fn badge_url(color: &str, svg: &str, style: &str) -> String {
+    fn badge_url(color_: &str, svg: &str, style: &str) -> String {
         format!(
             concat!(
                 "https://img.shields.io/badge/{}-preview-{}.svg",
@@ -254,7 +254,7 @@ fn PreviewBadge(
                 "social" => "",
                 _ => "simple%20icons",
             },
-            color,
+            color_,
             style,
             window().btoa(svg).unwrap(),
         )
@@ -263,13 +263,17 @@ fn PreviewBadge(
     let on_load = move |ev: web_sys::Event| {
         let target = event_target::<web_sys::HtmlInputElement>(&ev);
 
-        if target.get_attribute("reloaded") == Some("true".to_string()) {
+        if target.get_attribute("reloaded") == Some("true".into()) {
             target.set_attribute("reloaded", "false").unwrap();
             return;
         }
         if text_color.is_some() {
             spawn_local(async move {
-                let url = badge_url(&color(), &svg(), style);
+                let url = badge_url(
+                    &color.get_untracked(),
+                    &svg.get_untracked(),
+                    style,
+                );
                 let badge_svg = fetch_text(&url).await.unwrap();
                 let styled_badge_svg = badge_svg.replace(
                     "id=\"rlink\"",
@@ -290,10 +294,10 @@ fn PreviewBadge(
                     )
                     .unwrap();
 
-                update_preview_canvas();
+                update_preview_canvas(pixel_ratio.get_untracked());
             });
         } else {
-            update_preview_canvas();
+            update_preview_canvas(pixel_ratio.get_untracked());
         }
     };
 
