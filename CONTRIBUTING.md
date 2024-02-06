@@ -3,7 +3,6 @@
 ## Setup
 
 - Install Rust with [rustup](https://rustup.rs/).
-- Add `wasm32-unknown-unknown` target with `rustup target add wasm32-unknown-unknown`.
 - Install [cargo-make](https://sagiegurari.github.io/cargo-make/) with `cargo install --force cargo-make`.
 - Install [fnm](https://github.com/Schniz/fnm) with `cargo install fnm` and [setup your Shell](https://github.com/Schniz/fnm#shell-setup).
 - Install NodeJS with npm and run `npm install`.
