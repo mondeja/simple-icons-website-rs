@@ -1,10 +1,7 @@
 use crate::header::{nav::button::HeaderMenuButton, HeaderStateSignal};
 use crate::modal::{Modal, ModalOpen, ModalOpenSignal};
-use crate::storage::LocalStorage;
-use crate::Url;
-use i18n::{move_tr, Language, LocaleSignal, LANGUAGES};
-use leptos::{window, *};
-use std::str::FromStr;
+use leptos::*;
+use leptos_fluent::{i18n, Language};
 
 static LANGUAGE_SELECTOR_ICON_SVG_PATH: &str = concat!(
     "m12.87 15.07-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6H17V4h-7V2H8v2",
@@ -14,74 +11,29 @@ static LANGUAGE_SELECTOR_ICON_SVG_PATH: &str = concat!(
     "L19.12 17h-3.24z",
 );
 
-pub fn provide_language_context() -> LocaleSignal {
-    let locale_signal = LocaleSignal(create_rw_signal(initial_language()));
-    provide_context(locale_signal);
-    locale_signal
-}
-
-fn initial_language() -> &'static Language {
-    match Url::params::get(&Url::params::Names::Language)
-        .and_then(|value| <&'static Language>::from_str(value.as_str()).ok())
-    {
-        Some(value) => {
-            set_language_in_localstorage(value);
-            value
-        }
-        None => match initial_language_from_localstorage() {
-            Some(lang) => lang,
-            None => match initial_language_from_navigator_languages() {
-                Some(lang) => lang,
-                None => <&'static Language>::default(),
-            },
-        },
-    }
-}
-
-fn initial_language_from_navigator_languages() -> Option<&'static Language> {
-    let languages = window().navigator().languages().to_vec();
-    for raw_language in languages {
-        let language =
-            raw_language.as_string().expect("Language not parseable");
-        if let Ok(lang) = language.parse() {
-            return Some(lang);
-        }
-    }
-    None
-}
-
-fn initial_language_from_localstorage() -> Option<&'static Language> {
-    LocalStorage::get(LocalStorage::Keys::Language)
-        .and_then(|value| <&'static Language>::from_str(value.as_str()).ok())
-}
-
-pub fn set_language_in_localstorage(lang: &'static Language) {
-    LocalStorage::set(LocalStorage::Keys::Language, &lang.id.to_string());
-}
-
 /// Languages list
 #[component]
 pub fn LanguagesList() -> impl IntoView {
-    let locale_state = expect_context::<LocaleSignal>().0;
     let modal_open = expect_context::<ModalOpenSignal>();
+    let current_language = Signal::derive(move || i18n().language.get());
 
     view! {
         <ul class="language-selector">
             <For
-                each=move || LANGUAGES.iter()
+                each=move || i18n().languages
                 key=move |lang| lang.id.to_string()
-                children=move |lang: &Language| {
+                children=move |lang: &&Language| {
                     view! {
-                        <Show when=move || lang != locale_state()>
-                            <li on:click=move |_| {
+                        <li
+                            class=move || if *lang == current_language() { "hidden" } else { "" }
+                            on:click=move |_| {
                                 modal_open.set_none();
-                                locale_state.update(|state| *state = lang);
-                                set_language_in_localstorage(lang);
-                            }>
+                                i18n().set_language_with_localstorage(lang);
+                            }
+                        >
 
-                                {lang.name}
-                            </li>
-                        </Show>
+                            {lang.name}
+                        </li>
                     }
                 }
             />
@@ -98,7 +50,7 @@ pub fn LanguageSelectorButton() -> impl IntoView {
 
     view! {
         <HeaderMenuButton
-            title=move_tr!("change-language")
+            title=Signal::derive(move || i18n().tr("change-language"))
             on:click=move |_| modal_open.set_languages()
             svg_path=LANGUAGE_SELECTOR_ICON_SVG_PATH
             class=Signal::derive(move || match header_state().menu_open {
@@ -117,7 +69,7 @@ pub fn LanguageSelector() -> impl IntoView {
     view! {
         <LanguageSelectorButton/>
         <Modal
-            title=move_tr!("select-a-language")
+            title=Signal::derive(move || i18n().tr("select-a-language"))
             is_open=Signal::derive(move || modal_open.0() == Some(ModalOpen::Languages))
             on_close=Signal::derive(move || modal_open.set_none())
             on_close_focus_search_bar=true

@@ -8,22 +8,22 @@ mod title;
 use crate::grid::item::title::get_icon_localized_title;
 use deprecated::IconIsDeprecatedNotice;
 use footer::IconGridItemFooter;
-use i18n::LocaleSignal;
 use icon_preview::IconGridItemPreview;
+use leptos::*;
+use leptos_fluent::i18n;
 use links::IconGridItemLinks;
 use title::IconGridItemTitle;
 use types::SimpleIcon;
-
-use leptos::*;
 
 /// Icon grid item
 ///
 /// Each icon displayed in the icons grid
 #[component]
 pub fn IconGridItem(icon: &'static SimpleIcon) -> impl IntoView {
-    let locale_signal = expect_context::<LocaleSignal>().0;
-    let icon_localized_title =
-        create_memo(move |_| get_icon_localized_title(icon, locale_signal()));
+    let i18n = i18n();
+    let icon_localized_title = create_memo(move |_| {
+        get_icon_localized_title(icon, i18n.language.get())
+    });
 
     view! {
         <li>

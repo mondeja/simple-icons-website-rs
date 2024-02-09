@@ -3,8 +3,8 @@ use crate::copy::copy_inner_text_on_click;
 use crate::svg::{SVGDef, SVGIcon};
 use crate::Url;
 use core::fmt;
-use i18n::move_tr;
 use leptos::{ev::MouseEvent, html::Div, *};
+use leptos_fluent::i18n;
 use leptos_use::on_click_outside;
 use std::str::FromStr;
 
@@ -32,7 +32,7 @@ fn ModalHeader(
 
                 {title}
             </h2>
-            <button type="button" title=move_tr!("close") on:click=move |_| on_close()>
+            <button type="button" title=move || i18n().tr("close") on:click=move |_| on_close()>
                 <SVGIcon path=&SVGDef::Cross/>
             </button>
         </div>

@@ -1,5 +1,5 @@
-use i18n::{move_tr, tr};
 use leptos::*;
+use leptos_fluent::i18n;
 
 #[component]
 pub fn IconGridItemLinks(
@@ -10,6 +10,7 @@ pub fn IconGridItemLinks(
     /// License type
     license_type: Option<&'static str>,
 ) -> impl IntoView {
+    let brand_guidelines = move || i18n().tr("brand-guidelines");
     view! {
         <div class="links">
 
@@ -21,24 +22,27 @@ pub fn IconGridItemLinks(
                             view! {
                                 <a
                                     href=guidelines_url
-                                    title=move_tr!("brand-guidelines")
+                                    title=brand_guidelines
                                     class="brand-guidelines"
                                     target="_blank"
                                 >
-                                    {move_tr!("brand-guidelines")}
+                                    {brand_guidelines}
                                 </a>
                             },
                         );
                 }
                 if license_type.is_some() || license_url.is_some() {
-                    let title = move || match license_type {
-                        Some(license_type) => {
-                            match license_type {
-                                "custom" => tr!("custom-license"),
-                                _ => license_type.to_string(),
+                    let title = move || {
+                        let i18n = i18n();
+                        match license_type {
+                            Some(license_type) => {
+                                match license_type {
+                                    "custom" => i18n.tr("custom-license"),
+                                    _ => license_type.to_string(),
+                                }
                             }
+                            None => i18n.tr("license"),
                         }
-                        None => tr!("license"),
                     };
                     links
                         .push(
