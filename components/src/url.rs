@@ -7,8 +7,6 @@
 /// Single source of thruth for the URL params state
 pub mod params {
     use leptos::window;
-    use leptos_router::Url;
-    use wasm_bindgen;
 
     /// Enum to ensure that the params names are unique
     pub enum Names {
@@ -33,55 +31,35 @@ pub mod params {
         }
     }
 
+    fn current_url() -> web_sys::Url {
+        web_sys::Url::new(&window().location().href().unwrap()).unwrap()
+    }
+
     /// Update a parameter value in the URL query using window history
     pub fn update(k: &Names, v: &str) {
-        let current_url =
-            Url::try_from(window().location().search().unwrap().as_str())
-                .unwrap();
-        let mut params = current_url.search_params;
-        // Remove empty values from the URL!
+        let url = current_url();
+        let params = url.search_params();
+        // Remove empty values from the URL
         if v.is_empty() {
-            params.remove(k.as_str());
+            params.delete(k.as_str())
         } else {
-            params.insert(k.as_str().to_string(), v.to_string());
+            params.set(k.as_str(), v)
         }
-
-        let q = params.to_query_string();
-        let query = q.trim_matches('?');
-        let pathname = window().location().pathname().unwrap();
-        let url = match query.is_empty() {
-            false => format!("{}?{}", pathname, query),
-            true => pathname,
-        };
+        url.set_search(&params.to_string().as_string().unwrap());
         window()
             .history()
             .unwrap()
             .replace_state_with_url(
                 &wasm_bindgen::JsValue::NULL,
                 "",
-                Some(&url),
+                Some(&url.to_string().as_string().unwrap()),
             )
+            .map_err(|e| log::error!("Failed to update the URL: {:?}", e))
             .ok();
     }
 
     /// Get a URL param value from the URL of the browser
     pub fn get(k: &Names) -> Option<String> {
-        let query = window().location().search().unwrap();
-        if !query.starts_with('?') {
-            return None;
-        }
-        for (key, value) in
-            Url::try_from(query.as_str()).unwrap().search_params.0
-        {
-            if key != k.as_str() {
-                continue;
-            }
-            if value.is_empty() {
-                return None;
-            } else {
-                return Some(value);
-            }
-        }
-        None
+        current_url().search_params().get(k.as_str())
     }
 }
