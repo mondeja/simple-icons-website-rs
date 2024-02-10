@@ -10,9 +10,8 @@ pub use image::{
     copy_as_image_png, download_jpg, download_png,
 };
 use leptos::{document, *};
-use leptos_fluent::i18n;
+use leptos_fluent::{move_tr, tr};
 pub use pdf::download_pdf;
-use std::collections::HashMap;
 use std::fmt;
 use std::str::FromStr;
 pub use svg::download_svg;
@@ -88,29 +87,18 @@ fn set_download_type_on_localstorage(download_type: &DownloadType) {
 pub fn DownloadFileTypeControl() -> impl IntoView {
     let download_type = expect_context::<DownloadTypeSignal>().0;
 
-    let download_svg_title = Signal::derive(move || {
-        let i18n = i18n();
-        i18n.trs("download-filetype", &{
-            let mut map = HashMap::new();
-            map.insert("filetype".to_string(), i18n.tr("svg").into());
-            map
-        })
-    });
-    let download_pdf_title = Signal::derive(move || {
-        let i18n = i18n();
-        i18n.trs("download-filetype", &{
-            let mut map = HashMap::new();
-            map.insert("filetype".to_string(), i18n.tr("pdf").into());
-            map
-        })
+    let download_svg_title =
+        move_tr!("download-filetype", {"filetype" => tr!("svg")});
+    let download_pdf_title = move_tr!("download-filetype", {
+        "filetype" => tr!("pdf"),
     });
 
     view! {
         <div class="control">
-            <label>{move || i18n().tr("download")}</label>
+            <label>{move || tr!("download")}</label>
             <div class="flex flex-row">
                 <ControlButtonText
-                    text=Signal::derive(move || i18n().tr("svg"))
+                    text=move_tr!("svg")
                     title=download_svg_title
                     active=Signal::derive(move || { download_type() == DownloadType::SVG })
                     on:click=move |_| {
@@ -123,7 +111,7 @@ pub fn DownloadFileTypeControl() -> impl IntoView {
                 />
 
                 <ControlButtonText
-                    text=Signal::derive(move || i18n().tr("pdf"))
+                    text=move_tr!("pdf")
                     title=download_pdf_title
                     active=Signal::derive(move || { download_type() == DownloadType::PDF })
                     on:click=move |_| {
