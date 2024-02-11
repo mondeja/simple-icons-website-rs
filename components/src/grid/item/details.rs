@@ -3,9 +3,7 @@ use crate::controls::download::{
     copy_as_image_png, download, download_jpg, download_pdf, download_png,
     download_svg,
 };
-use crate::copy::{
-    copy_inner_text_on_click, copy_setting_copied_transition_in_element,
-};
+use crate::copy::{copy_and_set_copied_transition, copy_inner_text_on_click};
 use crate::fetch::fetch_text;
 use crate::grid::item::icon_preview::on_click_copy_image_children_src_content;
 use crate::grid::item::title::get_icon_localized_title;
@@ -549,18 +547,16 @@ pub fn IconDetailsModal() -> impl IntoView {
                                             )
                                             .await
                                         {
-                                            spawn_local(
-                                                copy_setting_copied_transition_in_element(
-                                                    svg,
-                                                    document()
-                                                        .get_element_by_id(Ids::IconDetailsModal.as_str())
-                                                        .unwrap()
-                                                        .get_elements_by_tag_name("button")
-                                                        .item(0)
-                                                        .unwrap()
-                                                        .dyn_into::<web_sys::HtmlElement>()
-                                                        .unwrap(),
-                                                ),
+                                            copy_and_set_copied_transition(
+                                                svg,
+                                                document()
+                                                    .get_element_by_id(Ids::IconDetailsModal.as_str())
+                                                    .unwrap()
+                                                    .get_elements_by_tag_name("button")
+                                                    .item(0)
+                                                    .unwrap()
+                                                    .dyn_into::<web_sys::HtmlElement>()
+                                                    .unwrap(),
                                             );
                                         }
                                     });
@@ -608,15 +604,13 @@ pub fn IconDetailsModal() -> impl IntoView {
                                 on:click=move |ev| {
                                     let hex = get_hex_from_modal_container();
                                     set_copying_hex(true);
-                                    spawn_local(
-                                        copy_setting_copied_transition_in_element(
-                                            hex,
-                                            ev
-                                                .target()
-                                                .unwrap()
-                                                .dyn_into::<web_sys::HtmlElement>()
-                                                .unwrap(),
-                                        ),
+                                    copy_and_set_copied_transition(
+                                        hex,
+                                        ev
+                                            .target()
+                                            .unwrap()
+                                            .dyn_into::<web_sys::HtmlElement>()
+                                            .unwrap(),
                                     );
                                     set_timeout(
                                         move || set_copying_hex(false),
@@ -650,15 +644,13 @@ pub fn IconDetailsModal() -> impl IntoView {
                                                 "data:image/svg+xml;base64,{}",
                                                 base64,
                                             );
-                                            spawn_local(
-                                                copy_setting_copied_transition_in_element(
-                                                    base64_svg,
-                                                    ev
-                                                        .target()
-                                                        .unwrap()
-                                                        .dyn_into::<web_sys::HtmlElement>()
-                                                        .unwrap(),
-                                                ),
+                                            copy_and_set_copied_transition(
+                                                base64_svg,
+                                                ev
+                                                    .target()
+                                                    .unwrap()
+                                                    .dyn_into::<web_sys::HtmlElement>()
+                                                    .unwrap(),
                                             );
                                         }
                                     });
@@ -708,15 +700,13 @@ pub fn IconDetailsModal() -> impl IntoView {
                                 on:click=move |ev| {
                                     let brand_name = get_brand_name_from_modal_container();
                                     set_copying_brand_name(true);
-                                    spawn_local(
-                                        copy_setting_copied_transition_in_element(
-                                            brand_name,
-                                            ev
-                                                .target()
-                                                .unwrap()
-                                                .dyn_into::<web_sys::HtmlElement>()
-                                                .unwrap(),
-                                        ),
+                                    copy_and_set_copied_transition(
+                                        brand_name,
+                                        ev
+                                            .target()
+                                            .unwrap()
+                                            .dyn_into::<web_sys::HtmlElement>()
+                                            .unwrap(),
                                     );
                                     set_timeout(
                                         move || set_copying_brand_name(false),
