@@ -18,12 +18,7 @@ pub enum Ids {
     CrossSVGPath,
     UploadSVGPath,
     SaveSVGPath,
-    GridSVGPath,
-    EyeBoxSVGPath,
     CopySVGPath,
-    CircleArrowUpSVGPath,
-    CircleArrowDownSVGPath,
-    WarningSVGPath,
 }
 
 impl Ids {
@@ -45,12 +40,7 @@ impl Ids {
             Ids::CrossSVGPath => "cross-path",
             Ids::UploadSVGPath => "upload-path",
             Ids::SaveSVGPath => "save-path",
-            Ids::GridSVGPath => "grid-path",
-            Ids::EyeBoxSVGPath => "eye-box-path",
             Ids::CopySVGPath => "copy-path",
-            Ids::CircleArrowUpSVGPath => "circle-arrow-up-path",
-            Ids::CircleArrowDownSVGPath => "circle-arrow-down-path",
-            Ids::WarningSVGPath => "warning-path",
         }
         #[cfg(not(debug_assertions))]
         match self {
@@ -69,12 +59,7 @@ impl Ids {
             Ids::CrossSVGPath => "x",
             Ids::UploadSVGPath => "u",
             Ids::SaveSVGPath => "s",
-            Ids::GridSVGPath => "g",
-            Ids::EyeBoxSVGPath => "e",
             Ids::CopySVGPath => "p",
-            Ids::CircleArrowUpSVGPath => "a",
-            Ids::CircleArrowDownSVGPath => "z",
-            Ids::WarningSVGPath => "w",
         }
     }
 }
