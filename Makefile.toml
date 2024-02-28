@@ -188,28 +188,20 @@ args = [
     "stylelint",
     "{components,app}/**/*.css",
     "--ignore-path",
-    ".gitignore",
+    ".prettierignore",
     "--config",
-    "./app/.stylelintrc.json"
+    "./.stylelintrc.json"
 ]
 
 [tasks.format-prettier]
 description = "Format non Rust files in the project with prettier"
 command = "npx"
-args = [
-    "prettier",
-    "--write",
-    ".",
-    "--ignore-path",
-    ".gitignore",
-    "--log-level",
-    "warn"
-]
+args = ["prettier", "--write", ".", "--log-level", "warn"]
 
 [tasks.lint-prettier]
 description = "Check formatting of non Rust files in the project with prettier"
 command = "npx"
-args = ["prettier", "--check", ".", "--ignore-path", ".gitignore"]
+args = ["prettier", "--check", "."]
 
 [tasks.lint-js]
 description = "Lint JS and TS files in the project with ESLint"
@@ -248,6 +240,16 @@ blob_stream = json_parse ${packagejson}
 cp ./node_modules/blob-stream/.js ./app/public/assets/js/blob-stream-${blob_stream.version}.js
 '''
 
+[tasks.copy-fonts]
+description = "Copy fonts from @fontsource directory"
+script_runner = "@duckscript"
+script = '''
+rm -r ./app/public/assets/fonts
+mkdir ./app/public/assets/fonts
+cp ./node_modules/@fontsource/roboto-mono/files/ ./app/public/assets/fonts
+cp ./node_modules/@fontsource/open-sans/files/ ./app/public/assets/fonts
+'''
+
 [tasks.fetch-deprecated-icons]
 description = "Fetch deprecated icons from simple-icons repository"
 command = "npx"
@@ -267,6 +269,7 @@ args = ["tsx", "scripts/create-cname.ts"]
 description = "Run pre-build scripts"
 run_task = { name = [
     "build-js-libs",
+    "copy-fonts",
     "fetch-deprecated-icons",
     "create-sitemap",
     "create-cname",

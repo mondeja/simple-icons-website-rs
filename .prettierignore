@@ -1,7 +1,7 @@
-/target/
+target/
 app/dist/
 playwright-report/
-**/*.rs.bk
+*.rs.bk
 node_modules/
 test-results/
 end2end/playwright-report/
@@ -12,4 +12,5 @@ app/public/assets/sitemap.xml
 app/public/assets/CNAME
 app/public/assets/js/
 app/public/assets/fonts/
+app/public/assets/fonts.css
 app/public/js-libs.html
