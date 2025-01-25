@@ -22,7 +22,7 @@ use web_sys;
 pub enum DownloadType {
     #[default]
     SVG,
-    PDF,
+    PNG,
 }
 
 impl FromStr for DownloadType {
@@ -30,9 +30,8 @@ impl FromStr for DownloadType {
 
     fn from_str(value: &str) -> Result<Self, Self::Err> {
         match value {
-            "svg" => Ok(Self::SVG),
-            "pdf" => Ok(Self::PDF),
-            _ => Err(()),
+            "png" => Ok(Self::PNG),
+            _ => Ok(Self::SVG),
         }
     }
 }
@@ -41,7 +40,7 @@ impl fmt::Display for DownloadType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Self::SVG => write!(f, "svg"),
-            Self::PDF => write!(f, "pdf"),
+            Self::PNG => write!(f, "png"),
         }
     }
 }
@@ -82,19 +81,13 @@ fn set_download_type_on_localstorage(download_type: &DownloadType) {
 pub fn DownloadFileTypeControl() -> impl IntoView {
     let download_type = expect_context::<DownloadTypeSignal>().0;
 
-    let download_svg_title =
-        move_tr!("download-filetype", {"filetype" => tr!("svg")});
-    let download_pdf_title = move_tr!("download-filetype", {
-        "filetype" => tr!("pdf"),
-    });
-
     view! {
         <div class="control">
             <label>{move || tr!("download")}</label>
             <div class="flex flex-row">
                 <ControlButtonText
                     text=move_tr!("svg")
-                    title=download_svg_title
+                    title=move_tr!("download-filetype", {"filetype" => tr!("svg") })
                     active=Signal::derive(move || { download_type() == DownloadType::SVG })
                     on:click=move |_| {
                         download_type.set(DownloadType::SVG);
@@ -103,12 +96,12 @@ pub fn DownloadFileTypeControl() -> impl IntoView {
                 />
 
                 <ControlButtonText
-                    text=move_tr!("pdf")
-                    title=download_pdf_title
-                    active=Signal::derive(move || { download_type() == DownloadType::PDF })
+                    text=move_tr!("png")
+                    title=move_tr!("download-filetype", { "filetype" => tr!("png") })
+                    active=Signal::derive(move || { download_type() == DownloadType::PNG })
                     on:click=move |_| {
-                        download_type.set(DownloadType::PDF);
-                        set_download_type_on_localstorage(&DownloadType::PDF);
+                        download_type.set(DownloadType::PNG);
+                        set_download_type_on_localstorage(&DownloadType::PNG);
                     }
                 />
 
