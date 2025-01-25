@@ -1,5 +1,8 @@
 use icondata::SiX;
-use leptos::{html::Footer as FooterHtmlElement, NodeRef, *};
+use leptos::{
+    html::Footer as FooterHtmlElement,
+    prelude::{NodeRef, *},
+};
 use leptos_fluent::{move_tr, tr};
 use leptos_icons::Icon;
 
@@ -84,7 +87,7 @@ pub fn XButton() -> impl IntoView {
             target="_blank"
             href="https://x.com/intent/tweet?url=https://simpleicons.org&text=Simple%20Icons%3A%20free%20SVG%20icons%20for%20popular%20brands."
         >
-            <Icon class="text-white h-4 mr-3" icon=SiX />
+            <Icon attr:class="text-white h-4 mr-3" icon=SiX />
             <span>{move_tr!("share-this")}</span>
         </a>
     }

@@ -10,20 +10,23 @@ use crate::storage::LocalStorage;
 use crate::Ids;
 use crate::Url;
 use fuzzy::{build_searcher, search};
-use js_sys::JsString;
-use leptos::{document, html::Input, wasm_bindgen::JsCast, *};
+use leptos::{
+    prelude::{document, *},
+    task::spawn_local,
+    wasm_bindgen::JsCast,
+};
 use leptos_fluent::tr;
 use simple_icons_website_types::SimpleIcon;
-use web_sys;
+use web_sys::HtmlInputElement;
 
 #[derive(Copy, Clone)]
 pub struct SearchValueSignal(pub RwSignal<String>);
 
-pub fn get_search_input() -> web_sys::HtmlInputElement {
+pub fn get_search_input() -> HtmlInputElement {
     document()
         .get_element_by_id(Ids::SearchInput.as_str())
         .unwrap()
-        .dyn_into::<web_sys::HtmlInputElement>()
+        .dyn_into::<HtmlInputElement>()
         .unwrap()
 }
 
@@ -36,7 +39,7 @@ pub fn focus_search_bar() {
 
 pub fn provide_search_context(icons: Vec<&'static SimpleIcon>) -> String {
     let initial_search_value = initial_search_value(icons);
-    provide_context(SearchValueSignal(create_rw_signal(
+    provide_context(SearchValueSignal(RwSignal::new(
         initial_search_value.clone(),
     )));
 
@@ -95,7 +98,7 @@ fn init_searcher(icons: Vec<&'static SimpleIcon>) {
     for (icon_candidates, icon_order_alpha) in &icons_candidates_ids {
         let candidates_array = js_sys::Array::new();
         for icon_title in icon_candidates {
-            candidates_array.push(&JsString::from(*icon_title).into());
+            candidates_array.push(&js_sys::JsString::from(*icon_title).into());
         }
 
         let icon_title_id_array = js_sys::Array::of2(
@@ -200,14 +203,14 @@ pub async fn search_icons(
 }
 
 async fn on_search(
-    search_input_ref: NodeRef<Input>,
+    search_input_ref: HtmlInputElement,
     search_signal: RwSignal<String>,
     icons_grid_signal: RwSignal<IconsGrid>,
     order_mode_signal: RwSignal<OrderMode>,
     icons_per_page: usize,
     icons: Vec<&'static SimpleIcon>,
 ) {
-    let value = search_input_ref().unwrap().value();
+    let value = search_input_ref.value();
     search_signal.update(move |state| {
         Url::params::update(&Url::params::Names::Query, &value);
 
@@ -255,10 +258,10 @@ pub fn SearchControl() -> impl IntoView {
     let layout = expect_context::<LayoutSignal>().0;
     let icons = expect_context::<IconsIndexSignal>().0;
 
-    let search_input_ref = create_node_ref::<Input>();
+    let search_input_ref = NodeRef::new();
     // Focus on load. Fallback for Safari, see:
     // https://caniuse.com/?search=autofocus
-    search_input_ref.on_load(|input| {
+    search_input_ref.on_load(|input: HtmlInputElement| {
         _ = input.focus();
     });
 
@@ -279,7 +282,7 @@ pub fn SearchControl() -> impl IntoView {
                     on:input=move |_| {
                         spawn_local(
                             on_search(
-                                search_input_ref,
+                                search_input_ref.get().unwrap(),
                                 search,
                                 icons_grid,
                                 order_mode,
@@ -294,7 +297,7 @@ pub fn SearchControl() -> impl IntoView {
                     <span
                         title=move || tr!("clear-search")
                         on:click=move |_| {
-                            search_input_ref().unwrap().set_value("");
+                            search_input_ref.get().unwrap().set_value("");
                             fire_on_search_event();
                         }
                     >

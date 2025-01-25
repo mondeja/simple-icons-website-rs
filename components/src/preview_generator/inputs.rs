@@ -1,4 +1,3 @@
-use crate::button::Button;
 use crate::controls::search::fuzzy::search;
 use crate::event::dispatch_input_event_on_input;
 use crate::fetch::fetch_text;
@@ -7,10 +6,7 @@ use crate::js_libs::svg::svg_path_bbox;
 use crate::preview_generator::{
     canvas::update_preview_canvas, helpers::is_valid_hex_color,
 };
-use leptos::{
-    html::{Div, Input},
-    *,
-};
+use leptos::{html::Input, prelude::*, task::spawn_local};
 use leptos_fluent::{move_tr, tr};
 use leptos_use::{on_click_outside, use_device_pixel_ratio};
 use simple_icons::{sdk, sdk::lint::errors::PathLintError};
@@ -61,11 +57,10 @@ pub fn PathInput(
     let pixel_ratio = use_device_pixel_ratio();
 
     let (path_lint_errors, set_path_lint_errors) =
-        create_signal::<Vec<sdk::lint::LintError>>(vec![]);
-    let (show_path_lint_errors, set_show_path_lint_errors) =
-        create_signal(false);
-    let input_ref = create_node_ref::<Input>();
-    let input_group_ref = create_node_ref::<Div>();
+        signal::<Vec<sdk::lint::LintError>>(vec![]);
+    let (show_path_lint_errors, set_show_path_lint_errors) = signal(false);
+    let input_ref = NodeRef::new();
+    let input_group_ref = NodeRef::new();
 
     fn process_lint_errors(
         path: &str,
@@ -180,7 +175,7 @@ pub fn PathInput(
                 prop:value=path
                 class:warn=move || !path_lint_errors().is_empty()
                 on:input=move |_| {
-                    let p = input_ref().unwrap().value();
+                    let p = input_ref.get().unwrap().value();
                     process_lint_errors(&p, set_path_lint_errors);
                     set_show_path_lint_errors(true);
                     set_path(p);
@@ -188,7 +183,7 @@ pub fn PathInput(
                 }
 
                 on:focus=move |_| {
-                    let p = input_ref().unwrap().value();
+                    let p = input_ref.get().unwrap().value();
                     process_lint_errors(&p, set_path_lint_errors);
                     set_show_path_lint_errors(true);
                 }
@@ -234,15 +229,20 @@ fn ShowLintErrorButton(
     input_ref: NodeRef<Input>,
 ) -> impl IntoView {
     view! {
-        <Button
+        <button
             title=move_tr!("show")
+            class="button"
+            type="button"
+            tabindex=0
             on:click=move |_| {
-                let input = input_ref().unwrap();
+                let input = input_ref.get().unwrap();
                 input.focus().unwrap();
                 input.set_selection_start(Some(start)).unwrap();
                 input.set_selection_end(Some(end)).unwrap();
             }
-        />
+        >
+            {move_tr!("show")}
+        </button>
     }
 }
 
@@ -254,10 +254,13 @@ fn FixLintErrorButton(
     input_ref: NodeRef<Input>,
 ) -> impl IntoView {
     view! {
-        <Button
+        <button
             title=move_tr!("fix")
+            class="button"
+            type="button"
+            tabindex=0
             on:click=move |_| {
-                let input = input_ref().unwrap();
+                let input = input_ref.get().unwrap();
                 let (new_value, (start, end)) = fixer(&input.value(), (start, end));
                 input.set_value(&new_value);
                 dispatch_input_event_on_input(&input);
@@ -271,7 +274,9 @@ fn FixLintErrorButton(
                     std::time::Duration::from_millis(3),
                 );
             }
-        />
+        >
+            {move_tr!("fix")}
+        </button>
     }
 }
 
@@ -311,15 +316,14 @@ pub fn BrandInput(
     let pixel_ratio = use_device_pixel_ratio();
 
     let (brand_suggestions, set_brand_suggestions) =
-        create_signal(Vec::<&SimpleIcon>::with_capacity(7));
+        signal(Vec::<&SimpleIcon>::with_capacity(7));
     let (more_brand_suggestions, set_more_brand_suggestions) =
-        create_signal(Vec::<&SimpleIcon>::new());
-    let (show_brand_suggestions, set_show_brand_suggestions) =
-        create_signal(false);
+        signal(Vec::<&SimpleIcon>::new());
+    let (show_brand_suggestions, set_show_brand_suggestions) = signal(false);
     let (show_more_brand_suggestions, set_show_more_brand_suggestions) =
-        create_signal(false);
+        signal(false);
 
-    let input_ref = create_node_ref::<Input>();
+    let input_ref = NodeRef::new();
     _ = on_click_outside(input_ref, move |_| {
         set_show_brand_suggestions(false);
         set_show_more_brand_suggestions(false);
