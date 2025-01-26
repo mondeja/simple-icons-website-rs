@@ -29,7 +29,7 @@
     "eslint": "8.56.0",
     "eslint-config-simple-icons": "0.1.2",
     "husky": "9.1.7",
-    "terser": "5.37.0",
+    "lightningcss": "1.29.1",
     "postcss": "8.5.1",
     "postcss-import": "16.1.0",
     "prettier": "3.4.2",
@@ -39,6 +39,7 @@
     "stylelint-config-standard": "36.0.0",
     "stylelint-config-tailwindcss": "0.0.7",
     "tailwindcss": "3.4.3",
+    "terser": "5.37.0",
     "tsx": "4.19.2"
   },
   "dependencies": {
