@@ -1,4 +1,3 @@
-import CONFIG from '../config/config.ts';
 import fs from 'node:fs/promises';
 
 const cnameAssetPath = 'app/public/assets/CNAME';
@@ -10,4 +9,4 @@ if (cnameAssetExists) {
   await fs.unlink(cnameAssetPath);
 }
 
-await fs.writeFile(cnameAssetPath, CONFIG.domain);
+await fs.writeFile(cnameAssetPath, 'simpleicons.org');

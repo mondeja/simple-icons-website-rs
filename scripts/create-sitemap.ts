@@ -1,4 +1,3 @@
-import CONFIG from '../config/config.ts';
 import fs from 'node:fs/promises';
 
 const sitemapAssetPath = 'app/public/assets/sitemap.xml';
@@ -10,9 +9,9 @@ if (sitemapAssetExists) {
   await fs.unlink(sitemapAssetPath);
 }
 
-const protocol = CONFIG.domain.includes(':') ? 'http' : 'https';
+const protocol = 'https';
 const currentDate = new Date().toISOString();
-const domain = CONFIG.domain;
+const domain = 'simpleicons.org';
 
 await fs.writeFile(
   sitemapAssetPath,

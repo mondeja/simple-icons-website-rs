@@ -1,4 +1,4 @@
-import CONFIG, { getGithubToken } from '../config/config.ts';
+import { getGithubToken } from './helpers.ts';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
@@ -29,7 +29,7 @@ const GRAPHQL_QUERY = `{
   }
 }`;
 
-const tmpFilePath = path.join(os.tmpdir(), CONFIG.deprecated_icons_file_name);
+const tmpFilePath = path.join(os.tmpdir(), 'simple-icons-deprecated.json');
 const tmpFilePathExists = await fs
   .access(tmpFilePath)
   .then(() => true)

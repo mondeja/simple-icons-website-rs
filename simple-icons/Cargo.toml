@@ -8,7 +8,6 @@ edition.workspace = true
 path = "src/lib.rs"
 
 [dependencies]
-simple-icons-website-config.workspace = true
 nanoserde.workspace = true
 unicode-normalization.workspace = true
 serde_json.workspace = true

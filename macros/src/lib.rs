@@ -8,34 +8,20 @@ use simple_icons::{
     get_simple_icon_svg_path, get_simple_icons,
     sdk::fetch_deprecated_simple_icons,
 };
-use simple_icons_website_config::CONFIG;
 use std::fs;
 use std::path::Path;
 use syn::{parse_macro_input, LitStr};
 
-fn get_max_icons_from_config() -> Option<usize> {
-    CONFIG
-        .read()
-        .unwrap()
-        .get::<Option<usize>>("max_icons")
-        .unwrap()
-}
-
 /// Get number of icons available in the simple-icons npm package
 #[proc_macro]
 pub fn get_number_of_icons(_: TokenStream) -> TokenStream {
-    let max_icons = get_max_icons_from_config();
-    if let Some(max_icons) = max_icons {
-        max_icons.to_string().parse().unwrap()
-    } else {
-        Path::new("node_modules/simple-icons/icons")
-            .read_dir()
-            .unwrap()
-            .count()
-            .to_string()
-            .parse()
-            .unwrap()
-    }
+    Path::new("node_modules/simple-icons/icons")
+        .read_dir()
+        .unwrap()
+        .count()
+        .to_string()
+        .parse()
+        .unwrap()
 }
 
 /// Get number of deprecated icons available in the simple-icons npm package
@@ -142,8 +128,7 @@ pub fn get_simple_icons_3rd_party_libraries(_: TokenStream) -> TokenStream {
 }
 
 fn icons_array_impl(only_include_deprecated: bool) -> String {
-    let max_icons = get_max_icons_from_config();
-    let simple_icons = get_simple_icons(max_icons);
+    let simple_icons = get_simple_icons();
 
     let hexes = simple_icons
         .iter()

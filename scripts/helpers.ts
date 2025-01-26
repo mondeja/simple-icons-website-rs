@@ -5,14 +5,6 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const parseRustConfig = async (env = 'prod') => {
-  const rustConfigFilePath = path.resolve(__dirname, `settings.${env}.json`);
-  const rustConfigFile = await fs.readFile(rustConfigFilePath, 'utf8');
-  return JSON.parse(rustConfigFile);
-};
-
-export default await parseRustConfig();
-
 export const getGithubToken = async () => {
   if (process.env.GITHUB_TOKEN) {
     return process.env.GITHUB_TOKEN;

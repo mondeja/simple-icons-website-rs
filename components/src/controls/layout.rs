@@ -4,7 +4,6 @@ use crate::Url;
 use icondata::{LuGrid2x2, LuGrid3x3};
 use leptos::prelude::*;
 use leptos_fluent::move_tr;
-use simple_icons_website_config::CONFIG;
 use std::fmt;
 use std::str::FromStr;
 
@@ -18,16 +17,8 @@ pub enum Layout {
 impl Layout {
     pub fn icons_per_page(&self) -> u32 {
         match self {
-            Self::Comfortable => CONFIG
-                .read()
-                .unwrap()
-                .get("icons_per_page_comfortable")
-                .unwrap(),
-            Self::Compact => CONFIG
-                .read()
-                .unwrap()
-                .get("icons_per_page_compact")
-                .unwrap(),
+            Self::Comfortable => 30,
+            Self::Compact => 60,
         }
     }
 }

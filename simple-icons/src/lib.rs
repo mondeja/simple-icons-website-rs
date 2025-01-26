@@ -22,7 +22,7 @@ pub struct SimpleIcon {
 }
 
 /// Get simple icons
-pub fn get_simple_icons(max_icons: Option<usize>) -> Vec<SimpleIcon> {
+pub fn get_simple_icons() -> Vec<SimpleIcon> {
     let simple_icons_data = get_simple_icons_data();
     let mut simple_icons: Vec<SimpleIcon> =
         Vec::with_capacity(simple_icons_data.len());
@@ -41,12 +41,6 @@ pub fn get_simple_icons(max_icons: Option<usize>) -> Vec<SimpleIcon> {
             aliases: icon_data.aliases,
         };
         simple_icons.push(icon);
-
-        if let Some(max_icons) = max_icons {
-            if simple_icons.len() == max_icons {
-                break;
-            }
-        }
     }
 
     simple_icons

@@ -3,7 +3,6 @@ members = [
     "app",
     "components",
     "components/preview-generator",
-    "config",
     "macros",
     "simple-icons",
     "types"
@@ -23,7 +22,6 @@ opt-level = 'z'
 [workspace.dependencies]
 simple-icons = { path = "./simple-icons" }
 simple-icons-website-macros = { path = "./macros" }
-simple-icons-website-config = { path = "./config" }
 simple-icons-website-types = { path = "./types" }
 simple-icons-website-components = { path = "./components" }
 simple-icons-website-preview-generator = { path = "./components/preview-generator" }

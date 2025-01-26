@@ -2,7 +2,6 @@ import type { Page, Download, TestType } from '@playwright/test';
 import * as path from 'node:path';
 import * as simpleicons from 'simple-icons';
 import { getDirnameFromImportMeta } from 'simple-icons/sdk';
-import CONFIG from '../../config/config.ts';
 
 const __dirname = getDirnameFromImportMeta(import.meta.url);
 
@@ -18,7 +17,7 @@ export const SIMPLE_ICONS_DIRPATH = path.resolve(
   'node_modules/simple-icons',
 );
 
-export const N_ICONS_PER_PAGE = CONFIG.icons_per_page_comfortable;
+export const N_ICONS_PER_PAGE = 30;
 
 const getViewportSize = (page: Page): { width: number; height: number } => {
   const size = page.viewportSize();
