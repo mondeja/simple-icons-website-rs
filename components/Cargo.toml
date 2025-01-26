@@ -10,7 +10,6 @@ name = "components"
 
 [dependencies]
 simple-icons-website-macros.workspace = true
-simple-icons-website-config.workspace = true
 simple-icons-website-types.workspace = true
 leptos.workspace = true
 leptos-use.workspace = true

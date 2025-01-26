@@ -1,4 +1,3 @@
-use simple_icons_website_config::CONFIG;
 use std::env;
 use std::fs;
 use std::path::Path;
@@ -32,11 +31,7 @@ impl PartialEq for IconDeprecation {
  * ordered by version.
  **/
 pub fn fetch_deprecated_simple_icons() -> Vec<IconDeprecation> {
-    let tmp_file_name = CONFIG
-        .read()
-        .unwrap()
-        .get_string("deprecated_icons_file_name")
-        .unwrap();
+    let tmp_file_name = "simple-icons-deprecated.json";
     let tmp_file_path = Path::new(&env::temp_dir()).join(tmp_file_name);
     if !tmp_file_path.exists() {
         panic!("You need to run the script fetch-deprecated-icons.rs before building")

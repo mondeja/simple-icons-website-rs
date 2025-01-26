@@ -48,18 +48,10 @@ args = [
     "../macros",
     "--watch",
     "../simple-icons",
-    "--watch",
-    "../config",
     "--ignore",
     "./public/assets/js",
 ]
 cwd = "./app"
-
-[tasks.doc]
-clear = true
-description = "Open components documentation"
-command = "cargo"
-args = ["doc", "--open", "--no-deps"]
 
 [tasks.format]
 clear = true

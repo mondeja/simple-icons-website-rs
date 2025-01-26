@@ -2,8 +2,9 @@ use crate::app::TITLE;
 use leptos::prelude::*;
 use leptos_fluent::tr;
 use leptos_meta::*;
-use simple_icons_website_config::CONFIG;
 use simple_icons_website_macros::get_number_of_icons;
+
+static DOMAIN: &str = "simpleicons.org";
 
 #[component]
 pub fn Head() -> impl IntoView {
@@ -15,8 +16,7 @@ pub fn Head() -> impl IntoView {
             "svg" => tr!("svg"),
         })
     });
-    let domain: String = CONFIG.read().unwrap().get_string("domain").unwrap();
-    let url = format!("https://{}/", &domain);
+    let url = format!("https://{}/", DOMAIN);
 
     view! {
         <Title text=TITLE />
@@ -43,8 +43,7 @@ pub fn Head() -> impl IntoView {
 /// Open graph meta tags
 #[component]
 fn MetaOpenGraph(description: Signal<String>) -> impl IntoView {
-    let domain: String = CONFIG.read().unwrap().get_string("domain").unwrap();
-    let url = format!("https://{}/", &domain);
+    let url = format!("https://{}/", DOMAIN);
     view! {
         <Meta name="og:type" content="website" />
         <Meta name="og:title" content=TITLE />
@@ -58,8 +57,7 @@ fn MetaOpenGraph(description: Signal<String>) -> impl IntoView {
 /// X (social network) meta tags
 #[component]
 fn MetaX(description: Signal<String>) -> impl IntoView {
-    let domain: String = CONFIG.read().unwrap().get_string("domain").unwrap();
-    let url = format!("https://{}/", &domain);
+    let url = format!("https://{}/", DOMAIN);
     view! {
         <Meta name="twitter:card" content="summary_large_image" />
         <Meta name="twitter:title" content=TITLE />
@@ -73,21 +71,20 @@ fn MetaX(description: Signal<String>) -> impl IntoView {
 /// See https://developers.google.com/search/docs/data-types/logo
 #[component]
 fn LdJSONMetadata() -> impl IntoView {
-    let domain: String = CONFIG.read().unwrap().get_string("domain").unwrap();
     let metadata = {
-        let logo_url = format!("https://{}/icons/simpleicons.svg", &domain);
+        let logo_url = format!("https://{}/icons/simpleicons.svg", DOMAIN);
         serde_json::json!({
             "@context": "https://schema.org",
             "@type": "Organization",
             "name": TITLE,
-            "url": format!("https://{}/", &domain),
+            "url": format!("https://{}/", DOMAIN),
             "logo": logo_url,
             "image": logo_url,
             "potentialAction": {
                 "@type": "SearchAction",
                 "target": format!(
                     "https://{}/?q={{search-term}}",
-                    &domain
+                    DOMAIN
                 ),
                 "query-input": "required name=search-term",
             },

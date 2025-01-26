@@ -20,8 +20,8 @@ jobs:
       - uses: treosh/lighthouse-ci-action@v11
         with:
           urls: |
-            https://wasm.simpleicons.org/
-            https://wasm.simpleicons.org/preview/
+            https://simpleicons.org/
+            https://simpleicons.org/preview/
           uploadArtifacts: true
           temporaryPublicStorage: true
 

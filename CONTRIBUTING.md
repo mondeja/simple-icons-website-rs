@@ -17,7 +17,6 @@
 - `cargo make lint`: Check formatting of files.
 - `cargo make build`: Build the website for production.
 - `cargo make serve`: Build the website for production and serve it with [serve](https://www.npmjs.com/package/serve).
-- `cargo make doc`: Build and open documentation.
 - `cargo make watch-css`: Watch the CSS files with [TailwindCSS](https://tailwindcss.com/).
 
 ## Testing
@@ -41,7 +40,6 @@ Is useful to run only certain tests in a browser. For example: `cargo make test 
 
 - **_app/_**: Main package with the app entrypoint. It provides the logic where the top level components are composed and handles global states.
 - **_components/_**: Components library. It provides the components used in the website.
-- **_config/_**: Application configuration.
 - **_macros/_**: It provides compile time macros used in the website to statically generate the data provided by the simple-icons npm package.
 - **_simple-icons/_**: Simple Icons Rust library. It is a Rust API to the the simple-icons npm package.
 
