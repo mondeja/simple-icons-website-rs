@@ -5,6 +5,7 @@ const addScripts = (pdfkitVersion, blobStreamVersion) => {
     script.defer = true;
     document.body.appendChild(script);
   }
+
   if (!window.blobStream) {
     const script = document.createElement('script');
     script.src = `/js/blob-stream-${blobStreamVersion}.js`;
