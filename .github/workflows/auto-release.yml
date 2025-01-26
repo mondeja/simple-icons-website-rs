@@ -75,7 +75,7 @@ jobs:
         run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Install Playwright browsers
         if: steps.get-releases.outputs.dep != steps.get-releases.outputs.si
-        run: npx playwright install --with-deps
+        run: npx playwright install chrome --with-deps
       - name: Install tooling dependencies
         if: steps.get-releases.outputs.dep != steps.get-releases.outputs.si
         run: cargo install cargo-make
@@ -86,7 +86,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Run `cargo make test`
         if: steps.get-releases.outputs.dep != steps.get-releases.outputs.si
-        run: cargo make test
+        run: cargo make test --project=chrome-desktop
       - name: Push updates
         if: steps.get-releases.outputs.dep != steps.get-releases.outputs.si
         run: |
