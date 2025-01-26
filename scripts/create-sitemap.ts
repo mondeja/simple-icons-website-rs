@@ -27,5 +27,10 @@ await fs.writeFile(
     `    <lastmod>${currentDate}</lastmod>\n` +
     `    <changefreq>weekly</changefreq>\n` +
     `  </url>\n` +
+    `  <url>\n` +
+    `    <loc>${protocol}://${domain}/deprecations</loc>\n` +
+    `    <lastmod>${currentDate}</lastmod>\n` +
+    `    <changefreq>weekly</changefreq>\n` +
+    `  </url>\n` +
     `</urlset>`,
 );
