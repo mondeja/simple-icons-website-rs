@@ -3,6 +3,10 @@ members = [
     "app",
     "components",
     "components/preview-generator",
+    "components/menu",
+    "components/footer",
+    "libs/svg-path-bbox",
+    "libs/web-sys-simple-events",
     "macros",
     "simple-icons",
     "types"
@@ -25,6 +29,10 @@ simple-icons-website-macros = { path = "./macros" }
 simple-icons-website-types = { path = "./types" }
 simple-icons-website-components = { path = "./components" }
 simple-icons-website-preview-generator = { path = "./components/preview-generator" }
+simple-icons-website-footer = { path = "./components/footer" }
+simple-icons-website-menu = { path = "./components/menu" }
+svg-path-bbox = { path = "./libs/svg-path-bbox" }
+web-sys-simple-events = { path = "./libs/web-sys-simple-events" }
 leptos = { version = "0.7", default-features = false, features = [
     "csr",
     "nightly",
