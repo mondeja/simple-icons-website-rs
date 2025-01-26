@@ -91,7 +91,8 @@ run_task = { name = [
     "run-pre-build-scripts",
     "build-css",
     "minify-css",
-    "build-wasm"
+    "build-wasm",
+    "minify-wasm-js-binding",
 ] }
 
 [tasks.build-wasm]
@@ -100,6 +101,11 @@ install_crate = { crate_name = "trunk", binary = "trunk", test_arg = "--help" }
 command = "trunk"
 args = ["--config", "Trunk.prod.toml", "build", "--release"]
 cwd = "./app"
+
+[tasks.minify-wasm-js-binding]
+description = "Minify the WASM JS binding"
+command = "npx"
+args = ["tsx", "scripts/minify-wasm-js-binding.ts"]
 
 [tasks.build-css]
 description = "Build CSS with TailwindCSS for production"
