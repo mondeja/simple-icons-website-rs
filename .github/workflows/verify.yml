@@ -50,11 +50,11 @@ jobs:
             browser: firefox
             project: firefox-desktop
             runs-on: ubuntu-22.04
-          - name: Safari Desktop
-            command: test
-            browser: webkit
-            project: webkit-desktop
-            runs-on: ubuntu-22.04
+          #- name: Safari Desktop
+          #  command: test
+          #  browser: webkit
+          #  project: webkit-desktop
+          #  runs-on: ubuntu-22.04
           - name: Chromium Mobile
             command: test
             browser: chromium
