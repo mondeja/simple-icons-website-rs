@@ -6,13 +6,13 @@ edition.workspace = true
 
 [lib]
 crate-type = ["cdylib", "rlib"]
-name = "simple_icons_website_preview_generator"
 
 [dependencies]
 simple-icons.workspace = true
 simple-icons-website-components.workspace = true
 simple-icons-website-macros.workspace = true
 simple-icons-website-types.workspace = true
+simple-icons-website-ids.workspace = true
 simple-icons-website-svg-defs.workspace = true
 simple-icons-website-svg-icon.workspace = true
 simple-icons-website-url.workspace = true
@@ -30,6 +30,3 @@ wasm-bindgen.workspace = true
 wasm-bindgen-futures.workspace = true
 svg-path-cst.workspace = true
 lazy_static.workspace = true
-
-[package.metadata.cargo-machete]
-ignored = ["simple-icons-website-components"]

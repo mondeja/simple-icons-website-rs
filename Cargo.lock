@@ -2155,6 +2155,7 @@ dependencies = [
  "leptos_hotkeys",
  "simple-icons",
  "simple-icons-website-components",
+ "simple-icons-website-ids",
  "simple-icons-website-macros",
  "simple-icons-website-svg-defs",
  "simple-icons-website-svg-icon",

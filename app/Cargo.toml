@@ -23,11 +23,3 @@ fluent-templates.workspace = true
 console_error_panic_hook.workspace = true
 serde_json.workspace = true
 leptos-use.workspace = true
-
-[package.metadata.cargo-machete]
-# Renamed in [lib] as "components".
-# This is a bug in `cargo machete`.
-ignored = [
-    "simple-icons-website-components",
-    "simple-icons-website-preview-generator"
-]

@@ -6,7 +6,6 @@ edition.workspace = true
 
 [lib]
 crate-type = ["cdylib", "rlib"]
-name = "web_sys_simple_events"
 
 [dependencies]
 web-sys.workspace = true

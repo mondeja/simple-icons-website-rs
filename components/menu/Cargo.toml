@@ -6,7 +6,6 @@ edition.workspace = true
 
 [lib]
 crate-type = ["cdylib", "rlib"]
-name = "simple_icons_website_menu"
 
 [dependencies]
 leptos.workspace = true

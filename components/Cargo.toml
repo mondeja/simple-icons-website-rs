@@ -6,7 +6,6 @@ edition.workspace = true
 
 [lib]
 crate-type = ["cdylib", "rlib"]
-name = "components"
 
 [dependencies]
 simple-icons-website-macros.workspace = true

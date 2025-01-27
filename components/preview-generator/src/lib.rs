@@ -5,8 +5,6 @@ mod inputs;
 
 use buttons::PreviewButtons;
 use canvas::update_preview_canvas;
-use components::controls::search::fuzzy::search;
-use components::grid::ICONS;
 use helpers::contrast_color_for;
 use icondata::SiSimpleicons;
 use inputs::{BrandInput, ColorInput, PathInput};
@@ -14,6 +12,9 @@ use lazy_static::lazy_static;
 use leptos::{prelude::*, task::spawn_local};
 use leptos_use::use_device_pixel_ratio;
 use simple_icons::sdk;
+use simple_icons_website_components::{
+    controls::search::fuzzy::search, grid::ICONS,
+};
 use simple_icons_website_macros::get_number_of_icons;
 use simple_icons_website_svg_icon::svg_with_path_opt_fill;
 use simple_icons_website_types::SimpleIcon;

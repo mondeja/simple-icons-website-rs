@@ -6,7 +6,6 @@ edition.workspace = true
 
 [lib]
 crate-type = ["cdylib", "rlib"]
-name = "svg_path_bbox"
 
 [dependencies]
 js-sys.workspace = true

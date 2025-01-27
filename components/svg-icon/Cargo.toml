@@ -6,7 +6,6 @@ edition.workspace = true
 
 [lib]
 crate-type = ["cdylib", "rlib"]
-name = "simple_icons_website_svg_icon"
 
 [dependencies]
 simple-icons-website-svg-defs.workspace = true

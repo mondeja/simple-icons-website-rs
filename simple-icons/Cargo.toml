@@ -4,9 +4,6 @@ description = "Binding between simple-icons npm library and Rust"
 version.workspace = true
 edition.workspace = true
 
-[lib]
-path = "src/lib.rs"
-
 [dependencies]
 nanoserde.workspace = true
 unicode-normalization.workspace = true
