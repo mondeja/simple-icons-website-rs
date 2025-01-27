@@ -3,14 +3,9 @@
 
 pub mod controls;
 pub mod copy;
-pub mod fetch;
 pub mod grid;
 pub mod header;
-mod ids;
 pub mod modal;
-pub mod storage;
-pub mod svg;
-pub mod url;
 
-pub use ids::Ids;
-pub use url as Url;
+pub use simple_icons_website_ids::Ids;
+pub use simple_icons_website_url as Url;

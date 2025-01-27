@@ -1,6 +1,6 @@
-//! Module to track the ids of components, to ensure that they are unique.
+//! Track the ids of components, to ensure that they are unique.
 //!
-//! It minifies identifiers in release mode.
+//! Minify identifiers in release mode.
 
 pub enum Ids {
     SearchInput,

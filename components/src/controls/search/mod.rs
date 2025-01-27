@@ -5,9 +5,7 @@ use crate::controls::order::{
     set_order_mode, OrderMode, OrderModeSignal, OrderModeVariant,
 };
 use crate::grid::{IconsGrid, IconsGridSignal, IconsIndexSignal, ICONS};
-use crate::storage::LocalStorage;
 use crate::Ids;
-use crate::Url;
 use fuzzy::{build_searcher, search};
 use leptos::{
     prelude::{document, *},
@@ -15,7 +13,9 @@ use leptos::{
     wasm_bindgen::JsCast,
 };
 use leptos_fluent::tr;
+use simple_icons_website_storage::LocalStorage;
 use simple_icons_website_types::SimpleIcon;
+use simple_icons_website_url as Url;
 use web_sys::HtmlInputElement;
 use web_sys_simple_events::dispatch_input_event_on_input;
 

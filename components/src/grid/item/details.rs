@@ -8,7 +8,6 @@ use crate::copy::{
     copy_child_img_src_content_from_mouse_event, copy_inner_text_on_click,
     copy_text,
 };
-use crate::fetch::fetch_text;
 use crate::grid::item::title::get_icon_localized_title;
 use crate::grid::CurrentIconViewSignal;
 use crate::modal::{Modal, ModalOpenSignal};
@@ -24,7 +23,7 @@ use leptos_icons::Icon;
 use leptos_use::on_click_outside;
 use simple_icons_website_menu::{Menu, MenuItem};
 use simple_icons_website_types::SimpleIcon;
-use web_sys;
+use web_sys_simple_fetch::fetch_text;
 
 fn get_brand_name_from_modal_container() -> String {
     document()

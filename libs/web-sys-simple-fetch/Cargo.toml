@@ -1,0 +1,15 @@
+[package]
+name = "web-sys-simple-fetch"
+description = "Library to easily fetch remote sources with web-sys"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+name = "web_sys_simple_fetch"
+
+[dependencies]
+web-sys.workspace = true
+wasm-bindgen.workspace = true
+wasm-bindgen-futures.workspace = true
+js-sys.workspace = true

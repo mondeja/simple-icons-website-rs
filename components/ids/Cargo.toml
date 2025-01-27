@@ -1,0 +1,9 @@
+[package]
+name = "simple-icons-website-ids"
+description = "Unique identifiers for the Simple Icons website"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+name = "simple_icons_website_ids"

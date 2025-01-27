@@ -1,7 +1,7 @@
-use crate::svg::{IconOrSvg, SVGIcon};
 use leptos::prelude::*;
 use leptos_icons::Icon;
 use leptos_use::use_media_query;
+use simple_icons_website_svg_icon::{IconOrSvg, SVGIcon};
 
 pub(crate) static XS_ICON_SIZE: &str = "19";
 

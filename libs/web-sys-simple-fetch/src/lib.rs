@@ -1,4 +1,3 @@
-use leptos::prelude::window;
 use wasm_bindgen::JsCast;
 
 /// Fetch a resource forcing the retrieval from the cache
@@ -16,7 +15,7 @@ pub async fn fetch_text(url: &str) -> Result<String, String> {
         web_sys::Request::new_with_str_and_init(url, &req_opts).unwrap();
 
     let response = wasm_bindgen_futures::JsFuture::from(
-        window().fetch_with_request(&request),
+        web_sys::window().unwrap().fetch_with_request(&request),
     )
     .await
     .unwrap()

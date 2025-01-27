@@ -1,0 +1,14 @@
+[package]
+name = "simple-icons-website-svg-icon"
+description = "Dinamic SVG icon component for the Simple Icons website"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+name = "simple_icons_website_svg_icon"
+
+[dependencies]
+simple-icons-website-svg-defs.workspace = true
+leptos.workspace = true
+icondata.workspace = true

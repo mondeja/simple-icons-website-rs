@@ -1,11 +1,12 @@
 use crate::controls::search::focus_search_bar;
 use crate::copy::copy_inner_text_on_click;
-use crate::svg::{SVGDef, SVGIcon};
-use crate::Url;
 use core::fmt;
 use leptos::{ev::MouseEvent, prelude::*};
 use leptos_fluent::tr;
 use leptos_use::on_click_outside;
+use simple_icons_website_svg_defs::SVGDef;
+use simple_icons_website_svg_icon::SVGIcon;
+use simple_icons_website_url as Url;
 use std::str::FromStr;
 
 #[component]

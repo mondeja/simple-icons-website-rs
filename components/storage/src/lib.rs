@@ -23,7 +23,8 @@ pub mod LocalStorage {
     }
 
     pub fn get(key: Keys) -> Option<String> {
-        ::leptos::prelude::window()
+        web_sys::window()
+            .unwrap()
             .local_storage()
             .unwrap()
             .unwrap()
@@ -32,7 +33,8 @@ pub mod LocalStorage {
     }
 
     pub fn set(key: Keys, value: &str) {
-        ::leptos::prelude::window()
+        web_sys::window()
+            .unwrap()
             .local_storage()
             .unwrap()
             .unwrap()

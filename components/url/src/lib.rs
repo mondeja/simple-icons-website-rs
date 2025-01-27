@@ -1,9 +1,7 @@
-//! URL utilities working with Leptos
+//! URL utilities
 
 /// Single source of thruth for the URL params state
 pub mod params {
-    use leptos::prelude::window;
-
     /// Enum to ensure that the params names are unique
     pub enum Names {
         Query,
@@ -28,7 +26,10 @@ pub mod params {
     }
 
     fn current_url() -> web_sys::Url {
-        web_sys::Url::new(&window().location().href().unwrap()).unwrap()
+        web_sys::Url::new(
+            &web_sys::window().unwrap().location().href().unwrap(),
+        )
+        .unwrap()
     }
 
     /// Update a parameter value in the URL query using window history
@@ -42,7 +43,8 @@ pub mod params {
             params.set(k.as_str(), v)
         }
         url.set_search(&params.to_string().as_string().unwrap());
-        window()
+        web_sys::window()
+            .unwrap()
             .history()
             .unwrap()
             .replace_state_with_url(
@@ -51,7 +53,9 @@ pub mod params {
                 Some(&url.to_string().as_string().unwrap()),
             )
             .map_err(|e| {
-                leptos::logging::error!("Failed to update the URL: {:?}", e)
+                let rs_msg = format!("Failed to update the URL: {:?}", e);
+                let js_msg = wasm_bindgen::JsValue::from_str(&rs_msg);
+                web_sys::console::error_1(&js_msg);
             })
             .ok();
     }

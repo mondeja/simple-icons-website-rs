@@ -1,0 +1,12 @@
+[package]
+name = "simple-icons-website-storage"
+description = "Local storage for the Simple Icons website"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+name = "simple_icons_website_storage"
+
+[dependencies]
+web-sys.workspace = true

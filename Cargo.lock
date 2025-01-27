@@ -2079,6 +2079,9 @@ dependencies = [
  "simple-icons-website-footer",
  "simple-icons-website-macros",
  "simple-icons-website-preview-generator",
+ "simple-icons-website-storage",
+ "simple-icons-website-svg-defs",
+ "simple-icons-website-url",
 ]
 
 [[package]]
@@ -2092,13 +2095,18 @@ dependencies = [
  "leptos-use",
  "leptos_icons",
  "rand",
+ "simple-icons-website-ids",
  "simple-icons-website-macros",
  "simple-icons-website-menu",
+ "simple-icons-website-storage",
+ "simple-icons-website-svg-defs",
+ "simple-icons-website-svg-icon",
  "simple-icons-website-types",
+ "simple-icons-website-url",
  "wasm-bindgen",
- "wasm-bindgen-futures",
  "web-sys",
  "web-sys-simple-events",
+ "web-sys-simple-fetch",
 ]
 
 [[package]]
@@ -2110,6 +2118,10 @@ dependencies = [
  "leptos-fluent",
  "leptos_icons",
 ]
+
+[[package]]
+name = "simple-icons-website-ids"
+version = "0.1.0"
 
 [[package]]
 name = "simple-icons-website-macros"
@@ -2144,18 +2156,54 @@ dependencies = [
  "simple-icons",
  "simple-icons-website-components",
  "simple-icons-website-macros",
+ "simple-icons-website-svg-defs",
+ "simple-icons-website-svg-icon",
  "simple-icons-website-types",
+ "simple-icons-website-url",
  "svg-path-bbox",
  "svg-path-cst",
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "web-sys",
  "web-sys-simple-events",
+ "web-sys-simple-fetch",
+]
+
+[[package]]
+name = "simple-icons-website-storage"
+version = "0.1.0"
+dependencies = [
+ "web-sys",
+]
+
+[[package]]
+name = "simple-icons-website-svg-defs"
+version = "0.1.0"
+dependencies = [
+ "leptos",
+ "simple-icons-website-ids",
+]
+
+[[package]]
+name = "simple-icons-website-svg-icon"
+version = "0.1.0"
+dependencies = [
+ "icondata",
+ "leptos",
+ "simple-icons-website-svg-defs",
 ]
 
 [[package]]
 name = "simple-icons-website-types"
 version = "0.1.0"
+
+[[package]]
+name = "simple-icons-website-url"
+version = "0.1.0"
+dependencies = [
+ "wasm-bindgen",
+ "web-sys",
+]
 
 [[package]]
 name = "slab"
@@ -2702,6 +2750,16 @@ dependencies = [
 name = "web-sys-simple-events"
 version = "0.1.0"
 dependencies = [
+ "web-sys",
+]
+
+[[package]]
+name = "web-sys-simple-fetch"
+version = "0.1.0"
+dependencies = [
+ "js-sys",
+ "wasm-bindgen",
+ "wasm-bindgen-futures",
  "web-sys",
 ]
 

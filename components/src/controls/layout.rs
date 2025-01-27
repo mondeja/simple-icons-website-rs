@@ -1,9 +1,9 @@
 use super::button::ControlButtonIcon;
-use crate::storage::LocalStorage;
-use crate::Url;
 use icondata::{LuGrid2x2, LuGrid3x3};
 use leptos::prelude::*;
 use leptos_fluent::move_tr;
+use simple_icons_website_storage::LocalStorage;
+use simple_icons_website_url as Url;
 use std::fmt;
 use std::str::FromStr;
 

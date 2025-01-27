@@ -1,7 +1,7 @@
-use crate::fetch::fetch_text;
 use leptos::{ev::MouseEvent, prelude::*, task::spawn_local};
 use leptos_use::{use_clipboard, UseClipboardReturn};
 use wasm_bindgen::{closure::Closure, prelude::*, JsCast};
+use web_sys_simple_fetch::fetch_text;
 
 fn set_copied_class(el: web_sys::HtmlElement) {
     el.class_list().add_1("copied").unwrap();
