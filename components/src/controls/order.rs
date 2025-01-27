@@ -10,7 +10,6 @@ use rand::seq::SliceRandom;
 use rand::thread_rng;
 use simple_icons_website_storage::LocalStorage;
 use simple_icons_website_types::SimpleIcon;
-use std::fmt;
 use std::str::FromStr;
 
 #[derive(Default, Copy, Clone, PartialEq)]
@@ -76,8 +75,8 @@ impl FromStr for OrderMode {
     }
 }
 
-impl fmt::Display for OrderModeVariant {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+impl std::fmt::Display for OrderModeVariant {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::Alphabetic => write!(f, "alpha"),
             Self::Color => write!(f, "color"),

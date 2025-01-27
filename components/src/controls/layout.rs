@@ -4,7 +4,6 @@ use leptos::prelude::*;
 use leptos_fluent::move_tr;
 use simple_icons_website_storage::LocalStorage;
 use simple_icons_website_url as Url;
-use std::fmt;
 use std::str::FromStr;
 
 #[derive(Default, Copy, Clone, PartialEq)]
@@ -35,8 +34,8 @@ impl FromStr for Layout {
     }
 }
 
-impl fmt::Display for Layout {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+impl std::fmt::Display for Layout {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::Comfortable => write!(f, "comfortable"),
             Self::Compact => write!(f, "compact"),
