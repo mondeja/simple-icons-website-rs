@@ -6,7 +6,6 @@ use crate::controls::download::{
 use crate::copy::{
     copy_and_set_copied_transition,
     copy_child_img_src_content_from_mouse_event, copy_inner_text_on_click,
-    copy_text,
 };
 use crate::grid::item::title::get_icon_localized_title;
 use crate::grid::CurrentIconViewSignal;
@@ -20,7 +19,7 @@ use icondata::{
 use leptos::{prelude::*, task::spawn_local, wasm_bindgen::JsCast};
 use leptos_fluent::{move_tr, tr, I18n};
 use leptos_icons::Icon;
-use leptos_use::on_click_outside;
+use leptos_use::{on_click_outside, use_clipboard, UseClipboardReturn};
 use simple_icons_website_menu::{Menu, MenuItem};
 use simple_icons_website_types::SimpleIcon;
 use web_sys_simple_fetch::fetch_text;
@@ -658,7 +657,14 @@ pub fn IconDetailsModal() -> impl IntoView {
                                                     .first()
                                                     .unwrap()
                                                     .to_string();
-                                                copy_text(&path);
+                                                let UseClipboardReturn { copy, is_supported, .. } = use_clipboard();
+                                                if !is_supported() {
+                                                    leptos::logging::error!(
+                                                        "Clipboard API not supported by the browser"
+                                                    );
+                                                    return;
+                                                }
+                                                copy(&path);
                                                 set_timeout(
                                                     move || set_copying_svg_path(false),
                                                     std::time::Duration::from_secs(1),

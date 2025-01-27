@@ -33,8 +33,8 @@ pub fn get_search_input() -> HtmlInputElement {
 /// Set the focus on the search bar
 pub fn focus_search_bar() {
     let input = get_search_input();
-    input.blur().unwrap();
-    input.focus().unwrap();
+    _ = input.blur();
+    _ = input.focus();
 }
 
 pub fn provide_search_context(icons: Vec<&'static SimpleIcon>) -> String {
@@ -263,6 +263,7 @@ pub fn SearchControl() -> impl IntoView {
     // https://caniuse.com/?search=autofocus
     search_input_ref.on_load(|input: HtmlInputElement| {
         _ = input.focus();
+        _ = input.blur();
     });
 
     // The onfocus attribute puts the cursor at the end of the input

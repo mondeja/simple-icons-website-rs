@@ -34,8 +34,8 @@ impl FromStr for DownloadType {
     }
 }
 
-impl std::fmt::Display for DownloadType {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl core::fmt::Display for DownloadType {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
             Self::SVG => write!(f, "svg"),
             Self::PNG => write!(f, "png"),

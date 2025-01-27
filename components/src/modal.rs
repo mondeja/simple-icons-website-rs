@@ -1,6 +1,5 @@
 use crate::controls::search::focus_search_bar;
 use crate::copy::copy_inner_text_on_click;
-use core::fmt;
 use leptos::{ev::MouseEvent, prelude::*};
 use leptos_fluent::tr;
 use leptos_use::on_click_outside;
@@ -103,8 +102,8 @@ pub enum ModalOpen {
     Icon,
 }
 
-impl fmt::Display for ModalOpen {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+impl core::fmt::Display for ModalOpen {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
             ModalOpen::Extensions => write!(f, "extensions"),
             ModalOpen::Languages => write!(f, "languages"),

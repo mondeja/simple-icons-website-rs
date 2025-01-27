@@ -34,20 +34,7 @@ pub fn copy_and_set_copied_transition(value: &str, el: web_sys::HtmlElement) {
     set_copied_class(el);
 }
 
-/// Copy a text to the clipboard
-pub fn copy_text(text: &str) {
-    let UseClipboardReturn {
-        copy, is_supported, ..
-    } = use_clipboard();
-
-    if !is_supported() {
-        leptos::logging::error!("Clipboard API not supported by the browser");
-        return;
-    }
-
-    copy(text);
-}
-
+// TODO: Rewrite with Rust
 #[wasm_bindgen(module = "/src/copy.js")]
 extern "C" {
     pub fn copy_blob_as_image_with_navigator_clipboard(blob: &web_sys::Blob);

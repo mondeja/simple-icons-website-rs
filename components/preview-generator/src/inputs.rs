@@ -236,7 +236,7 @@ fn ShowLintErrorButton(
             tabindex=0
             on:click=move |_| {
                 let input = input_ref.get().unwrap();
-                input.focus().unwrap();
+                _ = input.focus();
                 input.set_selection_start(Some(start)).unwrap();
                 input.set_selection_end(Some(end)).unwrap();
             }
@@ -266,7 +266,7 @@ fn FixLintErrorButton(
                 dispatch_input_event_on_input(&input);
                 set_timeout(
                     move || {
-                        input.focus().unwrap();
+                        _ = input.focus();
                         input.select();
                         input.set_selection_start(Some(start)).unwrap();
                         input.set_selection_end(Some(end)).unwrap();
@@ -415,7 +415,7 @@ fn BrandSuggestions(
                             .unwrap()
                             .dyn_into::<web_sys::HtmlInputElement>()
                             .unwrap();
-                        input.focus().unwrap();
+                        _ = input.focus();
                     }
                 >
 

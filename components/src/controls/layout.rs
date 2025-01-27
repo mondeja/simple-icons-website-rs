@@ -34,8 +34,8 @@ impl FromStr for Layout {
     }
 }
 
-impl std::fmt::Display for Layout {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl core::fmt::Display for Layout {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
             Self::Comfortable => write!(f, "comfortable"),
             Self::Compact => write!(f, "compact"),
