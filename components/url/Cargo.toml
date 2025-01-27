@@ -1,6 +1,6 @@
 [package]
-name = "web-sys-simple-events"
-description = "Library to easily manage events on containers with web-sys"
+name = "simple-icons-website-url"
+description = "URL of the Simple Icons website"
 version.workspace = true
 edition.workspace = true
 
@@ -9,3 +9,4 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 web-sys.workspace = true
+wasm-bindgen.workspace = true

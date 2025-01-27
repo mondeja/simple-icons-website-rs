@@ -1,0 +1,12 @@
+[package]
+name = "simple-icons-website-svg-defs"
+description = "SVG definitions for the Simple Icons website"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+simple-icons-website-ids.workspace = true
+leptos.workspace = true

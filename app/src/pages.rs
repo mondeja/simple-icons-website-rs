@@ -1,14 +1,4 @@
 //! Application pages
-use components::controls::color_scheme::ColorSchemeControl;
-use components::controls::download::provide_download_type_context;
-use components::controls::layout::provide_layout_context;
-use components::controls::order::provide_order_mode_context;
-use components::controls::search::provide_search_context;
-use components::controls::Controls;
-use components::grid::{
-    provide_icons_grid_contexts, Grid, IconsIndexSignal, DEPRECATED_ICONS,
-    ICONS,
-};
 use icondata::{BsGrid3x2GapFill, IoWarningSharp, VsPreview};
 use leptos::prelude::*;
 use leptos_fluent::move_tr;
@@ -17,6 +7,18 @@ use leptos_router::{
     components::A,
     hooks::{use_navigate, use_query_map},
     NavigateOptions,
+};
+use simple_icons_website_components::{
+    controls::{
+        color_scheme::ColorSchemeControl,
+        download::provide_download_type_context,
+        layout::provide_layout_context, order::provide_order_mode_context,
+        search::provide_search_context, Controls,
+    },
+    grid::{
+        provide_icons_grid_contexts, Grid, IconsIndexSignal, DEPRECATED_ICONS,
+        ICONS,
+    },
 };
 use simple_icons_website_preview_generator::PreviewGenerator;
 

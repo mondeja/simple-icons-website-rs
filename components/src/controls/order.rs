@@ -4,13 +4,12 @@ use super::search::{
     fire_on_search_event, get_search_value_from_localstorage, SearchValueSignal,
 };
 use crate::grid::{IconsGrid, IconsGridSignal, IconsIndexSignal};
-use crate::storage::LocalStorage;
 use leptos::prelude::*;
 use leptos_fluent::move_tr;
 use rand::seq::SliceRandom;
 use rand::thread_rng;
+use simple_icons_website_storage::LocalStorage;
 use simple_icons_website_types::SimpleIcon;
-use std::fmt;
 use std::str::FromStr;
 
 #[derive(Default, Copy, Clone, PartialEq)]
@@ -76,8 +75,8 @@ impl FromStr for OrderMode {
     }
 }
 
-impl fmt::Display for OrderModeVariant {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+impl core::fmt::Display for OrderModeVariant {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
             Self::Alphabetic => write!(f, "alpha"),
             Self::Color => write!(f, "color"),

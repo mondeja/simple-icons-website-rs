@@ -5,9 +5,7 @@ use crate::controls::order::{
     set_order_mode, OrderMode, OrderModeSignal, OrderModeVariant,
 };
 use crate::grid::{IconsGrid, IconsGridSignal, IconsIndexSignal, ICONS};
-use crate::storage::LocalStorage;
 use crate::Ids;
-use crate::Url;
 use fuzzy::{build_searcher, search};
 use leptos::{
     prelude::{document, *},
@@ -15,7 +13,9 @@ use leptos::{
     wasm_bindgen::JsCast,
 };
 use leptos_fluent::tr;
+use simple_icons_website_storage::LocalStorage;
 use simple_icons_website_types::SimpleIcon;
+use simple_icons_website_url as Url;
 use web_sys::HtmlInputElement;
 use web_sys_simple_events::dispatch_input_event_on_input;
 
@@ -33,8 +33,8 @@ pub fn get_search_input() -> HtmlInputElement {
 /// Set the focus on the search bar
 pub fn focus_search_bar() {
     let input = get_search_input();
-    input.blur().unwrap();
-    input.focus().unwrap();
+    _ = input.blur();
+    _ = input.focus();
 }
 
 pub fn provide_search_context(icons: Vec<&'static SimpleIcon>) -> String {
@@ -263,6 +263,7 @@ pub fn SearchControl() -> impl IntoView {
     // https://caniuse.com/?search=autofocus
     search_input_ref.on_load(|input: HtmlInputElement| {
         _ = input.focus();
+        _ = input.blur();
     });
 
     // The onfocus attribute puts the cursor at the end of the input

@@ -1,7 +1,7 @@
 use crate::header::HeaderStateSignal;
-use crate::svg::{IconOrSvg, SVGIcon};
 use leptos::prelude::*;
 use leptos_icons::Icon;
+use simple_icons_website_svg_icon::{IconOrSvg, SVGIcon};
 
 /// Header menu link
 ///

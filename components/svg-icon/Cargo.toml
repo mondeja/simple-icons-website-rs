@@ -1,6 +1,6 @@
 [package]
-name = "simple-icons-website-footer"
-description = "Footer component for the Simple Icons website"
+name = "simple-icons-website-svg-icon"
+description = "Dinamic SVG icon component for the Simple Icons website"
 version.workspace = true
 edition.workspace = true
 
@@ -8,7 +8,6 @@ edition.workspace = true
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
+simple-icons-website-svg-defs.workspace = true
 leptos.workspace = true
-leptos_icons.workspace = true
 icondata.workspace = true
-leptos-fluent.workspace = true

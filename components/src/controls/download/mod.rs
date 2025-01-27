@@ -3,8 +3,6 @@ pub mod pdf;
 pub mod svg;
 
 use crate::controls::button::ControlButtonText;
-use crate::storage::LocalStorage;
-use crate::Url;
 pub use image::{
     copy_as_base64_jpg, copy_as_base64_png, copy_as_image_jpg,
     copy_as_image_png, download_jpg, download_png,
@@ -12,11 +10,11 @@ pub use image::{
 use leptos::prelude::{document, *};
 use leptos_fluent::{move_tr, tr};
 pub use pdf::download_pdf;
-use std::fmt;
+use simple_icons_website_storage::LocalStorage;
+use simple_icons_website_url as Url;
 use std::str::FromStr;
 pub use svg::download_svg;
 use wasm_bindgen::JsCast;
-use web_sys;
 
 #[derive(Default, Copy, Clone, PartialEq)]
 pub enum DownloadType {
@@ -36,8 +34,8 @@ impl FromStr for DownloadType {
     }
 }
 
-impl fmt::Display for DownloadType {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+impl core::fmt::Display for DownloadType {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
             Self::SVG => write!(f, "svg"),
             Self::PNG => write!(f, "png"),

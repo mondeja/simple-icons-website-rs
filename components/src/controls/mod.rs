@@ -7,7 +7,6 @@ pub mod layout;
 pub mod order;
 pub mod search;
 
-use crate::svg::{SVGDef, SVGIcon};
 use button::XS_ICON_SIZE;
 use color_scheme::ColorSchemeControl;
 use download::DownloadFileTypeControl;
@@ -17,6 +16,8 @@ use leptos_fluent::tr;
 use leptos_use::use_media_query;
 use order::OrderControl;
 use search::SearchControl;
+use simple_icons_website_svg_defs::SVGDef;
+use simple_icons_website_svg_icon::SVGIcon;
 
 /// State of the controls panel
 #[derive(Copy, Clone, Default)]

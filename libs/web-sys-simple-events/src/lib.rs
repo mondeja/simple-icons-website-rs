@@ -15,3 +15,9 @@ pub fn dispatch_event_on_input(
 pub fn dispatch_input_event_on_input(input: &web_sys::HtmlInputElement) {
     dispatch_event_on_input(input, "input");
 }
+
+/// Focus an input
+pub fn focus_input(input: &web_sys::HtmlInputElement) {
+    _ = input.focus();
+    _ = input.blur();
+}

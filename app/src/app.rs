@@ -1,10 +1,5 @@
 use crate::head::Head;
 use crate::pages::{AllIconsIndex, DeprecationsIndex, Error404, Preview};
-use components::header::Header;
-use components::modal::provide_modal_open_context;
-use components::storage::LocalStorage;
-use components::svg::SVGDefsDefinition;
-use components::Url;
 use fluent_templates::static_loader;
 use leptos::{html::Footer as FooterHtmlElement, prelude::*};
 use leptos_fluent::leptos_fluent;
@@ -17,7 +12,13 @@ use leptos_use::{
     use_color_mode_with_options, ColorMode, UseColorModeOptions,
     UseColorModeReturn,
 };
+use simple_icons_website_components::{
+    header::Header, modal::provide_modal_open_context,
+};
 use simple_icons_website_footer::Footer;
+use simple_icons_website_storage::LocalStorage;
+use simple_icons_website_svg_defs::SVGDefsDefinition;
+use simple_icons_website_url as Url;
 
 /// Title of the page
 pub static TITLE: &str = "Simple Icons";
