@@ -1,4 +1,4 @@
-site-description = { $n-icons }개의 유명 브랜드를 위한 무료 { $svg } 아이콘
+site-description = { $n-icons }개의 유명 브랜드를 위한 { $svg } 아이콘
 close = 닫다
 theme = 구성
 light-color-scheme = 밝은 색 구성
