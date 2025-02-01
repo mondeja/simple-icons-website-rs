@@ -1,0 +1,9 @@
+[package]
+name = "simple-icons-sdk"
+description = "Rust implementation of Simple Icons SDK"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+unicode-normalization.workspace = true
+nanoserde.workspace = true

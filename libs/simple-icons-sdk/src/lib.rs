@@ -1,12 +1,9 @@
 mod data;
-mod deprecated;
-pub mod lint;
 
 pub use data::{
     get_simple_icons_data, SimpleIconData, SimpleIconDataAliases,
     SimpleIconDataLicense,
 };
-pub use deprecated::{fetch_deprecated_simple_icons, IconDeprecation};
 use unicode_normalization::UnicodeNormalization;
 
 fn title_to_slug_replace_chars(title: &str) -> String {

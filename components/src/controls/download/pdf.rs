@@ -1,5 +1,5 @@
 use leptos::prelude::document;
-use simple_icons_website_macros::js_library_version;
+use simple_icons_macros::js_library_version;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen(module = "/src/controls/download/pdf.js")]

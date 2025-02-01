@@ -10,13 +10,14 @@ members = [
     "components/svg-defs",
     "components/svg-icon",
     "components/url",
+    "libs/simple-icons",
+    "libs/simple-icons-macros",
+    "libs/simple-icons-sdk",
     "libs/svg-path-bbox",
+    "libs/types",
     "libs/web-sys-simple-copy",
     "libs/web-sys-simple-events",
     "libs/web-sys-simple-fetch",
-    "macros",
-    "simple-icons",
-    "types"
 ]
 resolver = "2"
 
@@ -31,9 +32,10 @@ lto = true
 opt-level = 'z'
 
 [workspace.dependencies]
-simple-icons = { path = "./simple-icons" }
-simple-icons-website-macros = { path = "./macros" }
-simple-icons-website-types = { path = "./types" }
+simple-icons = { path = "./libs/simple-icons" }
+simple-icons-macros = { path = "./libs/simple-icons-macros" }
+simple-icons-sdk = { path = "./libs/simple-icons-sdk" }
+simple-icons-website-types = { path = "./libs/types" }
 simple-icons-website-components = { path = "./components" }
 simple-icons-website-preview-generator = { path = "./components/preview-generator" }
 simple-icons-website-footer = { path = "./components/footer" }

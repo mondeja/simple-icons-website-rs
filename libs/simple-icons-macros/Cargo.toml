@@ -1,5 +1,5 @@
 [package]
-name = "simple-icons-website-macros"
+name = "simple-icons-macros"
 description = "Simple Icons website macros"
 version.workspace = true
 edition.workspace = true

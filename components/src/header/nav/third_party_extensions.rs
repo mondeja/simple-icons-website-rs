@@ -4,15 +4,15 @@ use crate::modal::{ModalOpen, ModalOpenSignal};
 use icondata::FaPuzzlePieceSolid;
 use leptos::prelude::*;
 use leptos_fluent::move_tr;
-use simple_icons_website_macros::{
+use simple_icons_macros::{
     get_simple_icons_3rd_party_extensions, get_simple_icons_3rd_party_libraries,
 };
 use simple_icons_website_svg_icon::SVGIcon;
 use simple_icons_website_types::ThirdPartyExtension;
 
-static THIRD_PARTY_EXTENSIONS: &[ThirdPartyExtension] =
+static THIRD_PARTY_EXTENSIONS: &[&ThirdPartyExtension] =
     get_simple_icons_3rd_party_extensions!();
-static THIRD_PARTY_LIBRARIES: &[ThirdPartyExtension] =
+static THIRD_PARTY_LIBRARIES: &[&ThirdPartyExtension] =
     get_simple_icons_3rd_party_libraries!();
 
 #[component]
@@ -38,7 +38,7 @@ fn ThirdPartyExtensionsTableRow(
 
 #[component]
 fn ThirdPartyExtensionsOrLibrariesTable(
-    items: &'static [ThirdPartyExtension],
+    items: &'static [&'static ThirdPartyExtension],
 ) -> impl IntoView {
     view! {
         <table class="third-party-extensions">

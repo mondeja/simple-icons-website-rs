@@ -2,7 +2,7 @@ use crate::app::TITLE;
 use leptos::prelude::*;
 use leptos_fluent::tr;
 use leptos_meta::*;
-use simple_icons_website_macros::get_number_of_icons;
+use simple_icons_macros::get_number_of_icons;
 
 static DOMAIN: &str = "simpleicons.org";
 

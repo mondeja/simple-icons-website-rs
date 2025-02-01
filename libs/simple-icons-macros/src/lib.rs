@@ -5,8 +5,7 @@
 use proc_macro::TokenStream;
 use simple_icons::{
     color::{is_relatively_light_icon_hex, sort_hexes},
-    get_simple_icon_svg_path, get_simple_icons,
-    sdk::fetch_deprecated_simple_icons,
+    fetch_deprecated_simple_icons, get_simple_icon_svg_path, get_simple_icons,
 };
 use std::fs;
 use std::path::Path;
@@ -92,7 +91,7 @@ fn get_simple_icons_3rd_party_extensions_libraries_impl(
 
         extensions_array_code.push_str(&format!(
             concat!(
-                "::simple_icons_website_types::ThirdPartyExtension{{",
+                "&::simple_icons_website_types::ThirdPartyExtension{{",
                 "name: \"{}\",",
                 "url: \"{}\",",
                 "author_name: \"{}\",",

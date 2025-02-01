@@ -45,9 +45,7 @@ args = [
     "--watch",
     "../components",
     "--watch",
-    "../macros",
-    "--watch",
-    "../simple-icons",
+    "../libs",
     "--ignore",
     "./public/assets/js",
 ]

@@ -9,8 +9,9 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 simple-icons.workspace = true
+simple-icons-sdk.workspace = true
+simple-icons-macros.workspace = true
 simple-icons-website-components.workspace = true
-simple-icons-website-macros.workspace = true
 simple-icons-website-types.workspace = true
 simple-icons-website-ids.workspace = true
 simple-icons-website-svg-defs.workspace = true

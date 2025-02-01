@@ -16,7 +16,7 @@ use leptos::{
 };
 use leptos_use::use_intersection_observer;
 use scroll::ScrollButtons;
-use simple_icons_website_macros::{
+use simple_icons_macros::{
     deprecated_icons_array, get_number_of_deprecated_icons,
     get_number_of_icons, icons_array,
 };
