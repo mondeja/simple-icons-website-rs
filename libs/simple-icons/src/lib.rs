@@ -1,7 +1,9 @@
 pub mod color;
-pub mod sdk;
+mod deprecated;
+pub mod lint;
 
-use crate::sdk::{
+pub use deprecated::{fetch_deprecated_simple_icons, IconDeprecation};
+use simple_icons_sdk::{
     get_simple_icons_data, title_to_slug, SimpleIconDataAliases,
     SimpleIconDataLicense,
 };

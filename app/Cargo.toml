@@ -6,7 +6,7 @@ edition.workspace = true
 
 [dependencies]
 simple-icons-website-components.workspace = true
-simple-icons-website-macros.workspace = true
+simple-icons-macros.workspace = true
 simple-icons-website-preview-generator.workspace = true
 simple-icons-website-footer.workspace = true
 simple-icons-website-storage.workspace = true

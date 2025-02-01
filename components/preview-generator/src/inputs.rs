@@ -2,7 +2,8 @@ use crate::{canvas::update_preview_canvas, helpers::is_valid_hex_color};
 use leptos::{html::Input, prelude::*, task::spawn_local};
 use leptos_fluent::{move_tr, tr};
 use leptos_use::{on_click_outside, use_device_pixel_ratio};
-use simple_icons::{sdk, sdk::lint::errors::PathLintError};
+use simple_icons::lint::errors::PathLintError;
+use simple_icons_sdk as sdk;
 use simple_icons_website_components::{
     controls::search::fuzzy::search, grid::ICONS,
 };
@@ -56,16 +57,17 @@ pub fn PathInput(
     let pixel_ratio = use_device_pixel_ratio();
 
     let (path_lint_errors, set_path_lint_errors) =
-        signal::<Vec<sdk::lint::LintError>>(vec![]);
+        signal::<Vec<simple_icons::lint::LintError>>(vec![]);
     let (show_path_lint_errors, set_show_path_lint_errors) = signal(false);
     let input_ref = NodeRef::new();
     let input_group_ref = NodeRef::new();
 
     fn process_lint_errors(
         path: &str,
-        set_path_lint_errors: WriteSignal<Vec<sdk::lint::LintError>>,
+        set_path_lint_errors: WriteSignal<Vec<simple_icons::lint::LintError>>,
     ) {
-        let mut new_lint_errors = sdk::lint::lint_path_characters(path);
+        let mut new_lint_errors =
+            simple_icons::lint::lint_path_characters(path);
         if !new_lint_errors.is_empty() {
             set_path_lint_errors(new_lint_errors);
             return;
@@ -98,8 +100,9 @@ pub fn PathInput(
         }
         let path_bbox = maybe_path_bbox.unwrap();
 
-        new_lint_errors.extend(sdk::lint::lint_path_segments(&path_segments));
-        new_lint_errors.extend(sdk::lint::lint_path_bbox(&path_bbox));
+        new_lint_errors
+            .extend(simple_icons::lint::lint_path_segments(&path_segments));
+        new_lint_errors.extend(simple_icons::lint::lint_path_bbox(&path_bbox));
         set_path_lint_errors(new_lint_errors);
     }
 
@@ -250,7 +253,7 @@ fn ShowLintErrorButton(
 fn FixLintErrorButton(
     start: u32,
     end: u32,
-    fixer: sdk::lint::LintErrorFixer,
+    fixer: simple_icons::lint::LintErrorFixer,
     input_ref: NodeRef<Input>,
 ) -> impl IntoView {
     view! {
@@ -284,7 +287,7 @@ fn FixLintErrorButton(
 fn LintError(
     message: Signal<String>,
     range: Option<(u32, u32)>,
-    fixer: Option<sdk::lint::LintErrorFixer>,
+    fixer: Option<simple_icons::lint::LintErrorFixer>,
     input_ref: NodeRef<Input>,
 ) -> impl IntoView {
     view! {

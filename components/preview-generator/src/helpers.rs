@@ -1,4 +1,5 @@
-use simple_icons::{color, sdk};
+use simple_icons::color;
+use simple_icons_sdk as sdk;
 
 /// Check if a string is a valid hex color
 pub fn is_valid_hex_color(value: &str) -> bool {

@@ -11,11 +11,11 @@ use inputs::{BrandInput, ColorInput, PathInput};
 use lazy_static::lazy_static;
 use leptos::{prelude::*, task::spawn_local};
 use leptos_use::use_device_pixel_ratio;
-use simple_icons::sdk;
+use simple_icons_macros::get_number_of_icons;
+use simple_icons_sdk as sdk;
 use simple_icons_website_components::{
     controls::search::fuzzy::search, grid::ICONS,
 };
-use simple_icons_website_macros::get_number_of_icons;
 use simple_icons_website_svg_icon::svg_with_path_opt_fill;
 use simple_icons_website_types::SimpleIcon;
 use simple_icons_website_url as Url;
@@ -24,8 +24,8 @@ use web_sys_simple_fetch::fetch_text;
 static DEFAULT_INITIAL_BRAND: &str = "Simple Icons";
 static DEFAULT_INITIAL_COLOR: &str = "111111";
 lazy_static! {
-    static ref DEFAULT_INITIAL_PATH: String =
-        sdk::svg_to_path(SiSimpleicons.data);
+    // TODO: use a macro to get the path from the SVG
+    static ref DEFAULT_INITIAL_PATH: String = sdk::svg_to_path(SiSimpleicons.data);
 }
 
 fn search_brand(value: &str) -> Option<&'static SimpleIcon> {

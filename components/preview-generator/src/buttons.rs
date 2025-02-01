@@ -2,7 +2,7 @@ use crate::{canvas::canvas as canvas_container, helpers::is_valid_hex_color};
 use leptos::{prelude::*, task::spawn_local, wasm_bindgen::JsCast};
 use leptos_fluent::{move_tr, tr};
 use leptos_hotkeys::use_hotkeys;
-use simple_icons::sdk;
+use simple_icons_sdk as sdk;
 use simple_icons_website_components::{
     controls::download::download, grid::ICONS,
 };
