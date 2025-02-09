@@ -123,7 +123,7 @@ fn initial_icons_from_search_value_order_mode_and_layout(
 fn wait_for_first_grid_item_and_open_details(attempt: u32) {
     if let Some(el) = document()
         .query_selector(
-            "main > ul > :first-child > :last-child > :nth-child(2)",
+            "main > ul > :nth-child(2) > :last-child > :nth-child(2)",
         )
         .unwrap_or(None)
     {
