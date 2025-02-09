@@ -9,7 +9,7 @@ pub use image::{
 };
 use leptos::prelude::{document, *};
 use leptos_fluent::{move_tr, tr};
-pub use pdf::download_pdf;
+pub use pdf::{add_pdfkit_scripts, download_pdf};
 use simple_icons_website_storage::LocalStorage;
 use simple_icons_website_url as Url;
 use std::str::FromStr;
