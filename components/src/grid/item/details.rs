@@ -1,7 +1,7 @@
 use crate::controls::download::{
-    copy_as_base64_jpg, copy_as_base64_png, copy_as_image_jpg,
-    copy_as_image_png, download, download_jpg, download_pdf, download_png,
-    download_svg,
+    add_pdfkit_scripts, copy_as_base64_jpg, copy_as_base64_png,
+    copy_as_image_jpg, copy_as_image_png, download, download_jpg, download_pdf,
+    download_png, download_svg,
 };
 use crate::copy::{
     copy_and_set_copied_transition, copy_child_img_src_content_from_mouse_event,
@@ -66,6 +66,10 @@ pub fn fill_icon_details_modal_with_icon(
     i18n: I18n,
     icon: &'static SimpleIcon,
 ) {
+    // Load pdfkit and blob-stream scripts to avoid loading when
+    // the user clicks on the download pdf button
+    add_pdfkit_scripts();
+
     let language = i18n.language.get();
     let icon_localized_title = get_icon_localized_title(icon, language);
 

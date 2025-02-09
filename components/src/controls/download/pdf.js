@@ -1,19 +1,23 @@
-const addScripts = (pdfkitVersion, blobStreamVersion) => {
-  if (!window.PDFDocument) {
+export const add_scripts_ = (pdfkitVersion, blobStreamVersion) => {
+  if (!document.querySelector('script#pdfkit')) {
     const script = document.createElement('script');
     script.src = `/js/pdfkit-${pdfkitVersion}.js`;
+    script.id = 'pdfkit';
     script.defer = true;
     document.body.appendChild(script);
   }
 
-  if (!window.blobStream) {
+  if (!document.querySelector('script#blob-stream')) {
     const script = document.createElement('script');
     script.src = `/js/blob-stream-${blobStreamVersion}.js`;
+    script.id = 'blob-stream';
     script.defer = true;
     document.body.appendChild(script);
   }
+};
 
-  return new Promise((resolve) => {
+const waitForPdfkitAndBlobStreamOnWindow = () =>
+  new Promise((resolve) => {
     const interval = setInterval(() => {
       if (window.PDFDocument && window.blobStream) {
         clearInterval(interval);
@@ -21,7 +25,6 @@ const addScripts = (pdfkitVersion, blobStreamVersion) => {
       }
     }, 100);
   });
-};
 
 export const download_pdf_ = async (
   slug,
@@ -30,9 +33,10 @@ export const download_pdf_ = async (
   blobStreamVersion,
 ) => {
   const icon_svg_url = `/icons/${slug}.svg`;
+  add_scripts_(pdfkitVersion, blobStreamVersion);
   const [res, ,] = await Promise.all([
     fetch(icon_svg_url),
-    addScripts(pdfkitVersion, blobStreamVersion),
+    waitForPdfkitAndBlobStreamOnWindow(),
   ]);
   const svg = await res.text();
 
