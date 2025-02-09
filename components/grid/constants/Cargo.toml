@@ -1,0 +1,12 @@
+[package]
+name = "simple-icons-website-grid-constants"
+description = "Constants for grid component for the Simple Icons website"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+simple-icons-macros.workspace = true
+simple-icons-website-types.workspace = true

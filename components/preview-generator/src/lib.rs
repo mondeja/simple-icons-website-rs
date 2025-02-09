@@ -6,15 +6,14 @@ mod inputs;
 use badge_maker::make_badge;
 use buttons::PreviewButtons;
 use canvas::update_preview_canvas;
+use fast_fuzzy::search;
 use helpers::contrast_color_for;
 use inputs::{BrandInput, ColorInput, PathInput};
 use leptos::{prelude::*, task::spawn_local};
 use leptos_use::use_device_pixel_ratio;
 use simple_icons_macros::{get_number_of_icons, get_simple_icon_svg_path};
 use simple_icons_sdk as sdk;
-use simple_icons_website_components::{
-    controls::search::fuzzy::search, grid::ICONS,
-};
+use simple_icons_website_grid_constants::ICONS;
 use simple_icons_website_svg_icon::svg_with_path_opt_fill;
 use simple_icons_website_types::SimpleIcon;
 use simple_icons_website_url as Url;

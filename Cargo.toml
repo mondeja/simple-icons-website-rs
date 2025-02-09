@@ -1,22 +1,29 @@
 [workspace]
 members = [
     "app",
-    "components",
-    "components/preview-generator",
-    "components/menu",
+    "components/header",
     "components/footer",
+    "components/controls",
+    "components/controls/layout-types",
+    "components/controls/order-types",
+    "components/controls/search",
+    "components/grid",
+    "components/grid/types",
+    "components/grid/constants",
+    "components/menu",
     "components/ids",
     "components/modal",
     "components/copy",
-    "components/search",
     "components/storage",
     "components/svg-defs",
     "components/svg-icon",
     "components/url",
+    "components/preview-generator",
     "libs/simple-icons",
     "libs/simple-icons-macros",
     "libs/simple-icons-sdk",
     "libs/badge-maker",
+    "libs/fast-fuzzy",
     "libs/svg-path-bbox",
     "libs/types",
     "libs/web-sys-simple-copy",
@@ -37,23 +44,31 @@ opt-level = 'z'
 
 [workspace.dependencies]
 simple-icons = { path = "./libs/simple-icons" }
-simple-icons-macros = { path = "./libs/simple-icons-macros" }
 simple-icons-sdk = { path = "./libs/simple-icons-sdk" }
+simple-icons-macros = { path = "./libs/simple-icons-macros" }
 simple-icons-website-types = { path = "./libs/types" }
-simple-icons-website-components = { path = "./components" }
 simple-icons-website-preview-generator = { path = "./components/preview-generator" }
 simple-icons-website-footer = { path = "./components/footer" }
+simple-icons-website-header = { path = "./components/header" }
+simple-icons-website-controls = { path = "./components/controls" }
+simple-icons-website-controls-layout-types = { path = "./components/controls/layout-types" }
+simple-icons-website-controls-order-types = { path = "./components/controls/order-types" }
+simple-icons-website-controls-search = { path = "./components/controls/search" }
+simple-icons-website-grid = { path = "./components/grid" }
+simple-icons-website-grid-types = { path = "./components/grid/types" }
+simple-icons-website-grid-constants = { path = "./components/grid/constants" }
+simple-icons-website-grid-icons-loader = { path = "./components/grid/icons-loader" }
 simple-icons-website-menu = { path = "./components/menu" }
 simple-icons-website-ids = { path = "./components/ids" }
-simple-icons-website-modal = { path = "./components/modal" }
 simple-icons-website-copy = { path = "./components/copy" }
-simple-icons-website-search = { path = "./components/search" }
+simple-icons-website-modal = { path = "./components/modal" }
 simple-icons-website-storage = { path = "./components/storage" }
 simple-icons-website-svg-defs = { path = "./components/svg-defs" }
 simple-icons-website-svg-icon = { path = "./components/svg-icon" }
 simple-icons-website-url = { path = "./components/url" }
 svg-path-bbox = { path = "./libs/svg-path-bbox" }
 badge-maker = { path = "./libs/badge-maker" }
+fast-fuzzy = { path = "./libs/fast-fuzzy" }
 web-sys-simple-copy = { path = "./libs/web-sys-simple-copy" }
 web-sys-simple-events = { path = "./libs/web-sys-simple-events" }
 web-sys-simple-fetch = { path = "./libs/web-sys-simple-fetch" }

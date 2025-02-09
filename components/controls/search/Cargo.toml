@@ -1,0 +1,18 @@
+[package]
+name = "simple-icons-website-controls-search"
+description = "Search utilities for the Simple Icons website"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+simple-icons-website-ids.workspace = true
+simple-icons-website-types.workspace = true
+simple-icons-website-grid-constants.workspace = true
+fast-fuzzy.workspace = true
+leptos.workspace = true
+wasm-bindgen.workspace = true
+web-sys.workspace = true
+js-sys.workspace = true

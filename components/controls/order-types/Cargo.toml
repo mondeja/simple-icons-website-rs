@@ -1,0 +1,12 @@
+[package]
+name = "simple-icons-website-controls-order-types"
+description = "Types and signals for order control for the Simple Icons website"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+simple-icons-website-types.workspace = true
+rand.workspace = true

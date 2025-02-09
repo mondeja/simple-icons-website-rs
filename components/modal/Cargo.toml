@@ -9,7 +9,7 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 simple-icons-website-copy.workspace = true
-simple-icons-website-search.workspace = true
+simple-icons-website-controls-search.workspace = true
 simple-icons-website-svg-defs.workspace = true
 simple-icons-website-svg-icon.workspace = true
 simple-icons-website-url.workspace = true
