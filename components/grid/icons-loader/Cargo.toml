@@ -1,0 +1,14 @@
+[package]
+name = "simple-icons-website-grid-icons-loader"
+description = "Icons loader component for the icons grid of Simple Icons website"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+leptos.workspace = true
+simple-icons-website-grid-types.workspace = true
+simple-icons-website-controls-layout-types.workspace = true
+leptos-fluent.workspace = true

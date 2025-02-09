@@ -1,0 +1,32 @@
+[package]
+name = "simple-icons-website-controls"
+description = "Controls components for the Simple Icons website"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+leptos.workspace = true
+simple-icons-macros.workspace = true
+simple-icons-website-types.workspace = true
+simple-icons-website-svg-icon.workspace = true
+simple-icons-website-svg-defs.workspace = true
+simple-icons-website-storage.workspace = true
+simple-icons-website-ids.workspace = true
+simple-icons-website-url.workspace = true
+simple-icons-website-grid-icons-loader.workspace = true
+simple-icons-website-grid-types.workspace = true
+simple-icons-website-controls-layout-types.workspace = true
+simple-icons-website-controls-order-types.workspace = true
+simple-icons-website-controls-search.workspace = true
+fast-fuzzy.workspace = true
+web-sys-simple-events.workspace = true
+leptos_icons.workspace = true
+icondata.workspace = true
+leptos-use.workspace = true
+leptos-fluent.workspace = true
+wasm-bindgen.workspace = true
+web-sys.workspace = true
+js-sys.workspace = true

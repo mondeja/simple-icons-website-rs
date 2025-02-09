@@ -1,0 +1,15 @@
+[package]
+name = "simple-icons-website-grid-types"
+description = "Types and signals for grid component for the Simple Icons website"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+leptos.workspace = true
+simple-icons-website-types.workspace = true
+simple-icons-website-controls-layout-types.workspace = true
+simple-icons-website-controls-order-types.workspace = true
+simple-icons-website-controls-search.workspace = true

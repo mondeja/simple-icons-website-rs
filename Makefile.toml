@@ -224,7 +224,7 @@ writefile ${jslibs} ""
 # fast-fuzzy
 packagejson = readfile node_modules/fast-fuzzy/package.json
 fast_fuzzy = json_parse ${packagejson}
-exec npx esbuild ./components/src/controls/search/fast-fuzzy.js --bundle --outfile=./app/public/assets/js/fast-fuzzy-${fast_fuzzy.version}.js --minify --log-level=error
+exec npx esbuild ./libs/fast-fuzzy/src/fast-fuzzy.js --bundle --outfile=./app/public/assets/js/fast-fuzzy-${fast_fuzzy.version}.js --minify --log-level=error
 appendfile ${jslibs} "<script type=\"module\" src=\"/js/fast-fuzzy-${fast_fuzzy.version}.js\" defer></script>"
 
 # svg-path-bbox

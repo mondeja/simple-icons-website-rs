@@ -1,0 +1,8 @@
+[package]
+name = "fast-fuzzy"
+description = "Bindings for fast-fuzzy npm package"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+wasm-bindgen.workspace = true

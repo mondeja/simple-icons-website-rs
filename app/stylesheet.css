@@ -2,11 +2,14 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-@import './../components/src/lib.css';
-@import './../components/preview-generator/src/lib.css';
-@import './../components/footer/src/lib.css';
-@import './../components/modal/src/lib.css';
-@import './../components/copy/src/lib.css';
+@import '../components/preview-generator/src/lib.css';
+@import '../components/footer/src/lib.css';
+@import '../components/header/src/lib.css';
+@import '../components/controls/src/lib.css';
+@import '../components/grid/src/lib.css';
+@import '../components/grid/icons-loader/src/lib.css';
+@import '../components/modal/src/lib.css';
+@import '../components/copy/src/lib.css';
 
 :root {
   --dark-contrast-color: rgb(34 34 34);

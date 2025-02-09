@@ -8,20 +8,17 @@ use leptos_router::{
     hooks::{use_navigate, use_query_map},
     NavigateOptions,
 };
-use simple_icons_website_components::{
-    controls::{
-        color_scheme::ColorSchemeControl,
-        download::provide_download_type_context,
-        layout::provide_layout_context,
-        order::provide_order_mode_context,
-        search::{init_searcher, provide_search_context},
-        Controls,
-    },
-    grid::{
-        provide_icons_grid_contexts, Grid, IconsIndexSignal, DEPRECATED_ICONS,
-        ICONS,
-    },
+use simple_icons_website_controls::{
+    color_scheme::ColorSchemeControl,
+    download::provide_download_type_context,
+    layout::provide_layout_context,
+    order::provide_order_mode_context,
+    search::{init_searcher, provide_search_context},
+    Controls,
 };
+use simple_icons_website_grid::{provide_icons_grid_contexts, Grid};
+use simple_icons_website_grid_constants::{DEPRECATED_ICONS, ICONS};
+use simple_icons_website_grid_types::IconsIndexSignal;
 use simple_icons_website_preview_generator::PreviewGenerator;
 
 fn index_redirections() -> bool {

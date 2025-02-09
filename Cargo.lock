@@ -487,6 +487,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "fast-fuzzy"
+version = "0.1.0"
+dependencies = [
+ "wasm-bindgen",
+]
+
+[[package]]
 name = "fluent-bundle"
 version = "0.15.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2128,8 +2135,12 @@ dependencies = [
  "leptos_router",
  "serde_json",
  "simple-icons-macros",
- "simple-icons-website-components",
+ "simple-icons-website-controls",
  "simple-icons-website-footer",
+ "simple-icons-website-grid",
+ "simple-icons-website-grid-constants",
+ "simple-icons-website-grid-types",
+ "simple-icons-website-header",
  "simple-icons-website-modal",
  "simple-icons-website-preview-generator",
  "simple-icons-website-storage",
@@ -2138,23 +2149,23 @@ dependencies = [
 ]
 
 [[package]]
-name = "simple-icons-website-components"
+name = "simple-icons-website-controls"
 version = "0.1.0"
 dependencies = [
+ "fast-fuzzy",
  "icondata",
  "js-sys",
  "leptos",
  "leptos-fluent",
  "leptos-use",
  "leptos_icons",
- "leptos_meta",
- "rand",
  "simple-icons-macros",
- "simple-icons-website-copy",
+ "simple-icons-website-controls-layout-types",
+ "simple-icons-website-controls-order-types",
+ "simple-icons-website-controls-search",
+ "simple-icons-website-grid-icons-loader",
+ "simple-icons-website-grid-types",
  "simple-icons-website-ids",
- "simple-icons-website-menu",
- "simple-icons-website-modal",
- "simple-icons-website-search",
  "simple-icons-website-storage",
  "simple-icons-website-svg-defs",
  "simple-icons-website-svg-icon",
@@ -2163,7 +2174,35 @@ dependencies = [
  "wasm-bindgen",
  "web-sys",
  "web-sys-simple-events",
- "web-sys-simple-fetch",
+]
+
+[[package]]
+name = "simple-icons-website-controls-layout-types"
+version = "0.1.0"
+dependencies = [
+ "leptos",
+]
+
+[[package]]
+name = "simple-icons-website-controls-order-types"
+version = "0.1.0"
+dependencies = [
+ "rand",
+ "simple-icons-website-types",
+]
+
+[[package]]
+name = "simple-icons-website-controls-search"
+version = "0.1.0"
+dependencies = [
+ "fast-fuzzy",
+ "js-sys",
+ "leptos",
+ "simple-icons-website-grid-constants",
+ "simple-icons-website-ids",
+ "simple-icons-website-types",
+ "wasm-bindgen",
+ "web-sys",
 ]
 
 [[package]]
@@ -2188,6 +2227,79 @@ dependencies = [
 ]
 
 [[package]]
+name = "simple-icons-website-grid"
+version = "0.1.0"
+dependencies = [
+ "icondata",
+ "js-sys",
+ "leptos",
+ "leptos-fluent",
+ "leptos-use",
+ "leptos_icons",
+ "leptos_meta",
+ "simple-icons-website-controls",
+ "simple-icons-website-controls-layout-types",
+ "simple-icons-website-controls-order-types",
+ "simple-icons-website-controls-search",
+ "simple-icons-website-copy",
+ "simple-icons-website-grid-icons-loader",
+ "simple-icons-website-grid-types",
+ "simple-icons-website-ids",
+ "simple-icons-website-menu",
+ "simple-icons-website-modal",
+ "simple-icons-website-svg-defs",
+ "simple-icons-website-svg-icon",
+ "simple-icons-website-types",
+ "simple-icons-website-url",
+ "wasm-bindgen",
+ "web-sys",
+ "web-sys-simple-fetch",
+]
+
+[[package]]
+name = "simple-icons-website-grid-constants"
+version = "0.1.0"
+dependencies = [
+ "simple-icons-macros",
+ "simple-icons-website-types",
+]
+
+[[package]]
+name = "simple-icons-website-grid-icons-loader"
+version = "0.1.0"
+dependencies = [
+ "leptos",
+ "leptos-fluent",
+ "simple-icons-website-controls-layout-types",
+ "simple-icons-website-grid-types",
+]
+
+[[package]]
+name = "simple-icons-website-grid-types"
+version = "0.1.0"
+dependencies = [
+ "leptos",
+ "simple-icons-website-controls-layout-types",
+ "simple-icons-website-controls-order-types",
+ "simple-icons-website-controls-search",
+ "simple-icons-website-types",
+]
+
+[[package]]
+name = "simple-icons-website-header"
+version = "0.1.0"
+dependencies = [
+ "icondata",
+ "leptos",
+ "leptos-fluent",
+ "leptos_icons",
+ "simple-icons-macros",
+ "simple-icons-website-modal",
+ "simple-icons-website-svg-icon",
+ "simple-icons-website-types",
+]
+
+[[package]]
 name = "simple-icons-website-ids"
 version = "0.1.0"
 
@@ -2207,8 +2319,8 @@ dependencies = [
  "leptos",
  "leptos-fluent",
  "leptos-use",
+ "simple-icons-website-controls-search",
  "simple-icons-website-copy",
- "simple-icons-website-search",
  "simple-icons-website-svg-defs",
  "simple-icons-website-svg-icon",
  "simple-icons-website-url",
@@ -2220,6 +2332,7 @@ name = "simple-icons-website-preview-generator"
 version = "0.1.0"
 dependencies = [
  "badge-maker",
+ "fast-fuzzy",
  "js-sys",
  "leptos",
  "leptos-fluent",
@@ -2228,7 +2341,8 @@ dependencies = [
  "simple-icons",
  "simple-icons-macros",
  "simple-icons-sdk",
- "simple-icons-website-components",
+ "simple-icons-website-controls",
+ "simple-icons-website-grid-constants",
  "simple-icons-website-ids",
  "simple-icons-website-svg-defs",
  "simple-icons-website-svg-icon",
@@ -2242,16 +2356,6 @@ dependencies = [
  "web-sys-simple-copy",
  "web-sys-simple-events",
  "web-sys-simple-fetch",
-]
-
-[[package]]
-name = "simple-icons-website-search"
-version = "0.1.0"
-dependencies = [
- "leptos",
- "simple-icons-website-ids",
- "wasm-bindgen",
- "web-sys",
 ]
 
 [[package]]
