@@ -38,10 +38,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          token: ${{ steps.app-token.outputs.token }}
           # Ensure we are checked out on the master branch
           ref: master
-          # Ensure custom credentials are used when pushing
-          persist-credentials: false
       - name: Get toolchain config
         id: toolchain
         uses: ./.github/actions/get-toolchain
