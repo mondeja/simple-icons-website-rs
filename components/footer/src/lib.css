@@ -18,11 +18,11 @@ footer {
 
   /* X button */
   .x-button svg path {
-    @apply fill-[#555];
+    @apply fill-[#000] dark:fill-[#ccc];
   }
 
   .x-button:hover svg path {
-    @apply fill-[rgba(107,107,107,0.8)];
+    @apply fill-[#333] dark:fill-[#fff];
   }
 
   /* Facebook button */
