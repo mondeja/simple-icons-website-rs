@@ -6,7 +6,7 @@ use leptos_fluent::leptos_fluent;
 use leptos_hotkeys::{provide_hotkeys_context, scopes};
 use leptos_router::{
     components::{Route, Router, Routes},
-    StaticSegment, WildcardSegment,
+    StaticSegment,
 };
 use leptos_use::{
     use_color_mode_with_options, ColorMode, UseColorModeOptions,
@@ -91,13 +91,6 @@ pub fn App() -> impl IntoView {
     // Provide context for keyboard shortcuts
     provide_hotkeys_context(main_ref, false, scopes!());
 
-    // TODO: Note that we're not using the `fallback` prop of `Routes` here.
-    // Because it doesn't works on production. Instead, we're using a `WildcardSegment`
-    // to render 404 pages. This is a workaround until the issue is reported to leptos
-    // and fixed.
-    #[allow(clippy::unit_arg, clippy::unused_unit)]
-    let empty_view = || view!();
-
     view! {
         <I18n>
             <Head />
@@ -105,12 +98,10 @@ pub fn App() -> impl IntoView {
             <SVGDefsDefinition />
             <main node_ref=main_ref>
                 <Router>
-                    <Routes fallback=empty_view>
+                    <Routes fallback=Error404>
                         <Route path=StaticSegment("/preview") view=Preview />
                         <Route path=StaticSegment("/deprecations") view=DeprecationsIndex />
-                        <Route path=StaticSegment("/404") view=Error404 />
                         <Route path=StaticSegment("/") view=AllIconsIndex />
-                        <Route path=WildcardSegment("*") view=Error404 />
                     </Routes>
                 </Router>
             </main>
