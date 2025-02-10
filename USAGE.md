@@ -17,11 +17,11 @@ Grid with all brand icons.
 
 ### URL parameters
 
-| Option          | Description                                                                                                                                                    | Default       | Example                |
-| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ---------------------- |
-| `download-type` | The type of download to set by controls. This affect to the download button of icon cards. Possible values are `svg` and `png`.                                | `svg`         | `?download-type=png`   |
-| `layout`        | Icons grid layout to use. Possible values are `comfortable` and `compact`.                                                                                     | `comfortable` | `?layout=compact`      |
-| `order`         | Order in which the icons are displayed. Possible values are `alpha` (Alphabetic), `alpha-reverse` (Alphabetic reverse), `color`, `color-reverse` and `random`. | `random`      | `?order=color-reverse` |
+|     Option      | Description                                                                                                                                                    |    Default    |        Example         |
+| :-------------: | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-----------: | :--------------------: |
+| `download-type` | The type of download to set by controls. This affect to the download button of icon cards. Possible values are `svg` and `png`.                                |     `svg`     |  `?download-type=png`  |
+|    `layout`     | Icons grid layout to use. Possible values are `comfortable` and `compact`.                                                                                     | `comfortable` |   `?layout=compact`    |
+|     `order`     | Order in which the icons are displayed. Possible values are `alpha` (Alphabetic), `alpha-reverse` (Alphabetic reverse), `color`, `color-reverse` and `random`. |   `random`    | `?order=color-reverse` |
 
 [Unicode language identifier]: https://unicode.org/reports/tr35/tr35.html#Unicode_language_identifier
 
