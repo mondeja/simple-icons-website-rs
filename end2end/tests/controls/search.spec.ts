@@ -36,8 +36,8 @@ test.describe('search', () => {
     const orderModeControlButtons = await page.locator(
       `${ORDER_MODE_CONTROL_SELECTOR} button`,
     );
-    await expect(orderModeControlButtons).toHaveCount(4);
-    await expect(orderModeControlButtons.nth(3)).toHaveClass('selected');
+    await expect(orderModeControlButtons).toHaveCount(6);
+    await expect(orderModeControlButtons.nth(5)).toHaveClass('selected');
 
     await expect(
       await page.evaluate(() => localStorage.getItem('order-mode')),
