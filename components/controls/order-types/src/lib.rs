@@ -5,7 +5,9 @@ use std::str::FromStr;
 #[derive(Default, Copy, Clone, PartialEq)]
 pub enum OrderModeVariant {
     Alphabetic,
+    AlphabeticReverse,
     Color,
+    ColorReverse,
     SearchMatch,
     #[default]
     Random,
@@ -15,7 +17,9 @@ impl From<&str> for OrderModeVariant {
     fn from(order_mode: &str) -> Self {
         match order_mode {
             "alpha" => Self::Alphabetic,
+            "alpha-reverse" => Self::AlphabeticReverse,
             "color" => Self::Color,
+            "color-reverse" => Self::ColorReverse,
             "random" => Self::Random,
             _ => Self::SearchMatch,
         }
@@ -26,7 +30,9 @@ impl core::fmt::Display for OrderModeVariant {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
             Self::Alphabetic => write!(f, "alpha"),
+            Self::AlphabeticReverse => write!(f, "alpha-reverse"),
             Self::Color => write!(f, "color"),
+            Self::ColorReverse => write!(f, "color-reverse"),
             Self::SearchMatch => write!(f, "search"),
             Self::Random => write!(f, "random"),
         }
@@ -57,8 +63,14 @@ pub fn sort_icons(order_mode: &OrderModeVariant, icons: &mut Vec<&SimpleIcon>) {
         OrderModeVariant::Alphabetic => {
             icons.sort_by(|a, b| a.order_alpha.cmp(&b.order_alpha));
         }
+        OrderModeVariant::AlphabeticReverse => {
+            icons.sort_by(|a, b| b.order_alpha.cmp(&a.order_alpha));
+        }
         OrderModeVariant::Color => {
             icons.sort_by(|a, b| a.order_color.cmp(&b.order_color));
+        }
+        OrderModeVariant::ColorReverse => {
+            icons.sort_by(|a, b| b.order_color.cmp(&a.order_color));
         }
         OrderModeVariant::Random => {
             icons.shuffle(&mut thread_rng());

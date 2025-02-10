@@ -63,9 +63,11 @@ pub fn set_order_mode(
     });
     if update_grid {
         match order_mode {
-            &OrderModeVariant::Alphabetic
-            | &OrderModeVariant::Color
-            | OrderModeVariant::Random => {
+            &OrderModeVariant::SearchMatch => {
+                // Fire a search event to update the grid
+                fire_on_search_event();
+            }
+            _ => {
                 icons_grid_signal.update(|grid| {
                     let search_value = get_search_value_from_localstorage();
                     if search_value.is_some() {
@@ -84,10 +86,6 @@ pub fn set_order_mode(
                     }
                 });
             }
-            &OrderModeVariant::SearchMatch => {
-                // Fire a search event to update the grid
-                fire_on_search_event();
-            }
         }
     }
 }
@@ -101,23 +99,15 @@ pub fn OrderControl() -> impl IntoView {
     let icons = StoredValue::new(expect_context::<IconsIndexSignal>().0);
 
     Effect::new(move |_| match order_mode.get_untracked().current {
-        OrderModeVariant::Random => set_order_mode(
-            &OrderModeVariant::Random,
+        OrderModeVariant::SearchMatch | OrderModeVariant::Alphabetic => {}
+        mode => set_order_mode(
+            &mode,
             &order_mode,
             &icons_grid,
             Some(&layout_signal()),
             true,
             icons.read_value().to_vec(),
         ),
-        OrderModeVariant::Color => set_order_mode(
-            &OrderModeVariant::Color,
-            &order_mode,
-            &icons_grid,
-            Some(&layout_signal()),
-            true,
-            icons.read_value().to_vec(),
-        ),
-        _ => {}
     });
 
     view! {
@@ -130,10 +120,40 @@ pub fn OrderControl() -> impl IntoView {
                     active=Signal::derive(move || {
                         order_mode().current == OrderModeVariant::Alphabetic
                     })
-
+                    class:hidden=Signal::derive(move || {
+                        order_mode().current == OrderModeVariant::AlphabeticReverse
+                    })
                     on:click=move |_| {
+                        let new_order_mode = match order_mode().current {
+                            OrderModeVariant::Alphabetic => OrderModeVariant::AlphabeticReverse,
+                            _ => OrderModeVariant::Alphabetic,
+                        };
                         set_order_mode(
-                            &OrderModeVariant::Alphabetic,
+                            &new_order_mode,
+                            &order_mode,
+                            &icons_grid,
+                            Some(&layout_signal()),
+                            true,
+                            icons.read_value().to_vec(),
+                        )
+                    }
+                />
+                <ControlButtonIcon
+                    title=move_tr!("sort-alphabetically")
+                    icon="M1.515 5.143h2.571V23.57a.414.414 0 0 0 .43.429h2.57a.414.414 0 0 0 .43-.43V5.143h2.57c.196 0 .331-.09.402-.268.072-.17.04-.326-.094-.469L6.108.119A.484.484 0 0 0 5.8 0a.449.449 0 0 0-.308.12L1.22 4.392a.506.506 0 0 0-.134.32.414.414 0 0 0 .43.43Zm18.587 17.331H16.78c-.188 0-.322.008-.402.026l-.188.027V22.5l.148-.147c.133-.16.227-.275.281-.348l4.94-7.099v-1.19h-7.593v3.065h1.607v-1.54h3.107c.16 0 .295-.015.4-.04a.856.856 0 0 0 .102-.007c.039-.004.068-.008.086-.008v.04l-.146.121c-.08.08-.176.2-.28.361L13.9 22.794v1.205h7.82v-3.12H20.1v1.594Zm1.875-13.608L18.895 0h-2.168l-3.082 8.866h-.936v1.42h3.842v-1.42h-1.004l.631-1.929h3.254l.63 1.93h-1.005v1.418h3.857V8.866ZM16.62 5.464l.977-2.92c.038-.107.07-.236.102-.388.03-.152.047-.232.047-.24l.039-.269h.055c0 .036.007.125.026.268l.162.63.963 2.92z"
+                    active=Signal::derive(move || {
+                        order_mode().current == OrderModeVariant::AlphabeticReverse
+                    })
+                    class:hidden=Signal::derive(move || {
+                        order_mode().current != OrderModeVariant::AlphabeticReverse
+                    })
+                    on:click=move |_| {
+                        let new_order_mode = match order_mode().current {
+                            OrderModeVariant::AlphabeticReverse => OrderModeVariant::Alphabetic,
+                            _ => OrderModeVariant::AlphabeticReverse,
+                        };
+                        set_order_mode(
+                            &new_order_mode,
                             &order_mode,
                             &icons_grid,
                             Some(&layout_signal()),
@@ -147,14 +167,48 @@ pub fn OrderControl() -> impl IntoView {
                     title=move_tr!("sort-by-color")
                     icon="M3.44 0a.42.42 0 0 0-.31.121.42.42 0 0 0-.12.309v18.427H.44a.4.4 0 0 0-.403.268c-.07.17-.04.326.094.469l4.287 4.287c.098.08.199.119.307.119a.449.449 0 0 0 .308-.12l4.272-4.273a.502.502 0 0 0 .134-.318.418.418 0 0 0-.43-.432H6.44V.43A.415.415 0 0 0 6.01 0H3.44zm14.738 4.178c-2.082.008-4.25.926-5.875 2.69a7.722 7.722 0 0 0 .445 10.91 7.722 7.722 0 0 0 10.912-.444 1.287 1.287 0 0 0-.074-1.818 1.26 1.26 0 0 0-.857-.336 1.333 1.333 0 0 1-.854-.342 1.287 1.287 0 0 1-.074-1.818l1.03-1.118a4.29 4.29 0 0 0-.247-6.06c-1.22-1.125-2.787-1.67-4.406-1.664zm-2.063 1.869a1.287 1.287 0 0 1 .723.332 1.287 1.287 0 0 1 .074 1.818 1.287 1.287 0 0 1-1.818.074 1.287 1.287 0 0 1-.074-1.818 1.287 1.287 0 0 1 1.095-.406zm4.268.433a1.287 1.287 0 0 1 .722.332 1.287 1.287 0 0 1 .075 1.819 1.287 1.287 0 0 1-1.819.074 1.287 1.287 0 0 1-.074-1.818 1.287 1.287 0 0 1 1.096-.407zm-7.176 2.721a1.287 1.287 0 0 1 .723.332 1.287 1.287 0 0 1 .074 1.819 1.287 1.287 0 0 1-1.818.074 1.287 1.287 0 0 1-.075-1.819 1.287 1.287 0 0 1 1.096-.406zm.78 4.219a1.287 1.287 0 0 1 .722.332 1.287 1.287 0 0 1 .074 1.818 1.287 1.287 0 0 1-1.818.075 1.287 1.287 0 0 1-.074-1.819 1.287 1.287 0 0 1 1.095-.406z"
                     active=Signal::derive(move || order_mode().current == OrderModeVariant::Color)
-                    on:click=move |_| set_order_mode(
-                        &OrderModeVariant::Color,
-                        &order_mode,
-                        &icons_grid,
-                        Some(&layout_signal()),
-                        true,
-                        icons.read_value().to_vec(),
-                    )
+                    class:hidden=Signal::derive(move || {
+                        order_mode().current == OrderModeVariant::ColorReverse
+                    })
+                    on:click=move |_| {
+                        let new_order_mode = match order_mode().current {
+                            OrderModeVariant::Color => OrderModeVariant::ColorReverse,
+                            _ => OrderModeVariant::Color,
+                        };
+                        set_order_mode(
+                            &new_order_mode,
+                            &order_mode,
+                            &icons_grid,
+                            Some(&layout_signal()),
+                            true,
+                            icons.read_value().to_vec(),
+                        )
+                    }
+                />
+
+                <ControlButtonIcon
+                    title=move_tr!("sort-by-color")
+                    icon="M6 24a.42.42 0 0 0 .31-.121.42.42 0 0 0 .12-.31V5.144H9a.4.4 0 0 0 .403-.268c.07-.17.04-.326-.094-.47L5.022.12a.476.476 0 0 0-.307-.12.449.449 0 0 0-.308.12L.135 4.394A.502.502 0 0 0 0 4.71a.418.418 0 0 0 .43.432H3V23.57a.415.415 0 0 0 .43.43zM18.178 4.178c-2.082.008-4.25.926-5.875 2.69a7.722 7.722 0 0 0 .445 10.91 7.722 7.722 0 0 0 10.912-.444 1.287 1.287 0 0 0-.074-1.818 1.26 1.26 0 0 0-.857-.336 1.333 1.333 0 0 1-.854-.342 1.287 1.287 0 0 1-.074-1.818l1.03-1.118a4.29 4.29 0 0 0-.247-6.06c-1.22-1.125-2.787-1.67-4.406-1.664Zm-2.063 1.869a1.287 1.287 0 0 1 .723.332 1.287 1.287 0 0 1 .074 1.818 1.287 1.287 0 0 1-1.818.074 1.287 1.287 0 0 1-.074-1.818 1.287 1.287 0 0 1 1.095-.406Zm4.268.433a1.287 1.287 0 0 1 .722.332 1.287 1.287 0 0 1 .075 1.819 1.287 1.287 0 0 1-1.819.074 1.287 1.287 0 0 1-.074-1.818 1.287 1.287 0 0 1 1.096-.407Zm-7.176 2.721a1.287 1.287 0 0 1 .723.332 1.287 1.287 0 0 1 .074 1.819 1.287 1.287 0 0 1-1.818.074 1.287 1.287 0 0 1-.075-1.819 1.287 1.287 0 0 1 1.096-.406zm.78 4.219a1.287 1.287 0 0 1 .722.332 1.287 1.287 0 0 1 .074 1.818 1.287 1.287 0 0 1-1.818.075 1.287 1.287 0 0 1-.074-1.819 1.287 1.287 0 0 1 1.095-.406z"
+                    active=Signal::derive(move || {
+                        order_mode().current == OrderModeVariant::ColorReverse
+                    })
+                    class:hidden=Signal::derive(move || {
+                        order_mode().current != OrderModeVariant::ColorReverse
+                    })
+                    on:click=move |_| {
+                        let new_order_mode = match order_mode().current {
+                            OrderModeVariant::ColorReverse => OrderModeVariant::Color,
+                            _ => OrderModeVariant::ColorReverse,
+                        };
+                        set_order_mode(
+                            &new_order_mode,
+                            &order_mode,
+                            &icons_grid,
+                            Some(&layout_signal()),
+                            true,
+                            icons.read_value().to_vec(),
+                        )
+                    }
                 />
 
                 <ControlButtonIcon

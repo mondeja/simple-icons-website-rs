@@ -14,8 +14,8 @@ test.describe('order mode', () => {
     const orderModeButtons = await page.locator(
       `${ORDER_MODE_CONTROL_SELECTOR} button`,
     );
-    await expect(orderModeButtons).toHaveCount(3);
-    await expect(orderModeButtons.nth(2)).toHaveClass('selected');
+    await expect(orderModeButtons).toHaveCount(5);
+    await expect(orderModeButtons.nth(4)).toHaveClass('selected');
   });
 
   test('alphabetical -> color', async ({ page }) => {
@@ -30,8 +30,8 @@ test.describe('order mode', () => {
       `${ORDER_MODE_CONTROL_SELECTOR} button`,
     );
 
-    await orderModeButtons.nth(1).click();
-    await expect(orderModeButtons.nth(1)).toHaveClass('selected');
+    await orderModeButtons.nth(2).click();
+    await expect(orderModeButtons.nth(2)).toHaveClass('selected');
 
     const colorGridItemIconsTitles = await getGridItemsIconsTitles(page);
 
@@ -39,8 +39,6 @@ test.describe('order mode', () => {
     expect(colorGridItemIconsTitles).toHaveLength(N_ICONS_PER_PAGE);
 
     // Check that the order is different from the alphabetical one
-    // NOTE: This could fail if the icons are sorted by color in alphabetical
-    // order, but it's really unlikely, almost impossible in a future.
     expect(alphabeticalGridItemIconsTitles).not.toEqual(
       colorGridItemIconsTitles,
     );
@@ -52,7 +50,7 @@ test.describe('order mode', () => {
 
     await page.reload();
     await expect(
-      page.locator(`${ORDER_MODE_CONTROL_SELECTOR} button`).nth(1),
+      page.locator(`${ORDER_MODE_CONTROL_SELECTOR} button`).nth(2),
     ).toHaveClass('selected');
   });
 });
