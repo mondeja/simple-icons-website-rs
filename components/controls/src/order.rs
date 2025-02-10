@@ -99,23 +99,15 @@ pub fn OrderControl() -> impl IntoView {
     let icons = StoredValue::new(expect_context::<IconsIndexSignal>().0);
 
     Effect::new(move |_| match order_mode.get_untracked().current {
-        OrderModeVariant::Random => set_order_mode(
-            &OrderModeVariant::Random,
+        OrderModeVariant::SearchMatch | OrderModeVariant::Alphabetic => {}
+        mode => set_order_mode(
+            &mode,
             &order_mode,
             &icons_grid,
             Some(&layout_signal()),
             true,
             icons.read_value().to_vec(),
         ),
-        OrderModeVariant::Color => set_order_mode(
-            &OrderModeVariant::Color,
-            &order_mode,
-            &icons_grid,
-            Some(&layout_signal()),
-            true,
-            icons.read_value().to_vec(),
-        ),
-        _ => {}
     });
 
     view! {
