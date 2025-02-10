@@ -10,6 +10,7 @@ pub mod params {
         Layout,
         ColorScheme,
         Modal,
+        OrderMode,
     }
 
     impl Names {
@@ -21,6 +22,7 @@ pub mod params {
                 Self::Layout => "layout",
                 Self::ColorScheme => "color-scheme",
                 Self::Modal => "modal",
+                Self::OrderMode => "order",
             }
         }
     }

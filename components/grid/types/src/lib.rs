@@ -13,7 +13,7 @@ pub struct IconsIndexSignal(pub Vec<&'static SimpleIcon>);
 pub struct IconsGrid {
     /// Icons currently loaded
     pub loaded_icons: Vec<&'static SimpleIcon>,
-    /// Icons in order of the grid
+    /// Icons of the grid
     pub icons: Vec<&'static SimpleIcon>,
 }
 
@@ -39,12 +39,14 @@ impl IconsGrid {
 
     pub fn load_next_icons(&mut self, layout: &Layout) {
         let icons_per_page: usize = layout.icons_per_page() as usize;
-        for i in self.loaded_icons.len()..self.icons.len() {
-            if self.loaded_icons.len() == self.icons.len() {
+        let icons_length = self.icons.len();
+        for i in self.loaded_icons.len()..icons_length {
+            let loaded_icons_length = self.loaded_icons.len();
+            if loaded_icons_length == icons_length {
                 break;
             }
             self.loaded_icons.push(self.icons[i]);
-            if self.loaded_icons.len() % icons_per_page == 0 {
+            if (loaded_icons_length + 1) % icons_per_page == 0 {
                 break;
             }
         }

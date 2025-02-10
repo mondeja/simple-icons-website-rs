@@ -26,6 +26,14 @@ impl From<&str> for OrderModeVariant {
     }
 }
 
+impl FromStr for OrderModeVariant {
+    type Err = ();
+
+    fn from_str(value: &str) -> Result<Self, Self::Err> {
+        Ok(Self::from(value))
+    }
+}
+
 impl core::fmt::Display for OrderModeVariant {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
@@ -35,6 +43,19 @@ impl core::fmt::Display for OrderModeVariant {
             Self::ColorReverse => write!(f, "color-reverse"),
             Self::SearchMatch => write!(f, "search"),
             Self::Random => write!(f, "random"),
+        }
+    }
+}
+
+impl OrderModeVariant {
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            Self::Alphabetic => "alpha",
+            Self::AlphabeticReverse => "alpha-reverse",
+            Self::Color => "color",
+            Self::ColorReverse => "color-reverse",
+            Self::SearchMatch => "search",
+            Self::Random => "random",
         }
     }
 }

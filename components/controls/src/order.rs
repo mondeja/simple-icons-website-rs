@@ -13,11 +13,10 @@ use simple_icons_website_grid_types::{
 };
 use simple_icons_website_storage::LocalStorage;
 use simple_icons_website_types::SimpleIcon;
-use std::str::FromStr;
+use simple_icons_website_url as Url;
 
 pub fn provide_order_mode_context(initial_search_value: &str) -> OrderMode {
-    let initial_order_mode =
-        get_order_mode_from_localstorage_and_search_value(initial_search_value);
+    let initial_order_mode = initial_order_mode(initial_search_value);
     provide_context(OrderModeSignal(RwSignal::new(initial_order_mode)));
     initial_order_mode
 }
@@ -25,25 +24,39 @@ pub fn provide_order_mode_context(initial_search_value: &str) -> OrderMode {
 #[derive(Copy, Clone)]
 pub struct OrderModeSignal(pub RwSignal<OrderMode>);
 
-fn get_order_mode_from_localstorage() -> Option<OrderMode> {
+fn get_order_mode_from_localstorage() -> Option<OrderModeVariant> {
     LocalStorage::get(LocalStorage::Keys::OrderMode)
         .as_ref()
-        .and_then(|value| OrderMode::from_str(value).ok())
+        .and_then(|value| value.parse().ok())
 }
 
-fn get_order_mode_from_localstorage_and_search_value(
-    search_value: &str,
-) -> OrderMode {
-    let maybe_order_mode = get_order_mode_from_localstorage();
-    let mut order_mode = maybe_order_mode.unwrap_or_default();
-    if !search_value.is_empty() {
-        order_mode.current = OrderModeVariant::SearchMatch;
+fn initial_order_mode(search_value: &str) -> OrderMode {
+    let selected_order_variant =
+        match Url::params::get(&Url::params::Names::OrderMode)
+            .and_then(|order| order.parse::<OrderModeVariant>().ok())
+        {
+            Some(order) => {
+                set_order_mode_on_localstorage(&order);
+                order
+            }
+            None => get_order_mode_from_localstorage().unwrap_or_default(),
+        };
+    OrderMode {
+        current: if !search_value.is_empty() {
+            OrderModeVariant::SearchMatch
+        } else {
+            selected_order_variant
+        },
+        favorite: selected_order_variant,
     }
-    order_mode
 }
 
 fn set_order_mode_on_localstorage(order_mode: &OrderModeVariant) {
-    LocalStorage::set(LocalStorage::Keys::OrderMode, &order_mode.to_string());
+    LocalStorage::set(LocalStorage::Keys::OrderMode, order_mode.as_str());
+}
+
+fn set_order_mode_on_url_param(order_mode: &OrderModeVariant) {
+    Url::params::update(&Url::params::Names::OrderMode, order_mode.as_str());
 }
 
 pub fn set_order_mode(
@@ -58,9 +71,12 @@ pub fn set_order_mode(
         state.current = *order_mode;
         if *order_mode != OrderModeVariant::SearchMatch {
             state.favorite = *order_mode;
-            set_order_mode_on_localstorage(order_mode);
         }
     });
+
+    set_order_mode_on_localstorage(order_mode);
+    set_order_mode_on_url_param(order_mode);
+
     if update_grid {
         match order_mode {
             &OrderModeVariant::SearchMatch => {
