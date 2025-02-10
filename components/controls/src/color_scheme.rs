@@ -12,29 +12,31 @@ pub fn ColorSchemeControl() -> impl IntoView {
     view! {
         <div class="control">
             <label>{move_tr!("theme")}</label>
-            <div>
-                <ControlButtonIcon
-                    title=move_tr!("light-color-scheme")
-                    icon=ChSun
-                    active=Signal::derive(move || color_scheme() == ColorMode::Light)
-                    on:click=move |_| set_color_scheme(ColorMode::Light)
-                />
-
-                <ControlButtonIcon
-                    title=move_tr!("dark-color-scheme")
-                    icon=ChMoon
-                    active=Signal::derive(move || color_scheme() == ColorMode::Dark)
-                    on:click=move |_| set_color_scheme(ColorMode::Dark)
-                />
-
-                <ControlButtonIcon
-                    title=move_tr!("system-color-scheme")
-                    icon=TbSunMoon
-                    active=Signal::derive(move || color_scheme() == ColorMode::Auto)
-                    on:click=move |_| set_color_scheme(ColorMode::Auto)
-                />
-
-            </div>
+            {move || {
+                let current_color_scheme = color_scheme();
+                view! {
+                    <div>
+                        <ControlButtonIcon
+                            title=move_tr!("light-color-scheme")
+                            icon=ChSun
+                            active=current_color_scheme == ColorMode::Light
+                            on:click=move |_| set_color_scheme(ColorMode::Light)
+                        />
+                        <ControlButtonIcon
+                            title=move_tr!("dark-color-scheme")
+                            icon=ChMoon
+                            active=current_color_scheme == ColorMode::Dark
+                            on:click=move |_| set_color_scheme(ColorMode::Dark)
+                        />
+                        <ControlButtonIcon
+                            title=move_tr!("system-color-scheme")
+                            icon=TbSunMoon
+                            active=current_color_scheme == ColorMode::Auto
+                            on:click=move |_| set_color_scheme(ColorMode::Auto)
+                        />
+                    </div>
+                }
+            }}
         </div>
     }
 }
