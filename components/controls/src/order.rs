@@ -67,10 +67,9 @@ pub fn set_order_mode(
         state.current = *order_mode;
         if *order_mode != OrderModeVariant::SearchMatch {
             state.favorite = *order_mode;
+            set_order_mode_on_localstorage(order_mode);
         }
     });
-
-    set_order_mode_on_localstorage(order_mode);
 
     if update_grid {
         match order_mode {
