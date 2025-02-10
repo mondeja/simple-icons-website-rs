@@ -55,10 +55,6 @@ fn set_order_mode_on_localstorage(order_mode: &OrderModeVariant) {
     LocalStorage::set(LocalStorage::Keys::OrderMode, order_mode.as_str());
 }
 
-fn set_order_mode_on_url_param(order_mode: &OrderModeVariant) {
-    Url::params::update(&Url::params::Names::OrderMode, order_mode.as_str());
-}
-
 pub fn set_order_mode(
     order_mode: &OrderModeVariant,
     order_mode_signal: &RwSignal<OrderMode>,
@@ -75,7 +71,6 @@ pub fn set_order_mode(
     });
 
     set_order_mode_on_localstorage(order_mode);
-    set_order_mode_on_url_param(order_mode);
 
     if update_grid {
         match order_mode {
