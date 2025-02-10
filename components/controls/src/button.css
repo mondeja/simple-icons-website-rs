@@ -36,7 +36,8 @@
   @apply control-button;
 }
 
-.controls-group .control button:first-child {
+.controls-group .control button:first-child,
+.controls-group .control:first-child button:nth-child(2) {
   @apply border-r-0 rounded-l-[3px];
 }
 
