@@ -8,19 +8,12 @@ pub(crate) static XS_ICON_SIZE: &str = "19";
 /// Abstract control button
 #[component]
 pub fn ControlButton(
-    /// Button title
-    title: Signal<String>,
-    /// Button children
     children: Children,
-    /// The control is active
-    #[prop(into)]
-    active: Signal<bool>,
-    /// Optional classes
-    #[prop(optional)]
-    class: &'static str,
+    #[prop(into)] active: Signal<bool>,
+    #[prop(optional)] class: &'static str,
 ) -> impl IntoView {
     view! {
-        <button class:selected=active type="button" title=title tabindex=0 class=class>
+        <button class:selected=active type="button" tabindex=0 class=class>
             {children()}
         </button>
     }
@@ -43,15 +36,24 @@ pub fn ControlButtonIcon(
 ) -> impl IntoView {
     let title_fn = Memo::new(move |_| title());
     let is_xs_screen = use_media_query("(max-width: 475px)");
+
+    // TODO: leptos-icons should be able to accept `'static str` and `String`
+    //       as `width` and `height` properties using `Cow` or something similar
     let size =
         Memo::new(move |_| if is_xs_screen() { XS_ICON_SIZE } else { "24" });
 
     view! {
-        <ControlButton title active class>
+        <ControlButton active class attr:title=title>
             {match icon {
                 IconOrSvg::Icon(icon) => {
-                    let size_px = format!("{}px", size.get_untracked());
-                    view! { <Icon icon width=size_px.clone() height=size_px /> }.into_any()
+                    view! {
+                        <Icon
+                            icon
+                            width=Signal::derive(move || size().to_string())
+                            height=Signal::derive(move || size().to_string())
+                        />
+                    }
+                        .into_any()
                 }
                 value => {
                     view! {
@@ -88,7 +90,7 @@ pub fn ControlButtonText(
     active: Signal<bool>,
 ) -> impl IntoView {
     view! {
-        <ControlButton title active=active>
+        <ControlButton active attr:title=title>
             <span>{text}</span>
         </ControlButton>
     }
