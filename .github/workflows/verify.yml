@@ -12,8 +12,7 @@ jobs:
   lighthouse:
     name: Lighthouse report
     runs-on: ubuntu-latest
-    if: |
-      github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -88,7 +87,7 @@ jobs:
             ~/.cargo/.crates.toml
             ~/.cargo/.crates2.json
             target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-${{ matrix.command }}-${{ steps.toolchain.outputs.channel }}
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-${{ steps.toolchain.outputs.channel }}-${{ matrix.command }}
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -149,3 +148,92 @@ jobs:
           clean-exclude: CNAME
           git-config-name: simple-icons[bot]
           git-config-email: simple-icons[bot]@users.noreply.github.com
+
+  report-wasm-size:
+    name: WASM size report
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Get toolchain config
+        id: toolchain
+        uses: ./.github/actions/get-toolchain
+      - name: Setup Rust
+        uses: hecrj/setup-rust-action@v2
+        with:
+          rust-version: ${{ steps.toolchain.outputs.channel }}
+          targets: wasm32-unknown-unknown
+      - name: Cache Rust dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            ~/.cargo/.crates.toml
+            ~/.cargo/.crates2.json
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-${{ steps.toolchain.outputs.channel }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+      - name: Cache Node.js dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-v20
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install tooling dependencies
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-make,trunk,cargo-machete
+      - name: Install Node.js dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Build
+        run: cargo make build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Restore WebAssembly report
+        uses: actions/cache/restore@v4
+        id: restore
+        with:
+          path: .wasm-report/size_in_bytes
+          key: ${{ runner.os }}-wasm-report
+      - name: Create WebAssembly report
+        run: |
+          size_in_bytes=$(wc -c < "$(find app/dist -name '*.wasm' -print)")
+          size_in_mb=$(bc -l <<< "$size_in_bytes / (1024 * 1024)")
+          if [ ! -d .wasm-report ]; then
+            mkdir .wasm-report
+          fi
+          if [ ! -f .wasm-report/size_in_bytes ]; then
+            echo 0 > .wasm-report/size_in_bytes
+          fi
+          previous_size_in_bytes=$(cat .wasm-report/size_in_bytes)
+          previous_size_in_mb=$(bc -l <<< "$previous_size_in_bytes / (1024 * 1024)")
+          echo "- $size_in_bytes bytes" >> $GITHUB_STEP_SUMMARY
+          echo "- $size_in_mb MB" >> $GITHUB_STEP_SUMMARY
+          echo -e '\n#### Comparison against master\n' >> $GITHUB_STEP_SUMMARY
+          if [ "$previous_size_in_bytes" -eq 0 ]; then
+            echo "No previous WASM file has been found in the cache." >> $GITHUB_STEP_SUMMARY
+          else
+            if [ "$size_in_bytes" -gt "$previous_size_in_bytes" ]; then
+              echo "- WASM file size has increased by $(bc -l <<< "$size_in_bytes - $previous_size_in_bytes") bytes." >> $GITHUB_STEP_SUMMARY
+              echo "- Difference: +$(bc -l <<< "($size_in_bytes - $previous_size_in_bytes) / $previous_size_in_bytes * 100")%" >> $GITHUB_STEP_SUMMARY
+            elif [ "$size_in_bytes" -lt "$previous_size_in_bytes" ]; then
+              echo "- WASM file size has decreased by $(bc -l <<< "$previous_size_in_bytes - $size_in_bytes") bytes." >> $GITHUB_STEP_SUMMARY
+              echo "- Difference: -$(bc -l <<< "($previous_size_in_bytes - $size_in_bytes) / $previous_size_in_bytes * 100")%" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "WASM file size has not changed." >> $GITHUB_STEP_SUMMARY
+            fi
+          fi
+          echo $size_in_bytes > .wasm-report/size_in_bytes
+      - name: Save WebAssembly report
+        if: github.ref == 'refs/heads/master' || steps.restore.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .wasm-report/size_in_bytes
+          key: ${{ runner.os }}-wasm-report
