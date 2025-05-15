@@ -9,4 +9,4 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 simple-icons-website-types.workspace = true
-rand.workspace = true
+js-sys.workspace = true
