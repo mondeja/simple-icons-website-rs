@@ -1,13 +1,13 @@
 use crate::{nav::button::HeaderMenuButton, HeaderStateSignal};
 use icondata::FaPuzzlePieceSolid;
-use leptos::prelude::*;
+use leptos::{prelude::*, task::spawn_local};
 use leptos_fluent::move_tr;
 use simple_icons_macros::{
     get_simple_icons_3rd_party_extensions, get_simple_icons_3rd_party_libraries,
 };
 use simple_icons_website_modal::{Modal, ModalOpen, ModalOpenSignal};
-use simple_icons_website_svg_icon::SVGIcon;
 use simple_icons_website_types::ThirdPartyExtension;
+use web_sys_simple_fetch::fetch_text;
 
 static THIRD_PARTY_EXTENSIONS: &[&ThirdPartyExtension] =
     get_simple_icons_3rd_party_extensions!();
@@ -18,11 +18,28 @@ static THIRD_PARTY_LIBRARIES: &[&ThirdPartyExtension] =
 fn ThirdPartyExtensionsTableRow(
     extension: &'static ThirdPartyExtension,
 ) -> impl IntoView {
+    let (icon_path, set_icon_path) = signal("".to_string());
+
+    spawn_local(async move {
+        if let Ok(content) = fetch_text(extension.icon_image_src).await {
+            let path = content
+                .split("<path d=\"")
+                .nth(1)
+                .unwrap_or(" \"")
+                .split_once('"')
+                .unwrap()
+                .0;
+            set_icon_path.set(path.to_string());
+        }
+    });
+
     view! {
         <tr>
             <td>
                 <a href=extension.url target="_blank">
-                    <SVGIcon fill="currentColor" path=extension.icon_slug />
+                    <svg width="24" height="24" role="img" aria-hidden="true" viewBox="0 0 24 24">
+                        <path d=icon_path fill="currentColor"></path>
+                    </svg>
                     <span>{extension.name}</span>
                 </a>
             </td>

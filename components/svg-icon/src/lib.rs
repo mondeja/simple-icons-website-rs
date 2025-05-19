@@ -30,10 +30,8 @@ pub fn SVGIcon(
                 Some(aria_label) => aria_label(),
                 None => "".to_string(),
             }
-
             viewBox=view_box
         >
-
             <path d=path.into() fill=fill></path>
         </svg>
     }
