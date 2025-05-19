@@ -41,10 +41,8 @@ pub fn App() -> impl IntoView {
             .initial_value_from_url_param_to_storage(true),
     );
 
-    provide_context::<(Signal<ColorMode>, WriteSignal<ColorMode>)>((
-        color_mode,
-        set_color_mode,
-    ));
+    provide_context::<Signal<ColorMode>>(color_mode);
+    provide_context::<WriteSignal<ColorMode>>(set_color_mode);
 
     // Create a context to store a node reference to the footer
     // to use it in other components of pages

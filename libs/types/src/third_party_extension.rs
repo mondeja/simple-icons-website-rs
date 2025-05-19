@@ -5,5 +5,5 @@ pub struct ThirdPartyExtension {
     pub url: &'static str,
     pub author_name: &'static str,
     pub author_url: &'static str,
-    pub icon_slug: &'static str,
+    pub icon_image_src: &'static str,
 }

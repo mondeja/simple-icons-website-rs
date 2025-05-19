@@ -6,8 +6,8 @@ use leptos_use::ColorMode;
 
 #[component]
 pub fn ColorSchemeControl() -> impl IntoView {
-    let (color_scheme, set_color_scheme) =
-        expect_context::<(Signal<ColorMode>, WriteSignal<ColorMode>)>();
+    let color_scheme = use_context::<Signal<ColorMode>>().unwrap();
+    let set_color_scheme = use_context::<WriteSignal<ColorMode>>().unwrap();
 
     view! {
         <div class="control">

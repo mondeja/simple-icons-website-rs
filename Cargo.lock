@@ -2253,6 +2253,7 @@ dependencies = [
  "simple-icons-website-modal",
  "simple-icons-website-svg-icon",
  "simple-icons-website-types",
+ "web-sys-simple-fetch",
 ]
 
 [[package]]

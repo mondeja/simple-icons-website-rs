@@ -46,11 +46,15 @@ fn get_simple_icons_3rd_party_extensions_libraries_impl(
 
     let table_lines = readme_file_content
         .split_once(section_name)
-        .unwrap()
+        .unwrap_or_else(|| {
+            panic!("Expected section '{section_name}' in Simple Icons README")
+        })
         .1
         .split("|\n\n")
         .next()
-        .unwrap()
+        .expect(
+            r"Delimiter '|\n\n' after table not found in Simple Icons README",
+        )
         .split("|\n|")
         .skip(2);
 
@@ -77,17 +81,11 @@ fn get_simple_icons_3rd_party_extensions_libraries_impl(
             .split_once(')')
             .unwrap()
             .0;
-        let icon_slug = line
+        let icon_image_src = line
             .split_once("<img src=\"")
             .unwrap()
             .1
             .split_once('"')
-            .unwrap()
-            .0
-            .split('/')
-            .next_back()
-            .unwrap()
-            .split_once(".svg")
             .unwrap()
             .0;
 
@@ -98,14 +96,10 @@ fn get_simple_icons_3rd_party_extensions_libraries_impl(
                 "url: \"{}\",",
                 "author_name: \"{}\",",
                 "author_url: \"{}\",",
-                "icon_slug: \"{}\",",
+                "icon_image_src: \"{}\",",
                 "}},"
             ),
-            name,
-            url,
-            author_name,
-            author_url,
-            get_simple_icon_svg_path_impl(icon_slug),
+            name, url, author_name, author_url, icon_image_src,
         ));
     }
 
