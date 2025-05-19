@@ -22,7 +22,6 @@ fn ThirdPartyExtensionsTableRow(
 
     spawn_local(async move {
         if let Ok(content) = fetch_text(extension.icon_image_src).await {
-            leptos::logging::log!("Fetched icon content: {}", content);
             let path = content
                 .split("<path d=\"")
                 .nth(1)
