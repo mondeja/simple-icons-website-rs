@@ -41,6 +41,9 @@ const parseRootCssVariables = (): string[] => {
 const config = {
 	content: {
 		files: ['index.html', '../{app,components}/**/*.{css,rs}'],
+		transform: {
+			rs: (content) => content.replaceAll(/(?:^|\s)class:/g, ' '),
+		},
 	},
 	theme: {
 		extend: {

@@ -103,7 +103,7 @@ pub fn Preview() -> impl IntoView {
             <div class=concat!(
                 "flex lg:flex-col items-center lg:space-y-3",
                 " relative left-4 lg:left-0 mt-2 sm:mt-7",
-                " max-w-auto lg:max-w-[114px]",
+                " lg:max-w-[114px]",
             )>
                 <A attr:class="button mx-auto max-h-[40px] ml-0 lg:ml-1" href="/">
                     <Icon icon=BsGrid3x2GapFill width="24px" height="24px" />
