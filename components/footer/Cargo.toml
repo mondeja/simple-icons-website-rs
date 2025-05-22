@@ -10,6 +10,6 @@ crate-type = ["cdylib", "rlib"]
 [dependencies]
 leptos.workspace = true
 leptos_icons.workspace = true
-icondata.workspace = true
 leptos-fluent.workspace = true
 simple-icons-macros.workspace = true
+simple-icons-website-svg-icon.workspace = true

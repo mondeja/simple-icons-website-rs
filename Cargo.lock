@@ -872,7 +872,6 @@ dependencies = [
  "icondata_io",
  "icondata_lu",
  "icondata_ri",
- "icondata_si",
  "icondata_tb",
  "icondata_vs",
 ]
@@ -942,15 +941,6 @@ name = "icondata_ri"
 version = "0.0.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "114a85cc95d1bfaee8dc5bf8a07dd043fc9e75499dc2ff4ac5e066193c594930"
-dependencies = [
- "icondata_core",
-]
-
-[[package]]
-name = "icondata_si"
-version = "0.0.10"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dc30cb2dbc2ac53f23dddbcb0ad73720970b24c0ed13935df8082b74fb627860"
 dependencies = [
  "icondata_core",
 ]
@@ -2175,11 +2165,11 @@ dependencies = [
 name = "simple-icons-website-footer"
 version = "0.1.0"
 dependencies = [
- "icondata",
  "leptos",
  "leptos-fluent",
  "leptos_icons",
  "simple-icons-macros",
+ "simple-icons-website-svg-icon",
 ]
 
 [[package]]
