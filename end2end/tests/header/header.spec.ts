@@ -26,7 +26,7 @@ test.describe('header', () => {
 				await expect(
 					page.locator(selectors.header.nav.buttons.container),
 				).toBeInViewport();
-				await expect(page.locator(`${nav} > ul > li:visible`)).toHaveCount(
+				await expect(page.locator(`${nav} > ul > a:visible`)).toHaveCount(
 					numberOfMenuButtons,
 				);
 
@@ -37,7 +37,7 @@ test.describe('header', () => {
 				await expect(
 					page.locator(selectors.header.nav.buttons.container),
 				).toBeHidden();
-				await expect(page.locator(`${nav} > ul li:visible`)).toHaveCount(1);
+				await expect(page.locator(`${nav} > ul a:visible`)).toHaveCount(1);
 
 				// Burger menu is visible
 				const burgerButton = page.locator(selectors.header.nav.toggler);
@@ -47,7 +47,7 @@ test.describe('header', () => {
 				await expect(
 					page.locator(selectors.header.nav.buttons.container),
 				).toBeInViewport();
-				await expect(page.locator(`${nav} > ul > li:visible`)).toHaveCount(
+				await expect(page.locator(`${nav} > ul > a:visible`)).toHaveCount(
 					numberOfMenuButtons + 1,
 				);
 			}

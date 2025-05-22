@@ -3,9 +3,8 @@ use leptos::{
     prelude::{NodeRef, *},
 };
 use leptos_fluent::{move_tr, tr};
-use leptos_icons::Icon;
 use simple_icons_macros::get_simple_icon_svg_path;
-use simple_icons_website_svg_icon::{IconOrSvg, SVGIcon};
+use simple_icons_website_svg_icon::SVGIcon;
 
 /// Footer of the website
 #[component]
@@ -90,7 +89,7 @@ fn SocialButton(
     href: &'static str,
     class: &'static str,
     title: &'static str,
-    #[prop(into)] icon: IconOrSvg,
+    icon: &'static str,
 ) -> impl IntoView {
     view! {
         <a
@@ -101,25 +100,7 @@ fn SocialButton(
             role="button"
             target="_blank"
         >
-            {match icon {
-                IconOrSvg::Icon(icon) => {
-                    view! { <Icon icon width="23px" height="23px" /> }.into_any()
-                }
-                value => {
-                    view! {
-                        <SVGIcon
-                            width="23"
-                            height="23"
-                            path=match value {
-                                IconOrSvg::SvgPath(svg_path) => svg_path,
-                                IconOrSvg::SvgDef(svg_def) => svg_def.d(),
-                                _ => unreachable!(),
-                            }
-                        />
-                    }
-                        .into_any()
-                }
-            }}
+            <SVGIcon width="23" height="23" path=icon />
         </a>
     }
 }
