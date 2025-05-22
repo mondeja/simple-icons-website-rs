@@ -18,12 +18,12 @@ pub fn HeaderMenuLink(
     icon: IconOrSvg,
 ) -> impl IntoView {
     let header_state = expect_context::<HeaderStateSignal>().0;
-    let title_fn = Memo::new(move |_| title());
 
     view! {
-        <li
-            on:click=move |_| window().location().set_href(href).unwrap()
-            title=title_fn
+        <a
+            href=href
+            title=title
+            target="_blank"
             class=move || match header_state().menu_open {
                 true => "block",
                 false => "hidden lg:block",
@@ -48,8 +48,7 @@ pub fn HeaderMenuLink(
                         .into_any()
                 }
             }}
-
-        </li>
+        </a>
     }
 }
 

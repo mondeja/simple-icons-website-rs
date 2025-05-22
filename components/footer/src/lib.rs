@@ -1,11 +1,10 @@
-use icondata::{SiFacebook, SiMastodon, SiX};
 use leptos::{
     html::Footer as FooterHtmlElement,
     prelude::{NodeRef, *},
 };
 use leptos_fluent::{move_tr, tr};
-use leptos_icons::Icon;
 use simple_icons_macros::get_simple_icon_svg_path;
+use simple_icons_website_svg_icon::SVGIcon;
 
 /// Footer of the website
 #[component]
@@ -88,9 +87,9 @@ fn ReportProblems() -> impl IntoView {
 #[component]
 fn SocialButton(
     href: &'static str,
-    icon: icondata::Icon,
     class: &'static str,
     title: &'static str,
+    icon: &'static str,
 ) -> impl IntoView {
     view! {
         <a
@@ -101,7 +100,7 @@ fn SocialButton(
             role="button"
             target="_blank"
         >
-            <Icon icon width="23px" height="23px" />
+            <SVGIcon width="23" height="23" path=icon />
         </a>
     }
 }
@@ -111,7 +110,7 @@ fn XButton() -> impl IntoView {
     view! {
         <SocialButton
             href="https://x.com/intent/tweet?url=https://simpleicons.org&text=Simple%20Icons%3A%20SVG%20icons%20for%20popular%20brands."
-            icon=SiX
+            icon=get_simple_icon_svg_path!("x")
             class="x-button"
             title="X"
         />
@@ -123,7 +122,7 @@ fn FacebookButton() -> impl IntoView {
     view! {
         <SocialButton
             href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsimpleicons.org"
-            icon=SiFacebook
+            icon=get_simple_icon_svg_path!("facebook")
             class="facebook-button"
             title="Facebook"
         />
@@ -135,7 +134,7 @@ fn MastodonButton() -> impl IntoView {
     view! {
         <SocialButton
             href="https://mastodonshare.com/?text=Simple%20Icons%3A%20SVG%20icons%20for%20popular%20brands.&url=https%3A%2F%2Fsimpleicons.org"
-            icon=SiMastodon
+            icon=get_simple_icon_svg_path!("mastodon")
             class="mastodon-button"
             title="Mastodon"
         />
@@ -144,7 +143,6 @@ fn MastodonButton() -> impl IntoView {
 
 #[component]
 fn BlueskyButton() -> impl IntoView {
-    // TODO: Bluesky not in `icondata` because the version of Simple Icons used is too old
     view! {
         <a
             href="https://bsky.app/intent/compose?text=Simple%20Icons%3A%20SVG%20icons%20for%20popular%20brands%20at%20https%3A%2F%2Fsimpleicons.org"
