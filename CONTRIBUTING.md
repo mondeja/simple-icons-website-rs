@@ -6,14 +6,12 @@
 - Install [cargo-make] with `cargo install --force cargo-make`.
 - Install [fnm](https://github.com/Schniz/fnm) with `cargo install fnm` and [setup your Shell](https://github.com/Schniz/fnm#shell-setup).
 - Install NodeJS with npm and run `npm install`.
-- Install Playwright browsers and dependencies with `npx playwright install --with-deps`.
 - Create an _.env_ file at the root including a Github personal token with the variable `GITHUB_TOKEN` like `GITHUB_TOKEN=...`.
 
 ## Commands
 
 - `cargo make`: Build WASM and serve. With `watch-css`, recommended for development. After it, you can use `cd app && trunk serve` to serve.
 - `cargo make watch-css`: Watch the CSS files with [TailwindCSS](https://tailwindcss.com/).
-- `cargo make test`: Build app for production and run tests with [Playwright](https://playwright.dev/).
 - `cargo make format`: Format files.
 - `cargo make lint`: Check formatting of files.
 - `cargo make build`: Build the website for production.
@@ -21,7 +19,30 @@
 
 ## Testing
 
-Is useful to run only certain tests in a browser. For example: `cargo make test --project=chrome-desktop --grep=header`
+To run end-to-end tests execute in three different terminals:
+
+```sh
+chromedriver --port=4444
+# or `geckodriver --port=4444` (for Firefox)
+# or `msedgedriver --port=4444` (for MsEdge)
+```
+
+```sh
+cargo make
+```
+
+```sh
+BROWSER=chrome cargo test --package simple-icons-website-end2end --test desktop -- --fail-fast
+```
+
+- Change `BROWSER=chrome` to `BROWSER=firefox` (for Firefox) or `BROWSER=edge` (for MsEdge).
+- Change `--test desktop` to `--test {suite}` to run a specific test suite. You can find the test suites in the _tests/end2end/tests/_ folder and under `[[test]]` sections in _tests/end2end/Cargo.toml_.
+
+### Different screen sizes
+
+The environment variable `WINDOW_SIZE=WIDTHxHEIGHT` controls size of the browser window. For example, `WINDOW_SIZE=1280x720` will set the browser window to 1280 x 720 pixels.
+
+Note that different screen sizes must be located in different test suites.
 
 ## Add translation
 
@@ -37,7 +58,6 @@ Is useful to run only certain tests in a browser. For example: `cargo make test 
 - [Leptos](https://docs.rs/leptos) as the components library with a client side rendering approach.
 - [TailwindCSS](https://tailwindcss.com/) as the CSS framework.
 - [Trunk](https://trunkrs.dev/) as the web server (on development) and application builder (on production).
-- [Playwright](https://playwright.dev/) for end to end testing.
 
 ### Rust crates
 
