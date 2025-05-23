@@ -6,6 +6,7 @@
 		"macabeus.vscode-fluent",
 		"samverschueren.linter-xo",
 		"esbenp.prettier-vscode",
-		"alexkrechik.cucumberautocomplete"
+		"alexkrechik.cucumberautocomplete",
+		"mondeja.leptos-snippets"
 	]
 }
