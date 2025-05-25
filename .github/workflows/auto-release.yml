@@ -41,27 +41,10 @@ jobs:
           token: ${{ steps.app-token.outputs.token }}
           # Ensure we are checked out on the master branch
           ref: master
-      - name: Get toolchain config
-        id: toolchain
-        uses: ./.github/actions/get-toolchain
       - name: Setup Rust nightly
-        uses: hecrj/setup-rust-action@v2
+        uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
-          rust-version: ${{ steps.toolchain.outputs.channel }}
-          targets: wasm32-unknown-unknown
-          profile: minimal
-      - name: Cache Rust dependencies
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            ~/.cargo/.crates.toml
-            ~/.cargo/.crates2.json
-            target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-nightly
+          target: wasm32-unknown-unknown
       - name: Cache Node.js dependencies
         uses: actions/cache@v4
         with:

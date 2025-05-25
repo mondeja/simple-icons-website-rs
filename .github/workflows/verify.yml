@@ -30,27 +30,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Get toolchain config
-        id: toolchain
-        uses: ./.github/actions/get-toolchain
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v2
+        uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
-          rust-version: ${{ steps.toolchain.outputs.channel }}
-          targets: wasm32-unknown-unknown
-          profile: default
-      - name: Cache Rust dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            ~/.cargo/.crates.toml
-            ~/.cargo/.crates2.json
-            target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-${{ steps.toolchain.outputs.channel }}-lint
+          target: wasm32-unknown-unknown
+          components: clippy,rustfmt
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -112,27 +96,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Get toolchain config
-        id: toolchain
-        uses: ./.github/actions/get-toolchain
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v2
+        uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
-          rust-version: ${{ steps.toolchain.outputs.channel }}
-          targets: wasm32-unknown-unknown
-          profile: minimal
-      - name: Cache Rust dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            ~/.cargo/.crates.toml
-            ~/.cargo/.crates2.json
-            target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-${{ steps.toolchain.outputs.channel }}
+          target: wasm32-unknown-unknown
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -207,26 +174,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Get toolchain config
-        id: toolchain
-        uses: ./.github/actions/get-toolchain
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v2
+        uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
-          rust-version: ${{ steps.toolchain.outputs.channel }}
-          targets: wasm32-unknown-unknown
-      - name: Cache Rust dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            ~/.cargo/.crates.toml
-            ~/.cargo/.crates2.json
-            target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-${{ steps.toolchain.outputs.channel }}
+          target: wasm32-unknown-unknown
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
