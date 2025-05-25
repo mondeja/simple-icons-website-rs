@@ -1,7 +1,13 @@
+#[allow(clippy::single_component_path_imports)]
+use cucumber;
 use std::future::Future;
-use thirtyfour::prelude::*;
+use thirtyfour::{self, error::WebDriverError, WebElement};
 
-#[cucumber_thirtyfour_worlder::worlder]
+#[cucumber_thirtyfour_worlder::worlder(
+    cucumber = cucumber,
+    thirtyfour = thirtyfour,
+    check_concurrency_cli_option_when_firefox = true,
+)]
 pub struct AppWorld;
 
 pub trait TouchesViewport {

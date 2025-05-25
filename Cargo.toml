@@ -55,6 +55,21 @@ codegen-units = 1
 lto = true
 opt-level = 'z'
 
+[workspace.metadata.dylint]
+libraries = [
+	{ git = "https://github.com/leptos-rs/leptos-lints", tag = "v0.1.0" },
+]
+
+[workspace.lints.rust]
+warnings = "deny"
+# Configuration for leptos-lints
+unknown_lints = "allow"
+leptos_print_stdout = "deny"
+
+[workspace.lints.rust.unexpected_cfgs]
+level = "deny"
+check-cfg = ["cfg(dylint_lib, values(any()))"]
+
 [workspace.dependencies]
 simple-icons = { path = "./libs/simple-icons" }
 simple-icons-sdk = { path = "./libs/simple-icons-sdk" }
@@ -153,23 +168,8 @@ icu_collator = "1"
 snafu = { version = "0.8", default-features = false }
 cucumber = "0.21"
 thirtyfour = "0.35"
-cucumber-thirtyfour-worlder = "0.1.3"
+cucumber-thirtyfour-worlder = "0.1"
 tokio = { version = "1.39", default-features = false, features = [
 	"macros",
 	"rt-multi-thread",
 ] }
-
-[workspace.metadata.dylint]
-libraries = [
-	{ git = "https://github.com/leptos-rs/leptos-lints", tag = "v0.1.0" },
-]
-
-[workspace.lints.rust]
-warnings = "deny"
-# Configuration for leptos-lints
-unknown_lints = "allow"
-leptos_print_stdout = "deny"
-
-[workspace.lints.rust.unexpected_cfgs]
-level = "deny"
-check-cfg = ["cfg(dylint_lib, values(any()))"]
