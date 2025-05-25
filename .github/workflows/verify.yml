@@ -34,6 +34,7 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           target: wasm32-unknown-unknown
+          components: clippy,rustfmt
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
