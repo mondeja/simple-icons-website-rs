@@ -44,13 +44,11 @@ jobs:
         with:
           tool: cargo-make,trunk,cargo-machete${{ matrix.task == 'dylint' && ',dylint-link' || '' }}
       - name: Setup Node.js
-        if: matrix.task != 'dylint'
         uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
           cache: npm
       - name: Install Node.js dependencies
-        if: matrix.task != 'dylint'
         run: npm ci --no-audit --no-fund
       - name: Build
         run: cargo make build
