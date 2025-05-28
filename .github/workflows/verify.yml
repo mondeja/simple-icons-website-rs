@@ -42,7 +42,7 @@ jobs:
       - name: Install tooling dependencies
         uses: taiki-e/install-action@v2
         with:
-          tool: cargo-make,trunk,cargo-machete,${{ matrix.task == 'dylint' && 'dylint-link' || '' }}
+          tool: cargo-make,trunk,cargo-machete${{ matrix.task == 'dylint' && ',dylint-link' || '' }}
       - name: Setup Node.js
         if: matrix.task != 'dylint'
         uses: actions/setup-node@v4
