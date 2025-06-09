@@ -65,7 +65,8 @@
 	"tailwindCSS.experimental.classRegex": [
 		["(?:format|concat)!\\(([^)]*)\\)", "(?:\")([^\"]*)(?:\")"],
 		"(?:attr:class=\")([^\"]*)(?:\")",
-		"(?:class:)([^=\\s]*)(?:=)"
+		"(?:class:)([^=\\s]*)(?:=)",
+		"(?:\\w_class\\s=\\s\")([^\"]*)"
 	],
 
 	// Stylelint
