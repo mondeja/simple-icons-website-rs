@@ -122,8 +122,8 @@ leptos-fluent = { version = "0.2", features = [
 	"nightly",
 	"disable-unicode-isolating-marks",
 ] }
-leptos_icons = "0.6"
-icondata = { version = "0.5", default-features = false, features = [
+leptos_icons = { path = "../leptos-icons" }
+icondata = { version = "0.6", default-features = false, features = [
 	"charm",
 	"tabler-icons",
 	"lucide",

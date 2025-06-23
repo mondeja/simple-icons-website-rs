@@ -1,8 +1,8 @@
 use crate::{CurrentIconViewSignal, item::title::get_icon_localized_title};
 use icondata::{
     BiCheckRegular, BiMenuAltRightRegular, BiMenuRegular, BsCode,
-    BsWindowFullscreen, IoColorWand, TbJpg, TbPdf, TbPng, TbSvg,
-    VsSymbolNamespace,
+    BsWindowFullscreen, IoColorWand, TbJpgOutline, TbPdfOutline, TbPngOutline,
+    TbSvgOutline, VsSymbolNamespace,
 };
 use leptos::{
     ev::MouseEvent, prelude::*, task::spawn_local, wasm_bindgen::JsCast,
@@ -291,7 +291,7 @@ pub fn IconDetailsModal() -> impl IntoView {
     let modal_is_open = Signal::derive(move || current_icon_view().is_some());
 
     let (copying_as_base64_svg, set_copying_as_base64_svg) = signal(false);
-    let copy_as_base64_svg_icon = Memo::new(move |_| {
+    let copy_as_base64_svg_icon = Signal::derive(move || {
         if copying_as_base64_svg() {
             BiCheckRegular
         } else {
@@ -299,7 +299,7 @@ pub fn IconDetailsModal() -> impl IntoView {
         }
     });
 
-    let copy_as_base64_svg_text = Memo::new(move |_| {
+    let copy_as_base64_svg_text = Signal::derive(move || {
         if copying_as_base64_svg() {
             tr!("copied")
         } else {
@@ -308,7 +308,7 @@ pub fn IconDetailsModal() -> impl IntoView {
     });
 
     let (copying_as_base64_jpg, set_copying_as_base64_jpg) = signal(false);
-    let copy_as_base64_jpg_icon = Memo::new(move |_| {
+    let copy_as_base64_jpg_icon = Signal::derive(move || {
         if copying_as_base64_jpg() {
             BiCheckRegular
         } else {
@@ -316,7 +316,7 @@ pub fn IconDetailsModal() -> impl IntoView {
         }
     });
 
-    let copy_as_base64_jpg_text = Memo::new(move |_| {
+    let copy_as_base64_jpg_text = Signal::derive(move || {
         if copying_as_base64_jpg() {
             tr!("copied")
         } else {
@@ -325,7 +325,7 @@ pub fn IconDetailsModal() -> impl IntoView {
     });
 
     let (copying_as_base64_png, set_copying_as_base64_png) = signal(false);
-    let copy_as_base64_png_icon = Memo::new(move |_| {
+    let copy_as_base64_png_icon = Signal::derive(move || {
         if copying_as_base64_png() {
             BiCheckRegular
         } else {
@@ -333,7 +333,7 @@ pub fn IconDetailsModal() -> impl IntoView {
         }
     });
 
-    let copy_as_base64_png_text = Memo::new(move |_| {
+    let copy_as_base64_png_text = Signal::derive(move || {
         if copying_as_base64_png() {
             tr!("copied")
         } else {
@@ -342,7 +342,7 @@ pub fn IconDetailsModal() -> impl IntoView {
     });
 
     let (copying_hex, set_copying_hex) = signal(false);
-    let copy_hex_msg = Memo::new(move |_| {
+    let copy_hex_msg = Signal::derive(move || {
         if copying_hex() {
             tr!("copied")
         } else {
@@ -350,7 +350,7 @@ pub fn IconDetailsModal() -> impl IntoView {
         }
     });
 
-    let copy_hex_icon = Memo::new(move |_| {
+    let copy_hex_icon = Signal::derive(move || {
         if copying_hex() {
             BiCheckRegular
         } else {
@@ -370,26 +370,25 @@ pub fn IconDetailsModal() -> impl IntoView {
         move_tr!("download-filetype", {"filetype" => tr!("png")});
 
     let (copying_svg, set_copying_svg) = signal(false);
-    let copy_svg_msg = Memo::new(move |_| match copying_svg() {
+    let copy_svg_msg = Signal::derive(move || match copying_svg() {
         true => tr!("copied"),
         false => tr!("copy-filetype", {"filetype" => tr!("svg")}),
     });
 
-    let copy_svg_icon = Memo::new(move |_| match copying_svg() {
+    let copy_svg_icon = Signal::derive(move || match copying_svg() {
         true => BiCheckRegular,
-        false => TbSvg,
+        false => TbSvgOutline,
     });
 
     let (copying_svg_path, set_copying_svg_path) = signal(false);
-    let copy_svg_path_msg = Memo::new(move |_| {
-        if copying_svg_path() {
-            tr!("copied")
-        } else {
-            tr!("copy-icon-svg-path")
-        }
+    #[allow(unused_parens)]
+    let copy_svg_path_msg = move_tr!(if (copying_svg_path()) {
+        "copied"
+    } else {
+        "copy-icon-svg-path"
     });
 
-    let copy_svg_path_icon = Memo::new(move |_| {
+    let copy_svg_path_icon = Signal::derive(move || {
         if copying_svg_path() {
             BiCheckRegular
         } else {
@@ -398,48 +397,50 @@ pub fn IconDetailsModal() -> impl IntoView {
     });
 
     let (copying_png, set_copying_png) = signal(false);
-    let copy_png_msg = Memo::new(move |_| match copying_png() {
+    let copy_png_msg = Signal::derive(move || match copying_png() {
         true => tr!("copied"),
         false => tr!("copy-filetype", {"filetype" => tr!("png")}),
     });
 
-    let copy_png_icon = Memo::new(move |_| match copying_png() {
+    let copy_png_icon = Signal::derive(move || match copying_png() {
         true => BiCheckRegular,
-        false => TbPng,
+        false => TbPngOutline,
     });
 
     let (copying_jpg, set_copying_jpg) = signal(false);
-    let copy_jpg_msg = Memo::new(move |_| match copying_jpg() {
+    let copy_jpg_msg = Signal::derive(move || match copying_jpg() {
         true => tr!("copied"),
         false => tr!("copy-filetype", {"filetype" => tr!("jpg")}),
     });
 
-    let copy_jpg_icon = Memo::new(move |_| match copying_jpg() {
+    let copy_jpg_icon = Signal::derive(move || match copying_jpg() {
         true => BiCheckRegular,
-        false => TbJpg,
+        false => TbJpgOutline,
     });
 
     let (copying_brand_name, set_copying_brand_name) = signal(false);
-    let copy_brand_name_msg = Memo::new(move |_| match copying_brand_name() {
-        true => tr!("copied"),
-        false => tr!("copy-brand-name"),
+    #[allow(unused_parens)]
+    let copy_brand_name_msg = move_tr!(if (copying_brand_name()) {
+        "copied"
+    } else {
+        "copy-brand-name"
     });
 
-    let copy_brand_name_icon = Memo::new(move |_| match copying_brand_name() {
-        true => BiCheckRegular,
-        false => VsSymbolNamespace,
-    });
+    let copy_brand_name_icon =
+        Signal::derive(move || match copying_brand_name() {
+            true => BiCheckRegular,
+            false => VsSymbolNamespace,
+        });
 
     let (copying_icon_modal_url, set_copying_icon_modal_url) = signal(false);
-    let copy_icon_modal_url_msg = Memo::new(move |_| {
-        if copying_icon_modal_url() {
-            tr!("copied")
-        } else {
-            tr!("copy-icon-modal-url")
-        }
+    #[allow(unused_parens)]
+    let copy_icon_modal_url_msg = move_tr!(if (copying_icon_modal_url()) {
+        "copied"
+    } else {
+        "copy-icon-modal-url"
     });
 
-    let copy_icon_modal_url_icon = Memo::new(move |_| {
+    let copy_icon_modal_url_icon = Signal::derive(move || {
         if copying_icon_modal_url() {
             BiCheckRegular
         } else {
@@ -490,16 +491,15 @@ pub fn IconDetailsModal() -> impl IntoView {
 
                             <DetailsMenuItem
                                 text=download_svg_msg
-                                icon=Signal::derive(move || TbSvg)
+                                icon=TbSvgOutline
                                 on:click=move |_| {
                                     let slug = get_slug_from_modal_container();
                                     download_svg(&slug);
                                 }
                             />
-
                             <DetailsMenuItem
                                 text=download_pdf_msg
-                                icon=Signal::derive(move || TbPdf)
+                                icon=TbPdfOutline
                                 on:click=move |_| {
                                     let slug = get_slug_from_modal_container();
                                     download_pdf(&slug);
@@ -508,7 +508,7 @@ pub fn IconDetailsModal() -> impl IntoView {
 
                             <DetailsMenuItem
                                 text=download_png_msg
-                                icon=Signal::derive(move || TbPng)
+                                icon=TbPngOutline
                                 on:click=move |_| {
                                     let slug = get_slug_from_modal_container();
                                     download_png(&slug);
@@ -517,7 +517,7 @@ pub fn IconDetailsModal() -> impl IntoView {
 
                             <DetailsMenuItem
                                 text=download_jpg_msg
-                                icon=Signal::derive(move || TbJpg)
+                                icon=TbJpgOutline
                                 on:click=move |_| {
                                     let slug = get_slug_from_modal_container();
                                     download_jpg(&slug);
@@ -526,7 +526,7 @@ pub fn IconDetailsModal() -> impl IntoView {
 
                             <DetailsMenuItem
                                 text=download_colored_svg_msg
-                                icon=Signal::derive(move || TbSvg)
+                                icon=TbSvgOutline
                                 on:click=move |_| {
                                     let slug = get_slug_from_modal_container();
                                     let hex = get_hex_from_modal_container();
