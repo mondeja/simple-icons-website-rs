@@ -342,12 +342,11 @@ pub fn IconDetailsModal() -> impl IntoView {
     });
 
     let (copying_hex, set_copying_hex) = signal(false);
-    let copy_hex_msg = Signal::derive(move || {
-        if copying_hex() {
-            tr!("copied")
-        } else {
-            tr!("copy-hex-color")
-        }
+    #[allow(unused_parens)]
+    let copy_hex_msg = move_tr!(if (copying_hex()) {
+        "copied"
+    } else {
+        "copy-hex-color"
     });
 
     let copy_hex_icon = Signal::derive(move || {
