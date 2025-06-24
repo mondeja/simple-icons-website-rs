@@ -34,36 +34,37 @@ pub fn ControlButtonIcon(
     #[prop(optional)]
     class: &'static str,
 ) -> impl IntoView {
-    let title_fn = Memo::new(move |_| title());
     let is_xs_screen = use_media_query("(max-width: 475px)");
 
-    // TODO: leptos-icons should be able to accept `'static str` and `String`
-    //       as `width` and `height` properties using `Cow` or something similar
-    let size =
-        Memo::new(move |_| if is_xs_screen() { XS_ICON_SIZE } else { "24" });
+    // TODO: remove `to_string()` and deduplicate implementations when
+    // https://github.com/carloskiki/leptos-icons/pull/63 is merged
+    let size = Signal::derive(move || {
+        if is_xs_screen() {
+            XS_ICON_SIZE.to_string()
+        } else {
+            "24".to_string()
+        }
+    });
+    let size_for_svgicon =
+        Signal::derive(
+            move || {
+                if is_xs_screen() { XS_ICON_SIZE } else { "24" }
+            },
+        );
 
     view! {
         <ControlButton active class attr:title=title>
             {match icon {
-                IconOrSvg::Icon(icon) => {
-                    view! {
-                        <Icon
-                            icon
-                            width=Signal::derive(move || size().to_string())
-                            height=Signal::derive(move || size().to_string())
-                        />
-                    }
-                        .into_any()
-                }
+                IconOrSvg::Icon(icon) => view! { <Icon icon width=size height=size /> }.into_any(),
                 value => {
                     view! {
                         <SVGIcon
                             role="img"
                             aria_hidden=true
-                            aria_label=title_fn
+                            aria_label=title
                             view_box="0 0 24 24"
-                            width=size
-                            height=size
+                            width=size_for_svgicon
+                            height=size_for_svgicon
                             path=match value {
                                 IconOrSvg::SvgPath(svg_path) => svg_path,
                                 IconOrSvg::SvgDef(svg_def) => svg_def.d(),

@@ -18,7 +18,7 @@ pub fn Menu(
 pub fn MenuItem(
     class: &'static str,
     #[prop(optional, into)] text: Signal<String>,
-    #[prop(optional, into)] icon: Option<Signal<icondata::Icon>>,
+    #[prop(into)] icon: Signal<icondata::Icon>,
     #[prop(optional)] children: Option<Children>,
 ) -> impl IntoView {
     view! {
@@ -29,18 +29,10 @@ pub fn MenuItem(
             ),
             class,
         )>
-            {match icon {
-                Some(icon) => {
-                    view! {
-                        <span class="min-w-[24px] min-h-[24px]">
-                            <Icon width="24px" height="24px" icon />
-                        </span>
-                    }
-                        .into_any()
-                }
-                #[allow(clippy::unit_arg, clippy::unused_unit)]
-                None => view! {  }.into_any(),
-            }} {text}
+            <span class="min-w-[24px] min-h-[24px]">
+                <Icon width="24px" height="24px" icon />
+            </span>
+            {text}
             {match children {
                 Some(child) => child().into_any(),
                 #[allow(clippy::unit_arg, clippy::unused_unit)]

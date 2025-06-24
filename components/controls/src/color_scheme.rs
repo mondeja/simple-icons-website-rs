@@ -1,5 +1,5 @@
 use super::button::ControlButtonIcon;
-use icondata::{ChMoon, ChSun, TbSunMoon};
+use icondata::{ChMoon, ChSun, TbSunMoonOutline};
 use leptos::prelude::*;
 use leptos_fluent::move_tr;
 use leptos_use::ColorMode;
@@ -30,7 +30,7 @@ pub fn ColorSchemeControl() -> impl IntoView {
                         />
                         <ControlButtonIcon
                             title=move_tr!("system-color-scheme")
-                            icon=TbSunMoon
+                            icon=TbSunMoonOutline
                             active=current_color_scheme == ColorMode::Auto
                             on:click=move |_| set_color_scheme(ColorMode::Auto)
                         />
