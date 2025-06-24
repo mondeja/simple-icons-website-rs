@@ -55,9 +55,7 @@ pub fn ControlButtonIcon(
     view! {
         <ControlButton active class attr:title=title>
             {match icon {
-                IconOrSvg::Icon(icon) => {
-                    view! { <Icon icon style="foo" width=size height=size /> }.into_any()
-                }
+                IconOrSvg::Icon(icon) => view! { <Icon icon width=size height=size /> }.into_any(),
                 value => {
                     view! {
                         <SVGIcon
