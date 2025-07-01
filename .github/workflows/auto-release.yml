@@ -75,7 +75,7 @@ jobs:
         run: |
           sed -i 's/"simple-icons": "${{needs.get-releases.outputs.dep}}"/"simple-icons": "${{needs.get-releases.outputs.si}}"/' package.json
           cat package.json | grep '"simple-icons":' -C 2
-          npm install --package-lock-only --no-audit --no-fund
+          npm install --package-lock-only --no-audit --no-fund --ignore-scripts
       - name: Install Node.js dependencies
         run: npm ci --no-audit --no-fund
       - name: Install tooling dependencies
