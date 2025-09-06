@@ -68,16 +68,20 @@ print_stdout = "deny"
 [workspace.lints.rust]
 warnings = "warn"
 # Configuration for leptos-lints
-unknown_lints = "allow"
+#   Allowance of unknown lints must go after unknown lints in the
+#   command passed by cargo to rustc or a warning would be triggered
+#   for web_sys_* lints just because the name start with "w".
+#   This is how cargo currently works. It doesn't knows anything
+#   about what are unknown lints, so there is no logic shared between
+#   them and the `unknown_lints` lint.
+unknown_lints = { level = "allow", priority = -1 }
 leptos_print_stdout = "deny"
 # Configuration for leptos-unique-ids lints
 literal_as_id_attribute_value = "deny"
 tt_as_id_attribute_value = "deny"
 # Configuration for rs-apps-lints
 #   web-sys
-#     TODO: this is triggering a warning with the Rust compiler,
-#     see https://github.com/rust-lang/rust-clippy/issues/15126
-#web_sys_reexports = "deny"
+web_sys_reexports = "deny"
 #   leptos
 leptos_reexports = "deny"
 
