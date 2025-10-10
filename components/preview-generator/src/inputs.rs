@@ -1,4 +1,6 @@
-use crate::{canvas::update_preview_canvas, helpers::is_valid_hex_color};
+use crate::{
+    Brand, canvas::update_preview_canvas, helpers::is_valid_hex_color,
+};
 use fast_fuzzy::search;
 use leptos::{html::Input, prelude::*, task::spawn_local};
 use leptos_fluent::{move_tr, tr};
@@ -348,11 +350,8 @@ impl BrandSuggestionsState {
 }
 
 #[component]
-pub fn BrandInput(
-    brand: ReadSignal<String>,
-    set_brand: WriteSignal<String>,
-    set_color: WriteSignal<String>,
-) -> impl IntoView {
+pub fn BrandInput(set_color: WriteSignal<String>) -> impl IntoView {
+    let brand = expect_context::<RwSignal<Brand>>();
     let pixel_ratio = use_device_pixel_ratio();
 
     let brand_suggestions_state =
@@ -374,13 +373,17 @@ pub fn BrandInput(
                 type="text"
                 class="mr-7 w-[524px]"
                 id=Ids::PreviewBrand
-                value=brand
-                prop:value=brand
+                value=move || brand().0.clone()
+                prop:value=move || brand().0.clone()
                 autocomplete="off"
                 on:input=move |ev| {
+                    let current_brand_slug = &brand().1;
                     let value = event_target_value::<web_sys::Event>(&ev);
-                    let (bs, more_bs) = search_brand_suggestions(&value);
-                    set_brand(value.clone());
+                    let (bs, more_bs) = search_brand_suggestions(&value, current_brand_slug);
+                    brand
+                        .update(|b| {
+                            b.0 = value.clone();
+                        });
                     update_preview_canvas(pixel_ratio.get_untracked());
                     brand_suggestions_state
                         .update(|state| {
@@ -392,8 +395,9 @@ pub fn BrandInput(
                         });
                 }
                 on:focus=move |ev| {
+                    let current_brand_slug = &brand().1;
                     let value = event_target_value::<web_sys::Event>(&ev);
-                    let (bs, more_bs) = search_brand_suggestions(&value);
+                    let (bs, more_bs) = search_brand_suggestions(&value, current_brand_slug);
                     brand_suggestions_state
                         .update(|state| {
                             state.input_value = value;
@@ -406,7 +410,6 @@ pub fn BrandInput(
 
             <BrandSuggestions
                 show=Signal::derive(move || { brand_suggestions_state().show_brand_suggestions() })
-                set_brand
                 set_color
             />
         </div>
@@ -416,7 +419,6 @@ pub fn BrandInput(
 #[component]
 fn BrandSuggestions(
     show: Signal<bool>,
-    set_brand: WriteSignal<String>,
     set_color: WriteSignal<String>,
 ) -> impl IntoView {
     let brand_suggestions_state =
@@ -443,9 +445,7 @@ fn BrandSuggestions(
                     .brand_suggestions
                     .iter()
                     .map(|icon| {
-                        view! {
-                            <BrandSuggestion icon=icon set_brand=set_brand set_color=set_color />
-                        }
+                        view! { <BrandSuggestion icon set_color /> }
                     })
                     .collect::<Vec<_>>()
             }}
@@ -480,7 +480,7 @@ fn BrandSuggestions(
                 state
                     .more_brand_suggestions
                     .into_iter()
-                    .map(|icon| view! { <BrandSuggestion icon set_brand set_color /> })
+                    .map(|icon| view! { <BrandSuggestion icon set_color /> })
                     .collect::<Vec<_>>()
             }}
         </ul>
@@ -490,11 +490,11 @@ fn BrandSuggestions(
 #[component]
 fn BrandSuggestion(
     icon: &'static SimpleIcon,
-    set_brand: WriteSignal<String>,
     set_color: WriteSignal<String>,
 ) -> impl IntoView {
     let brand_suggestions_state =
         expect_context::<RwSignal<BrandSuggestionsState>>();
+    let brand = expect_context::<RwSignal<Brand>>();
 
     view! {
         <li on:click=move |_| {
@@ -503,7 +503,10 @@ fn BrandSuggestion(
                     state.show_brand_suggestions = false;
                     state.show_more_brand_suggestions = false;
                 });
-            set_brand(icon.title.to_string());
+            brand
+                .update(|b| {
+                    *b = (icon.title.to_string(), icon.slug.to_string());
+                });
             set_color(icon.hex.to_string());
             spawn_local(async move {
                 match fetch_text(&format!("/icons/{}.svg", icon.slug)).await {
@@ -530,6 +533,7 @@ fn BrandSuggestion(
 
 fn search_brand_suggestions(
     value: &str,
+    current_slug: &str,
 ) -> (Vec<&'static SimpleIcon>, Vec<&'static SimpleIcon>) {
     let mut initial_icons: Vec<&'static SimpleIcon> =
         Vec::with_capacity(BrandSuggestionsState::MAX_MINIMAL_SUGGESTIONS);
@@ -539,10 +543,15 @@ fn search_brand_suggestions(
     for i in 0..search_result_length {
         let result_icon_array = js_sys::Array::from(&search_result.get(i));
         let icon_order_alpha = result_icon_array.get(1).as_f64().unwrap();
-        if i > 5 {
-            more_icons.push(&ICONS[icon_order_alpha as usize]);
+        let icon = &ICONS[icon_order_alpha as usize];
+        if icon.slug == current_slug {
+            continue;
+        }
+        if initial_icons.len() >= BrandSuggestionsState::MAX_MINIMAL_SUGGESTIONS
+        {
+            more_icons.push(icon);
         } else {
-            initial_icons.push(&ICONS[icon_order_alpha as usize]);
+            initial_icons.push(icon);
         }
     }
     (initial_icons, more_icons)
