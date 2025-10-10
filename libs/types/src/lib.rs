@@ -29,6 +29,12 @@ pub struct SimpleIcon {
     pub deprecation: Option<&'static IconDeprecation>,
 }
 
+impl PartialEq for SimpleIcon {
+    fn eq(&self, other: &Self) -> bool {
+        self.slug == other.slug
+    }
+}
+
 impl SimpleIcon {
     pub fn plain_aliases(&self) -> Vec<&'static str> {
         let mut aliases = Vec::new();

@@ -1,4 +1,6 @@
-use crate::{canvas::canvas as canvas_container, helpers::is_valid_hex_color};
+use crate::{
+    Brand, canvas::canvas as canvas_container, helpers::is_valid_hex_color,
+};
 use leptos::{prelude::*, task::spawn_local};
 use leptos_fluent::{move_tr, tr};
 use simple_icons_sdk as sdk;
@@ -12,21 +14,19 @@ use web_sys_simple_copy::copy_canvas_container_as_image;
 
 #[component]
 pub fn PreviewButtons(
-    brand: ReadSignal<String>,
     path: ReadSignal<String>,
-    set_brand: WriteSignal<String>,
     set_color: WriteSignal<String>,
     set_path: WriteSignal<String>,
 ) -> impl IntoView {
     view! {
         <div class="preview-buttons">
             <div>
-                <PreviewUploadSVGButton set_brand=set_brand set_color=set_color set_path=set_path />
+                <PreviewUploadSVGButton set_color set_path />
             </div>
             <div class="float-right">
                 <PreviewCopyButton />
-                <PreviewSaveButton brand=brand />
-                <PreviewDownloadSVGButton brand=brand path=path />
+                <PreviewSaveButton />
+                <PreviewDownloadSVGButton path=path />
             </div>
         </div>
     }
@@ -34,18 +34,17 @@ pub fn PreviewButtons(
 
 #[component]
 fn PreviewUploadSVGButton(
-    set_brand: WriteSignal<String>,
     set_color: WriteSignal<String>,
     set_path: WriteSignal<String>,
 ) -> impl IntoView {
     async fn on_upload_svg_file(
         file: web_sys::File,
-        set_brand: WriteSignal<String>,
         set_color: WriteSignal<String>,
         set_path: WriteSignal<String>,
     ) {
         match wasm_bindgen_futures::JsFuture::from(file.text()).await {
             Ok(text) => {
+                let brand = expect_context::<RwSignal<Brand>>();
                 let file_content = text.as_string().unwrap();
 
                 // Set color
@@ -68,18 +67,18 @@ fn PreviewUploadSVGButton(
                 if file_content.contains("<title>")
                     && file_content.contains("</title>")
                 {
-                    let brand = file_content
+                    let brand_title = file_content
                         .split("<title>")
                         .nth(1)
                         .unwrap()
                         .split("</title>")
                         .next()
                         .unwrap();
-                    set_brand(brand.to_string());
+                    brand.update(|b| b.0 = brand_title.to_string());
 
                     if !file_content.contains("fill=\"") {
                         for icon in ICONS.iter() {
-                            if icon.title == brand {
+                            if icon.title == brand_title {
                                 set_color(icon.hex.to_string());
                                 break;
                             }
@@ -121,7 +120,7 @@ fn PreviewUploadSVGButton(
                 on:change=move |ev| {
                     let input = event_target::<web_sys::HtmlInputElement>(&ev);
                     let file = input.files().unwrap().get(0).unwrap();
-                    spawn_local(on_upload_svg_file(file, set_brand, set_color, set_path));
+                    spawn_local(on_upload_svg_file(file, set_color, set_path));
                     input.set_value("");
                 }
             />
@@ -180,7 +179,8 @@ fn PreviewCopyButton() -> impl IntoView {
 }
 
 #[component]
-fn PreviewSaveButton(brand: ReadSignal<String>) -> impl IntoView {
+fn PreviewSaveButton() -> impl IntoView {
+    let brand = expect_context::<RwSignal<Brand>>();
     view! {
         <button
             title=move || tr!("save-preview")
@@ -190,7 +190,8 @@ fn PreviewSaveButton(brand: ReadSignal<String>) -> impl IntoView {
             tabindex=0
             on:click=move |_| {
                 let canvas = canvas_container();
-                let filename = format!("{}.png", &sdk::title_to_slug(&brand()));
+                let brand_title = brand().0.clone();
+                let filename = format!("{}.png", &sdk::title_to_slug(&brand_title));
                 let url = canvas.to_data_url().unwrap();
                 download(&filename, &url);
             }
@@ -202,10 +203,8 @@ fn PreviewSaveButton(brand: ReadSignal<String>) -> impl IntoView {
 }
 
 #[component]
-fn PreviewDownloadSVGButton(
-    brand: ReadSignal<String>,
-    path: ReadSignal<String>,
-) -> impl IntoView {
+fn PreviewDownloadSVGButton(path: ReadSignal<String>) -> impl IntoView {
+    let brand = expect_context::<RwSignal<Brand>>();
     view! {
         <button
             title=move_tr!("download-filetype", { "filetype" => tr!("svg") })
@@ -214,11 +213,13 @@ fn PreviewDownloadSVGButton(
             type="button"
             tabindex=0
             on:click=move |_| {
-                let filename = format!("{}.svg", &sdk::title_to_slug(&brand()));
+                let brand_title = brand().0.clone();
+                let filename = format!("{}.svg", &sdk::title_to_slug(&brand_title));
+                let title = brand().0.clone();
                 let url = format!(
                     "data:image/svg+xml;utf8,{}",
                     js_sys::encode_uri_component(
-                        &svg_with_title_path_opt_fill(&brand(), &path(), None),
+                        &svg_with_title_path_opt_fill(&title, &path(), None),
                     ),
                 );
                 download(&filename, &url);

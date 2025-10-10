@@ -23,8 +23,11 @@ use simple_icons_website_url as Url;
 use web_sys_simple_fetch::fetch_text;
 
 static DEFAULT_INITIAL_BRAND: &str = "Simple Icons";
+static DEFAULT_INITIAL_SLUG: &str = "simpleicons";
 static DEFAULT_INITIAL_COLOR: &str = "111111";
 static DEFAULT_INITIAL_PATH: &str = get_simple_icon_svg_path!("simpleicons");
+
+pub(crate) type Brand = (String, String); // (title, slug)
 
 fn search_brand(value: &str) -> Option<&'static SimpleIcon> {
     let search_result = js_sys::Array::from(&search(value));
@@ -37,16 +40,19 @@ fn search_brand(value: &str) -> Option<&'static SimpleIcon> {
     None
 }
 
-fn default_icon() -> (String, String, String, Option<&'static SimpleIcon>) {
+fn default_icon() -> (Brand, String, String, Option<&'static SimpleIcon>) {
     (
-        DEFAULT_INITIAL_BRAND.to_string(),
+        (
+            DEFAULT_INITIAL_BRAND.to_string(),
+            DEFAULT_INITIAL_SLUG.to_string(),
+        ),
         DEFAULT_INITIAL_COLOR.to_string(),
         DEFAULT_INITIAL_PATH.to_string(),
         None,
     )
 }
 
-fn initial_icon() -> (String, String, String, Option<&'static SimpleIcon>) {
+fn initial_icon() -> (Brand, String, String, Option<&'static SimpleIcon>) {
     match Url::params::get(&Url::params::Names::Query) {
         Some(value) => {
             if value.is_empty() {
@@ -54,7 +60,7 @@ fn initial_icon() -> (String, String, String, Option<&'static SimpleIcon>) {
             }
             match search_brand(&value) {
                 Some(icon) => (
-                    icon.title.to_string(),
+                    (icon.title.to_string(), icon.slug.to_string()),
                     icon.hex.to_string(),
                     "".to_string(),
                     Some(icon),
@@ -69,14 +75,21 @@ fn initial_icon() -> (String, String, String, Option<&'static SimpleIcon>) {
 /// Preview generator
 #[component]
 pub fn PreviewGenerator() -> impl IntoView {
-    let (initial_brand, initial_color, initial_path, icon) = initial_icon();
-    let (brand, set_brand) = signal(initial_brand);
+    let (initial_brand, initial_color, initial_path, initial_icon) =
+        initial_icon();
+    let brand = RwSignal::new(initial_brand);
     let (color, set_color) = signal(initial_color);
     let (path, set_path) = signal(initial_path.clone());
+
+    provide_context::<RwSignal<Brand>>(brand);
+
     if path.get_untracked().is_empty() {
         spawn_local(async move {
-            match fetch_text(&format!("/icons/{}.svg", icon.unwrap().slug))
-                .await
+            match fetch_text(&format!(
+                "/icons/{}.svg",
+                initial_icon.unwrap().slug
+            ))
+            .await
             {
                 Ok(svg) => set_path(sdk::svg_to_path(&svg)),
                 Err(_) => set_path(initial_path.clone()),
@@ -92,25 +105,25 @@ pub fn PreviewGenerator() -> impl IntoView {
     view! {
         <div class="preview">
             <div>
-                <BrandInput brand set_brand set_color />
+                <BrandInput set_color />
                 <ColorInput color set_color />
             </div>
             <PathInput path set_path />
 
-            <PreviewFigure brand color path />
+            <PreviewFigure color path />
             <PreviewBadges color path />
-            <PreviewButtons brand path set_brand set_color set_path />
+            <PreviewButtons path set_color set_path />
         </div>
     }
 }
 
 #[component]
 fn PreviewFigure(
-    brand: ReadSignal<String>,
     color: ReadSignal<String>,
     path: ReadSignal<String>,
 ) -> impl IntoView {
     let fill_color = Memo::new(move |_| contrast_color_for(&color()));
+    let brand = expect_context::<RwSignal<Brand>>();
 
     view! {
         <figure class="preview-figure">
@@ -145,7 +158,8 @@ fn PreviewFigure(
 
                 <g transform="translate(21,235)" style="font-family: Helvetica">
                     {move || {
-                        let preview_title = format!("{} Preview", brand());
+                        let title = brand().0.clone();
+                        let preview_title = format!("{title} Preview");
                         if preview_title.len() > 24 {
                             let mut title_1 = String::with_capacity(24);
                             let mut title_2 = String::with_capacity(24);
@@ -188,10 +202,10 @@ fn PreviewFigure(
                     }}
 
                     <text fill=fill_color font-size="17" y="25">
-                        {move || format!("{}.svg", sdk::title_to_slug(&brand()))}
+                        {move || format!("{}.svg", sdk::title_to_slug(&brand().0))}
                     </text>
                     <text fill=fill_color font-size="16" y="61">
-                        {move || format!("Brand: {}", brand())}
+                        {move || format!("Brand: {}", brand().0)}
                     </text>
                     <text fill=fill_color font-size="16" y="84">
                         {move || format!("Color: #{}", color())}
