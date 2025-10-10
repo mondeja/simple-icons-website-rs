@@ -3,7 +3,7 @@ Feature: Go to footer
 	button. Because scrolling to the footer, the grid loads more icons.
 
 	Background:
-		Given I see the app
+		Given I see the index page
 		And I scroll to the top
 		And the "Go to header" button does not exists
 

@@ -3,7 +3,7 @@ Feature: Grid loads more icons when clicking button
 	to the "Load more icons" button.
 
 	Background:
-		Given I see the app
+		Given I see the index page
 		And I see the grid
 
 	Scenario: Load the next page clicking the "Load more icons" button

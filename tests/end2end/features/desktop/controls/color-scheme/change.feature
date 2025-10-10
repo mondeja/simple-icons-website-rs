@@ -3,7 +3,7 @@ Feature: Change color scheme
 	the buttons of the color scheme control.
 
 	Background:
-		Given I see the app
+		Given I see the index page
 
 	Scenario: Change color scheme to dark
 		When click on the light button of the color scheme control

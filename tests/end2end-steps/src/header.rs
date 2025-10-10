@@ -4,13 +4,18 @@ use end2end_helpers::{AppWorld, TouchesViewport};
 use std::time::Duration;
 use thirtyfour::prelude::*;
 
-#[given("I see the app")]
-async fn open_the_app(world: &mut AppWorld) -> Result<()> {
+#[given(regex = "I see the (index|preview generator) page")]
+async fn open_the_app(world: &mut AppWorld, page: String) -> Result<()> {
+    let (path, selector) = match page.as_str() {
+        "index" => ("", "header"),
+        _ => ("/preview", ".preview"),
+    };
+
     _ = world
-        .goto_path("")
+        .goto_path(path)
         .await?
         .driver()
-        .query(By::Tag("header"))
+        .query(By::Css(selector))
         .wait(Duration::from_secs(60), Duration::from_millis(100))
         .and_displayed()
         .first()

@@ -2,7 +2,7 @@ Feature: Search for icons
 	Search for icons using the search control.
 
 	Background:
-		Given I see the app
+		Given I see the index page
 
 	Scenario: Search for an icon given its name
 		When I type "simple icons" in the search input

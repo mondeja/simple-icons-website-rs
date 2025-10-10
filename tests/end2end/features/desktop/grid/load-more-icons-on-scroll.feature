@@ -2,7 +2,7 @@ Feature: Grid loads more icons when scrolling
 	Ensures that the app loads the next page of icons when scrolling to the footer.
 
 	Background:
-		Given I see the app
+		Given I see the index page
 		And I see the grid
 
 	Scenario: Load the next pages of icons on scroll
