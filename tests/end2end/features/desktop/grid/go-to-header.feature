@@ -4,7 +4,7 @@ Feature: Go to header
 	Icons keeps loading when we go back to the header.
 
 	Background:
-		Given I see the app
+		Given I see the index page
 		And I scroll to the top
 		And the "Go to header" button does not exists
 

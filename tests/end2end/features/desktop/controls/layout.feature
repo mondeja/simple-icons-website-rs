@@ -3,7 +3,7 @@ Feature: Change layout
 	and changes it by clicking on the buttons of the layout control.
 
 	Background:
-		Given I see the app
+		Given I see the index page
 
 	Scenario: Load the comfortable layout and change it
 		Then the selected layout is comfortable

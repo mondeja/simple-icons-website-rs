@@ -2,7 +2,7 @@ Feature: System color scheme
 	Ensures that the app loads the system color scheme when it is opened.
 
 	Background:
-		Given I see the app
+		Given I see the index page
 
 	Scenario: Load the system color scheme and change to it
 		Then the app background is the system color scheme
