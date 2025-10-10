@@ -423,7 +423,6 @@ fn BrandSuggestions(
 ) -> impl IntoView {
     let brand_suggestions_state =
         expect_context::<RwSignal<BrandSuggestionsState>>();
-    let brand = expect_context::<RwSignal<Brand>>();
 
     view! {
         <ul class=move || {
@@ -442,11 +441,9 @@ fn BrandSuggestions(
                 if !state.show_brand_suggestions() {
                     return vec![];
                 }
-                let current_brand_slug = &brand().1;
                 state
                     .brand_suggestions
                     .iter()
-                    .filter(|icon| icon.slug != *current_brand_slug)
                     .map(|icon| {
                         view! { <BrandSuggestion icon set_color /> }
                     })
@@ -480,11 +477,9 @@ fn BrandSuggestions(
                 if !state.show_more_brand_suggestions() {
                     return vec![];
                 }
-                let current_brand_slug = &brand().1;
                 state
                     .more_brand_suggestions
                     .into_iter()
-                    .filter(|icon| icon.slug != *current_brand_slug)
                     .map(|icon| view! { <BrandSuggestion icon set_color /> })
                     .collect::<Vec<_>>()
             }}
