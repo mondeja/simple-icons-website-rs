@@ -7,7 +7,7 @@ Feature: Upload SVG file
 		Given I see the preview generator page
 		Then The brand input value is "Simple Icons"
 
-	Scenario: Change SVG path by clicking the button "Upload SVG"
+	Scenario: Change preview icon by upload a file using the "Upload SVG" button
 		When I upload the file "node_modules/simple-icons/icons/leptos.svg" by clicking the "Upload SVG" button
 		Then The brand input value is "Leptos"
 		Then The title in the preview is "Leptos Preview"
