@@ -29,7 +29,7 @@ async fn upload_file_by_clicking_on_upload_svg_button(
 #[when(
     regex = r#"I press the "([^"]+)" \+ "([^"]+)" keys, the event "([^"]+)" is executed on the element "([^"]+)""#
 )]
-async fn check_press_keys_event_is_executed_on_element(
+async fn press_keys_combination_and_check_event_is_executed_on_element(
     world: &mut AppWorld,
     modifier: String,
     key: String,
@@ -42,6 +42,14 @@ async fn check_press_keys_event_is_executed_on_element(
         "alt" => Key::Alt,
         "meta" => Key::Meta,
         _ => panic!("Unknown modifier key: {modifier}"),
+    };
+    let thirtyfour_key: TypingData = match key.to_lowercase().as_str() {
+        "arrowup" => Key::Up.into(),
+        "arrowdown" => Key::Down.into(),
+        "arrowleft" => Key::Left.into(),
+        "arrowright" => Key::Right.into(),
+        k if k.len() == 1 => k.chars().next().unwrap().into(),
+        _ => panic!("Unknown key: {key}"),
     };
 
     let driver = world.driver();
@@ -68,22 +76,11 @@ async fn check_press_keys_event_is_executed_on_element(
     let actions = driver.action_chain();
     actions
         .key_down(modifier_key.clone())
-        .send_keys_to_element(
-            &body,
-            match key.to_lowercase().as_str() {
-                "arrowup" => TypingData::from(Key::Up),
-                "arrowdown" => TypingData::from(Key::Down),
-                "arrowleft" => TypingData::from(Key::Left),
-                "arrowright" => TypingData::from(Key::Right),
-                k if k.len() == 1 => {
-                    TypingData::from(k.chars().next().unwrap())
-                }
-                _ => panic!("Unknown key: {key}"),
-            },
-        )
+        .send_keys_to_element(&body, thirtyfour_key)
         .key_up(modifier_key)
         .perform()
         .await?;
+
     let script_ret = driver
         .execute(
             r#"
