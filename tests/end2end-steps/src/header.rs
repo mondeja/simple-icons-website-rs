@@ -17,7 +17,6 @@ async fn check_header_title(world: &mut AppWorld, title: String) -> Result<()> {
     let header_title = world
         .driver()
         .query(By::Css("header > div > a"))
-        .wait(Duration::from_secs(6), Duration::from_millis(10))
         .and_displayed()
         .first()
         .await?;
@@ -31,13 +30,14 @@ async fn check_header_description(
     world: &mut AppWorld,
     title: String,
 ) -> Result<()> {
-    let found = world
+    world
         .driver()
         .query(By::Css("header > div > p"))
-        .with_text(StringMatch::new(&title).partial())
-        .exists()
+        .first()
+        .await?
+        .wait_until()
+        .has_text(StringMatch::new(&title).partial())
         .await?;
-    assert!(found);
     Ok(())
 }
 
@@ -70,7 +70,6 @@ async fn check_language_selector_modal(world: &mut AppWorld) -> Result<()> {
     world
         .driver()
         .query(By::Css(".language-selector"))
-        .wait(Duration::from_millis(200), Duration::from_millis(10))
         .and_displayed()
         .all_from_selector_required()
         .await?;
@@ -99,7 +98,6 @@ async fn select_language(
     world
         .driver()
         .query(By::XPath(&xpath))
-        .wait(Duration::from_millis(200), Duration::from_millis(10))
         .and_displayed()
         .first()
         .await?

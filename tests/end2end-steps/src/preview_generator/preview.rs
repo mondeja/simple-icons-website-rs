@@ -46,7 +46,7 @@ async fn check_preview_background_color(
         .first()
         .await?
         .wait_until()
-        .has_attribute("fill", color.clone())
+        .has_attribute("fill", color)
         .await?;
     Ok(())
 }
@@ -106,7 +106,6 @@ async fn check_preview_badges_color(
     let found = world
         .driver()
         .query(By::Css(selector))
-        .wait(Duration::from_secs(6), Duration::from_millis(50))
         .with_filter(move |element: thirtyfour::WebElement| {
             let expected_color = color.clone();
             async move {
@@ -183,7 +182,6 @@ async fn check_preview_badges_logo(
     let found = world
         .driver()
         .query(By::Css(selector))
-        .wait(Duration::from_secs(6), Duration::from_millis(50))
         .with_filter(move |element: thirtyfour::WebElement| {
             let expected_svg_path = expected_svg_path.clone();
             let mode = mode.clone();
