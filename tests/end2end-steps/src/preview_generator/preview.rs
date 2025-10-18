@@ -3,10 +3,10 @@ use base64::{
     Engine as _, engine::general_purpose::STANDARD as BASE64_STANDARD,
 };
 use cucumber::then;
-use end2end_helpers::AppWorld;
+use end2end_helpers::{AppWorld, Waiter, element_has_inner_html};
 use end2end_helpers::{equality_predicate, starts_with_predicate};
 use std::time::Duration;
-use thirtyfour::prelude::*;
+use thirtyfour::{prelude::*, stringmatch::StringMatch};
 
 #[then(
     regex = r#"the (title|filename|brand|color) in the preview is "([^"]+)""#
@@ -23,23 +23,14 @@ async fn check_preview_data(
         "color" => ".preview-figure > svg > g > text:nth-child(4)",
         _ => unreachable!(),
     };
-    let found = world
+    world
         .driver()
         .query(By::Css(selector))
-        .wait(Duration::from_secs(6), Duration::from_millis(50))
-        .with_filter(move |element: thirtyfour::WebElement| {
-            let value = value.clone();
-            async move {
-                let text = element.inner_html().await;
-                if let std::result::Result::Ok(text) = text {
-                    return std::result::Result::Ok(text == value);
-                }
-                std::result::Result::Ok(false)
-            }
-        })
-        .exists()
+        .first()
+        .await?
+        .wait_until()
+        .condition(element_has_inner_html(StringMatch::new(&value)))
         .await?;
-    assert!(found);
     Ok(())
 }
 
@@ -49,26 +40,14 @@ async fn check_preview_background_color(
     color: String,
 ) -> Result<()> {
     let selector = ".preview-figure > svg > rect:nth-child(1)";
-    let found = world
+    world
         .driver()
         .query(By::Css(selector))
-        .wait(Duration::from_secs(6), Duration::from_millis(50))
-        .with_filter(move |element: thirtyfour::WebElement| {
-            let color = color.clone();
-            async move {
-                let fill = element.attr("fill").await;
-                if let std::result::Result::Ok(Some(fill)) = fill {
-                    return std::result::Result::Ok(fill == color);
-                }
-                std::result::Result::Ok(false)
-            }
-        })
-        .exists()
+        .first()
+        .await?
+        .wait_until()
+        .has_attribute("fill", color.clone())
         .await?;
-    assert!(
-        found,
-        "The preview does not have the expected background color"
-    );
     Ok(())
 }
 
@@ -78,45 +57,43 @@ async fn check_preview_svg_paths(
     mode: String,
     value: String,
 ) -> Result<()> {
-    let client = world.driver().clone();
-
-    let found = world
-        .driver()
-        .query(By::Css(".preview-figure > svg"))
-        .wait(Duration::from_secs(6), Duration::from_millis(50))
-        .with_filter(move |_| {
-            let value = value.clone();
-            let client = client.clone();
-            let mode = mode.clone();
-            async move {
-                let paths_elements = client
-                    .find_all(By::Css(".preview-figure > svg > svg > path"))
-                    .await;
-                if let std::result::Result::Ok(paths_elements) = paths_elements
-                {
-                    let mut paths = vec![];
-                    for path_element in &paths_elements {
-                        if let std::result::Result::Ok(Some(d)) =
-                            path_element.attr("d").await
-                        {
-                            paths.push(d);
-                        }
+    let condition = move || {
+        let client = world.driver().clone();
+        let value = value.clone();
+        let predicate_fn = match mode.as_str() {
+            "are" => equality_predicate,
+            _ => starts_with_predicate,
+        };
+        async move {
+            let paths_elements = client
+                .find_all(By::Css(".preview-figure > svg > svg > path"))
+                .await;
+            if let std::result::Result::Ok(paths_elements) = paths_elements {
+                let mut paths = vec![];
+                for path_element in &paths_elements {
+                    if let std::result::Result::Ok(Some(d)) =
+                        path_element.attr("d").await
+                    {
+                        paths.push(d);
                     }
-                    let predicate_fn = match mode.as_str() {
-                        "are" => equality_predicate,
-                        _ => starts_with_predicate,
-                    };
-                    let result = paths.len() == 4
-                        && paths.iter().all(|d| predicate_fn(d, &value));
-                    std::result::Result::Ok(result)
-                } else {
-                    std::result::Result::Ok(false)
                 }
+                let result = paths.len() == 4
+                    && paths.iter().all(|d| predicate_fn(d, &value));
+                std::result::Result::Ok(result)
+            } else {
+                std::result::Result::Ok(false)
             }
-        })
-        .exists()
-        .await?;
-    assert!(found, "The SVG paths were not found as expected");
+        }
+    };
+
+    Waiter::new(
+        Duration::from_secs(6),
+        Duration::from_millis(50),
+        "The SVG paths were not found as expected".to_string(),
+    )
+    .until(|| [&condition])
+    .await?;
+
     Ok(())
 }
 

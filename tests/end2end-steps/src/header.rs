@@ -2,7 +2,7 @@ use anyhow::{Ok, Result};
 use cucumber::{then, when};
 use end2end_helpers::{AppWorld, TouchesViewport};
 use std::time::Duration;
-use thirtyfour::prelude::*;
+use thirtyfour::{prelude::*, stringmatch::StringMatch};
 
 #[then("the header touches the viewport")]
 async fn header_touches_viewport(world: &mut AppWorld) -> Result<()> {
@@ -34,19 +34,7 @@ async fn check_header_description(
     let found = world
         .driver()
         .query(By::Css("header > div > p"))
-        .wait(Duration::from_millis(1000), Duration::from_millis(10))
-        .with_filter(move |e: WebElement| {
-            let title = title.clone();
-            async move {
-                let text = e.text().await;
-                if let std::result::Result::Ok(text) = text {
-                    return std::result::Result::Ok(
-                        text.contains(title.as_str()),
-                    );
-                }
-                std::result::Result::Ok(false)
-            }
-        })
+        .with_text(StringMatch::new(&title).partial())
         .exists()
         .await?;
     assert!(found);

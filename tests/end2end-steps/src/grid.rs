@@ -1,7 +1,7 @@
 use anyhow::{Ok, Result};
 use core::str::FromStr;
 use cucumber::{given, then, when};
-use end2end_helpers::AppWorld;
+use end2end_helpers::{AppWorld, Waiter};
 use simple_icons_website_controls_layout_type::Layout;
 use std::time::Duration;
 use thirtyfour::prelude::*;
@@ -32,30 +32,34 @@ async fn number_of_icons_per_page_loaded(
     layout: String,
     multiplicator: String,
 ) -> Result<()> {
-    let client = world.driver().clone();
-
     let expected_number_of_icons =
         Layout::from_str(&layout).unwrap().icons_per_page() as usize
             * multiplicator.parse::<usize>()?;
 
-    let found = client
-        .query(By::Css("main > ul"))
-        .wait(Duration::from_secs(6), Duration::from_millis(50))
-        .with_filter(move |_| {
-            let client = client.clone();
-            async move {
-                let elements = client.find_all(By::Css("main > ul > li")).await;
-                if let std::result::Result::Ok(elements) = elements {
-                    return std::result::Result::Ok(
-                        elements.len() == expected_number_of_icons,
-                    );
-                }
-                std::result::Result::Ok(false)
+    let condition = move || {
+        let client = world.driver().clone();
+        async move {
+            let elements = client.find_all(By::Css("main > ul > li")).await;
+            if let std::result::Result::Ok(elements) = elements {
+                return std::result::Result::Ok(
+                    elements.len() == expected_number_of_icons,
+                );
             }
-        })
-        .exists()
-        .await?;
-    assert!(found);
+            std::result::Result::Ok(false)
+        }
+    };
+
+    Waiter::new(
+        Duration::from_secs(6),
+        Duration::from_millis(50),
+        format!(
+            "The expected number of icons ({expected_number_of_icons}) \
+            have not been loaded in time",
+        ),
+    )
+    .until(|| [&condition])
+    .await?;
+
     Ok(())
 }
 
