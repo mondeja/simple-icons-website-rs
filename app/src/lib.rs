@@ -7,13 +7,13 @@
 //! develop and build for production.
 //!
 pub(crate) mod app;
-pub(crate) mod head;
-pub(crate) mod pages;
 
 use crate::app::App;
 use leptos::{mount::mount_to_body, prelude::document};
+use wasm_bindgen::prelude::*;
 
-pub fn main() {
+#[wasm_bindgen(start)]
+pub fn main() -> Result<(), JsValue> {
     console_error_panic_hook::set_once();
 
     // Remove #loader and body background
@@ -25,4 +25,6 @@ pub fn main() {
     }
 
     mount_to_body(App);
+
+    Ok(())
 }

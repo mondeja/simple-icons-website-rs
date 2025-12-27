@@ -1870,42 +1870,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "leptos_router"
-version = "0.8.11"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "01e573711f2fb9ab5d655ec38115220d359eaaf1dcb93cc0ea624543b6dba959"
-dependencies = [
- "any_spawner",
- "either_of",
- "futures",
- "gloo-net",
- "js-sys",
- "leptos",
- "leptos_router_macro",
- "or_poisoned",
- "reactive_graph",
- "rustc_version",
- "send_wrapper",
- "tachys",
- "thiserror 2.0.17",
- "url",
- "wasm-bindgen",
- "web-sys",
-]
-
-[[package]]
-name = "leptos_router_macro"
-version = "0.8.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "409c0bd99f986c3cfa1a4db2443c835bc602ded1a12784e22ecb28c3ed5a2ae2"
-dependencies = [
- "proc-macro-error2",
- "proc-macro2",
- "quote",
- "syn",
-]
-
-[[package]]
 name = "leptos_server"
 version = "0.8.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2924,27 +2888,25 @@ name = "simple-icons-website"
 version = "0.1.0"
 dependencies = [
  "console_error_panic_hook",
+ "leptos",
+ "simple-icons-website-grid-constants",
+ "simple-icons-website-grid-types",
+ "simple-icons-website-page-layout",
+ "wasm-bindgen",
+]
+
+[[package]]
+name = "simple-icons-website-404-page"
+version = "0.1.0"
+dependencies = [
+ "console_error_panic_hook",
  "icondata",
  "leptos",
  "leptos-fluent",
- "leptos-use",
  "leptos_icons",
- "leptos_meta",
- "leptos_router",
- "serde_json",
- "simple-icons-macros",
  "simple-icons-website-controls",
- "simple-icons-website-footer",
- "simple-icons-website-grid",
- "simple-icons-website-grid-constants",
- "simple-icons-website-grid-types",
- "simple-icons-website-header",
- "simple-icons-website-i18n",
- "simple-icons-website-modal",
- "simple-icons-website-preview-generator",
- "simple-icons-website-storage",
- "simple-icons-website-svg-defs",
- "simple-icons-website-url",
+ "simple-icons-website-page-layout",
+ "wasm-bindgen",
 ]
 
 [[package]]
@@ -3019,6 +2981,18 @@ dependencies = [
  "wasm-bindgen",
  "web-sys",
  "web-sys-simple-fetch",
+]
+
+[[package]]
+name = "simple-icons-website-deprecations-page"
+version = "0.1.0"
+dependencies = [
+ "console_error_panic_hook",
+ "leptos",
+ "simple-icons-website-grid-constants",
+ "simple-icons-website-grid-types",
+ "simple-icons-website-page-layout",
+ "wasm-bindgen",
 ]
 
 [[package]]
@@ -3148,6 +3122,28 @@ dependencies = [
 ]
 
 [[package]]
+name = "simple-icons-website-page-layout"
+version = "0.1.0"
+dependencies = [
+ "leptos",
+ "leptos-fluent",
+ "leptos-use",
+ "leptos_meta",
+ "serde_json",
+ "simple-icons-macros",
+ "simple-icons-website-controls",
+ "simple-icons-website-footer",
+ "simple-icons-website-grid",
+ "simple-icons-website-grid-types",
+ "simple-icons-website-header",
+ "simple-icons-website-i18n",
+ "simple-icons-website-modal",
+ "simple-icons-website-storage",
+ "simple-icons-website-svg-defs",
+ "simple-icons-website-url",
+]
+
+[[package]]
 name = "simple-icons-website-preview-generator"
 version = "0.1.0"
 dependencies = [
@@ -3175,6 +3171,22 @@ dependencies = [
  "web-sys-simple-copy",
  "web-sys-simple-events",
  "web-sys-simple-fetch",
+]
+
+[[package]]
+name = "simple-icons-website-preview-page"
+version = "0.1.0"
+dependencies = [
+ "console_error_panic_hook",
+ "icondata",
+ "leptos",
+ "leptos-fluent",
+ "leptos_icons",
+ "simple-icons-website-controls",
+ "simple-icons-website-grid-constants",
+ "simple-icons-website-page-layout",
+ "simple-icons-website-preview-generator",
+ "wasm-bindgen",
 ]
 
 [[package]]
