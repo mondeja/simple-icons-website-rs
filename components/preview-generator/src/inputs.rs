@@ -542,7 +542,7 @@ fn BrandSuggestion(
             });
         }>
             <span>
-                <img src=format!("./icons/{}.svg", icon.slug) width="24px" height="24px" />
+                <img src=format!("/icons/{}.svg", icon.slug) width="24px" height="24px" />
                 <span>{icon.title}</span>
             </span>
         </li>

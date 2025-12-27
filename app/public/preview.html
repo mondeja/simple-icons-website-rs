@@ -1,14 +1,17 @@
 <!doctype html>
 <html>
 	<script>
-		const PATH = '/preview/';
+		const PATH = 'preview/';
 		const params = new URL(window.location).searchParams.toString();
-		const opts = params ? `&${params}` : '';
-		window.location = `/${PATH}${opts}`;
+		const opts = params ? `?${params}` : '';
+		window.location = `https://simpleicons.org/${PATH}${opts}`;
 	</script>
 	<noscript>
 		<head>
-			<meta http-equiv="refresh" content="0; URL=/preview/" />
+			<meta
+				http-equiv="refresh"
+				content="0; URL=https://simpleicons.org/preview/"
+			/>
 		</head>
 	</noscript>
 </html>

@@ -145,6 +145,8 @@ jobs:
         env:
           RELEASE: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Show dist tree
+        run: tree -ah -L 1 app/dist
       - name: Run chromedriver
         if: matrix.browser == 'chrome'
         run: chromedriver --port=4444 &
@@ -183,15 +185,24 @@ jobs:
           matrix.browser == 'chrome' &&
           matrix.suite == 'desktop' &&
           github.ref == 'refs/heads/master'
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          token: ${{ steps.app-token.outputs.token }}
-          branch: gh-pages
-          folder: app/dist
-          single-commit: true
-          clean-exclude: CNAME
-          git-config-name: simple-icons[bot]
-          git-config-email: simple-icons[bot]@users.noreply.github.com
+        run: |
+          git config --global user.name "simple-icons[bot]"
+          git config --global user.email "simple-icons[bot]@users.noreply.github.com"
+
+          mkdir -p gh-pages-temp
+          cd gh-pages-temp
+
+          git init
+          git remote add origin https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/${{ github.repository }}.git
+
+          git fetch origin gh-pages --depth=1 || true
+          git checkout origin/gh-pages -- CNAME 2>/dev/null || true
+
+          cp -r ../app/dist/* .
+
+          git add -A
+          git commit -m "Deploy from commit ${{ github.sha }}"
+          git push --force origin HEAD:gh-pages
 
   report-wasm-size:
     name: WASM size report
