@@ -429,8 +429,14 @@ args = ["tsx", "scripts/create-stats.ts"]
 [tasks.run-pre-build-scripts]
 description = "Run pre-build scripts"
 run_task = { name = [
-	"build-js-libs",
 	"fetch-deprecated-icons",
+	"run-parallel-pre-build-scripts",
+], parallel = false }
+
+[tasks.run-parallel-pre-build-scripts]
+description = "Run parallel pre-build scripts"
+run_task = { name = [
+	"build-js-libs",
 	"create-sitemap",
 	"create-stats",
 ], parallel = true }
