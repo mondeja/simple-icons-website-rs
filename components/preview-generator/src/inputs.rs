@@ -16,12 +16,91 @@ use wasm_bindgen::JsCast;
 use web_sys_simple_events::dispatch_input_event_on_input;
 use web_sys_simple_fetch::fetch_text;
 
+fn parse_color_to_hex(input: &str) -> Option<String> {
+    let trimmed = input.trim().to_lowercase();
+
+    // Si ya es hex, limpiarlo
+    if let Some(stripped) = trimmed.strip_prefix('#') {
+        let hex = stripped.to_uppercase();
+        if hex.chars().all(|c| c.is_ascii_hexdigit()) {
+            return Some(hex);
+        }
+    }
+
+    if trimmed.starts_with("rgb(") || trimmed.starts_with("rgba(") {
+        let start = trimmed.find('(')?;
+        let end = trimmed.find(')')?;
+        let content = &trimmed[start + 1..end];
+
+        let parts: Vec<&str> = content.split(',').collect();
+
+        if parts.len() >= 3 {
+            let r = parts[0].trim().parse::<u8>().ok()?;
+            let g = parts[1].trim().parse::<u8>().ok()?;
+            let b = parts[2].trim().parse::<u8>().ok()?;
+
+            return Some(format!("{:02X}{:02X}{:02X}", r, g, b).to_uppercase());
+        }
+    }
+
+    None
+}
+
 #[component]
 pub fn ColorInput(
     color: ReadSignal<String>,
     set_color: WriteSignal<String>,
 ) -> impl IntoView {
     let pixel_ratio = use_device_pixel_ratio();
+
+    let on_input = move |ev| {
+        let input = event_target::<web_sys::HtmlInputElement>(&ev);
+        let original_value = input.value();
+        let selection_start = input.selection_start().ok().flatten();
+        let selection_end = input.selection_end().ok().flatten();
+
+        let normalized_value =
+            if let Some(hex) = parse_color_to_hex(&original_value) {
+                let mut truncated = hex;
+                truncated.truncate(6);
+                truncated
+            } else {
+                let mut value = original_value.to_uppercase().replace('#', "");
+                value.truncate(6);
+                value
+            };
+
+        input.set_value(&normalized_value);
+
+        if let (Some(start), Some(end)) = (selection_start, selection_end) {
+            let hashes_before_start = original_value
+                .chars()
+                .take(start as usize)
+                .filter(|&c| c == '#')
+                .count() as u32;
+
+            let hashes_before_end = original_value
+                .chars()
+                .take(end as usize)
+                .filter(|&c| c == '#')
+                .count() as u32;
+
+            let normalized_len = normalized_value.chars().count() as u32;
+
+            let new_start = start
+                .saturating_sub(hashes_before_start)
+                .min(normalized_len);
+
+            let new_end =
+                end.saturating_sub(hashes_before_end).min(normalized_len);
+
+            let _ = input.set_selection_start(Some(new_start));
+            let _ = input.set_selection_end(Some(new_end));
+        }
+
+        set_color(normalized_value);
+        update_preview_canvas(pixel_ratio.get_untracked());
+    };
 
     view! {
         <div class="preview-input-group">
@@ -31,38 +110,11 @@ pub fn ColorInput(
                 style="width:68px"
                 id=Ids::PreviewColor
                 value=color
+                spellcheck=false
                 prop:value=color
                 autocomplete="off"
                 class:invalid=move || !is_valid_hex_color(&color())
-                on:input=move |ev| {
-                    let input = event_target::<web_sys::HtmlInputElement>(&ev);
-                    let original_value = input.value();
-                    let selection_start = input.selection_start().ok().flatten();
-                    let selection_end = input.selection_end().ok().flatten();
-                    let mut normalized_value = original_value.to_uppercase().replace('#', "");
-                    normalized_value.truncate(6);
-                    input.set_value(&normalized_value);
-                    if let (Some(start), Some(end)) = (selection_start, selection_end) {
-                        let hashes_before_start = original_value[..start
-                                .min(original_value.len() as u32) as usize]
-                            .matches('#')
-                            .count() as u32;
-                        let hashes_before_end = original_value[..end
-                                .min(original_value.len() as u32) as usize]
-                            .matches('#')
-                            .count() as u32;
-                        let new_start = start
-                            .saturating_sub(hashes_before_start)
-                            .min(normalized_value.len() as u32);
-                        let new_end = end
-                            .saturating_sub(hashes_before_end)
-                            .min(normalized_value.len() as u32);
-                        let _ = input.set_selection_start(Some(new_start));
-                        let _ = input.set_selection_end(Some(new_end));
-                    }
-                    set_color(normalized_value);
-                    update_preview_canvas(pixel_ratio.get_untracked());
-                }
+                on:input=on_input
             />
         </div>
     }
@@ -196,6 +248,7 @@ pub fn PathInput(
                 value=path
                 prop:value=path
                 autocomplete="off"
+                spellcheck=false
                 class:warn=move || !path_lint_errors().is_empty()
                 on:input=move |_| {
                     let p = input_ref.get().unwrap().value();
@@ -394,6 +447,7 @@ pub fn BrandInput(set_color: WriteSignal<String>) -> impl IntoView {
                 value=move || brand().0.clone()
                 prop:value=move || brand().0.clone()
                 autocomplete="off"
+                spellcheck=false
                 on:input=move |ev| {
                     let current_brand_slug = &brand().1;
                     let value = event_target_value::<web_sys::Event>(&ev);

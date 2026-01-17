@@ -203,6 +203,7 @@ pub fn SearchControl() -> impl IntoView {
                     autofocus
                     placeholder=move || tr!("search-by-brand")
                     value=search
+                    spellcheck=false
                     onfocus="var value = this.value; this.value = null; this.value = value;"
                     on:input=move |_| {
                         spawn_local(
