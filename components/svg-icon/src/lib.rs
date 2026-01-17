@@ -65,7 +65,7 @@ impl From<&'static SVGDef> for IconOrSvg {
 
 /// Build a SVG string with the 24px24 viewBox from a path and
 /// an optional `fill` attribute
-pub fn svg_with_path_opt_fill(path: &str, fill: Option<&str>) -> String {
+pub fn svg_with_path_opt_fill(path: &str, fill: Option<String>) -> String {
     format!(
         concat!(
             "<svg role=\"img\" viewBox=\"0 0 24 24\"",

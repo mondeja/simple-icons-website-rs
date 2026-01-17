@@ -11,6 +11,7 @@ use canvas::update_preview_canvas;
 pub use deps::add_preview_generator_scripts;
 use fast_fuzzy::search;
 use helpers::contrast_color_for;
+use helpers::is_valid_hex_color;
 use inputs::{BrandInput, ColorInput, PathInput};
 use leptos::{prelude::*, task::spawn_local};
 use leptos_use::use_device_pixel_ratio;
@@ -121,7 +122,22 @@ fn PreviewFigure(
     color: ReadSignal<String>,
     path: ReadSignal<String>,
 ) -> impl IntoView {
-    let fill_color = Memo::new(move |_| contrast_color_for(&color()));
+    let fill_color = Memo::new(move |_| {
+        let color = color();
+        if !is_valid_hex_color(&color) {
+            contrast_color_for("000000")
+        } else {
+            contrast_color_for(&color)
+        }
+    });
+    let color_or_error_color = Memo::new(move |_| {
+        let color = color();
+        if !is_valid_hex_color(&color) {
+            "CC0000".to_string()
+        } else {
+            color
+        }
+    });
     let brand = expect_context::<RwSignal<Brand>>();
 
     let (width, height) = (canvas::WIDTH, canvas::HEIGHT);
@@ -224,7 +240,7 @@ fn PreviewFigure(
                         </text>
                     </g>
                 </g>
-                <PreviewBadges color=color.into() path=path.into() />
+                <PreviewBadges color=color_or_error_color.into() path=path.into() />
             </svg>
             <canvas width=width height=height></canvas>
         </figure>
@@ -235,10 +251,26 @@ fn PreviewFigure(
 fn PreviewBadges(color: Signal<String>, path: Signal<String>) -> impl IntoView {
     let pixel_ratio = use_device_pixel_ratio();
 
-    let white_svg =
-        Signal::derive(move || svg_with_path_opt_fill(&path(), Some("FFF")));
-    let color_svg =
-        Signal::derive(move || svg_with_path_opt_fill(&path(), Some(&color())));
+    let white_svg = Signal::derive(move || {
+        svg_with_path_opt_fill(
+            &path(),
+            if is_valid_hex_color(&color()) {
+                Some("FFFFFF".to_string())
+            } else {
+                Some("CC0000".to_string())
+            },
+        )
+    });
+    let color_svg = Signal::derive(move || {
+        svg_with_path_opt_fill(
+            &path(),
+            if is_valid_hex_color(&color()) {
+                Some(color().to_string())
+            } else {
+                Some("CC0000".to_string())
+            },
+        )
+    });
 
     let badge_maker_loaded = RwSignal::new(false);
 
