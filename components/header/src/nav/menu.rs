@@ -39,9 +39,10 @@ pub fn HeaderMenuMoreInfoButton() -> impl IntoView {
                         );
 
                         #[cfg(debug_assertions)]
-                        leptos::logging::warn!(
-                            "You're in development mode, so make sure that you build the full app to turn on WASM cache optimization.",
-                        );
+                        leptos::logging::warn!(concat!(
+                            "[dev] Make sure that you build the",
+                            " full app to turn on WASM cache optimizations.",
+                        ));
                     }
                 }
             });
