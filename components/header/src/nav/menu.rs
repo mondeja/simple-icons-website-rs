@@ -27,10 +27,16 @@ pub fn HeaderMenuMoreInfoButton() -> impl IntoView {
             let link = wasm_link.clone();
             spawn_local(async move {
                 match fetch_text(&link).await {
-                    Ok(_) => leptos::logging::log!(
-                        "WASM Link fetched successfully: {}",
-                        link
-                    ),
+                    Ok(_) => {
+                        #[cfg(debug_assertions)]
+                        #[allow(leptos_print_stdout)]
+                        {
+                            leptos::logging::log!(
+                                "WASM Link fetched successfully: {}",
+                                link
+                            );
+                        }
+                    }
                     Err(err) => {
                         leptos::logging::warn!(
                             "Failed to fetch WASM Link '{}': {}",
