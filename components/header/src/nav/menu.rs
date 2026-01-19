@@ -16,10 +16,10 @@ pub fn HeaderMenuMoreInfoButton() -> impl IntoView {
     let wasm_links = RwSignal::new(Vec::<String>::new());
 
     let menu_ref = NodeRef::new();
-    let more_menu_open = RwSignal::new(false);
+    let menu_open = RwSignal::new(false);
     _ = on_click_outside(menu_ref, move |_| {
-        if more_menu_open.get_untracked() {
-            more_menu_open.set(false);
+        if menu_open.get_untracked() {
+            menu_open.set(false);
         }
     });
     menu_ref.on_load(move |_| {
@@ -136,10 +136,10 @@ pub fn HeaderMenuMoreInfoButton() -> impl IntoView {
             class:hidden=move || !header_state().menu_open
             id=Ids::More
             node_ref=menu_ref
-            on:click=move |_| more_menu_open.update(|is_open| *is_open = !*is_open)
+            on:click=move |_| menu_open.update(|is_open| *is_open = !*is_open)
         >
             <HeaderMenuButton icon=AiMoreOutlined width=25 height=25 />
-            <div class:hidden=move || !more_menu_open()>
+            <div class:hidden=move || !menu_open()>
                 <ul>{render_links()}</ul>
             </div>
         </li>
